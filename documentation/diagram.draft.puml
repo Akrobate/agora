@@ -1,0 +1,192 @@
+@startuml
+
+title Relationships - Diagram
+
+class "MongoDbRepository" {
+  --
+}
+
+class "ModuleRepository" {
+  * repository
+  --
+  create(input)
+  update(technical_name, input)
+  read(technical_name)
+  search(input)
+  delete(technical_name)
+}
+
+class "ModuleDynamicRepository" {
+  * repository
+  --
+  create(module_technical_name, input)
+  update(module_technical_name, id, input)
+  read(module_technical_name, id)
+  search(module_technical_name, field_list, input)
+  delete(module_technical_name, id)
+  formatDocumentId(document)
+}
+
+
+class "FieldTypeService" {
+  --
+  fieldsToJoiValidation(fields, is_creation_validation)
+  fieldsToSearchJoiValidation(fields)
+}
+
+
+class "AbstractTypeField" {
+  --
+  manageRequiredValidation(validation, field, is_creation)
+}
+
+class "TextTypeField" {
+  --
+  joiValidation
+}
+
+class "NumberTypeField" {
+  --
+  joiValidation
+}
+
+class "EmailTypeField" {
+  --
+  joiValidation
+}
+
+class "UrlTypeField" {
+  --
+  joiValidation
+}
+
+class "BooleanTypeField" {
+  --
+  joiValidation
+}
+
+class "RelationTypeField" {
+  --
+  joiValidation
+}
+
+
+class "ModuleDynamicService" {
+  *repository
+  --
+  create(technical_name, input)
+  update(technical_name, id, input)
+  read(technical_name, id)
+  search(technical_name, input = {})
+  delete(technical_name, id)
+  formatDocumentId(document)
+  checkModuleExistance(technical_name)
+}
+
+class "ModuleFieldService" {
+  *repository
+  --
+  create(input)
+  update(field_technical_name, input)
+  read(module_technical_name, field_technical_name)
+  search(technical_name)
+  delete(module_technical_name, field_technical_name)
+}
+
+class "ModuleSetupService" {
+  *repository
+  --
+  create(input)
+  update(technical_name, input)
+  read(technical_name)
+  search(input)
+  delete(technical_name)
+}
+
+
+class "ModuleDynamicController" {
+  * module_dynamic_service,
+  * module_field_service,
+  * field_type_service
+  --
+  create(request, response)
+  update(request, response)
+  read(request, response) 
+  delete(request, response)
+  search(request, response)
+}
+
+class "ModuleFieldController" {
+  * module_field_service,
+  --
+  create(request, response)
+  update(request, response)
+  read(request, response) 
+  delete(request, response)
+  search(request, response)
+}
+
+class "ModuleSetupController" {
+  * module_field_service,
+  --
+  create(request, response)
+  update(request, response)
+  read(request, response) 
+  delete(request, response)
+  search(request, response)
+}
+
+
+
+class "dynamic_routes" {
+}
+
+class "static_routes" {
+}
+
+class "app" {
+}
+
+ModuleRepository *-- MongoDbRepository
+ModuleDynamicRepository *-- MongoDbRepository
+
+ModuleDynamicService *-- ModuleDynamicRepository
+ModuleDynamicService *-- ModuleRepository
+ModuleFieldService *-- ModuleRepository
+ModuleSetupService *-- ModuleRepository
+
+
+ModuleDynamicController *-- ModuleDynamicService
+ModuleDynamicController *-- ModuleFieldService
+ModuleDynamicController *-- FieldTypeService
+
+ModuleFieldController *-- FieldTypeService
+FieldTypeService *-- TextTypeField
+FieldTypeService *-- NumberTypeField
+FieldTypeService *-- EmailTypeField
+FieldTypeService *-- UrlTypeField
+FieldTypeService *-- BooleanTypeField
+FieldTypeService *-- RelationTypeField
+
+TextTypeField --|> AbstractTypeField
+NumberTypeField --|> AbstractTypeField
+EmailTypeField --|> AbstractTypeField
+UrlTypeField --|> AbstractTypeField
+BooleanTypeField --|> AbstractTypeField
+RelationTypeField --|> AbstractTypeField
+
+ModuleFieldController *-- ModuleFieldService
+
+ModuleSetupController *-- ModuleSetupService
+
+
+dynamic_routes *-- ModuleDynamicController
+static_routes *-- ModuleSetupController
+static_routes *-- ModuleFieldController
+
+app *-- dynamic_routes
+app *-- static_routes
+
+
+
+@enduml
