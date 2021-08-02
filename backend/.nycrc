@@ -1,0 +1,18 @@
+{
+    "check-coverage": true,
+    "per-file": false,
+    "statements": 94.24,
+    "branches": 79.77,
+    "functions": 93.71,
+    "lines": 94.35,
+    "include": [
+        "src/**/*.js"
+    ],
+    "reporter": [
+        "lcov",
+        "text",
+        "html"
+    ],
+    "cache": true,
+    "all": true
+}
