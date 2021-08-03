@@ -50,6 +50,11 @@ class CustomError extends Error {
         return 4;
     }
 
+    // eslint-disable-next-line require-jsdoc
+    static get ORM_ERROR() {
+        return 5;
+    }
+
 }
 
 module.exports = {
