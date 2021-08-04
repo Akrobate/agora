@@ -1,18 +1,20 @@
 'use strict';
 
-// const {
-//     CustomError,
-// } = require('../CustomError');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 const {
     UserRepository,
 } = require('../repositories/UserRepository');
 
 const {
+    CustomError,
+} = require('../CustomError');
+
+const {
     configuration,
 } = require('../configuration');
 
-const jwt = require('jsonwebtoken');
 
 class UserService {
 
@@ -52,8 +54,29 @@ class UserService {
      * @returns {Promise<*|Error>}
      */
     async register(input) {
-        const user = await this.user_repository.create(input);
+
+        const {
+            password,
+        } = input;
+
+        const user = await this.user_repository
+            .create(Object.assign({}, input, {
+                password: UserService.hashPassword(password),
+            }));
         return user;
+    }
+
+
+    /**
+     * @param {String} password
+     * @returns {String}
+     */
+    static hashPassword(password) {
+        const hashed_password = crypto
+            .createHash('sha256')
+            .update(`${configuration.security.salt}${password}`)
+            .digest('base64');
+        return hashed_password;
     }
 
 
@@ -61,17 +84,35 @@ class UserService {
      * @param {Object} input
      * @returns {Promise<*|Error>}
      */
-    login(input) {
+    async login(input) {
+        const {
+            email,
+            password,
+        } = input;
+
+        const user = await this.user_repository.find({
+            email,
+        });
+
+        if (user === null) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Bad login or password');
+        }
+
+        if (user.password !== UserService.hashPassword(password)) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Bad login or password');
+        }
+
         let jwt_token = null;
+
         try {
             jwt_token = jwt.sign(input, this.jwt_private_key, this.jwt_config);
         } catch (error) {
             // @todo: Mutate error
-            console.log(error);
+            throw new CustomError(error);
         }
-        return Promise.resolve({
+        return {
             token: jwt_token,
-        });
+        };
     }
 
 
