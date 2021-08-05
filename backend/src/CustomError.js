@@ -55,6 +55,11 @@ class CustomError extends Error {
         return 5;
     }
 
+    // eslint-disable-next-line require-jsdoc
+    static get UNAUTHORIZED() {
+        return 6;
+    }
+
 }
 
 module.exports = {

@@ -16,6 +16,10 @@ const error_mapper = {
         status: status.INTERNAL_SERVER_ERROR,
         message: 'Internal error',
     },
+    [CustomError.ORM_ERROR]: {
+        status: status.INTERNAL_SERVER_ERROR,
+        // message: 'Internal error',
+    },
     [CustomError.NOT_FOUND]: {
         status: status.NOT_FOUND,
         message: 'Document not found',
@@ -24,12 +28,16 @@ const error_mapper = {
         status: status.CONFLICT,
         message: 'Entity already exists',
     },
+    [CustomError.UNAUTHORIZED]: {
+        status: status.UNAUTHORIZED,
+    },
 };
 
 
 const error_manager_middleware = (error, _, response, next) => {
 
     if (error.code === undefined) {
+
         logger.log(error);
         return response
             .status(status.INTERNAL_SERVER_ERROR)

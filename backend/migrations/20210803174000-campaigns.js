@@ -19,12 +19,12 @@ module.exports = {
                     unique: false,
                 },
                 description: {
-                    allowNull: false,
+                    allowNull: true,
                     type: sequelize.STRING,
                     unique: false,
                 },
                 start_date: {
-                    allowNull: false,
+                    allowNull: true,
                     type: sequelize.DATE,
                 },
                 end_date: {

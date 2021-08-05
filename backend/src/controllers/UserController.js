@@ -113,7 +113,6 @@ class UserController {
                             .required(),
                         password: joi.string()
                             .trim()
-                            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)
                             .required(),
                     })
                     .required(),
