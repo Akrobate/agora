@@ -10,7 +10,7 @@
     "cover": "nyc npm test",
     "migrate": "sequelize db:migrate --config src/configuration/sequelizeConfiguration.js"
   },
-  "author": "",
+  "author": "Artiom FEDOROV",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -26,7 +26,6 @@
     "mysql2": "^2.2.5",
     "qs": "^6.10.1",
     "sequelize": "^6.6.5",
-    "supertest": "^6.1.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -35,6 +34,7 @@
     "mocha": "^8.3.2",
     "nyc": "^15.1.0",
     "sequelize-cli": "^6.2.0",
-    "sinon": "^10.0.0"
+    "sinon": "^10.0.0",
+    "supertest": "^6.1.4"
   }
 }
