@@ -22,7 +22,8 @@ module.exports = {
                     type: sequelize.INTEGER.UNSIGNED,
                 },
                 public_token: {
-                    allowNull: false,
+                    allowNull: true,
+                    defaultValue: null,
                     type: sequelize.STRING,
                 },
                 access_level: {
