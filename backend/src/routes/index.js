@@ -7,6 +7,7 @@ const {
 const {
     UserController,
     CampaignController,
+    CampaignUserController,
 } = require('../controllers');
 
 const {
@@ -18,6 +19,7 @@ const api_routes = Router(); // eslint-disable-line new-cap
 const authentication_middleware = AuthenticationMiddleware.getInstance();
 const user_controller = UserController.getInstance();
 const campaign_controller = CampaignController.getInstance();
+const campaign_user_controller = CampaignUserController.getInstance();
 
 const url_prefix = '/api/v1';
 
@@ -36,10 +38,25 @@ api_routes.post(
 );
 
 api_routes.post(
+    '/users/login/guest',
+    (request, response, next) => user_controller
+        .loginGuest(request, response)
+        .catch(next)
+);
+
+api_routes.post(
     '/campaigns',
     authentication_middleware.injectJwtData(),
     (request, response, next) => campaign_controller
         .create(request, response)
+        .catch(next)
+);
+
+api_routes.post(
+    '/campaigns/:campaign_id/users',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_user_controller
+        .addUserToCampaign(request, response)
         .catch(next)
 );
 

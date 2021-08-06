@@ -132,6 +132,42 @@ class UserController {
         return response.status(HTTP_CODE.OK).send(data);
     }
 
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async loginGuest(request, response) {
+
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                body: joi.object()
+                    .keys({
+                        public_token: joi.string()
+                            .trim()
+                            .min(1)
+                            .required(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        if (error) {
+            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
+        }
+
+        const data = await this.user_service.loginGuest({
+            public_token: value.body.public_token,
+        });
+
+        return response.status(HTTP_CODE.OK).send(data);
+    }
+
 
 }
 

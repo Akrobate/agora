@@ -1,6 +1,10 @@
 'use strict';
 
 const {
+    v4,
+} = require('uuid');
+
+const {
     CampaignRepository,
     CampaignUserRepository,
     UserRepository,
@@ -56,27 +60,81 @@ class CampaignUserService {
             access_level,
         } = input;
 
-        if (user.access_type === 'full') {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'Guest user cannot create campaigns');
+        if (user.access_type !== 'full') {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Guest user cannot add create users to campaigns');
         }
 
-        const campaign_user = await this.campaign_user_repository
-            .find(Object.assign(
-                {},
-                input,
-                {
-                    owner_user_id: user.user_id,
-                }
-            ));
+        await this.checkCampaignExists(campaign_id);
 
-        await this.campaign_user_repository
+        await this.checkUserIsCampaignManager(user.user_id, campaign_id);
+
+        const user_to_add = await this.getOrCreateUserToInvite(email);
+
+        const campaign_user = await this.campaign_user_repository
             .create({
-                campaign_id: campaign.id,
-                user_id: user.user_id,
+                campaign_id,
+                user_id: user_to_add.id,
+                access_level,
+                public_token: `${v4()}`.replace(/-/g, ''),
+            });
+
+        return campaign_user;
+    }
+
+
+    /**
+     * @param {Number} campaign_id
+     * @returns {Object|Error}
+     */
+    async checkCampaignExists(campaign_id) {
+        const campaign = await this.campaign_repository
+            .find({
+                id_list: [campaign_id],
+            });
+
+        if (campaign === null) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Campaign does not exists');
+        }
+        return campaign;
+    }
+
+
+    /**
+     * @param {Number} user_id
+     * @param {Number} campaign_id
+     * @returns {Object|Error}
+     */
+    async checkUserIsCampaignManager(user_id, campaign_id) {
+        const manager_campaign_user = await this.campaign_user_repository
+            .find({
+                campaign_id,
+                user_id,
                 access_level: CampaignUserRepository.MANAGER,
             });
 
-        return campaign;
+        if (manager_campaign_user === null) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'User is not allowed to add users to campaigns');
+        }
+        return manager_campaign_user;
+    }
+
+
+    /**
+     * @param {String} email
+     * @returns {Object}
+     */
+    async getOrCreateUserToInvite(email) {
+        let user_to_add = await this.user_repository.find({
+            email,
+        });
+
+        if (user_to_add === null) {
+            user_to_add = await this.user_repository.create({
+                email,
+            });
+        }
+
+        return user_to_add;
     }
 
 }
