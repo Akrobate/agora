@@ -2,9 +2,6 @@
 
 const {
     CampaignRepository,
-} = require('../repositories');
-
-const {
     CampaignUserRepository,
 } = require('../repositories');
 
@@ -48,7 +45,7 @@ class CampaignService {
      * @param {Object} input
      * @returns {Promise<*|Error>}
      */
-    async get(user, input) {
+    async read(user, input) {
 
     }
 

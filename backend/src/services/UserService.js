@@ -127,6 +127,31 @@ class UserService {
 
 
     /**
+     * @param {Object} user_data
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async read(user_data, input) {
+        const {
+            id,
+        } = input;
+
+        if (user_data.user_id !== input.id) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'User can only read own data');
+        }
+        const user = await this.user_repository.find({
+            id_list: [id],
+        });
+
+        if (user === null) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'User data cannot be accessed');
+        }
+
+        return user;
+    }
+
+
+    /**
      * @param {Object} input
      * @returns {Promise<*|Error>}
      */

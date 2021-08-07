@@ -121,6 +121,15 @@ class DataSeeder {
             }
         );
     }
+
+
+    /**
+     * @param {String} jwt_token
+     * @returns {Object}
+     */
+    static decodeJwt(jwt_token) {
+        return jwt.verify(jwt_token, configuration.jwt.public_key);
+    }
 }
 
 module.exports = {

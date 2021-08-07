@@ -75,6 +75,7 @@ class CampaignRepository extends AbstractSequelizeRepository {
             {
                 tableName: 'campaigns',
                 underscored: true,
+                timestamps: false,
             }
         );
     }

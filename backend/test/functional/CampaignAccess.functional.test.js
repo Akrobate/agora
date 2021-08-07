@@ -7,30 +7,20 @@ const {
     expect,
 } = require('chai');
 
-const crypto = require('crypto');
-
-const {
-    configuration,
-} = require('../../src/configuration');
-
 const {
     app,
 } = require('../../src/app');
 
 const {
-    CampaignRepository,
-    UserRepository,
-} = require('../../src/repositories');
+    DataSeeder,
+} = require('../helpers/DataSeeder');
 
 const superApp = superTest(app);
 
-describe.only('CampaignAccess', () => {
-
-    const campaign_repository = CampaignRepository.getInstance();
-    const user_repository = UserRepository.getInstance();
+describe('CampaignAccess', () => {
 
     const user_seed = {
-        password: 'ShouldHaveLettersDigitsAndAtLeast8chars',
+        password: 'ShouldHaveLettersDigitsAndAtLeast8chars1',
         email: 'artiom.fedorov@test.com',
     };
 
@@ -41,26 +31,9 @@ describe.only('CampaignAccess', () => {
 
     before(async () => {
 
-        await campaign_repository.sequelize_model.destroy({
-            truncate: true,
-            cascade: false,
-        });
-
-        await user_repository.sequelize_model.destroy({
-            truncate: true,
-            cascade: false,
-        });
-
-        const hashed_password = crypto
-            .createHash('sha256')
-            .update(`${configuration.security.salt}${user_seed.password}`)
-            .digest('base64');
-
-        await user_repository.create(Object.assign({}, user_seed, {
-            password: hashed_password,
-        }));
-
-        // await campaign_repository.create(campagin_seed);
+        await DataSeeder.truncate('CampaignRepository');
+        await DataSeeder.truncate('UserRepository');
+        await DataSeeder.createUserHashPassword(user_seed);
 
     });
 
@@ -77,8 +50,6 @@ describe.only('CampaignAccess', () => {
                 jwt_token = response.body.token;
             });
 
-        console.log(jwt_token);
-
         await superApp
             .post('/api/v1/campaigns')
             .set('Authorization', `Bearer ${jwt_token}`)
@@ -86,6 +57,18 @@ describe.only('CampaignAccess', () => {
             .expect(HTTP_CODE.CREATED)
             .expect((response) => {
                 console.log(response.body);
+            });
+    });
+
+
+    it('Should not be able to create a campaign without jwt', async () => {
+        await superApp
+            .post('/api/v1/campaigns')
+            .set('Authorization', `Bearer ${'BAD JWT StrING'}`)
+            .send(campagin_seed)
+            .expect(HTTP_CODE.UNAUTHORIZED)
+            .expect((response) => {
+                expect(response.body).to.have.property('message');
             });
     });
 

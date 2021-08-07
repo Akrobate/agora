@@ -1,9 +1,14 @@
 'use strict';
 
 const {
+    expect,
+} = require('chai');
+const {
     v4,
 } = require('uuid');
-
+const {
+    DataSeeder,
+} = require('../helpers/DataSeeder');
 const {
     UserRepository,
 } = require('../../src/repositories/UserRepository');
@@ -13,14 +18,11 @@ describe('UserRepository', () => {
     const user_repository = UserRepository.getInstance();
 
     before(async () => {
-        await user_repository.sequelize_model.destroy({
-            truncate: true,
-            cascade: false,
-        });
+        await DataSeeder.truncate('UserRepository');
     });
 
+
     it('Should be able to create a user', async () => {
-        // const user_repository = UserRepository.getInstance();
         const user_seed = {
             first_name: 'Artiom',
             last_name: 'Fedorov',
@@ -29,7 +31,7 @@ describe('UserRepository', () => {
         };
 
         const result = await user_repository.create(user_seed);
-        console.log(result);
+        expect(result).to.be.an('Object');
     });
 
 });
