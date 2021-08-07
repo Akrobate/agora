@@ -97,6 +97,83 @@ class UserController {
      * @param {express.Response} response
      * @returns {Promise<*|Error>}
      */
+    async update(request, response) {
+        const {
+            user_id,
+        } = request.params;
+
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                body: joi.object()
+                    .keys({
+                        email: joi.string()
+                            .trim()
+                            .min(1)
+                            .optional(),
+                        password: joi.string()
+                            .trim()
+                            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)
+                            .optional(),
+                        first_name: joi.string()
+                            .trim()
+                            .optional(),
+                        last_name: joi.string()
+                            .trim()
+                            .optional(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        if (error) {
+            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
+        }
+
+        const user = await this.user_service.update(
+            request.jwt_data,
+            {
+                id: user_id,
+                email: value.body.email,
+                password: value.body.password,
+                first_name: value.body.first_name,
+                last_name: value.body.last_name,
+            }
+        );
+
+        return response.status(HTTP_CODE.CREATED).send(user);
+    }
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async read(request, response) {
+        const {
+            user_id,
+        } = request.params;
+
+        const user = await this.user_service.read(
+            request.jwt_data,
+            {
+                id: Number(user_id),
+            }
+        );
+
+        return response.status(HTTP_CODE.OK).send(user);
+    }
+
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
     async login(request, response) {
 
         const {
