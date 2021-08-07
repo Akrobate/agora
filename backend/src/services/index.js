@@ -12,8 +12,13 @@ const {
     CampaignUserService,
 } = require('./CampaignUserService');
 
+const {
+    PropositionService,
+} = require('./PropositionService');
+
 module.exports = {
     CampaignService,
     CampaignUserService,
     UserService,
+    PropositionService,
 };
