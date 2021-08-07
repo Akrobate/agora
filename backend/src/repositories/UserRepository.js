@@ -72,6 +72,7 @@ class UserRepository extends AbstractSequelizeRepository {
             {
                 tableName: 'users',
                 underscored: true,
+                timestamps: false,
             }
         );
     }

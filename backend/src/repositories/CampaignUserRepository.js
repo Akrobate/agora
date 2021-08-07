@@ -93,6 +93,7 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
             {
                 tableName: 'campaigns_users',
                 underscored: true,
+                timestamps: false,
             }
         );
     }
