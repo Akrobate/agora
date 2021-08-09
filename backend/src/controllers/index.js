@@ -16,9 +16,24 @@ const {
     PropositionController,
 } = require('./PropositionController');
 
+const {
+    CampaignUserStatusController,
+} = require('./CampaignUserStatusController');
+
+const {
+    UserPropositionController,
+} = require('./UserPropositionController');
+
+const {
+    UserEloPropositionController,
+} = require('./UserEloPropositionController');
+
 module.exports = {
     CampaignController,
     CampaignUserController,
     UserController,
     PropositionController,
+    CampaignUserStatusController,
+    UserPropositionController,
+    UserEloPropositionController,
 };

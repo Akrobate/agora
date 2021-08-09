@@ -5,6 +5,10 @@ const {
 } = require('uuid');
 
 const {
+    Acl,
+} = require('../services/commons');
+
+const {
     CampaignRepository,
     CampaignUserRepository,
     UserRepository,
@@ -19,20 +23,25 @@ class CampaignUserService {
 
     /**
      * Constructor.
+     * @param {Acl} acl
      * @param {CampaignRepository} campaign_repository
      * @param {CampaignUserRepository} campaign_user_repository
      * @param {UserRepository} user_repository
      */
     constructor(
+        acl,
         campaign_repository,
         campaign_user_repository,
         user_repository
     ) {
+        this.acl = acl;
         this.campaign_repository = campaign_repository;
         this.campaign_user_repository = campaign_user_repository;
         this.user_repository = user_repository;
     }
 
+
+    /* istanbul ignore next */
     /**
      * @static
      * @returns {CampaignUserService}
@@ -40,6 +49,7 @@ class CampaignUserService {
     static getInstance() {
         if (CampaignUserService.instance === null) {
             CampaignUserService.instance = new CampaignUserService(
+                Acl.getInstance(),
                 CampaignRepository.getInstance(),
                 CampaignUserRepository.getInstance(),
                 UserRepository.getInstance()
@@ -47,6 +57,7 @@ class CampaignUserService {
         }
         return CampaignUserService.instance;
     }
+
 
     /**
      * @param {Object} user
@@ -66,7 +77,7 @@ class CampaignUserService {
 
         await this.checkCampaignExists(campaign_id);
 
-        await this.checkUserIsCampaignManager(user.user_id, campaign_id);
+        await this.acl.checkUserIsCampaignManager(user.user_id, campaign_id);
 
         const user_to_add = await this.getOrCreateUserToInvite(email);
 
@@ -96,26 +107,6 @@ class CampaignUserService {
             throw new CustomError(CustomError.UNAUTHORIZED, 'Campaign does not exists');
         }
         return campaign;
-    }
-
-
-    /**
-     * @param {Number} user_id
-     * @param {Number} campaign_id
-     * @returns {Object|Error}
-     */
-    async checkUserIsCampaignManager(user_id, campaign_id) {
-        const manager_campaign_user = await this.campaign_user_repository
-            .find({
-                campaign_id,
-                user_id,
-                access_level: CampaignUserRepository.MANAGER,
-            });
-
-        if (manager_campaign_user === null) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'User is not allowed to add users to campaigns');
-        }
-        return manager_campaign_user;
     }
 
 

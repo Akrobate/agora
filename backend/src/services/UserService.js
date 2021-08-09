@@ -39,6 +39,8 @@ class UserService {
         };
     }
 
+
+    /* istanbul ignore next */
     /**
      * @static
      * @returns {UserService}

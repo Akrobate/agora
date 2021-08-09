@@ -25,6 +25,7 @@ class UserController {
     }
 
 
+    /* istanbul ignore next */
     /**
      * @static
      * @returns {UserController}

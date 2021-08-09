@@ -25,6 +25,7 @@ class CampaignUserStatusController {
     }
 
 
+    /* istanbul ignore next */
     /**
      * @static
      * @returns {CampaignUserStatusController}

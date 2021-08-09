@@ -25,6 +25,7 @@ class PropositionController {
     }
 
 
+    /* istanbul ignore next */
     /**
      * @static
      * @returns {PropositionController}

@@ -25,6 +25,7 @@ class CampaignController {
     }
 
 
+    /* istanbul ignore next */
     /**
      * @static
      * @returns {CampaignController}

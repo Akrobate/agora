@@ -3,38 +3,47 @@
 const moment = require('moment');
 
 const {
+    Acl,
+} = require('./commons');
+
+const {
     CampaignRepository,
     CampaignUserRepository,
     UserRepository,
     CampaignUserStatusRepository,
 } = require('../repositories');
 
-const {
-    CustomError,
-} = require('../CustomError');
+// const {
+//     CustomError,
+// } = require('../CustomError');
 
 
 class CampaignUserStatusService {
 
     /**
      * Constructor.
+     * @param {Acl} acl
      * @param {CampaignRepository} campaign_repository
      * @param {CampaignUserRepository} campaign_user_repository
      * @param {UserRepository} user_repository
      * @param {CampaignUserStatusRepository} campaign_user_status_repository
      */
     constructor(
+        acl,
         campaign_repository,
         campaign_user_repository,
         user_repository,
         campaign_user_status_repository
     ) {
+        this.acl = acl;
         this.campaign_repository = campaign_repository;
         this.campaign_user_repository = campaign_user_repository;
         this.user_repository = user_repository;
         this.campaign_user_status_repository = campaign_user_status_repository;
     }
 
+
+    /* istanbul ignore next */
     /**
      * @static
      * @returns {CampaignUserStatusService}
@@ -42,6 +51,7 @@ class CampaignUserStatusService {
     static getInstance() {
         if (CampaignUserStatusService.instance === null) {
             CampaignUserStatusService.instance = new CampaignUserStatusService(
+                Acl.getInstance(),
                 CampaignRepository.getInstance(),
                 CampaignUserRepository.getInstance(),
                 UserRepository.getInstance(),
@@ -66,7 +76,7 @@ class CampaignUserStatusService {
             status_id,
         } = input;
 
-        await this.checkUserIsACampaignMember(user_id, campaign_id);
+        await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
 
         let campaign_user_status = await this.campaign_user_status_repository.find({
             campaign_id,
@@ -120,26 +130,6 @@ class CampaignUserStatusService {
 
 
     /**
-     * @param {Number} user_id
-     * @param {Number} campaign_id
-     * @returns {Object|Error}
-     */
-    async checkUserIsCampaignManager(user_id, campaign_id) {
-        const manager_campaign_user = await this.campaign_user_repository
-            .find({
-                campaign_id,
-                user_id,
-                access_level: CampaignUserRepository.MANAGER,
-            });
-
-        if (manager_campaign_user === null) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'User is not allowed to add users to campaigns');
-        }
-        return manager_campaign_user;
-    }
-
-
-    /**
      * @param {String} email
      * @returns {Object}
      */
@@ -155,25 +145,6 @@ class CampaignUserStatusService {
         }
 
         return user_to_add;
-    }
-
-
-    /**
-     * @param {Number} user_id
-     * @param {Number} campaign_id
-     * @returns {Object|Error}
-     */
-    async checkUserIsACampaignMember(user_id, campaign_id) {
-        const manager_campaign_user = await this.campaign_user_repository
-            .find({
-                campaign_id,
-                user_id,
-            });
-
-        if (manager_campaign_user === null) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'User is not allowed change status');
-        }
-        return manager_campaign_user;
     }
 
 }

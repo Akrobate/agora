@@ -9,6 +9,9 @@ const {
     CampaignController,
     CampaignUserController,
     PropositionController,
+    CampaignUserStatusController,
+    UserPropositionController,
+    UserEloPropositionController,
 } = require('../controllers');
 
 const {
@@ -22,6 +25,9 @@ const user_controller = UserController.getInstance();
 const campaign_controller = CampaignController.getInstance();
 const campaign_user_controller = CampaignUserController.getInstance();
 const proposition_controller = PropositionController.getInstance();
+const campaign_user_status_controller = CampaignUserStatusController.getInstance();
+const user_proposition_controller = UserPropositionController.getInstance();
+const user_elo_proposition_controller = UserEloPropositionController.getInstance();
 
 const url_prefix = '/api/v1';
 
@@ -108,6 +114,70 @@ api_routes.delete(
     authentication_middleware.injectJwtData(),
     (request, response, next) => proposition_controller
         .delete(request, response)
+        .catch(next)
+);
+
+api_routes.post(
+    '/campaigns/:campaign_id/status',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_user_status_controller
+        .upsertStatus(request, response)
+        .catch(next)
+);
+
+api_routes.get(
+    '/campaigns/:campaign_id/status',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_user_status_controller
+        .getCampaignStatus(request, response)
+        .catch(next)
+);
+
+api_routes.post(
+    '/campaigns/:campaign_id/init-ranking',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_proposition_controller
+        .initRanking(request, response)
+        .catch(next)
+);
+
+api_routes.post(
+    '/campaigns/:campaign_id/update-ranking',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_proposition_controller
+        .updateRanking(request, response)
+        .catch(next)
+);
+
+api_routes.post(
+    '/campaigns/:campaign_id/init-elo-ranking',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_elo_proposition_controller
+        .initEloRanking(request, response)
+        .catch(next)
+);
+
+api_routes.post(
+    '/campaigns/:campaign_id/elo-duel-result',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_elo_proposition_controller
+        .processEloDuelResult(request, response)
+        .catch(next)
+);
+
+api_routes.get(
+    '/campaigns/:campaign_id/elo-ranking',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_elo_proposition_controller
+        .getEloRanking(request, response)
+        .catch(next)
+);
+
+api_routes.get(
+    '/campaigns/:campaign_id/elo-random-propositions',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_elo_proposition_controller
+        .randomPropositions(request, response)
         .catch(next)
 );
 
