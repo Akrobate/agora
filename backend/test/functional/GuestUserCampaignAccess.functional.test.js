@@ -112,7 +112,7 @@ describe('CampaignAccess', () => {
             })
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
-                expect(response.body).to.have.property('message', 'Guest user cannot create campaigns');
+                expect(response.body).to.have.property('message', 'Guest user is forbiden');
             });
     });
 

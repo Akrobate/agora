@@ -1,6 +1,8 @@
+/* istanbul ignore file */
+
 'use strict';
 
-const { 
+const {
     configuration,
 } = require('./configuration');
 

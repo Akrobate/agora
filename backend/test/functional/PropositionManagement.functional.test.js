@@ -124,7 +124,7 @@ describe('CampaignAccess', () => {
             })
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
-                expect(response.body).to.have.property('message', 'Guest user add propositions');
+                expect(response.body).to.have.property('message', 'Guest user is forbiden');
             });
     });
 
@@ -138,7 +138,7 @@ describe('CampaignAccess', () => {
             })
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
-                expect(response.body).to.have.property('message', 'User is not allowed to add propositions');
+                expect(response.body).to.have.property('message', 'User must be a campaign manager');
             });
     });
 
@@ -160,7 +160,7 @@ describe('CampaignAccess', () => {
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(not_manager_user_seed)}`)
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
-                expect(response.body).to.have.property('message', 'User is not allowed to read propositions');
+                expect(response.body).to.have.property('message', 'User must be a campaign member');
             });
     });
 
@@ -177,7 +177,7 @@ describe('CampaignAccess', () => {
             .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
-                expect(response.body).to.have.property('message', 'Guest user cannot delete campaigns');
+                expect(response.body).to.have.property('message', 'Guest user is forbiden');
             });
     });
 
