@@ -269,7 +269,6 @@ class AbstractSequelizeRepository {
         criteria = {},
         options = {}
     ) {
-
         let object_list = [];
         try {
             const sequelize_entity_list = await this.sequelize_model.findAll(
