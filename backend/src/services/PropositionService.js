@@ -1,6 +1,10 @@
 'use strict';
 
 const {
+    Acl,
+} = require('./commons');
+
+const {
     CampaignRepository,
     PropositionRepository,
     CampaignUserRepository,
@@ -15,20 +19,25 @@ class PropositionService {
 
     /**
      * Constructor.
+     * @param {Acl} acl
      * @param {PropositionRepository} proposition_repository
      * @param {CampaignRepository} campaign_repository
      * @param {CampaignUserRepository} campaign_user_repository
      */
     constructor(
+        acl,
         proposition_repository,
         campaign_repository,
         campaign_user_repository
     ) {
+        this.acl = acl;
         this.proposition_repository = proposition_repository;
         this.campaign_repository = campaign_repository;
         this.campaign_user_repository = campaign_user_repository;
     }
 
+
+    /* istanbul ignore next */
     /**
      * @static
      * @returns {PropositionService}
@@ -36,6 +45,7 @@ class PropositionService {
     static getInstance() {
         if (PropositionService.instance === null) {
             PropositionService.instance = new PropositionService(
+                Acl.getInstance(),
                 PropositionRepository.getInstance(),
                 CampaignRepository.getInstance(),
                 CampaignUserRepository.getInstance()
@@ -60,7 +70,7 @@ class PropositionService {
             proposition_id,
         } = input;
 
-        await this.checkUserIsACampaignMember(user_id, campaign_id);
+        await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
         const proposition = this.proposition_repository.read(proposition_id);
         return proposition;
 
@@ -82,11 +92,9 @@ class PropositionService {
             payload,
         } = input;
 
-        if (user.access_type === 'guest') {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'Guest user add propositions');
-        }
+        this.acl.forbidGuestAccessType(user);
 
-        await this.checkUserIsCampaignManager(user_id, campaign_id);
+        await this.acl.checkUserIsCampaignManager(user_id, campaign_id);
 
         const proposition = await this.proposition_repository.create({
             campaign_id,
@@ -112,9 +120,7 @@ class PropositionService {
             campaign_id,
         } = input;
 
-        if (user.access_type === 'guest') {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'Guest user cannot delete campaigns');
-        }
+        this.acl.forbidGuestAccessType(user);
 
         const proposition = await this.proposition_repository.read(proposition_id);
 
@@ -122,7 +128,7 @@ class PropositionService {
             throw new CustomError(CustomError.UNAUTHORIZED, 'Proposition does not belongs to campaign');
         }
 
-        await this.checkUserIsCampaignManager(user_id, proposition.campaign_id);
+        await this.acl.checkUserIsCampaignManager(user_id, proposition.campaign_id);
 
         return this.proposition_repository.delete(proposition_id);
     }
@@ -142,51 +148,12 @@ class PropositionService {
             campaign_id,
         } = input;
 
-        await this.checkUserIsACampaignMember(user_id, campaign_id);
+        await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
         const proposition_list = await this.proposition_repository.search({
             campaign_id,
         });
 
         return proposition_list;
-    }
-
-
-    /**
-     * @param {Number} user_id
-     * @param {Number} campaign_id
-     * @returns {Object|Error}
-     */
-    async checkUserIsCampaignManager(user_id, campaign_id) {
-        const manager_campaign_user = await this.campaign_user_repository
-            .find({
-                campaign_id,
-                user_id,
-                access_level: CampaignUserRepository.MANAGER,
-            });
-
-        if (manager_campaign_user === null) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'User is not allowed to add propositions');
-        }
-        return manager_campaign_user;
-    }
-
-
-    /**
-     * @param {Number} user_id
-     * @param {Number} campaign_id
-     * @returns {Object|Error}
-     */
-    async checkUserIsACampaignMember(user_id, campaign_id) {
-        const manager_campaign_user = await this.campaign_user_repository
-            .find({
-                campaign_id,
-                user_id,
-            });
-
-        if (manager_campaign_user === null) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'User is not allowed to read propositions');
-        }
-        return manager_campaign_user;
     }
 
 }
