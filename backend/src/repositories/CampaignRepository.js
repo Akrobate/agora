@@ -15,6 +15,22 @@ const {
 
 class CampaignRepository extends AbstractSequelizeRepository {
 
+
+    // eslint-disable-next-line require-jsdoc
+    static get STATUS_DRAFT() {
+        return 1;
+    }
+
+    // eslint-disable-next-line require-jsdoc
+    static get STATUS_IN_PROGRESS() {
+        return 2;
+    }
+
+    // eslint-disable-next-line require-jsdoc
+    static get STATUS_FINISHED() {
+        return 3;
+    }
+
     /**
      * @static
      * @returns {CampaignRepository}
@@ -51,6 +67,10 @@ class CampaignRepository extends AbstractSequelizeRepository {
                     allowNull: true,
                     type: DataTypes.STRING,
                 },
+                campaign_status: {
+                    allowNull: false,
+                    type: DataTypes.INTEGER.UNSIGNED,
+                },
                 start_date: {
                     allowNull: true,
                     type: DataTypes.DATE,
@@ -86,17 +106,33 @@ class CampaignRepository extends AbstractSequelizeRepository {
      * @returns {Object}
      */
     static _formatCriteria(criteria) {
+
         const {
+            id,
             id_list,
+            campaign_status_list,
         } = criteria;
+
 
         const where = {
             [Op.and]: {},
         };
 
+        if (id !== undefined) {
+            where[Op.and].id = {
+                [Op.eq]: id,
+            };
+        }
+
         if (id_list !== undefined) {
             where[Op.and].id = {
                 [Op.in]: id_list,
+            };
+        }
+
+        if (campaign_status_list !== undefined) {
+            where[Op.and].campaign_status = {
+                [Op.in]: campaign_status_list,
             };
         }
 

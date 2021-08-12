@@ -76,6 +76,30 @@ api_routes.post(
         .catch(next)
 );
 
+api_routes.get(
+    '/campaigns',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_controller
+        .search(request, response)
+        .catch(next)
+);
+
+api_routes.get(
+    '/campaigns/:campaign_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_controller
+        .read(request, response)
+        .catch(next)
+);
+
+api_routes.patch(
+    '/campaigns/:campaign_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_controller
+        .update(request, response)
+        .catch(next)
+);
+
 api_routes.post(
     '/campaigns/:campaign_id/users',
     authentication_middleware.injectJwtData(),
