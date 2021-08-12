@@ -25,11 +25,29 @@ class "campaigns" {
 class "propositions" {
   * id
   * campaign_id
-  * title
-  * description
-  * external_uid
+  * creator_user_id
+  * payload
   --
 }
+
+class "users_propositions_results" {
+  * id
+  * campaign_id
+  * proposition_id
+  * user_id
+  * rank
+  --
+}
+
+class "users_propositions_elo_results" {
+  * id
+  * campaign_id
+  * proposition_id
+  * user_id
+  * elo_score
+  --
+}
+
 
 
 campaigns --|> users
