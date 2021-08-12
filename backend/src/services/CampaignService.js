@@ -1,5 +1,9 @@
 'use strict';
 
+// const {
+//     CustomError,
+// } = require('../CustomError');
+
 const {
     CampaignRepository,
     CampaignUserRepository,
@@ -55,9 +59,35 @@ class CampaignService {
      * @param {Object} input
      * @returns {Promise<*|Error>}
      */
-    // async read(user, input) {
-    //
-    // }
+    async read(user, input) {
+
+        const {
+            user_id,
+        } = user;
+        const {
+            campaign_id,
+        } = input;
+
+        await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
+
+        const campain_user = await this.campaign_user_repository
+            .find({
+                user_id: user.user_id,
+                campaign_id,
+            });
+
+        const campaign = await this.campaign_repository.find({
+            id: campaign_id,
+        });
+
+        return Object.assign(
+            {},
+            campaign,
+            {
+                user_access_level: campain_user.access_level,
+            }
+        );
+    }
 
 
     /**
@@ -86,6 +116,67 @@ class CampaignService {
             });
 
         return campaign;
+    }
+
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async update(user, input) {
+        const {
+            user_id,
+        } = user;
+        const {
+            id: campaign_id,
+        } = input;
+        this.acl.forbidGuestAccessType(user);
+        this.acl.checkUserIsCampaignManager(user_id, campaign_id);
+
+        await this.campaign_repository
+            .update(input);
+
+        const campaign = await this.campaign_repository.find({
+            id: campaign_id,
+        });
+        return campaign;
+    }
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async search(user, input) {
+
+        const campain_user_list = await this.campaign_user_repository
+            .search({
+                user_id: user.user_id,
+            });
+
+        if (campain_user_list.length === 0) {
+            return [];
+        }
+
+        const campaign_list = await this.campaign_repository
+            .search(Object.assign(
+                {},
+                input,
+                {
+                    id_list: campain_user_list.map((campaign_user) => campaign_user.campaign_id),
+                }
+            ));
+
+
+        return campaign_list.map((campaign) => Object.assign(
+            {},
+            campaign,
+            {
+                user_access_level: campain_user_list.find(
+                    (campaign_user) => campaign_user.campaign_id === campaign.id).access_level,
+            }
+        ));
     }
 
 }
