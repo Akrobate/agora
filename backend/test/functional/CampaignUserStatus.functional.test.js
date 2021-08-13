@@ -29,6 +29,7 @@ describe('CampaignAccess', () => {
         id: 10,
         title: 'Title of campaignsss',
         description: 'Somethings',
+        campaign_status: 2,
         owner_user_id: manager_user_seed.id,
     };
 

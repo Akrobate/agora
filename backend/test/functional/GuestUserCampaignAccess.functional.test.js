@@ -2,6 +2,7 @@
 
 const superTest = require('supertest');
 const HTTP_CODE = require('http-status');
+const qs = require('qs');
 
 const {
     v4,
@@ -33,6 +34,7 @@ describe('CampaignAccess', () => {
         id: 10,
         title: 'Title of campaignsss',
         description: 'Somethings',
+        campaign_status: 2,
         owner_user_id: manager_user_seed.id,
     };
 
@@ -132,4 +134,66 @@ describe('CampaignAccess', () => {
     });
 
 
+    it('Guest user should be able read a campaign', async () => {
+        await superApp
+            .get(`/api/v1/campaigns/${campaign_seed.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                console.log(response.body);
+            });
+    });
+
+    it('Guest user should be able search a campaign', async () => {
+        await superApp
+            .get('/api/v1/campaigns')
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response.body).to.have.property('campaign_list');
+                const [
+                    campaign,
+                ] = response.body.campaign_list;
+                expect(campaign).to.have.property('id', 10);
+                expect(campaign).to.have.property('user_access_level', 3);
+                // console.log(response.body);
+            });
+    });
+
+    it('Guest user should be able search a campaign IN PROGRESS', async () => {
+        await superApp
+            .get('/api/v1/campaigns')
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .query(qs.stringify({
+                campaign_status_list: [
+                    2,
+                ],
+            }))
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response.body).to.have.property('campaign_list');
+                const [
+                    campaign,
+                ] = response.body.campaign_list;
+                expect(campaign).to.have.property('id', 10);
+                expect(campaign).to.have.property('user_access_level', 3);
+                // console.log(response.body);
+            });
+    });
+
+    it('Guest user should be able search a campaign IN PROGRESS', async () => {
+        await superApp
+            .get('/api/v1/campaigns')
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .query(qs.stringify({
+                campaign_status_list: [
+                    3,
+                ],
+            }))
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response.body).to.have.property('campaign_list');
+                expect(response.body.campaign_list.length).to.equal(0);
+            });
+    });
 });
