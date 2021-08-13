@@ -23,6 +23,10 @@ module.exports = {
                     type: sequelize.STRING,
                     unique: false,
                 },
+                campaign_status: {
+                    allowNull: false,
+                    type: sequelize.INTEGER.UNSIGNED,
+                },
                 start_date: {
                     allowNull: true,
                     type: sequelize.DATE,
