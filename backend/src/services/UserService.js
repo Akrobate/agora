@@ -129,6 +129,44 @@ class UserService {
 
 
     /**
+     * @param {Object} user
+     * @returns {Promise<*|Error>}
+     */
+    async renewToken(user) {
+        const {
+            user_id,
+            email,
+            access_type,
+        } = user;
+
+        const user_found = await this.user_repository.find({
+            email,
+        });
+
+        if (user_found === null) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Access denied');
+        }
+
+        const jwt_user_data = {
+            user_id,
+            email,
+            access_type,
+        };
+
+        let jwt_token = null;
+
+        try {
+            jwt_token = jwt.sign(jwt_user_data, this.jwt_private_key, this.jwt_config);
+        } catch (error) {
+            throw new CustomError(CustomError.INTERNAL_ERROR, error.message);
+        }
+        return {
+            token: jwt_token,
+        };
+    }
+
+
+    /**
      * @param {Object} user_data
      * @param {Object} input
      * @returns {Promise<*|Error>}

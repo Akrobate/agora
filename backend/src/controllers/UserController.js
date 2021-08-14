@@ -210,6 +210,18 @@ class UserController {
         return response.status(HTTP_CODE.OK).send(data);
     }
 
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async renewToken(request, response) {
+        const data = await this.user_service.renewToken(request.jwt_data);
+        return response.status(HTTP_CODE.OK).send(data);
+    }
+
+
     /**
      * @param {express.Request} request
      * @param {express.Response} response

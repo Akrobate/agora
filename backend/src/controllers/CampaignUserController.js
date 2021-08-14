@@ -88,6 +88,30 @@ class CampaignUserController {
         return response.status(HTTP_CODE.CREATED).send(user);
     }
 
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async searchCampaignUsers(request, response) {
+
+        const {
+            campaign_id,
+        } = request.params;
+
+        const campaign_user_list = await this.campaign_user_service.searchCampaignUsers(
+            request.jwt_data,
+            {
+                campaign_id,
+            }
+        );
+
+        return response.status(HTTP_CODE.OK).send({
+            campaign_user_list,
+        });
+    }
+
 }
 
 CampaignUserController.instance = null;

@@ -75,7 +75,7 @@ class CampaignUserService {
             throw new CustomError(CustomError.UNAUTHORIZED, 'Guest user cannot add create users to campaigns');
         }
 
-        await this.checkCampaignExists(campaign_id);
+        await this.acl.checkCampaignExists(campaign_id);
 
         await this.acl.checkUserIsCampaignManager(user.user_id, campaign_id);
 
@@ -94,19 +94,36 @@ class CampaignUserService {
 
 
     /**
-     * @param {Number} campaign_id
-     * @returns {Object|Error}
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
      */
-    async checkCampaignExists(campaign_id) {
-        const campaign = await this.campaign_repository
-            .find({
-                id_list: [campaign_id],
-            });
+    async searchCampaignUsers(user, input) {
+        const {
+            campaign_id,
+        } = input;
 
-        if (campaign === null) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'Campaign does not exists');
-        }
-        return campaign;
+        await this.acl.forbidGuestAccessType(user);
+
+        await this.acl.checkCampaignExists(campaign_id);
+
+        await this.acl.checkUserIsCampaignManager(user.user_id, campaign_id);
+
+        const campaign_user_list = await this.campaign_user_repository.search({
+            campaign_id,
+        });
+
+        const user_list = await this.user_repository.search({
+            id_list: campaign_user_list.map((campaign_user) => campaign_user.user_id),
+        });
+
+        return campaign_user_list.map((campaign_user) => Object.assign(
+            {},
+            campaign_user,
+            {
+                email: user_list.find((_user) => campaign_user.user_id === _user.id).email,
+            }
+        ));
     }
 
 

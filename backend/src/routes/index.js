@@ -52,6 +52,14 @@ api_routes.post(
         .catch(next)
 );
 
+api_routes.post(
+    '/users/token/renew',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_controller
+        .renewToken(request, response)
+        .catch(next)
+);
+
 api_routes.patch(
     '/users/:user_id',
     authentication_middleware.injectJwtData(),
@@ -105,6 +113,14 @@ api_routes.post(
     authentication_middleware.injectJwtData(),
     (request, response, next) => campaign_user_controller
         .addUserToCampaign(request, response)
+        .catch(next)
+);
+
+api_routes.get(
+    '/campaigns/:campaign_id/users',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_user_controller
+        .searchCampaignUsers(request, response)
         .catch(next)
 );
 
