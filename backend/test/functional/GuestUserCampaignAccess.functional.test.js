@@ -89,6 +89,23 @@ describe('CampaignAccess', () => {
     });
 
 
+    it('Manager should be able to list campaign members users', async () => {
+        await superApp
+            .get(`/api/v1/campaigns/${campaign_seed.id}/users`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                // console.log(response.body);
+                expect(response.body).to.have.property('campaign_user_list');
+
+                const manager_member = response.body.campaign_user_list
+                    .find((user) => user.user_id === manager_user_seed.id);
+                expect(manager_member).to.have.property('access_level', manager_campaign_user_seed.access_level);
+                expect(manager_member).to.have.property('email', manager_user_seed.email);
+            });
+    });
+
+
     it('Guest user should not be able add a guest user', async () => {
         await superApp
             .post(`/api/v1/campaigns/${campaign_seed.id}/users`)
