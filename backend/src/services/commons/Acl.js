@@ -102,6 +102,23 @@ class Acl {
         return manager_campaign_user;
     }
 
+
+    /**
+     * @param {Number} campaign_id
+     * @returns {Object|Error}
+     */
+    async checkCampaignExists(campaign_id) {
+        const campaign = await this.campaign_repository
+            .find({
+                id_list: [campaign_id],
+            });
+
+        if (campaign === null) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Campaign does not exists');
+        }
+        return campaign;
+    }
+
 }
 
 Acl.instance = null;
