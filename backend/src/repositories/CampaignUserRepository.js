@@ -32,7 +32,7 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
     /**
      * @returns {Number}
      */
-    static get PARTICIPANT() {
+    static get GUEST() {
         return 1;
     }
 
@@ -81,6 +81,11 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
                     allowNull: false,
                     type: DataTypes.INTEGER.UNSIGNED,
                 },
+                is_participant: {
+                    allowNull: false,
+                    defaultValue: true,
+                    type: DataTypes.BOOLEAN,
+                },
                 created_at: {
                     allowNull: false,
                     type: DataTypes.DATE,
@@ -105,6 +110,7 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
      */
     static _formatCriteria(criteria) {
         const {
+            id,
             id_list,
             user_id,
             campaign_id,
@@ -116,6 +122,12 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
         const where = {
             [Op.and]: {},
         };
+
+        if (id !== undefined) {
+            where[Op.and].id = {
+                [Op.eq]: id,
+            };
+        }
 
         if (id_list !== undefined) {
             where[Op.and].id = {

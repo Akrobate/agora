@@ -50,8 +50,22 @@ describe('CampaignAccess', () => {
     };
 
     const guest_campaign_user_seed = {
+        id: 201,
         campaign_id: campaign_seed.id,
         user_id: guest_user_seed.id,
+        public_token: '8185933f78c749b381ad630308cd1257',
+        access_level: 1,
+    };
+
+    const guest_user_to_delete_seed = {
+        id: 300,
+        email: 'guest.user_to_delete@test.com',
+    };
+
+    const guest_campaign_user_to_delete_seed = {
+        id: 301,
+        campaign_id: campaign_seed.id,
+        user_id: guest_user_to_delete_seed.id,
         public_token: '8185933f78c749b381ad630308cd1257',
         access_level: 1,
     };
@@ -70,56 +84,101 @@ describe('CampaignAccess', () => {
         await DataSeeder.create('UserRepository', guest_user_seed);
         await DataSeeder.create('CampaignUserRepository', guest_campaign_user_seed);
 
+        await DataSeeder.create('UserRepository', guest_user_to_delete_seed);
+        await DataSeeder.create('CampaignUserRepository', guest_campaign_user_to_delete_seed);
+
     });
 
 
-    it('Manager should be able to add a guest user', async () => {
-        await superApp
-            .post(`/api/v1/campaigns/${campaign_seed.id}/users`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .send({
-                email: 'artiom.somebody@test.com',
-                access_level: 1,
-            })
-            .expect(HTTP_CODE.CREATED)
-            .expect((response) => {
-                expect(response.body).to.have.property('campaign_id', '10');
-                expect(response.body).to.have.property('access_level', 1);
-            });
+    describe('Campaign members management', () => {
+
+        it('Manager should be able to add a guest user', async () => {
+            await superApp
+                .post(`/api/v1/campaigns/${campaign_seed.id}/users`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send({
+                    email: 'artiom.somebody@test.com',
+                    access_level: 1,
+                })
+                .expect(HTTP_CODE.CREATED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('campaign_id', '10');
+                    expect(response.body).to.have.property('access_level', 1);
+                });
+        });
+
+
+        it('Manager should be able to list campaign members users', async () => {
+            await superApp
+                .get(`/api/v1/campaigns/${campaign_seed.id}/users`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    // console.log(response.body);
+                    expect(response.body).to.have.property('campaign_user_list');
+
+                    const manager_member = response.body.campaign_user_list
+                        .find((user) => user.user_id === manager_user_seed.id);
+                    expect(manager_member).to.have.property('access_level', manager_campaign_user_seed.access_level);
+                    expect(manager_member).to.have.property('email', manager_user_seed.email);
+                });
+        });
+
+
+        it('Manager should be able to update a campaign members acces', async () => {
+            await superApp
+                .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${guest_campaign_user_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send({
+                    access_level: 2,
+                    is_participant: true,
+                })
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response.body).to.have.property('access_level', 2);
+                    expect(response.body).to.have.property('id', guest_campaign_user_seed.id);
+                });
+            await superApp
+                .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${guest_campaign_user_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send({
+                    access_level: guest_campaign_user_seed.access_level,
+                    is_participant: true,
+                })
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response.body).to.have.property('access_level', guest_campaign_user_seed.access_level);
+                    expect(response.body).to.have.property('id', guest_campaign_user_seed.id);
+                });
+        });
+
+
+        it('Manager should be able to delete a campaign members', async () => {
+            await superApp
+                .delete(`/api/v1/campaigns/${campaign_seed.id}/users/${guest_campaign_user_to_delete_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response.body).to.deep.equal({});
+                });
+        });
+
+
+        it('Guest user should not be able add a guest user', async () => {
+            await superApp
+                .post(`/api/v1/campaigns/${campaign_seed.id}/users`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
+                .send({
+                    email: `${v4()}.${v4()}@${v4()}.${v4()}`,
+                    access_level: 1,
+                })
+                .expect(HTTP_CODE.UNAUTHORIZED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('message', 'Guest user is forbiden');
+                });
+        });
+
     });
-
-
-    it('Manager should be able to list campaign members users', async () => {
-        await superApp
-            .get(`/api/v1/campaigns/${campaign_seed.id}/users`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .expect(HTTP_CODE.OK)
-            .expect((response) => {
-                // console.log(response.body);
-                expect(response.body).to.have.property('campaign_user_list');
-
-                const manager_member = response.body.campaign_user_list
-                    .find((user) => user.user_id === manager_user_seed.id);
-                expect(manager_member).to.have.property('access_level', manager_campaign_user_seed.access_level);
-                expect(manager_member).to.have.property('email', manager_user_seed.email);
-            });
-    });
-
-
-    it('Guest user should not be able add a guest user', async () => {
-        await superApp
-            .post(`/api/v1/campaigns/${campaign_seed.id}/users`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
-            .send({
-                email: `${v4()}.${v4()}@${v4()}.${v4()}`,
-                access_level: 1,
-            })
-            .expect(HTTP_CODE.UNAUTHORIZED)
-            .expect((response) => {
-                expect(response.body).to.have.property('message', 'Guest user cannot add create users to campaigns');
-            });
-    });
-
 
     it('Guest user should not be able to create a campaign', async () => {
         await superApp

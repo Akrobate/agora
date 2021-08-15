@@ -110,7 +110,7 @@ class CampaignController {
     async update(request, response) {
 
         const {
-            campaign_id
+            campaign_id,
         } = request.params;
 
         const {

@@ -85,6 +85,7 @@ class CampaignService {
             campaign,
             {
                 user_access_level: campain_user.access_level,
+                user_is_participant: campain_user.is_participant,
             }
         );
     }
@@ -169,14 +170,19 @@ class CampaignService {
             ));
 
 
-        return campaign_list.map((campaign) => Object.assign(
-            {},
-            campaign,
-            {
-                user_access_level: campain_user_list.find(
-                    (campaign_user) => campaign_user.campaign_id === campaign.id).access_level,
-            }
-        ));
+        return campaign_list.map((campaign) => {
+            const campaign_user = campain_user_list
+                .find((_campaign_user) => _campaign_user.campaign_id === campaign.id);
+
+            return Object.assign(
+                {},
+                campaign,
+                {
+                    user_access_level: campaign_user.access_level,
+                    user_is_participant: campaign_user.is_participant,
+                }
+            );
+        });
     }
 
 }

@@ -66,6 +66,9 @@ class CampaignUserController {
                             .required(),
                         access_level: joi.number()
                             .required(),
+                        is_participant: joi.boolean()
+                            .optional()
+                            .default(true),
                     })
                     .required(),
             })
@@ -94,22 +97,126 @@ class CampaignUserController {
      * @param {express.Response} response
      * @returns {Promise<*|Error>}
      */
+    async updateCampaignUser(request, response) {
+
+        const {
+            campaign_id,
+            campaign_user_id,
+        } = request.params;
+
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                body: joi.object()
+                    .keys({
+                        access_level: joi.number()
+                            .optional(),
+                        is_participant: joi.boolean()
+                            .optional(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        if (error) {
+            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
+        }
+
+        const campaign_user = await this.campaign_user_service.updateCampaignUser(
+            request.jwt_data,
+            {
+                id: campaign_user_id,
+                campaign_id,
+                access_level: value.body.access_level,
+                is_participant: value.body.is_participant,
+            }
+        );
+
+        return response.status(HTTP_CODE.OK).send(campaign_user);
+    }
+
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
     async searchCampaignUsers(request, response) {
 
         const {
             campaign_id,
         } = request.params;
 
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                body: joi.object()
+                    .keys({
+                        id_list: joi
+                            .array()
+                            .items(
+                                joi
+                                    .number()
+                                    .required()
+                            )
+                            .optional(),
+                        is_participant: joi.boolean()
+                            .optional(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        if (error) {
+            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
+        }
+
         const campaign_user_list = await this.campaign_user_service.searchCampaignUsers(
             request.jwt_data,
-            {
-                campaign_id,
-            }
+            Object.assign(
+                {},
+                value.query,
+                {
+                    campaign_id,
+                }
+            )
         );
 
         return response.status(HTTP_CODE.OK).send({
             campaign_user_list,
         });
+    }
+
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async removeCampaignUser(request, response) {
+
+        const {
+            campaign_id,
+            campaign_user_id,
+        } = request.params;
+
+        await this.campaign_user_service.removeCampaignUser(
+            request.jwt_data,
+            {
+                campaign_id,
+                id: campaign_user_id,
+            }
+        );
+
+        return response.status(HTTP_CODE.OK).send({});
     }
 
 }

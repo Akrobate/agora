@@ -30,6 +30,11 @@ module.exports = {
                     allowNull: false,
                     type: sequelize.INTEGER.UNSIGNED,
                 },
+                is_participant: {
+                    allowNull: false,
+                    defaultValue: true,
+                    type: sequelize.BOOLEAN,
+                },
                 created_at: {
                     allowNull: false,
                     defaultValue: sequelize.literal('NOW()'),

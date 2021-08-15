@@ -14,9 +14,9 @@ const {
     UserRepository,
 } = require('../repositories');
 
-const {
-    CustomError,
-} = require('../CustomError');
+// const {
+//     CustomError,
+// } = require('../CustomError');
 
 
 class CampaignUserService {
@@ -69,11 +69,10 @@ class CampaignUserService {
             email,
             campaign_id,
             access_level,
+            is_participant,
         } = input;
 
-        if (user.access_type !== 'full') {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'Guest user cannot add create users to campaigns');
-        }
+        await this.acl.forbidGuestAccessType(user);
 
         await this.acl.checkCampaignExists(campaign_id);
 
@@ -86,10 +85,40 @@ class CampaignUserService {
                 campaign_id,
                 user_id: user_to_add.id,
                 access_level,
+                is_participant,
                 public_token: `${v4()}`.replace(/-/g, ''),
             });
 
         return campaign_user;
+    }
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async updateCampaignUser(user, input) {
+        const {
+            id,
+            access_level,
+            is_participant,
+            campaign_id,
+        } = input;
+
+        await this.acl.forbidGuestAccessType(user);
+
+        await this.acl.checkCampaignExists(campaign_id);
+
+        await this.acl.checkUserIsCampaignManager(user.user_id, campaign_id);
+
+        await this.campaign_user_repository
+            .update({
+                id,
+                access_level,
+                is_participant,
+            });
+
+        return this.campaign_user_repository.read(id);
     }
 
 
@@ -109,9 +138,7 @@ class CampaignUserService {
 
         await this.acl.checkUserIsCampaignManager(user.user_id, campaign_id);
 
-        const campaign_user_list = await this.campaign_user_repository.search({
-            campaign_id,
-        });
+        const campaign_user_list = await this.campaign_user_repository.search(input);
 
         const user_list = await this.user_repository.search({
             id_list: campaign_user_list.map((campaign_user) => campaign_user.user_id),
@@ -124,6 +151,28 @@ class CampaignUserService {
                 email: user_list.find((_user) => campaign_user.user_id === _user.id).email,
             }
         ));
+    }
+
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async removeCampaignUser(user, input) {
+        const {
+            campaign_id,
+            id,
+        } = input;
+
+        await this.acl.forbidGuestAccessType(user);
+
+        await this.acl.checkCampaignExists(campaign_id);
+
+        await this.acl.checkUserIsCampaignManager(user.user_id, campaign_id);
+
+        return this.campaign_user_repository.delete(id);
+
     }
 
 
