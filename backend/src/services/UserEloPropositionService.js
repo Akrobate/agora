@@ -128,17 +128,32 @@ class UserEloPropositionService {
         } = input;
 
         await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
-        const proposition_list = await this.user_proposition_elo_result_repository.search(
-            {
-                campaign_id,
-                user_id,
-            },
-            {
-                sort_list: ['-elo_score'],
-            }
-        );
+        const elo_result_proposition_list = await this
+            .user_proposition_elo_result_repository.search(
+                {
+                    campaign_id,
+                    user_id,
+                },
+                {
+                    sort_list: ['-elo_score'],
+                }
+            );
 
-        return proposition_list;
+        const proposition_list = await this.proposition_repository.search({
+            id_list: elo_result_proposition_list
+                .map((elo_result_proposition) => elo_result_proposition.proposition_id),
+        });
+
+        return elo_result_proposition_list.map((elo_result_proposition) => Object.assign(
+            {},
+            elo_result_proposition,
+            {
+                proposition: proposition_list
+                    .find(
+                        (proposition) => proposition.id === elo_result_proposition.proposition_id
+                    ),
+            }
+        ));
     }
 
 
@@ -254,10 +269,28 @@ class UserEloPropositionService {
 
         const proposition_2 = this.performRandomChoiceFromList(other_propositions_list);
 
-        return [
+
+        const proposition_random_list = [
             proposition_1,
             proposition_2,
         ];
+
+        const proposition_list = await this.proposition_repository.search({
+            id_list: proposition_random_list
+                .map((elo_result_proposition) => elo_result_proposition.proposition_id),
+        });
+
+        return proposition_random_list.map((proposition_random) => Object.assign(
+            {},
+            proposition_random,
+            {
+                proposition: proposition_list
+                    .find(
+                        (proposition) => proposition.id === proposition_random.proposition_id
+                    ),
+            }
+        ));
+
     }
 
 
