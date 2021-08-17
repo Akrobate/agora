@@ -13,15 +13,23 @@
         >
 
             <v-col class="col-5 fill-height" >
-                <v-hover v-slot="{ hover }">
+                <v-hover v-slot="{ hover }" >
                     <v-card
                         class="px-6 fill-height rounded-xl proposition-card"
-                        :elevation="hover ? 13 : 4"         
+                        :class="{
+                            'proposition-card-activated':  proposition_selected === 1,
+                            'proposition-card-fadeout':  proposition_selected !== null,
+                        }"
+                        :elevation="hover ? 13 : 4"
+                        @click="propositionClicked(1)"
+                        :ripple="false"
                     >
                         <v-layout align-center fill-height>
                             <v-flex>
                                 <p class="text-h5 text--secondary">
-                                    "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+                                    {{ proposition_1 ? proposition_1.proposition.payload : '' }}
+                                                                        <br>
+                                    {{ proposition_1 ? proposition_1.proposition_id : '' }}
                                 </p>
                             </v-flex>
                         </v-layout>
@@ -29,10 +37,12 @@
                 </v-hover>
             </v-col>
 
+
             <v-spacer />
-            
+
+
             <v-col class="col-1" @click="is_loading = !is_loading">
-                <p class="text-h2" align="center" @click="suffle"  v-if="!is_loading">
+                <p class="text-h2" align="center"  v-if="!is_loading">
                     VS
                 </p>
 
@@ -44,21 +54,29 @@
                         ></v-progress-circular>
                 </div>
             </v-col>
+
+
             <v-spacer />
-
-
 
 
             <v-col class="col-5 fill-height" >
                 <v-hover v-slot="{ hover }" >
                     <v-card
                         class="px-6 fill-height rounded-xl proposition-card"
-                        :elevation="hover ? 13 : 4"         
+                        :class="{
+                            'proposition-card-activated':  proposition_selected === 2,
+                            'proposition-card-fadeout':  proposition_selected !== null,
+                        }"
+                        :elevation="hover ? 13 : 4"
+                        @click="propositionClicked(2)"
+                        :ripple="false"
                     >
                         <v-layout align-center fill-height>
                             <v-flex>
                                 <p class="text-h5 text--secondary">
-                                    "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+                                    {{ proposition_2 ? proposition_2.proposition.payload : '' }} 
+                                    <br>
+                                    {{ proposition_2 ? proposition_2.proposition_id : '' }}
                                 </p>
                             </v-flex>
                         </v-layout>
@@ -70,14 +88,7 @@
 
         </div>
 
-
-
         <!-- LIST ---->
-        <!-- LIST ---->
-        <!-- LIST ---->
-        <!-- LIST ---->
-
-
         
         <v-simple-table>
             <template v-slot:default>
@@ -93,11 +104,15 @@
             </thead>
             <tbody name="list" is="transition-group">
                 <tr
-                v-for="item in desserts"
-                :key="item.name"
+                v-for="proposition in eloPropositionRankingList"
+                :key="proposition.id"
+                :class="{
+                    'winner': proposition.proposition_id === last_winner_proposition_id,
+                    'loser': proposition.proposition_id === last_loser_proposition_id,
+                }"
                 >
-                    <td class="text-left">{{ item.name }}</td>
-                    <td class="text-right">{{ item.calories }}</td>
+                    <td class="text-left">{{ proposition.proposition.payload }}</td>
+                    <td class="text-right">{{ proposition.elo_score }}</td>
                 </tr>
             </tbody>
             </template>
@@ -109,65 +124,79 @@
 
 <script>
 
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
     name: "EloGamePage",
-    methods: {
-        suffle() {
-            this.desserts = this.desserts.sort(() => 0.5 - Math.random());
-        },
+    props: {
+        campaign_id: Number,
     },
     data() {
         return {
-            is_loading: true,
-            desserts: [
-                {
-                    name: 'Frozen Yogurt',
-                    calories: 159,
-                },
-                {
-                    name: 'Ice cream sandwich',
-                    calories: 237,
-                },
-                {
-                    name: 'Eclair',
-                    calories: 262,
-                },
-                {
-                    name: 'Cupcake',
-                    calories: 305,
-                },
-                {
-                    name: 'Gingerbread',
-                    calories: 356,
-                },
-                {
-                    name: 'Jelly bean',
-                    calories: 375,
-                },
-                {
-                    name: 'Lollipop',
-                    calories: 392,
-                },
-                {
-                    name: 'Honeycomb',
-                    calories: 408,
-                },
-                {
-                    name: 'Donut',
-                    calories: 452,
-                },
-                {
-                    name: 'KitKat',
-                    calories: 518,
-                },
-        ],
+            proposition_selected: null,
+            is_loading: false,
+            proposition_1: null,
+            proposition_2: null,
+
+            last_winner_proposition_id: null,
+            last_loser_proposition_id: null,
         };
+    },
+    methods: {
+        ...mapActions({
+            initEloData: 'elo_ranking_store/initEloData',
+            loadPropositionRankingList: 'elo_ranking_store/loadPropositionRankingList',
+            writeDuelResult: 'elo_ranking_store/writeDuelResult',
+            getRandomPropositions: 'elo_ranking_store/getRandomPropositions',
+        }),
+        async propositionClicked(proposition_number) {
+            this.is_loading = true
+            this.proposition_selected = proposition_number
+
+
+            this.last_winner_proposition_id = proposition_number === 1
+                ? this.proposition_1.proposition_id : this.proposition_2.proposition_id
+
+            this.last_loser_proposition_id = proposition_number === 2
+                ? this.proposition_1.proposition_id : this.proposition_2.proposition_id
+
+            await this.writeDuelResult({
+                campaign_id: this.campaign_id,
+                proposition_id_1: this.proposition_1.proposition_id,
+                proposition_id_2: this.proposition_2.proposition_id,
+                winner: proposition_number,
+            })
+            await this.updateResultList()
+            await this.loadRandomPropositions()
+            this.is_loading = false
+            this.proposition_selected = null
+        },
+        shuffle() {
+
+        },
+        async updateResultList() {
+            await this.loadPropositionRankingList({campaign_id: this.campaign_id})
+        },
+        async loadRandomPropositions() {
+            const random_propositions = await this.getRandomPropositions({ campaign_id: this.campaign_id })
+            this.proposition_1 = random_propositions[0]
+            this.proposition_2 = random_propositions[1]
+        }
+    },
+    async mounted() {
+        await this.initEloData({ campaign_id: this.campaign_id })
+        await this.loadRandomPropositions()
+    },
+    computed: {
+        ...mapGetters({
+            eloPropositionRankingList: 'elo_ranking_store/eloPropositionRankingList'
+        })
     },
 };
 </script>
 
 
-<style>
+<style scoped>
 .list-enter-active,
 .list-leave-active {
   transition: all 0.8s;
@@ -180,11 +209,27 @@ export default {
 }
 .list-move {
   transition: transform 1s;
-  color: blue
+}
+
+.list-move.winner {
+  color: green
+}
+.list-move.loser {
+  color: red
 }
 
 .proposition-card {
     cursor: pointer;
+    transition: background-color 0.2s ease-out, opacity 0.8s linear;
+}
+
+.proposition-card-activated {
+    background-color: #48c729 !important;
+    opacity: 0;
+}
+
+.proposition-card-fadeout {
+    opacity: 0;
 }
 
 </style>

@@ -31,28 +31,48 @@ const routes = [
         }
     },
     {
+        path: '/campaigns/create',
+        name: 'campaign-create',
+        props: true,
+        component: () => import('@/components/pages/CampaignCreatePage.vue')
+    },
+    {
+        path: '/campaigns/edit/:id',
+        name: 'campaign-edit',
+        props: (route) => Object.assign(
+            {},
+            route.params,
+            {
+                id: parseInt(route.params.id)
+            }
+        ),
+        component: () => import('@/components/pages/CampaignCreatePage.vue')
+    },
+    {
+        path: '/campaigns/elo-game/:campaign_id',
+        name: 'campaign-elo-game',
+        props: (route) => Object.assign(
+            {},
+            route.params,
+            {
+                campaign_id: parseInt(route.params.campaign_id)
+            }
+        ),
+        component: () => import('@/components/pages/EloGamePage.vue')
+    },
+    {
+        path: '/campaigns/:campaign_status',
+        name: 'campaign-list',
+        props: true,
+        component: () => import('@/components/pages/CampaignListPage.vue')
+    },
+    {
         path: '/about',
         name: 'about',
         component: () => import('@/components/pages/AboutPage.vue'),
         meta: {
             layout: 'AppLayout',
         }
-    },
-    {
-        path: '/modules/setup',
-        name: 'module-setup',
-        component: () => import('@/components/pages/ModuleSetupPage.vue')
-    },
-//     {
-//         path: '/modules/data/:module_technical_name/:id',
-//         name: 'module-data-edit',
-//         props: true,
-//         component: () => import('@/components/pages/ModuleDataEditPage.vue')
-//     },
-    {
-        path: '/views/setup',
-        name: 'view-setup',
-        component: () => import('@/components/pages/ModuleSetupPage.vue')
     },
 ]
 
@@ -65,24 +85,24 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {
-      if (store.getters['user/isConnected']) {
-        next()
-      } else {
-        next({
-          name: 'login',
-          params: { nextUrl: to.fullPath }
-        })
-      }
+        if (store.getters['authentication_store/isConnected']) {
+            next()
+        } else {
+            next({
+                name: 'login',
+                params: { nextUrl: to.fullPath }
+            })
+        }
     } else if(to.matched.some(record => record.meta.guest)) {
-      if(store.getters['user/isConnected']){
-        next({ name: 'home'})
-      }
-      else{
-        next()
-      }
+        if(store.getters['authentication_store/isConnected']){
+            next({ name: 'home'})
+        }
+        else{
+            next()
+        }
     } else {
-      next()
+        next()
     }
-  })
+})
 
 export default router
