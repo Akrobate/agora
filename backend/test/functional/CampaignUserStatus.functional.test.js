@@ -17,7 +17,7 @@ const {
 
 const superApp = superTest(app);
 
-describe('CampaignAccess', () => {
+describe('CampaignUserStatus', () => {
 
     const manager_user_seed = {
         id: 100,
@@ -104,6 +104,21 @@ describe('CampaignAccess', () => {
             .expect((response) => {
                 expect(response.body).to.have.property('status_id', 2);
             });
+
+        await superApp
+            .get(`/api/v1/campaigns/${campaign_seed.id}/status`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response.body).to.have.property('campaign_user_status_list');
+
+                const [
+                    campaign_status_1,
+                    campaign_status_2,
+                ] = response.body.campaign_user_status_list;
+                expect(campaign_status_1).to.have.property('status_id', 1);
+                expect(campaign_status_2).to.have.property('status_id', 2);
+            });
     });
 
     it('Guest user should be able to set campaign status, and read it', async () => {
@@ -130,11 +145,30 @@ describe('CampaignAccess', () => {
             });
 
         await superApp
+            .post(`/api/v1/campaigns/${campaign_seed.id}/status`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
+            .send({
+                status_id: 1,
+            })
+            .expect(HTTP_CODE.CREATED)
+            .expect((response) => {
+                expect(response.body).to.have.property('status_id', 1);
+            });
+
+        await superApp
             .get(`/api/v1/campaigns/${campaign_seed.id}/status`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
             .expect(HTTP_CODE.OK)
             .expect((response) => {
-                expect(response.body).to.have.property('status_id', 3);
+                expect(response.body).to.have.property('campaign_user_status_list');
+                expect(response.body.campaign_user_status_list).to.have.lengthOf(2);
+
+                const [
+                    campaign_status_1,
+                    campaign_status_2,
+                ] = response.body.campaign_user_status_list;
+                expect(campaign_status_1).to.have.property('status_id', 1);
+                expect(campaign_status_2).to.have.property('status_id', 3);
             });
     });
 

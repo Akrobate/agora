@@ -81,6 +81,7 @@ class CampaignUserStatusService {
         let campaign_user_status = await this.campaign_user_status_repository.find({
             campaign_id,
             user_id,
+            status_id,
         });
 
         if (campaign_user_status === null) {
@@ -117,34 +118,17 @@ class CampaignUserStatusService {
 
         const {
             campaign_id,
+            status_id,
         } = input;
 
         const campaign_user_status = await this.campaign_user_status_repository
-            .find({
+            .search({
                 campaign_id,
                 user_id,
+                status_id,
             });
 
         return campaign_user_status;
-    }
-
-
-    /**
-     * @param {String} email
-     * @returns {Object}
-     */
-    async getOrCreateUserToInvite(email) {
-        let user_to_add = await this.user_repository.find({
-            email,
-        });
-
-        if (user_to_add === null) {
-            user_to_add = await this.user_repository.create({
-                email,
-            });
-        }
-
-        return user_to_add;
     }
 
 }

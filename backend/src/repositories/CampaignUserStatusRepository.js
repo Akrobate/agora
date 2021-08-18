@@ -29,18 +29,26 @@ class CampaignUserStatusRepository extends AbstractSequelizeRepository {
         return CampaignUserStatusRepository.instance;
     }
 
+
     /**
      * @returns {Number}
      */
-    static get VALIDATED() {
+    static get INVITED() {
         return 1;
     }
 
     /**
      * @returns {Number}
      */
-    static get DRAFT() {
+    static get STARTED() {
         return 2;
+    }
+
+    /**
+     * @returns {Number}
+     */
+    static get RESULT_SUBMITED() {
+        return 3;
     }
 
     /**

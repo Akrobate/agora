@@ -91,14 +91,40 @@ class CampaignUserStatusController {
 
         const campaign_id = Number(request.params.campaign_id);
 
-        const campaign_user_status = await this.campaign_user_status_service.getCampaignStatus(
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                query: joi.object()
+                    .keys({
+                        status_id: joi.number()
+                            .optional(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        if (error) {
+            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
+        }
+
+        const campaign_user_status_list = await this.campaign_user_status_service.getCampaignStatus(
             request.jwt_data,
-            {
-                campaign_id,
-            }
+            Object.assign(
+                {},
+                value.query,
+                {
+                    campaign_id,
+                }
+            )
         );
 
-        return response.status(HTTP_CODE.OK).send(campaign_user_status);
+        return response.status(HTTP_CODE.OK).send({
+            campaign_user_status_list,
+        });
     }
 
 }
