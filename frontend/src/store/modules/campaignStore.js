@@ -26,9 +26,11 @@ const getters = {
 const actions = {
 
     async loadCampaigns({ commit }, { criteria = {}, list_to_update = 'draft' } = {}) {
-        const response = await campaign_repository.search(criteria)
-        commit(`set_campaign_${list_to_update}_list`, response.campaign_list)
-        return response.campaign_list
+        const {
+            campaign_list,
+        } = await campaign_repository.search(criteria)
+        commit(`set_campaign_${list_to_update}_list`, campaign_list)
+        return campaign_list
     },
     async getCampaign(_, { campaign_id }) {
         return campaign_repository.read(campaign_id)
