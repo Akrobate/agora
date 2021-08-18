@@ -5,6 +5,8 @@ import appLayoutStore from './modules/appLayoutStore'
 import userStore from './modules/userStore'
 import authenticationStore from './modules/authenticationStore'
 import eloRankingStore from './modules/eloRankingStore'
+import userPropositionStore from './modules/userPropositionStore'
+import campaignUserStatusStore from './modules/campaignUserStatusStore'
 
 Vue.use(Vuex)
 
@@ -17,6 +19,8 @@ export default new Vuex.Store({
     user_store: userStore,
     authentication_store: authenticationStore,
     elo_ranking_store: eloRankingStore,
+    user_proposition_store: userPropositionStore,
+    campaign_user_status_store: campaignUserStatusStore,
   },
   // strict: debug,
   // plugins: debug ? [createLogger()] : []
