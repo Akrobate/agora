@@ -1,9 +1,22 @@
 <template>
     <v-container style="max-width: 1280px; min-width: 795px">
-        <h1 class="text-h5 mt-8">EloGamePage</h1>
 
+        <v-row>
+            <v-col class="col-8">
+                <h1 class="text-h5 mt-8">EloGamePage</h1>
+            </v-col>
+            <v-col class="col-4" align="right">
+                <v-btn
+                    class="mt-6"
+                    color="primary"
+                    @click="validateUserResult"
+                >
+                    Valider mon classement
+                </v-btn>
+            </v-col>
+        </v-row>
 
-        <div >
+        <div>
         <v-row
             align="center"
             justify="center"
@@ -28,8 +41,6 @@
                             <v-flex>
                                 <p class="text-h5 text--secondary">
                                     {{ proposition_1 ? proposition_1.proposition.payload : '' }}
-                                                                        <br>
-                                    {{ proposition_1 ? proposition_1.proposition_id : '' }}
                                 </p>
                             </v-flex>
                         </v-layout>
@@ -74,9 +85,7 @@
                         <v-layout align-center fill-height>
                             <v-flex>
                                 <p class="text-h5 text--secondary">
-                                    {{ proposition_2 ? proposition_2.proposition.payload : '' }} 
-                                    <br>
-                                    {{ proposition_2 ? proposition_2.proposition_id : '' }}
+                                    {{ proposition_2 ? proposition_2.proposition.payload : '' }}
                                 </p>
                             </v-flex>
                         </v-layout>
@@ -91,7 +100,6 @@
         <!-- LIST ---->
         
         <v-simple-table>
-            <template v-slot:default>
             <thead>
                 <tr>
                 <th class="text-left">
@@ -115,7 +123,6 @@
                     <td class="text-right">{{ proposition.elo_score }}</td>
                 </tr>
             </tbody>
-            </template>
         </v-simple-table>
 
     </v-container>
@@ -148,6 +155,11 @@ export default {
             loadPropositionRankingList: 'elo_ranking_store/loadPropositionRankingList',
             writeDuelResult: 'elo_ranking_store/writeDuelResult',
             getRandomPropositions: 'elo_ranking_store/getRandomPropositions',
+            initRanking: 'user_proposition_store/init',
+            updateRanking: 'user_proposition_store/update',
+            setCampaignUserStatusInvited: 'campaign_user_status_store/setCampaignUserStatusInvited',
+            setCampaignUserStatusResultSubmited: 'campaign_user_status_store/setCampaignUserStatusResultSubmited',
+            checkAndsetCampaignUserStatusStarted: 'campaign_user_status_store/checkAndsetCampaignUserStatusStarted',
         }),
         async propositionClicked(proposition_number) {
             this.is_loading = true
@@ -171,8 +183,12 @@ export default {
             this.is_loading = false
             this.proposition_selected = null
         },
-        shuffle() {
-
+        async validateUserResult() {
+            await this.updateRanking({
+                campaign_id: this.campaign_id,
+                proposition_id_list: this.eloPropositionRankingList.map((item) => item.proposition_id),
+            })
+            await this.setCampaignUserStatusResultSubmited({ campaign_id: this.campaign_id })
         },
         async updateResultList() {
             await this.loadPropositionRankingList({campaign_id: this.campaign_id})
@@ -184,7 +200,9 @@ export default {
         }
     },
     async mounted() {
+        await this.checkAndsetCampaignUserStatusStarted({ campaign_id: this.campaign_id })
         await this.initEloData({ campaign_id: this.campaign_id })
+        await this.initRanking({ campaign_id: this.campaign_id })
         await this.loadRandomPropositions()
     },
     computed: {

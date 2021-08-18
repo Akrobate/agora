@@ -41,21 +41,32 @@
     </template>
 
     <template v-slot:[`item.actions`]="{ item }">
+
+        <router-link
+            v-if="item.user_is_participant && item.campaign_status === 2"
+            tag="span"
+            style="cursor: pointer"
+            :to="{ name: 'campaign-elo-game', params: { campaign_id: item.id } }"
+        >
+            <v-icon class="mr-2" color="green">mdi-play-circle</v-icon>
+        </router-link>
+
         <router-link 
             tag="span"
             style="cursor: pointer"
             :to="{ name: 'campaign-edit', params: { campaign_id: item.id } }"
         >
-            <v-icon class="mr-2" small>mdi-format-list-bulleted-square</v-icon>
+            <v-icon class="mr-2" >mdi-format-list-bulleted-square</v-icon>
         </router-link>
+
         <router-link 
             tag="span"
             style="cursor: pointer"
             :to="{ name: 'campaign-edit', params: { id: item.id } }"
         >
-            <v-icon class="mr-2" small>mdi-pencil</v-icon>
+            <v-icon class="mr-2" color="blue">mdi-pencil</v-icon>
         </router-link>
-        <v-icon small @click="deleteItem(item)">
+        <v-icon color="red" @click="deleteItem(item)">
             mdi-delete
         </v-icon>
     </template>
