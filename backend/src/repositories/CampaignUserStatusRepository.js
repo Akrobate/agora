@@ -106,9 +106,11 @@ class CampaignUserStatusRepository extends AbstractSequelizeRepository {
     static _formatCriteria(criteria) {
         const {
             id_list,
+            user_id_list,
             user_id,
             campaign_id,
             status_id,
+            status_id_list,
         } = criteria;
 
 
@@ -119,6 +121,12 @@ class CampaignUserStatusRepository extends AbstractSequelizeRepository {
         if (id_list !== undefined) {
             where[Op.and].id = {
                 [Op.in]: id_list,
+            };
+        }
+
+        if (user_id_list !== undefined) {
+            where[Op.and].user_id = {
+                [Op.in]: user_id_list,
             };
         }
 
@@ -137,6 +145,12 @@ class CampaignUserStatusRepository extends AbstractSequelizeRepository {
         if (status_id !== undefined) {
             where[Op.and].status_id = {
                 [Op.eq]: status_id,
+            };
+        }
+
+        if (status_id_list !== undefined) {
+            where[Op.and].status_id = {
+                [Op.in]: status_id_list,
             };
         }
 

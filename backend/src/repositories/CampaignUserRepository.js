@@ -113,6 +113,7 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
             id,
             id_list,
             user_id,
+            user_id_list,
             campaign_id,
             access_level,
             public_token,
@@ -138,6 +139,12 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
         if (user_id !== undefined) {
             where[Op.and].user_id = {
                 [Op.eq]: user_id,
+            };
+        }
+
+        if (user_id_list !== undefined) {
+            where[Op.and].user_id = {
+                [Op.in]: user_id_list,
             };
         }
 

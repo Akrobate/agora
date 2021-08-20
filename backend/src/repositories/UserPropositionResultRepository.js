@@ -84,6 +84,7 @@ class UserPropositionResultRepository extends AbstractSequelizeRepository {
     static _formatCriteria(criteria) {
         const {
             id_list,
+            user_id_list,
             id,
             campaign_id,
             user_id,
@@ -97,6 +98,12 @@ class UserPropositionResultRepository extends AbstractSequelizeRepository {
         if (id_list !== undefined) {
             where[Op.and].id = {
                 [Op.in]: id_list,
+            };
+        }
+
+        if (user_id_list !== undefined) {
+            where[Op.and].user_id = {
+                [Op.in]: user_id_list,
             };
         }
 
