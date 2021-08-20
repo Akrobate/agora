@@ -5,15 +5,15 @@ const joi = require('joi');
 const HTTP_CODE = require('http-status');
 
 const {
-    CustomError,
-} = require('../CustomError');
+    AbstractController,
+} = require('./AbstractController');
 
 const {
     UserPropositionService,
 } = require('../services');
 
 
-class UserPropositionController {
+class UserPropositionController extends AbstractController {
 
     /**
      * @param {UserPropositionService} proposition_user_service
@@ -21,6 +21,7 @@ class UserPropositionController {
     constructor(
         proposition_user_service
     ) {
+        super();
         this.proposition_user_service = proposition_user_service;
     }
 
@@ -96,9 +97,7 @@ class UserPropositionController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const user_proposition_result_list = await this.proposition_user_service.updateRanking(
             request.jwt_data,
@@ -113,6 +112,51 @@ class UserPropositionController {
         });
     }
 
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async getPropositionResult(request, response) {
+
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                query: joi.object()
+                    .keys({
+                        user_id_list: joi
+                            .array()
+                            .items(
+                                joi
+                                    .number()
+                                    .required()
+                            )
+                            .optional(),
+                        algorithm: joi
+                            .string()
+                            .valid('borda', 'relative_majority')
+                            .required(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        this.checkValidationError(error);
+
+        const data = await this.proposition_user_service.getPropositionResult(
+            request.jwt_data,
+            value.query
+        );
+
+        return response.status(HTTP_CODE.OK).send({
+            proposition_result_list: data,
+        });
+    }
 }
 
 UserPropositionController.instance = null;

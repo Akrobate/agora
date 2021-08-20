@@ -5,15 +5,14 @@ const joi = require('joi');
 const HTTP_CODE = require('http-status');
 
 const {
-    CustomError,
-} = require('../CustomError');
+    AbstractController,
+} = require('./AbstractController');
 
 const {
     CampaignService,
 } = require('../services');
 
-
-class CampaignController {
+class CampaignController extends AbstractController {
 
     /**
      * @param {CampaignService} campaign_service
@@ -21,6 +20,7 @@ class CampaignController {
     constructor(
         campaign_service
     ) {
+        super();
         this.campaign_service = campaign_service;
     }
 
@@ -83,9 +83,7 @@ class CampaignController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const user = await this.campaign_service.create(
             request.jwt_data,
@@ -143,9 +141,7 @@ class CampaignController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const user = await this.campaign_service.update(
             request.jwt_data,
@@ -199,9 +195,8 @@ class CampaignController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
+
         const data = await this.campaign_service.search(
             request.jwt_data,
             value.query
@@ -236,7 +231,6 @@ class CampaignController {
 
         return response.status(HTTP_CODE.OK).send(data);
     }
-
 
 }
 

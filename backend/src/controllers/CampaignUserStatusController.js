@@ -5,15 +5,15 @@ const joi = require('joi');
 const HTTP_CODE = require('http-status');
 
 const {
-    CustomError,
-} = require('../CustomError');
+    AbstractController,
+} = require('./AbstractController');
 
 const {
     CampaignUserStatusService,
 } = require('../services');
 
 
-class CampaignUserStatusController {
+class CampaignUserStatusController extends AbstractController {
 
     /**
      * @param {CampaignUserStatusService} campaign_user_status_service
@@ -21,6 +21,7 @@ class CampaignUserStatusController {
     constructor(
         campaign_user_status_service
     ) {
+        super();
         this.campaign_user_status_service = campaign_user_status_service;
     }
 
@@ -66,9 +67,8 @@ class CampaignUserStatusController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
+
 
         const campaign_user_status = await this.campaign_user_status_service.updateCampaignStatus(
             request.jwt_data,
@@ -107,9 +107,7 @@ class CampaignUserStatusController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const campaign_user_status_list = await this.campaign_user_status_service.getCampaignStatus(
             request.jwt_data,

@@ -5,15 +5,15 @@ const joi = require('joi');
 const HTTP_CODE = require('http-status');
 
 const {
-    CustomError,
-} = require('../CustomError');
+    AbstractController,
+} = require('./AbstractController');
 
 const {
     UserService,
 } = require('../services');
 
 
-class UserController {
+class UserController extends AbstractController {
 
     /**
      * @param {UserService} user_service
@@ -21,6 +21,7 @@ class UserController {
     constructor(
         user_service
     ) {
+        super();
         this.user_service = user_service;
     }
 
@@ -78,9 +79,8 @@ class UserController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
+
 
         const user = await this.user_service.register({
             email: value.body.email,
@@ -131,9 +131,7 @@ class UserController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const user = await this.user_service.update(
             request.jwt_data,
@@ -198,9 +196,7 @@ class UserController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const data = await this.user_service.login({
             email: value.body.email,
@@ -247,9 +243,7 @@ class UserController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const data = await this.user_service.loginGuest({
             public_token: value.body.public_token,

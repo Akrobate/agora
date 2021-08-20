@@ -5,15 +5,15 @@ const joi = require('joi');
 const HTTP_CODE = require('http-status');
 
 const {
-    CustomError,
-} = require('../CustomError');
+    AbstractController,
+} = require('./AbstractController');
 
 const {
     UserEloPropositionService,
 } = require('../services');
 
 
-class UserEloPropositionController {
+class UserEloPropositionController extends AbstractController {
 
     /**
      * @param {UserEloPropositionService} proposition_elo_user_service
@@ -21,6 +21,7 @@ class UserEloPropositionController {
     constructor(
         proposition_elo_user_service
     ) {
+        super();
         this.proposition_elo_user_service = proposition_elo_user_service;
     }
 
@@ -123,9 +124,7 @@ class UserEloPropositionController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const user_proposition_elo_result_list = await this.proposition_elo_user_service
             .processEloDuelResult(

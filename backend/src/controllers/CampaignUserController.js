@@ -5,15 +5,15 @@ const joi = require('joi');
 const HTTP_CODE = require('http-status');
 
 const {
-    CustomError,
-} = require('../CustomError');
+    AbstractController,
+} = require('./AbstractController');
 
 const {
     CampaignUserService,
 } = require('../services');
 
 
-class CampaignUserController {
+class CampaignUserController extends AbstractController {
 
     /**
      * @param {CampaignUserService} campaign_user_service
@@ -21,6 +21,7 @@ class CampaignUserController {
     constructor(
         campaign_user_service
     ) {
+        super();
         this.campaign_user_service = campaign_user_service;
     }
 
@@ -75,9 +76,8 @@ class CampaignUserController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
+
 
         const user = await this.campaign_user_service.addUserToCampaign(
             request.jwt_data,
@@ -122,9 +122,7 @@ class CampaignUserController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const campaign_user = await this.campaign_user_service.updateCampaignUser(
             request.jwt_data,
@@ -169,15 +167,21 @@ class CampaignUserController {
                             .optional(),
                         is_participant: joi.boolean()
                             .optional(),
+                        status_id_list: joi
+                            .array()
+                            .items(
+                                joi
+                                    .number()
+                                    .required()
+                            )
+                            .optional(),
                     })
                     .required(),
             })
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const campaign_user_list = await this.campaign_user_service.searchCampaignUsers(
             request.jwt_data,

@@ -5,15 +5,15 @@ const joi = require('joi');
 const HTTP_CODE = require('http-status');
 
 const {
-    CustomError,
-} = require('../CustomError');
+    AbstractController,
+} = require('./AbstractController');
 
 const {
     PropositionService,
 } = require('../services');
 
 
-class PropositionController {
+class PropositionController extends AbstractController {
 
     /**
      * @param {PropositionService} proposition_service
@@ -21,6 +21,7 @@ class PropositionController {
     constructor(
         proposition_service
     ) {
+        super();
         this.proposition_service = proposition_service;
     }
 
@@ -70,9 +71,7 @@ class PropositionController {
             .unknown(true)
             .validate(request);
 
-        if (error) {
-            throw new CustomError(CustomError.BAD_PARAMETER, error.message);
-        }
+        this.checkValidationError(error);
 
         const proposition = await this.proposition_service.create(
             request.jwt_data,
