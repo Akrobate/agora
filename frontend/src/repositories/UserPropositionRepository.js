@@ -34,6 +34,26 @@ class UserPropositionRepository {
         return result.data
     }
 
+
+    /**
+     * @param {Number} campaign_id 
+     * @param {Number} proposition_id_list 
+     * @returns {Promise} 
+     */
+    async getPropositionResults(campaign_id, user_id_list, algorithm) {
+        const result = await axios
+            .get(
+                `${this.ressource_url}/${campaign_id}/proposition-results`,
+                {
+                    params: {
+                        user_id_list,
+                        algorithm,
+                    },
+                }
+            )
+        return result.data
+    }
+
 }
 
 const user_proposition_repository = new UserPropositionRepository()

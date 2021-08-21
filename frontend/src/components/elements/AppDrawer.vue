@@ -5,6 +5,30 @@
         :value="isOpenedDrawer"
         @input="setOpenedDrawer"
     >
+
+
+        <v-list dense nav>
+            <v-list-item
+                link
+                :to="{ name: 'home' }"
+                :exact="true"
+            >
+                <v-list-item-icon>
+                    <v-icon>mdi-view-dashboard</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                    <v-list-item-title>Tableau de bord</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
+
+
+
+
+
+
+
         <v-list-item>
             <v-list-item-content>
                 <v-list-item-title class="title">

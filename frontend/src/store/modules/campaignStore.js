@@ -86,10 +86,17 @@ const actions = {
         const response = await campaign_user_repository.update(campaign_id, id, data)
         return response
     },
-    async loadCampaignUserList({ commit }, { criteria = {}, campaign_id } ) {
-        const response = await campaign_user_repository.search(campaign_id, criteria)
-        commit('set_campaign_user_list', response.campaign_user_list)
-        return response.campaign_list
+    async searchCampaignUserList(_, { criteria = {}, campaign_id } ) {
+        const {
+            campaign_user_list
+        } = await campaign_user_repository.search(campaign_id, criteria)
+        return campaign_user_list
+    },
+    async loadCampaignUserList({ dispatch, commit }, { criteria = {}, campaign_id } ) {
+        // const response = await campaign_user_repository.search(campaign_id, criteria)
+        const campaign_user_list = await dispatch('searchCampaignUserList', { criteria, campaign_id })
+        commit('set_campaign_user_list', campaign_user_list)
+        return campaign_user_list
     },
     async clearCampaignUserList({ commit } ) {
         commit('set_empty_campaign_user_list')
