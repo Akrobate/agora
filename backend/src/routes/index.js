@@ -116,6 +116,14 @@ api_routes.post(
         .catch(next)
 );
 
+api_routes.get(
+    '/campaigns/:campaign_id/proposition-results',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_proposition_controller
+        .getPropositionResult(request, response)
+        .catch(next)
+);
+
 api_routes.patch(
     '/campaigns/:campaign_id/users/:campaign_user_id',
     authentication_middleware.injectJwtData(),

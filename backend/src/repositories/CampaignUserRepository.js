@@ -117,6 +117,7 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
             campaign_id,
             access_level,
             public_token,
+            is_participant,
         } = criteria;
 
 
@@ -163,6 +164,12 @@ class CampaignUserRepository extends AbstractSequelizeRepository {
         if (public_token !== undefined) {
             where[Op.and].public_token = {
                 [Op.eq]: public_token,
+            };
+        }
+
+        if (is_participant !== undefined) {
+            where[Op.and].is_participant = {
+                [Op.eq]: AbstractSequelizeRepository.formatBoolean(is_participant),
             };
         }
 

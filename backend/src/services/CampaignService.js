@@ -144,6 +144,7 @@ class CampaignService {
         return campaign;
     }
 
+
     /**
      * @param {Object} user
      * @param {Object} input
