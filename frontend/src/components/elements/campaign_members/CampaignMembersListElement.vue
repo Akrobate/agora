@@ -1,10 +1,10 @@
 <template>
-  <v-data-table
+<v-data-table
     :headers="headers"
     :items="campaignUserList"
     hide-default-footer
     class="elevation-1"
-  >
+>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Membres de la campagne</v-toolbar-title>
@@ -47,15 +47,6 @@
     </template>
 
     <template v-slot:[`item.actions`]="{ item }">
-        <!--
-        <router-link 
-            tag="span"
-            style="cursor: pointer"
-            :to="{ name: 'field-setup', params: { module_technical_name: item.technical_name } }"
-        >
-            <v-icon class="mr-2" small>mdi-format-list-bulleted-square</v-icon>
-        </router-link>
-        -->
         <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
         </v-icon>
@@ -66,50 +57,48 @@
 
 
     <template v-slot:[`item.access_level`]="{ item }">
-
-            <v-chip
-                v-if="item.access_level === 2"
-                class="ma-2"
-                color="blue darken-1"
-                outlined
-                small
-            >
+        <v-chip
+            v-if="item.access_level === 2"
+            class="ma-2"
+            color="blue darken-1"
+            outlined
+            small
+        >
             Observateur
-            </v-chip>
+        </v-chip>
 
-            <v-chip
-                v-if="item.access_level === 3"
-                class="ma-2"
-                color="red"
-                text-color="white"
-                small
-            >
+        <v-chip
+            v-if="item.access_level === 3"
+            class="ma-2"
+            color="red"
+            text-color="white"
+            small
+        >
             Manager
-            </v-chip>
+        </v-chip>
     </template>
 
     <template v-slot:[`item.is_participant`]="{ item }">
-
-            <v-chip
-                v-if="item.is_participant === true"
-                class="ma-2"
-                color="blue"
-                outlined
-                small
-            >
+        <v-chip
+            v-if="item.is_participant === true"
+            class="ma-2"
+            color="blue"
+            outlined
+            small
+        >
             Participant
-            </v-chip>
+        </v-chip>
     </template>
 
     <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
+        <v-btn
+            color="primary"
+            @click="initialize"
+        >
+            Actualiser
+        </v-btn>
     </template>
-  </v-data-table>
+</v-data-table>
 
 </template>
 

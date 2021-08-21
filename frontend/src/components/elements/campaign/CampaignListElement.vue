@@ -54,7 +54,7 @@
         <router-link 
             tag="span"
             style="cursor: pointer"
-            :to="{ name: 'campaign-edit', params: { campaign_id: item.id } }"
+            :to="{ name: 'campaign-result', params: { campaign_id: item.id } }"
         >
             <v-icon class="mr-2" >mdi-format-list-bulleted-square</v-icon>
         </router-link>
