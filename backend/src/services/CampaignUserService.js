@@ -163,7 +163,7 @@ class CampaignUserService {
             .filter((campaign_user) => {
                 if (status_id_list) {
                     return campaign_user_status_list.find(
-                        (_user_status) => status_id_list.includes(_user_status)
+                        (_user_status) => status_id_list.includes(_user_status.status_id)
                             && _user_status.user_id === campaign_user.user_id
                     ) !== undefined;
                 }

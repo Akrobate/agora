@@ -291,6 +291,23 @@ class AbstractSequelizeRepository {
         return object_list;
     }
 
+
+    /**
+     * @param {*} value
+     * @returns {Boolean}
+     */
+    static formatBoolean(value) {
+        if (value === undefined || value === null) {
+            return value;
+        }
+
+        if (typeof value === 'string') {
+            return (value === 'true');
+        }
+
+        return value;
+    }
+
 }
 
 module.exports = {

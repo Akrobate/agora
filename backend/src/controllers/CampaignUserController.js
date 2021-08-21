@@ -155,7 +155,7 @@ class CampaignUserController extends AbstractController {
         } = joi
             .object()
             .keys({
-                body: joi.object()
+                query: joi.object()
                     .keys({
                         id_list: joi
                             .array()
