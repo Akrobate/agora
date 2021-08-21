@@ -61,6 +61,18 @@ const routes = [
         component: () => import('@/components/pages/EloGamePage.vue')
     },
     {
+        path: '/campaigns/:campaign_id/results',
+        name: 'campaign-result',
+        props: (route) => Object.assign(
+            {},
+            route.params,
+            {
+                campaign_id: parseInt(route.params.campaign_id)
+            }
+        ),
+        component: () => import('@/components/pages/CampaignResultPage.vue')
+    },
+    {
         path: '/campaigns/:campaign_status',
         name: 'campaign-list',
         props: true,
