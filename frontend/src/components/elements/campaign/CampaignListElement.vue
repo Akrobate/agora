@@ -43,7 +43,7 @@
     <template v-slot:[`item.actions`]="{ item }">
 
         <router-link
-            v-if="item.user_is_participant && item.campaign_status === 2"
+            v-if="item.user_is_participant && item.campaign_status === CAMPAIGN_STATUS.IN_PROGRESS"
             tag="span"
             style="cursor: pointer"
             :to="{ name: 'campaign-elo-game', params: { campaign_id: item.id } }"
@@ -51,7 +51,11 @@
             <v-icon class="mr-2" color="green">mdi-play-circle</v-icon>
         </router-link>
 
-        <router-link 
+        <router-link
+            v-if="
+                item.user_is_participant
+                && [CAMPAIGN_STATUS.IN_PROGRESS, CAMPAIGN_STATUS.FINISHED].includes(item.campaign_status)
+            "
             tag="span"
             style="cursor: pointer"
             :to="{ name: 'campaign-result', params: { campaign_id: item.id } }"
@@ -85,6 +89,7 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import CampaignCreateEditElement from '@/components/elements/campaign/CampaignCreateEditElement'
+import { CAMPAIGN_STATUS } from '@/constants'
 
   export default {
     name: 'CampaignListElement',
@@ -111,7 +116,8 @@ import CampaignCreateEditElement from '@/components/elements/campaign/CampaignCr
             },
         ],
         editing_module_technical_name: null,
-        list_title: 'Campagnes'
+        list_title: 'Campagnes',
+        CAMPAIGN_STATUS: CAMPAIGN_STATUS,
     }),
     computed: {
         ...mapGetters({

@@ -70,6 +70,7 @@ export default {
         description_rules: [],
     }),
     async mounted() {
+        console.log("CampaignCreateEditElement - Mounted")
         this.loadCampaingToEditIfCampaignIdIsSetted()
     },
     watch: {
@@ -83,7 +84,6 @@ export default {
             updateCampaign: 'campaign_store/updateCampaign',
             getCampaign: 'campaign_store/getCampaign',
             setEditionCampaignId: 'campaign_store/setEditionCampaignId'
-
         }),
         async save () {
             if (!this.$refs.form.validate()) {

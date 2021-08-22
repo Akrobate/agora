@@ -1,5 +1,11 @@
 'use strict';
 
+const CAMPAIGN_STATUS = {
+    DRAFT: 1,
+    IN_PROGRESS: 2,
+    FINISHED: 3,
+};
+
 const CAMPAIGN_USER_STATUS = {
     INVITED: 1,
     STARTED: 2,
@@ -7,5 +13,6 @@ const CAMPAIGN_USER_STATUS = {
 };
 
 export {
-    CAMPAIGN_USER_STATUS
+    CAMPAIGN_USER_STATUS,
+    CAMPAIGN_STATUS
 };
