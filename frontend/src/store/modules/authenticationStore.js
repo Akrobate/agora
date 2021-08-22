@@ -8,8 +8,9 @@ const state = () => ({
     is_connected: user_repository.isValidLocalStorageToken(),
     token: user_repository.getTokenFromLocalStorageIfIsValid(),
     token_data: user_repository.isValidLocalStorageToken() ?
-    user_repository.decodeToken(user_repository.getTokenFromLocalStorageIfIsValid()) : {},
+        user_repository.decodeToken(user_repository.getTokenFromLocalStorageIfIsValid()) : {},
     user: {},
+    is_renewing_token: false,
 })
 
 const getters = {
@@ -17,6 +18,7 @@ const getters = {
     authenticationStatus: (state) => state.authentication_status,
     token: (state) => state.token,
     tokenData: (state) => state.token_data,
+    isRenewingToken: (state) => state.is_renewing_token,
 }
 
 const actions = {
@@ -43,11 +45,39 @@ const actions = {
     setConnection({ commit }, { token }) {
         commit('authentication_success', token)
     },
+    setIsRenewingToken({ commit }, value) {
+        commit('set_is_renewing_token', value)
+    },
+    renewToken({ commit }) {
+        console.log("renewToken store")
+        commit('set_is_renewing_token', true)
+        return new Promise((resolve, reject) => {
+            commit('authentication_request')
+            return user_repository.renewToken()
+                .then((response) => {
+                    console.log(response)
+                    user_repository.setTokenLocalStorage(response.token)
+                    commit('authentication_success', response.token)
+                    commit('set_is_renewing_token', false)
+                    return resolve(response)
+                })
+                .catch((error) => {
+                    console.log("response", error)
+
+                    commit('authentication_error')
+                    commit('set_is_renewing_token', false)
+                    return reject(error)
+                })
+        })
+    },
 }
 
 const mutations = {
     authentication_request(state) {
         state.authentication_status = 'loading'
+    },
+    set_is_renewing_token(state, value) {
+        state.is_renewing_token = value
     },
     authentication_success(state, token) {
         state.authentication_status = 'success'
