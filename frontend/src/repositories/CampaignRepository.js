@@ -19,6 +19,7 @@ class CampaignRepository {
         const result = await axios.get(`${this.ressource_url}`, {
             params: criteria,
         });
+
         return result.data
     }
 

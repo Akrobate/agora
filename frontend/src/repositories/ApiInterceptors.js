@@ -30,7 +30,8 @@ const requestAuthenticate = async (config) => {
      // @todo: This mecanic could move to the store
     const is_renewing_token = store.getters['authentication_store/isRenewingToken']
     if (
-        (token_data.exp - moment().unix()) < (10 * 60)
+        is_connected
+        && (token_data.exp - moment().unix()) < (10 * 60)
         && is_renewing_token === false
         && token_data.exp - moment().unix() < token_data.exp
     ) {

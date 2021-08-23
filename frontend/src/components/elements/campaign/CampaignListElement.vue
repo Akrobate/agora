@@ -10,6 +10,7 @@
         <v-toolbar-title>{{ list_title }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn
+          v-if="campaign_status === 'draft'"
           color="primary"
           dark
           class="mb-2"
@@ -104,7 +105,7 @@ import { CAMPAIGN_STATUS } from '@/constants'
         dialogDelete: false,
         headers: [
             {
-                text: 'Titre',
+                text: 'Nom de la campagne',
                 align: 'start',
                 value: 'title',
             },
@@ -161,34 +162,28 @@ import { CAMPAIGN_STATUS } from '@/constants'
             deleteModule: 'campaign_store/deleteCampaign',
         }),
         initialize () {
-            console.log('this.campaign_status', this.campaign_status)
             
             switch (this.campaign_status) {
                 case 'in-progress':
-                    console.log("in_pro")
-                    this.loadCampaigns({ criteria: { campaign_status_list: [2] }, list_to_update: 'in_progress' });
-                    break;
+                    this.list_title = 'Campagnes en cours'
+                    this.loadCampaigns({ criteria: { campaign_status_list: [2] }, list_to_update: 'in_progress' })
+                    break
                 case 'draft':
-                    console.log("in_draft")
-                    this.loadCampaigns({ criteria: { campaign_status_list: [1] }, list_to_update: 'draft' });
-                    break;
+                    this.list_title = 'Brouillons de campagnes'
+                    this.loadCampaigns({ criteria: { campaign_status_list: [1] }, list_to_update: 'draft' })
+                    break
                 case 'finished':
-                    console.log("in_fini")
-                    this.loadCampaigns({ criteria:  { campaign_status_list: [3] }  , list_to_update:  'finished' });
-                    break;
-            
+                    this.list_title = 'Campagnes terminées'
+                    this.loadCampaigns({ criteria:  { campaign_status_list: [3] }  , list_to_update:  'finished' })
+                    break
                 default:
-                    break;
+                    break
             }
             
         },
         createItem() {
             this.editing_module_technical_name = null
             this.dialog = true
-        },
-        editItem (item) {
-            this.dialog = true
-            this.editing_module_technical_name = item.technical_name
         },
         deleteItem (item) {
             this.editing_module_technical_name = item.technical_name
