@@ -14,3 +14,12 @@ jwt:
   public_key: "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA7ZeTOEV7nwpkT3sImLU3\n3b5mAWp9GztFQQXfHRvDV83nVpamrdf8U/DOXPaVqNNoqfOsGiAoYXXKez16U+pM\nLXEUMDG5d/UTZfpwnD3HDRvwp31LWlSU4nN7dVkSvjdgfEb4r6xpF0cmmk6P9W+p\n3G+uZUPAjhGKb0HZUlqBNKi7MW4vAByus2N/fYIHQb8URWBl/6tGi9X7toMUjQbF\noIv2uPcM7fTj+3JDLYqe4JEm1736C0iEP2g09I1Rn2XIrrnkSua/BenrIavfr4uL\nMT63Z/POET3NkUTrvwaAEdZZn+uAd1fV6je8BAyY/Mn3Y8kRWhehc1BMG0p8JVTU\nLtrsaxjg25qt+tylt62eqzwg9+UZU/s6BteJXbmak1/VlzoAixGMcUtODnqPIlLb\naf25KwjL7G6vw6xwerTjkd7s8V1cyE/K3xkphN+DvXs1R3iYHCIG30MwPTqQ4lEA\nk4KU5uUR7TfCswZgGlB+3Cd102sXtPNLciXzYNo3rfBSTmMLCr3WBs9+sRNhoINz\neaJSmmXP7Nilzk0MlU4/9tObLf41XUC3m3gO4g+0owst4tAKn2WV8NDWFA5BoyCM\nWymDWMl+K9talCMGWuPh4GcTpv0ZqkQT4DEtXs15sjFIfMKm9LZTTrMamHh0kdIn\nfLbraK2T+wR1rhfbR51bOPkCAwEAAQ==\n-----END PUBLIC KEY-----"
   algorithm: RS256
   default_token_duration: 3600
+
+email:
+  host: smtp.gmail.com
+  port: 587
+  username: username@gmail.com
+  password: userpassword
+
+security:
+  salt: 
