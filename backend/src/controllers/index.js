@@ -28,6 +28,10 @@ const {
     UserEloPropositionController,
 } = require('./UserEloPropositionController');
 
+const {
+    InvitationController,
+} = require('./InvitationController');
+
 module.exports = {
     CampaignController,
     CampaignUserController,
@@ -36,4 +40,5 @@ module.exports = {
     CampaignUserStatusController,
     UserPropositionController,
     UserEloPropositionController,
+    InvitationController,
 };

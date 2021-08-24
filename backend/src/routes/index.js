@@ -12,6 +12,7 @@ const {
     CampaignUserStatusController,
     UserPropositionController,
     UserEloPropositionController,
+    InvitationController,
 } = require('../controllers');
 
 const {
@@ -28,6 +29,7 @@ const proposition_controller = PropositionController.getInstance();
 const campaign_user_status_controller = CampaignUserStatusController.getInstance();
 const user_proposition_controller = UserPropositionController.getInstance();
 const user_elo_proposition_controller = UserEloPropositionController.getInstance();
+const invitation_controller = InvitationController.getInstance();
 
 const url_prefix = '/api/v1';
 
@@ -145,6 +147,15 @@ api_routes.get(
     authentication_middleware.injectJwtData(),
     (request, response, next) => campaign_user_controller
         .searchCampaignUsers(request, response)
+        .catch(next)
+);
+
+
+api_routes.post(
+    '/campaigns/:campaign_id/users/:campaign_user_id/invite',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => invitation_controller
+        .sendCampaignUserInvitation(request, response)
         .catch(next)
 );
 

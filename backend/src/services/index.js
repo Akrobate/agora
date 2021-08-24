@@ -28,6 +28,14 @@ const {
     UserEloPropositionService,
 } = require('./UserEloPropositionService');
 
+const {
+    InvitationService,
+} = require('./InvitationService');
+
+const {
+    EmailService,
+} = require('./EmailService');
+
 module.exports = {
     CampaignService,
     CampaignUserService,
@@ -36,4 +44,6 @@ module.exports = {
     PropositionService,
     UserPropositionService,
     UserEloPropositionService,
+    InvitationService,
+    EmailService,
 };
