@@ -158,6 +158,46 @@ class CampaignUserStatusRepository extends AbstractSequelizeRepository {
             where,
         };
     }
+
+
+    /**
+     * @param {*} input
+     * @return {Object}
+     */
+    async upsertCampaignUserStatus(input) {
+        const {
+            campaign_id,
+            user_id,
+            status_id,
+            date,
+        } = input;
+
+        let campaign_user_status = await this.find({
+            campaign_id,
+            user_id,
+            status_id,
+        });
+
+        if (campaign_user_status === null) {
+            campaign_user_status = await this.create({
+                campaign_id,
+                status_id,
+                user_id,
+                date,
+            });
+        } else {
+            campaign_user_status = await this.update({
+                id: campaign_user_status.id,
+                campaign_id,
+                status_id,
+                user_id,
+                date,
+            });
+        }
+
+        return campaign_user_status;
+
+    }
 }
 
 CampaignUserStatusRepository.instance = null;

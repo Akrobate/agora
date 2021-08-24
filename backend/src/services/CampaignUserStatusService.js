@@ -78,28 +78,13 @@ class CampaignUserStatusService {
 
         await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
 
-        let campaign_user_status = await this.campaign_user_status_repository.find({
-            campaign_id,
-            user_id,
-            status_id,
-        });
-
-        if (campaign_user_status === null) {
-            campaign_user_status = await this.campaign_user_status_repository.create({
+        const campaign_user_status = await this.campaign_user_status_repository
+            .upsertCampaignUserStatus({
                 campaign_id,
                 status_id,
                 user_id,
                 date: moment().toISOString(),
             });
-        } else {
-            campaign_user_status = await this.campaign_user_status_repository.update({
-                id: campaign_user_status.id,
-                campaign_id,
-                status_id,
-                user_id,
-                date: moment().toISOString(),
-            });
-        }
 
         return campaign_user_status;
     }
