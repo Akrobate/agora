@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -10,7 +11,7 @@ const routes = [
         component: () => import('@/components/pages/LoginPage.vue'),
         meta: {
             layout: 'DefaultLayout',
-            guest: true,
+            public: true,
         }
     },
     {
@@ -31,10 +32,23 @@ const routes = [
         }
     },
     {
+        path: '/guest-home',
+        name: 'guest-access',
+        component: () => import('@/components/pages/GuestAccessPage.vue'),
+        meta: {
+            layout: 'AppLayout',
+            requiresAuth: true,
+        }
+    },
+    {
         path: '/campaigns/create',
         name: 'campaign-create',
         props: true,
-        component: () => import('@/components/pages/CampaignCreatePage.vue')
+        component: () => import('@/components/pages/CampaignCreatePage.vue'),
+        meta: {
+            layout: 'AppLayout',
+            requiresAuth: true,
+        }
     },
     {
         path: '/campaigns/edit/:id',
@@ -76,7 +90,11 @@ const routes = [
         path: '/campaigns/:campaign_status',
         name: 'campaign-list',
         props: true,
-        component: () => import('@/components/pages/CampaignListPage.vue')
+        component: () => import('@/components/pages/CampaignListPage.vue'),
+        meta: {
+            layout: 'AppLayout',
+            requiresAuth: true,
+        }
     },
     {
         path: '/about',
@@ -96,6 +114,7 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
+
     if(to.matched.some(record => record.meta.requiresAuth)) {
         if (store.getters['authentication_store/isConnected']) {
             next()
@@ -105,13 +124,14 @@ router.beforeEach((to, from, next) => {
                 params: { nextUrl: to.fullPath }
             })
         }
-    } else if(to.matched.some(record => record.meta.guest)) {
-        if(store.getters['authentication_store/isConnected']){
-            next({ name: 'home'})
-        }
-        else{
-            next()
-        }
+    } else if(to.matched.some(record => record.meta.public)) {
+
+        // if (store.getters['authentication_store/isConnected']) {
+        //     next({ name: 'home'})
+        // } else{
+        //     next()
+        // }
+        next()
     } else {
         next()
     }
