@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import '@/filters/GlobalFilters'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify';
