@@ -38,6 +38,18 @@ const actions = {
             })
         })
     },
+    async guestLogin({ commit }, { public_token }) {
+        try {
+            commit('authentication_request')
+            const response = await user_repository.guestLogin(public_token)
+            user_repository.setTokenLocalStorage(response.token)
+            commit('authentication_success', response.token)
+            return response
+        } catch (error) {
+            commit('authentication_error')
+            throw error
+        }
+    },
     logout({ commit }) {
         commit('logout')
         user_repository.removeTokenLocalStorage()

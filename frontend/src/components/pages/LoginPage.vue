@@ -1,12 +1,6 @@
 <template>
-  <v-container
-    class="fill-height"
-    fluid
-  >
-    <v-row
-      align="center"
-      justify="center"
-    >
+  <v-container class="fill-height" fluid>
+    <v-row align="center" justify="center">
       <v-col
         cols="12"
         sm="8"
@@ -80,7 +74,7 @@
 
 <script>
 
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import {version} from '../../../package.json';
 
 export default {
@@ -95,9 +89,38 @@ export default {
             app_version: version,
         }
     },
+    async mounted() {
+
+        const public_token = this.$route.query.public_token
+        if (public_token) {
+            try {
+                await this.authenticateGuest({ public_token })
+                this.$router.push({ name: 'guest-access' })
+                return null
+            } catch (error) {
+                if (error.response.status == 401) {
+                    this.snackbar_text = 'Votre invitation est invalide'
+                } else {
+                    this.snackbar_text = 'Probleme technique, veuillez essayer plus tard'
+                }
+                this.loading = false
+                this.snackbar = true
+            }
+        }
+
+        if (this.isConnected) {
+            this.$router.push({ name: 'home' })
+        }
+    },
+    computed: {
+        ...mapGetters({
+            isConnected: 'authentication_store/isConnected',
+        })
+    },
     methods: {
         ...mapActions({
-            authenticate: 'authentication_store/login'
+            authenticate: 'authentication_store/login',
+            authenticateGuest: 'authentication_store/guestLogin'
         }),
         async login() {
             this.loading = true
@@ -108,7 +131,6 @@ export default {
                 })
                 this.$router.push({ name: 'home' })
             } catch (error) {
-                console.log('errorerrorerrorerror', error);
                 if (error.response.status == 401) {
                     this.snackbar_text = 'Votre email ou mot de passe est incorrect'
                 } else {
