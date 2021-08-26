@@ -61,6 +61,15 @@ class CampaignUserRepository {
         const result = await axios.delete(`${this.ressource_url}/${campaign_id}/users/${id}`)
         return result.data
     }
+
+    /**
+     * @param {Object} data 
+     * @returns {Promise} 
+     */
+    async invite(campaign_id, id) {
+        const result = await axios.post(`${this.ressource_url}/${campaign_id}/users/${id}/invite`)
+        return result.data
+    }
 }
 
 const campaign_user_repository = new CampaignUserRepository()
