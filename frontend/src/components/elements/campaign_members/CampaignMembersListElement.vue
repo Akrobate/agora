@@ -43,16 +43,53 @@
           </v-card>
         </v-dialog>
 
+
+        <v-dialog v-model="dialogInvite" max-width="500px">
+          <v-card>
+            <v-card-title class="headline">
+                Inviter le membre
+            </v-card-title>
+
+            <v-card-text>
+                Etes vous sur de vouloir inviter ce membre maintenant?
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="closeInvite">Annuler</v-btn>
+              <v-btn color="blue darken-1" text @click="InviteConfirm">Oui</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+
       </v-toolbar>
     </template>
 
     <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">
+
+        <v-icon class="mr-2" @click="invite(item)">
+            mdi-email-send-outline
+        </v-icon>
+
+        <v-icon class="mr-2" @click="editItem(item)">
             mdi-pencil
         </v-icon>
-        <v-icon small @click="deleteItem(item)">
+        
+        <v-icon class="mr-2" @click="deleteItem(item)">
             mdi-delete
         </v-icon>
+
+    </template>
+
+
+    <template v-slot:[`item.invitation`]="{ item }">
+        <div :set="sub = item.user_status_list.find((status) => status.status_id === 1)">
+            <div v-if="sub !== undefined">
+                Invité {{ sub.date | humanizeDate }}
+            </div>
+        </div>
     </template>
 
 
@@ -118,6 +155,7 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
     data: () => ({
         dialog: false,
         dialogDelete: false,
+        dialogInvite: false,
         headers: [
             {
                 text: 'Email',
@@ -135,6 +173,11 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
                 sortable: true,
             },
             {
+                text: 'Invitation',
+                value: 'invitation',
+                sortable: true,
+            },
+            {
                 text: 'Actions',
                 value: 'actions',
                 align: 'end',
@@ -147,9 +190,6 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
         ...mapGetters({
             campaignUserList: 'campaign_store/campaignUserList',
         }),
-        formTitle () {
-            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-        },
     },
     watch: {
         dialog (val) {
@@ -157,6 +197,9 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
         },
         dialogDelete (val) {
             val || this.closeDelete()
+        },
+        dialogInvite (val) {
+            val || this.closeInvite()
         },
         campaign_id () {
             this.initialize()
@@ -169,6 +212,7 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
         ...mapActions({
             loadCampaignUserList: 'campaign_store/loadCampaignUserList',
             clearCampaignUserList: 'campaign_store/clearCampaignUserList',
+            inviteCampaignUser: 'campaign_store/inviteCampaignUser',
             deleteCampaignUser: 'campaign_store/deleteCampaignUser',
         }),
         saved() {
@@ -194,6 +238,17 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
             this.editing_campaign_user_id = item.id
             this.dialogDelete = true
         },
+        invite(item) {
+            this.editing_campaign_user_id = item.id
+            this.dialogInvite = true
+        },
+        async InviteConfirm() {
+            await this.inviteCampaignUser({
+                id: this.editing_campaign_user_id,
+                campaign_id: this.campaign_id
+            })
+            this.closeInvite()
+        },
         async deleteItemConfirm () {
             await this.deleteCampaignUser({
                 id: this.editing_campaign_user_id,
@@ -207,6 +262,9 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
         },
         closeDelete () {
             this.dialogDelete = false
+        },
+        closeInvite () {
+            this.dialogInvite = false
         },
     },
   }
