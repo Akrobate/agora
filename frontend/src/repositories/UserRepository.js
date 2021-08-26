@@ -14,6 +14,15 @@ class UserRepository {
         return response.data
     }
 
+    async guestLogin(public_token) {
+        const response = await axios.post(`${api_configuration.url_api}/api/v1/users/login/guest`,
+            {
+                public_token,
+            }
+        )
+        return response.data
+    }
+
     async renewToken() {
         const response = await axios.post(`${api_configuration.url_api}/api/v1/users/token/renew`)
         return response.data
