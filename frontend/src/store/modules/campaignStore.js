@@ -102,6 +102,12 @@ const actions = {
         commit('set_empty_campaign_user_list')
     },
 
+    async inviteCampaignUser({ dispatch }, { campaign_id, id }) {
+        const response = await campaign_user_repository.invite(campaign_id, id)
+        dispatch('loadCampaignUserList', { campaign_id });
+        return response;
+    }
+
 }
 
 const mutations = {
