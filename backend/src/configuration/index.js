@@ -7,4 +7,5 @@ const {
 
 module.exports = {
     configuration,
+    sequelize,
 };
