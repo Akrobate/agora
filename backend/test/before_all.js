@@ -12,7 +12,7 @@ before((done) => {
     console.log('Database forced to be:', test_database_name);
     console.log('======================================');
 
-console.log('configuration', configuration)
+    // console.log('configuration', configuration)
 
     done();
 });
