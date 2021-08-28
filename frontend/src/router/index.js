@@ -87,6 +87,18 @@ const routes = [
         component: () => import('@/components/pages/CampaignResultPage.vue')
     },
     {
+        path: '/campaigns/:campaign_id/participate',
+        name: 'campaign-participate',
+        props: (route) => Object.assign(
+            {},
+            route.params,
+            {
+                campaign_id: parseInt(route.params.campaign_id)
+            }
+        ),
+        component: () => import('@/components/pages/CampaignParticipationMainPage.vue')
+    },
+    {
         path: '/campaigns/:campaign_status',
         name: 'campaign-list',
         props: true,
