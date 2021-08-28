@@ -56,6 +56,10 @@
             v-if="
                 item.user_is_participant
                 && [CAMPAIGN_STATUS.IN_PROGRESS, CAMPAIGN_STATUS.FINISHED].includes(item.campaign_status)
+                && (
+                    item.user_access_level === USER_ACCESS_LEVEL.MANAGER
+                    || item.user_access_level === USER_ACCESS_LEVEL.OBSERVER
+                )
             "
             tag="span"
             style="cursor: pointer"
@@ -64,14 +68,20 @@
             <v-icon class="mr-2" >mdi-format-list-bulleted-square</v-icon>
         </router-link>
 
-        <router-link 
+        <router-link
+            v-if="item.user_access_level === USER_ACCESS_LEVEL.MANAGER"
             tag="span"
             style="cursor: pointer"
             :to="{ name: 'campaign-edit', params: { id: item.id } }"
         >
             <v-icon class="mr-2" color="blue">mdi-pencil</v-icon>
         </router-link>
-        <v-icon color="red" @click="deleteItem(item)">
+
+        <v-icon
+            v-if="item.user_access_level === USER_ACCESS_LEVEL.MANAGER"
+            color="red"
+            @click="deleteItem(item)"
+        >
             mdi-delete
         </v-icon>
     </template>
@@ -90,7 +100,7 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import CampaignCreateEditElement from '@/components/elements/campaign/CampaignCreateEditElement'
-import { CAMPAIGN_STATUS } from '@/constants'
+import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
 
   export default {
     name: 'CampaignListElement',
@@ -119,6 +129,7 @@ import { CAMPAIGN_STATUS } from '@/constants'
         editing_module_technical_name: null,
         list_title: 'Campagnes',
         CAMPAIGN_STATUS: CAMPAIGN_STATUS,
+        USER_ACCESS_LEVEL,
     }),
     computed: {
         ...mapGetters({
