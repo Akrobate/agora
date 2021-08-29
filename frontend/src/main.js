@@ -10,8 +10,11 @@ import { responseSuccess, responseError, requestAuthenticate } from '@/repositor
 
 import AppLayout from './components/layouts/AppLayout.vue'
 import DefaultLayout from './components/layouts/DefaultLayout.vue'
+import GuestAppLayout from './components/layouts/GuestAppLayout.vue'
+
 Vue.component('AppLayout', AppLayout)
 Vue.component('DefaultLayout', DefaultLayout)
+Vue.component('GuestAppLayout', GuestAppLayout)
 
 import store from '@/store'
 
