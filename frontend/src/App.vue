@@ -17,7 +17,6 @@ export default {
             token_data: 'authentication_store/tokenData',
         }),
         layout() {
-            console.log('this.token_datathis.token_datathis.token_datathis.token_data')
             if (this.$route.meta.public === true) {
                 return 'DefaultLayout'
             }

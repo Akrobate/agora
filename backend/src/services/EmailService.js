@@ -130,7 +130,7 @@ class EmailService {
             invitation_token,
         } = input;
 
-        const frontend_url = 'http://192.168.1.11:8080/';
+        const frontend_url = 'http://192.168.1.11:8080/login';
 
         const invitation_template = await fs.readFile(
             `${EmailService.TEMPLATES_FOLDER}invitation.html`,
