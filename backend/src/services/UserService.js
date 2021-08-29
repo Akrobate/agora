@@ -246,6 +246,7 @@ class UserService {
             user_id: user.id,
             email: user.email,
             access_type: 'guest',
+            invited_to_campaign_id: campaign_user.campaign_id,
         };
 
         let jwt_token = null;
