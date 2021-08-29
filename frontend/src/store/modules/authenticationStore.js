@@ -105,6 +105,7 @@ const mutations = {
         state.status = ''
         state.token = null
         state.is_connected = false
+        state.token_data = {}
     },
 }
 
