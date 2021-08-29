@@ -11,15 +11,20 @@
 
                 <p class="font-weight-medium body-2">
                     Vous êtes connecté en tant qu'invité à participer a la campagne <br />
-
-                    <span class="font-weight-bold">
-                        "Campaign name"
-                    </span>
                 </p>
 
+                <p class="font-weight-medium body-2 font-weight-bold">
+                    "{{ campaign_title }}"
+                </p>
+
+                <p class="font-weight-medium body-2 font-weight-normal">
+                    {{ campaign_description }}
+                </p>
+                
                 <v-btn
                     class="mt-3"
                     color="primary"
+                    :to="{ name: 'campaign-participate', params: { campaign_id: campaign_id } }"
                 >
                     Participer a la campagne en tant qu'invité
                 </v-btn>
@@ -62,6 +67,8 @@
 
 <script>
 
+import { mapActions, mapGetters } from 'vuex'
+
 import UserRegistrationFormElement from '@/components/elements/user/UserRegistrationFormElement'
 
 export default {
@@ -71,13 +78,34 @@ export default {
             disabled_email_value: 'fedorov.artiom@gmail.com',
             trigger_register: null,
             loading: false,
+
+            campaign_id: null,
+            campaign_title: null,
+            campaign_description: null,
         }
     },
     components: {
         UserRegistrationFormElement,
     },
-    props: {
-        campaign_id: Number,
+    computed: {
+        ...mapGetters({
+            token_data: 'authentication_store/tokenData',
+        }),
     },
+    methods: {
+        ...mapActions({
+            getCampaign: 'campaign_store/getCampaign',
+        }),
+    },
+    async mounted() {
+
+        const campaign = await this.getCampaign({
+            campaign_id: this.token_data.invited_to_campaign_id
+        })
+        this.campaign_id = campaign.id
+        this.campaign_title = campaign.title
+        this.campaign_description = campaign.description
+
+    }
 }
 </script>

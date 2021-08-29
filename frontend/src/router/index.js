@@ -136,8 +136,8 @@ router.beforeEach((to, from, next) => {
                 params: { nextUrl: to.fullPath }
             })
         }
+    // @todo: maybe use less condition, to remove at the end of the project
     } else if(to.matched.some(record => record.meta.public)) {
-
         // if (store.getters['authentication_store/isConnected']) {
         //     next({ name: 'home'})
         // } else{
