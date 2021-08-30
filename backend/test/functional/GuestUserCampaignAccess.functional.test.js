@@ -205,7 +205,10 @@ describe('CampaignAccess', () => {
             .expect((response) => {
                 expect(response.body).to.have.property('token');
                 expect(response.body.token)
-                    .to.equal(DataSeeder.getJwtGuestAccessToken(guest_user_seed));
+                    .to.equal(DataSeeder.getJwtGuestAccessToken(
+                        guest_user_seed,
+                        guest_campaign_user_seed.campaign_id
+                    ));
             });
     });
 

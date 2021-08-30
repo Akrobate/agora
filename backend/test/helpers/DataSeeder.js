@@ -96,13 +96,15 @@ class DataSeeder {
 
     /**
      * @param {Object} user
+     * @param {Number} invited_to_campaign_id
      * @returns {String}
      */
-    static getJwtGuestAccessToken(user) {
+    static getJwtGuestAccessToken(user, invited_to_campaign_id) {
         return DataSeeder.singJwt({
             user_id: user.id,
             email: user.email,
             access_type: 'guest',
+            invited_to_campaign_id,
         });
     }
 
