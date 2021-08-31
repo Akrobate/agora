@@ -51,6 +51,7 @@ const actions = {
     },
 
 
+
     async createProposition(_, { campaign_id, data }) {
         const response = await proposition_repository.create(campaign_id, data)
         return response
@@ -62,6 +63,11 @@ const actions = {
     },
     async clearPropositionList({ commit } ) {
         commit('set_empty_proposition_list')
+    },
+    async deleteProposition({ dispatch }, { campaign_id, id}) {
+        const response = await proposition_repository.delete(campaign_id, id)
+        await dispatch('loadPropositionList', { campaign_id })
+        return response
     },
 
 

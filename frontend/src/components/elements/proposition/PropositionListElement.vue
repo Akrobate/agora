@@ -25,13 +25,13 @@
             />
         </v-dialog>
 
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog v-model="dialogDelete" max-width="600px">
           <v-card>
-            <v-card-title class="headline">Are you sure you want to delete this module?</v-card-title>
+            <v-card-title class="headline">Confirmer la suppression ?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteConfirm">OK</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -97,7 +97,7 @@ import PropositionCreateEditElement from '@/components/elements/proposition/Prop
                 sortable: false,
             },
         ],
-        editing_module_technical_name: null,
+        editing_proposition_id: null,
     }),
     computed: {
         ...mapGetters({
@@ -139,19 +139,22 @@ import PropositionCreateEditElement from '@/components/elements/proposition/Prop
             }
         },
         createProposition() {
-            this.editing_module_technical_name = null
+            this.editing_proposition_id = null
             this.dialog = true
         },
         editItem (item) {
             this.dialog = true
-            this.editing_module_technical_name = item.technical_name
+            this.editing_proposition_id = item.id
         },
         deleteItem (item) {
-            this.editing_module_technical_name = item.technical_name
+            this.editing_proposition_id = item.id
             this.dialogDelete = true
         },
-        deleteItemConfirm () {
-            this.deleteModule(this.editing_module_technical_name)
+        async deleteConfirm () {
+            await this.deleteProposition({
+                campaign_id: this.campaign_id,
+                id: this.editing_proposition_id,
+            })
             this.closeDelete()
         },
         close () {
