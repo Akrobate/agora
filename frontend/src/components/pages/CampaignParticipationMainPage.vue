@@ -34,6 +34,10 @@
             </v-col>
         </v-row>
 
+
+        <proposition-manual-sort-element />
+
+
     </v-container>
 </template>
 
@@ -41,10 +45,14 @@
 
 import { mapActions } from 'vuex'
 
+import PropositionManualSortElement from '@/components/elements/proposition/PropositionManualSortElement'
 
 export default {
     props: {
         campaign_id: Number,
+    },
+    components: {
+        PropositionManualSortElement,
     },
     data() {
         return {
