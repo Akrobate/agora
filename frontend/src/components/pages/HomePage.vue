@@ -67,7 +67,7 @@
 
                         <v-btn 
                             text
-                            :to="{ name: 'campaign-elo-game', params: { campaign_id: campaign.id } }"
+                            :to="{ name: 'campaign-participate', params: { campaign_id: campaign.id } }"
                             >
                             <v-icon class="mr-2" color="green">mdi-play-circle</v-icon>
                             Participer

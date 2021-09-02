@@ -47,7 +47,7 @@
             v-if="item.user_is_participant && item.campaign_status === CAMPAIGN_STATUS.IN_PROGRESS"
             tag="span"
             style="cursor: pointer"
-            :to="{ name: 'campaign-elo-game', params: { campaign_id: item.id } }"
+            :to="{ name: 'campaign-participate', params: { campaign_id: item.id } }"
         >
             <v-icon class="mr-2" color="green">mdi-play-circle</v-icon>
         </router-link>

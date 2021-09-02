@@ -27,7 +27,7 @@
                     large
                 >
                     <v-icon class="mr-3">
-                        mdi-home
+                        mdi-play-circle
                     </v-icon>
                     Lancer le classement ELO
                 </v-btn>
