@@ -18,7 +18,7 @@
             <v-icon>mdi-information</v-icon>
         </v-btn>
 
-        <v-btn icon :to="{ name: 'module-setup'}">
+        <v-btn icon :to="{ name: 'about'}">
             <v-icon>mdi-cog</v-icon>
         </v-btn>
     </v-app-bar>
