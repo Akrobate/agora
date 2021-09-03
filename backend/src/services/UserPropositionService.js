@@ -163,7 +163,7 @@ class UserPropositionService {
      * @param {Object} input
      * @returns {Promise<*|Error>}
      */
-    async getRanking(user, input) {
+    async getOwnRanking(user, input) {
         const {
             user_id,
         } = user;
