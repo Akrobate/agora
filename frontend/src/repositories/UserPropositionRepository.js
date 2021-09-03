@@ -54,6 +54,19 @@ class UserPropositionRepository {
         return result.data
     }
 
+
+    /**
+     * @todo: Set the good roote
+     * @param {Number} campaign_id 
+     * @param {Number} proposition_id_list 
+     * @returns {Promise} 
+     */
+    // async getOwnRanking(campaign_id) {
+    //     const result = await axios
+    //         .get(`${this.ressource_url}/${campaign_id}/propositions`)
+    //     return result.data
+    // }
+
 }
 
 const user_proposition_repository = new UserPropositionRepository()
