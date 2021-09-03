@@ -167,6 +167,32 @@ class UserPropositionController extends AbstractController {
             proposition_result_list: data,
         });
     }
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async getOwnResult(request, response) {
+
+        const {
+            campaign_id,
+        } = request.params;
+
+
+        const data = await this.proposition_user_service.getOwnRanking(
+            request.jwt_data,
+            {
+                campaign_id,
+            }
+        );
+
+        return response.status(HTTP_CODE.OK).send({
+            proposition_result_list: data,
+        });
+    }
+
+
 }
 
 UserPropositionController.instance = null;
