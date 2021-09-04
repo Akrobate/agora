@@ -173,6 +173,22 @@ class UserPropositionService {
         } = input;
 
         await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
+
+        const user_proposition_result_list = await this.user_proposition_result_repository
+            .search({
+                user_id_list: [
+                    user_id,
+                ],
+                campaign_id,
+            },
+            {
+                sort_list: [
+                    'rank',
+                ],
+            });
+
+        console.log(user_proposition_result_list);
+
         const proposition_list = await this.proposition_repository.search({
             campaign_id,
             user_id,
