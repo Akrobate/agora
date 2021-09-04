@@ -148,4 +148,39 @@ describe('PropositionsRanking - Functional test', () => {
             });
     });
 
+
+    it.only('User should be get own ranking', async () => {
+        // Seeding
+        await superApp
+            .post(`/api/v1/campaigns/${campaign_seed.id}/init-ranking`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.CREATED);
+
+        await superApp
+            .post(`/api/v1/campaigns/${campaign_seed.id}/update-ranking`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .send({
+                proposition_id_list: [3, 2, 1],
+            })
+            .expect(HTTP_CODE.CREATED);
+
+        await superApp
+            .get(`/api/v1/campaigns/${campaign_seed.id}/own-proposition-results`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .send({
+                proposition_id_list: [3, 2, 1],
+            })
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response.body).to.have.property('proposition_result_list');
+                const {
+                    proposition_result_list,
+                } = response.body;
+                console.log('response.body', response.body);
+                const result_order = proposition_result_list.map((proposition) => proposition.id);
+                expect(result_order).to.deep.equal([3, 2, 1]);
+            });
+
+    });
+
 });
