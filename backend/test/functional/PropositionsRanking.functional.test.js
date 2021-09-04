@@ -149,7 +149,7 @@ describe('PropositionsRanking - Functional test', () => {
     });
 
 
-    it.only('User should be get own ranking', async () => {
+    it('User should be get own ranking', async () => {
         // Seeding
         await superApp
             .post(`/api/v1/campaigns/${campaign_seed.id}/init-ranking`)
@@ -177,7 +177,8 @@ describe('PropositionsRanking - Functional test', () => {
                     proposition_result_list,
                 } = response.body;
                 console.log('response.body', response.body);
-                const result_order = proposition_result_list.map((proposition) => proposition.id);
+                const result_order = proposition_result_list
+                    .map((proposition) => proposition.proposition_id);
                 expect(result_order).to.deep.equal([3, 2, 1]);
             });
 

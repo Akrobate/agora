@@ -187,14 +187,19 @@ class UserPropositionService {
                 ],
             });
 
-        console.log(user_proposition_result_list);
-
         const proposition_list = await this.proposition_repository.search({
             campaign_id,
-            user_id,
         });
 
-        return proposition_list;
+        return user_proposition_result_list.map((user_proposition_result) => {
+            const proposition = proposition_list
+                .find((prop) => prop.id === user_proposition_result.proposition_id);
+            return {
+                proposition_id: proposition.id,
+                rank: proposition.rank,
+                payload: proposition.payload,
+            };
+        });
     }
 
 
