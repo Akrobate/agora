@@ -224,6 +224,14 @@ api_routes.post(
         .catch(next)
 );
 
+api_routes.get(
+    '/campaigns/:campaign_id/own-proposition-results',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_proposition_controller
+        .getOwnResult(request, response)
+        .catch(next)
+);
+
 
 api_routes.post(
     '/campaigns/:campaign_id/init-elo-ranking',
