@@ -35,7 +35,7 @@ const error_mapper = {
 
 
 const error_manager_middleware = (error, _, response, next) => {
-    // console.log(error);
+    console.log(error);
     if (error.code === undefined) {
 
         logger.log(error);
