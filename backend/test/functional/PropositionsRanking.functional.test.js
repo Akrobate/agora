@@ -180,6 +180,13 @@ describe('PropositionsRanking - Functional test', () => {
                 const result_order = proposition_result_list
                     .map((proposition) => proposition.proposition_id);
                 expect(result_order).to.deep.equal([3, 2, 1]);
+
+                const [
+                    first_proposition,
+                ] = proposition_result_list;
+
+                expect(first_proposition).to.have.property('payload', proposition_3_seed.payload);
+                expect(first_proposition).to.have.property('campaign_id', proposition_3_seed.campaign_id);
             });
 
     });
