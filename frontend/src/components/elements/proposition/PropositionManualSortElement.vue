@@ -1,52 +1,51 @@
 <template>
     <v-container>
 
-        <v-spacer class="my-8"/>
+        <h1 class="text-h5 mt-8">Votre classement</h1>
+    
+        <v-btn
+            class="my-3"
+            color=""
+            @click="sort()"
+            x-small
+        >
+            Reinitialiser l'ordre
+        </v-btn>
 
-        <div class="row">
-            <div class="col-6">
-                <h3>Transition</h3>
-                
-                <button class="btn btn-secondary button" @click="sort">
-                    To original order
-                </button>
 
-                <v-simple-table>
+        <v-simple-table>
 
-                    <thead>
-                        <tr>
-                        <th class="text-left">
-                            Name
-                        </th>
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        Proposition
+                    </th>
+                </tr>
+            </thead>
 
-                        </tr>
-                    </thead>
+        
+            <draggable
+                class="list-group"
+                tag="tbody"
+                v-model="list"
+                v-bind="dragOptions"
+                @start="drag = true"
+                @end="drag = false"
+            >
 
-                
-                    <draggable
-                        class="list-group"
-                        tag="tbody"
-                        v-model="list"
-                        v-bind="dragOptions"
-                        @start="drag = true"
-                        @end="drag = false"
+                    <tr
+                        class="list-group-item"
+                        v-for="element in list"
+                        :key="element.order"
                     >
+                        <td>
+                            {{ element.name }}
+                        </td>
+                    </tr>
 
-                            <tr
-                                class="list-group-item"
-                                v-for="element in list"
-                                :key="element.order"
-                            >
-                                <td>
-                                    {{ element.name }}
-                                </td>
-                            </tr>
+            </draggable>
 
-                    </draggable>
-
-                </v-simple-table>
-            </div>
-        </div>
+        </v-simple-table>
     </v-container>
 
 </template>
