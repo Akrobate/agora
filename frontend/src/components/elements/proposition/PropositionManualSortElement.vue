@@ -53,8 +53,11 @@
 <script>
 
 import draggable from "vuedraggable";
+import { mapActions, mapGetters } from 'vuex';
 
 //https://github.com/SortableJS/Vue.Draggable/issues/61
+
+// 
 
 const message = [
   "vue.draggable",
@@ -82,11 +85,17 @@ export default {
         };
     },
     methods: {
+        ...mapActions({
+            loadOwnPropositionResultList: 'user_proposition_store/loadOwnPropositionResultList',
+        }),
         sort() {
             this.list = this.list.sort((a, b) => a.order - b.order);
         }
     },
     computed: {
+        ...mapGetters({
+            propositionResultList: 'user_proposition_store/propositionResultList',
+        }),
         dragOptions() {
             return {
                 animation: 400,
