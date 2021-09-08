@@ -71,18 +71,25 @@ const message = [
 ];
 export default {
     name: "PropositionManualSortElement",
-    display: "Transitions",
-    order: 7,
+    props: {
+        campaign_id: Number,
+    },
     components: {
         draggable
     },
     data() {
         return {
             list: message.map((name, index) => {
-                return { name, order: index + 1 };
+                return { name, order: index + 1 }
             }),
             drag: false
         };
+    },
+    async mounted() {
+        await this.loadOwnPropositionResultList({
+            campaign_id: this.campaign_id
+        })
+        console.log("propositionResultList", this.propositionResultList)
     },
     methods: {
         ...mapActions({
