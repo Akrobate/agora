@@ -35,7 +35,7 @@
         </v-row>
 
 
-        <proposition-manual-sort-element />
+        <proposition-manual-sort-element :campaign_id="campaign_id" />
 
 
     </v-container>
