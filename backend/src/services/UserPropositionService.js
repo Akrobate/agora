@@ -196,7 +196,7 @@ class UserPropositionService {
                 .find((prop) => prop.id === user_proposition_result.proposition_id);
             return {
                 proposition_id: proposition.id,
-                rank: proposition.rank,
+                rank: user_proposition_result.rank,
                 payload: proposition.payload,
             };
         });
