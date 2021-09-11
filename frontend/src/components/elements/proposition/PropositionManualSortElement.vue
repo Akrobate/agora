@@ -39,7 +39,7 @@
                         :key="element.order"
                     >
                         <td>
-                            {{ element.name }}
+                            {{ element.payload }}
                         </td>
                     </tr>
 
@@ -57,18 +57,6 @@ import { mapActions, mapGetters } from 'vuex';
 
 //https://github.com/SortableJS/Vue.Draggable/issues/61
 
-// 
-
-const message = [
-  "vue.draggable",
-  "draggable",
-  "component",
-  "for",
-  "vue.js 2.0",
-  "based",
-  "on",
-  "Sortablejs"
-];
 export default {
     name: "PropositionManualSortElement",
     props: {
@@ -79,9 +67,7 @@ export default {
     },
     data() {
         return {
-            list: message.map((name, index) => {
-                return { name, order: index + 1 }
-            }),
+            list: [],
             drag: false
         };
     },
@@ -89,7 +75,9 @@ export default {
         await this.loadOwnPropositionResultList({
             campaign_id: this.campaign_id
         })
-        console.log("propositionResultList", this.propositionResultList)
+        this.list = this.propositionResultList.map((proposition, index) => {
+                return { ...proposition, order: index + 1 }
+        })
     },
     methods: {
         ...mapActions({
