@@ -20,6 +20,9 @@
                     <th class="text-left">
                         Proposition
                     </th>
+                    <th class="text-left">
+                        Rang
+                    </th>
                 </tr>
             </thead>
 
@@ -40,6 +43,9 @@
                     >
                         <td>
                             {{ element.payload }}
+                        </td>
+                        <td>
+                            {{ element.rank }}
                         </td>
                     </tr>
 
