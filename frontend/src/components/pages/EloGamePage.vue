@@ -189,6 +189,7 @@ export default {
                 proposition_id_list: this.eloPropositionRankingList.map((item) => item.proposition_id),
             })
             await this.setCampaignUserStatusResultSubmited({ campaign_id: this.campaign_id })
+            this.$router.push({ name: 'campaign-participate', campaign_id: this.campaign_id })
         },
         async updateResultList() {
             await this.loadPropositionRankingList({campaign_id: this.campaign_id})
