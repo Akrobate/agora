@@ -188,7 +188,6 @@ describe('PropositionsRanking - Functional test', () => {
                 expect(first_proposition).to.have.property('payload', proposition_3_seed.payload);
                 expect(first_proposition).to.have.property('campaign_id', proposition_3_seed.campaign_id);
             });
-
     });
 
 });
