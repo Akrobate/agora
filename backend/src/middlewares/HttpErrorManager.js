@@ -31,6 +31,9 @@ const error_mapper = {
     [CustomError.UNAUTHORIZED]: {
         status: status.UNAUTHORIZED,
     },
+    [CustomError.ACCESS_FORBIDDEN]: {
+        status: status.FORBIDDEN,
+    },
 };
 
 
