@@ -60,6 +60,11 @@ class CustomError extends Error {
         return 6;
     }
 
+    // eslint-disable-next-line require-jsdoc
+    static get ACCESS_FORBIDDEN() {
+        return 7;
+    }
+
 }
 
 module.exports = {
