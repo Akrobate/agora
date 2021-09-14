@@ -8,6 +8,8 @@
             </v-card-text>
         </v-card>
 
+        <proposition-manual-sort-element :campaign_id="campaign_id" />
+
         <v-row class="my-10">
             <v-col cols="6" align="center">
                 <v-btn
@@ -33,10 +35,6 @@
                 </v-btn>
             </v-col>
         </v-row>
-
-
-        <proposition-manual-sort-element :campaign_id="campaign_id" />
-
 
     </v-container>
 </template>
