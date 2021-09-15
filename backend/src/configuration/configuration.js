@@ -13,7 +13,11 @@ const {
 
 
 const CONFIGURATION_SAMPLE_YAML_FILE = './configuration.default.yml';
-const CONFIGURATION_YAML_FILE = './configuration.yml';
+let CONFIGURATION_YAML_FILE = './configuration.yml';
+
+if (process.env.CONFIGURATION_YAML_FILE) {
+    CONFIGURATION_YAML_FILE = process.env.CONFIGURATION_YAML_FILE;
+}
 
 let configuration = {};
 let configuration_file = {};
