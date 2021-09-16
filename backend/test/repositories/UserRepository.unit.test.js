@@ -8,7 +8,7 @@ const {
 } = require('uuid');
 const {
     DataSeeder,
-} = require('../helpers/DataSeeder');
+} = require('../test_helpers/DataSeeder');
 const {
     UserRepository,
 } = require('../../src/repositories/UserRepository');

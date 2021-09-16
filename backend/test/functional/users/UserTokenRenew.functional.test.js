@@ -13,7 +13,7 @@ const {
 
 const {
     DataSeeder,
-} = require('../../helpers/DataSeeder');
+} = require('../../test_helpers/DataSeeder');
 
 const superApp = superTest(app);
 

@@ -11,7 +11,7 @@ const {
 } = require('chai');
 const {
     DataSeeder,
-} = require('../helpers/DataSeeder');
+} = require('../test_helpers/DataSeeder');
 const {
     app,
 } = require('../../src/app');
