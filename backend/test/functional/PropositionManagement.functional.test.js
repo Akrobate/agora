@@ -15,46 +15,23 @@ const {
     DataSeeder,
 } = require('../test_helpers/DataSeeder');
 
+const {
+    manager_user_seed,
+    campaign_seed,
+    manager_campaign_user_seed,
+    guest_user_seed,
+    guest_campaign_user_seed,
+} = require('../test_seeds/campaign_propositions_results_seeds');
+
+
 const superApp = superTest(app);
 
 describe('CampaignAccess', () => {
-
-    const manager_user_seed = {
-        id: 100,
-        password: 'ShouldHaveLettersDigitsAndAtLeast8chars1',
-        email: 'manager.user@test.com',
-    };
 
     const not_manager_user_seed = {
         id: 400,
         password: 'Nevermind',
         email: 'not_manager.user@test.com',
-    };
-
-    const campaign_seed = {
-        id: 10,
-        title: 'Title of campaignsss',
-        description: 'Somethings',
-        campaign_status: 2,
-        owner_user_id: manager_user_seed.id,
-    };
-
-    const manager_campaign_user_seed = {
-        campaign_id: campaign_seed.id,
-        user_id: 100,
-        access_level: 3,
-    };
-
-    const guest_user_seed = {
-        id: 200,
-        email: 'guest.user@test.com',
-    };
-
-    const guest_campaign_user_seed = {
-        campaign_id: campaign_seed.id,
-        user_id: guest_user_seed.id,
-        public_token: '8185933f78c749b381ad630308cd1257',
-        access_level: 1,
     };
 
     const proposition_to_read_seed = {
