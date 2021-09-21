@@ -26,25 +26,13 @@ const {
     manager_campaign_user_seed,
     guest_user_seed,
     guest_campaign_user_seed,
+    guest_user_to_delete_seed,
+    guest_campaign_user_to_delete_seed,
 } = require('../test_seeds/campaign_propositions_results_seeds');
 
 const superApp = superTest(app);
 
 describe('CampaignAccess', () => {
-
-    const guest_user_to_delete_seed = {
-        id: 300,
-        email: 'guest.user_to_delete@test.com',
-    };
-
-    const guest_campaign_user_to_delete_seed = {
-        id: 301,
-        campaign_id: campaign_seed.id,
-        user_id: guest_user_to_delete_seed.id,
-        public_token: '8185933f78c749b381ad630308cd1257',
-        access_level: 1,
-    };
-
 
     before(async () => {
 

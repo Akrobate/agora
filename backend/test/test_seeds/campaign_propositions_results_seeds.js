@@ -114,12 +114,29 @@ const manager_user_proposition_result_3 = {
     rank: 2,
 };
 
+
+const guest_user_to_delete_seed = {
+    id: 300,
+    email: 'guest.user_to_delete@test.com',
+};
+
+const guest_campaign_user_to_delete_seed = {
+    id: 301,
+    campaign_id: campaign_seed.id,
+    user_id: guest_user_to_delete_seed.id,
+    public_token: '8185933f78c749b381ad630308cd1257',
+    access_level: 1,
+};
+
+
 module.exports = {
     manager_user_seed,
     campaign_seed,
     manager_campaign_user_seed,
     guest_user_seed,
     guest_campaign_user_seed,
+    guest_campaign_user_to_delete_seed,
+    guest_user_to_delete_seed,
     campaign_user_status_1_seed,
     campaign_user_status_2_seed,
     proposition_1_seed,
