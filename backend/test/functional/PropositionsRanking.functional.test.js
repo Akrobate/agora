@@ -22,33 +22,15 @@ const {
     manager_campaign_user_seed,
     guest_user_seed,
     guest_campaign_user_seed,
+    proposition_1_seed,
+    proposition_2_seed,
+    proposition_3_seed,
 } = require('../test_seeds/campaign_propositions_results_seeds');
 
 
 const superApp = superTest(app);
 
 describe('PropositionsRanking - Functional test', () => {
-
-    const proposition_1_seed = {
-        id: 1,
-        campaign_id: campaign_seed.id,
-        payload: 'Payload 1',
-        creator_user_id: manager_user_seed.id,
-    };
-
-    const proposition_2_seed = {
-        id: 2,
-        campaign_id: campaign_seed.id,
-        payload: 'Payload 2',
-        creator_user_id: manager_user_seed.id,
-    };
-
-    const proposition_3_seed = {
-        id: 3,
-        campaign_id: campaign_seed.id,
-        payload: 'Payload 3',
-        creator_user_id: manager_user_seed.id,
-    };
 
     before(async () => {
 
