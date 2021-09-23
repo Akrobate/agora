@@ -20,7 +20,7 @@ const {
     proposition_1_seed,
     proposition_2_seed,
     proposition_3_seed,
-} = require('../test_seeds/campaign_propositions_results_seeds');
+} = require('../test_seeds/test_data_seeds');
 
 const {
     DataSeeder,

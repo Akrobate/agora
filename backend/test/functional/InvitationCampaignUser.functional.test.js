@@ -29,7 +29,7 @@ const {
     manager_campaign_user_seed,
     guest_user_seed,
     guest_campaign_user_seed,
-} = require('../test_seeds/campaign_propositions_results_seeds');
+} = require('../test_seeds/test_data_seeds');
 
 
 const superApp = superTest(app);

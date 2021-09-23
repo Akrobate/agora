@@ -33,7 +33,7 @@ const {
     manager_user_proposition_result_1,
     manager_user_proposition_result_2,
     manager_user_proposition_result_3,
-} = require('../test_seeds/campaign_propositions_results_seeds');
+} = require('../test_seeds/test_data_seeds');
 
 const superApp = superTest(app);
 
