@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "mocha --recursive test",
+    "test": "CONFIGURATION_YAML_FILE=./configuration.test.yml mocha --recursive test",
     "lint": "eslint src test",
     "cover": "nyc npm test",
     "migrate": "sequelize db:migrate --config src/configuration/sequelizeConfiguration.js"
