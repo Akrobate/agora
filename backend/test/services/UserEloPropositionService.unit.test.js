@@ -91,6 +91,3 @@ describe('UserEloPropositionService unit tests', () => {
     });
 
 });
-
-
-// array.sort((a, b) => 0.5 - Math.random());
