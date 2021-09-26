@@ -13,6 +13,7 @@
   "author": "Artiom FEDOROV",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "deepmerge": "^4.2.2",
