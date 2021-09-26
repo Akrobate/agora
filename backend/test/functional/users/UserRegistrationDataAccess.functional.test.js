@@ -11,10 +11,10 @@ const {
 } = require('chai');
 const {
     DataSeeder,
-} = require('../test_helpers/DataSeeder');
+} = require('../../test_helpers/DataSeeder');
 const {
     app,
-} = require('../../src/app');
+} = require('../../../src/app');
 
 const superApp = superTest(app);
 
