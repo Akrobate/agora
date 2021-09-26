@@ -7,10 +7,10 @@ const {
 } = require('chai');
 const {
     app,
-} = require('../../src/app');
+} = require('../../../src/app');
 const {
     DataSeeder,
-} = require('../test_helpers/DataSeeder');
+} = require('../../test_helpers/DataSeeder');
 
 const superApp = superTest(app);
 
