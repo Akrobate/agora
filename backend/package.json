@@ -8,7 +8,8 @@
     "test": "CONFIGURATION_YAML_FILE=./configuration.test.yml mocha --recursive test",
     "lint": "eslint src test",
     "cover": "nyc npm test",
-    "migrate": "sequelize db:migrate --config src/configuration/sequelizeConfiguration.js"
+    "migrate": "sequelize db:migrate --config src/configuration/sequelizeConfiguration.js",
+    "migrate:test": "CONFIGURATION_YAML_FILE=./configuration.test.yml sequelize db:migrate --config src/configuration/sequelizeConfiguration.js"
   },
   "author": "Artiom FEDOROV",
   "license": "ISC",
