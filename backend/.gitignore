@@ -4,6 +4,7 @@ dist/
 npm-debug.log
 yarn-error.log
 configuration.yml
+configuration.test.yml
 .nyc_output/
 coverage/
 
