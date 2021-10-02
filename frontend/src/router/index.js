@@ -126,7 +126,6 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-
     if(to.matched.some(record => record.meta.requiresAuth)) {
         if (store.getters['authentication_store/isConnected']) {
             next()
@@ -136,17 +135,8 @@ router.beforeEach((to, from, next) => {
                 params: { nextUrl: to.fullPath }
             })
         }
-    // @todo: maybe use less condition, to remove at the end of the project
-    } else if(to.matched.some(record => record.meta.public)) {
-        // if (store.getters['authentication_store/isConnected']) {
-        //     next({ name: 'home'})
-        // } else{
-        //     next()
-        // }
-        next()
-    } else {
-        next()
     }
+    next()
 })
 
 export default router
