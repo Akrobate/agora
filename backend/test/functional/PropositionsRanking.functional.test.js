@@ -143,8 +143,7 @@ describe('PropositionsRanking - Functional test', () => {
                 const [
                     first_proposition,
                 ] = proposition_result_list;
-                // @todo Was here, but is probably useless. To reckeck
-                // expect(first_proposition).to.have.property('campaign_id', proposition_3_seed.campaign_id)
+
                 expect(first_proposition).to.have.property('payload', proposition_3_seed.payload);
             });
     });
