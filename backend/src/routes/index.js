@@ -110,14 +110,6 @@ api_routes.patch(
         .catch(next)
 );
 
-api_routes.post(
-    '/campaigns/:campaign_id/users',
-    authentication_middleware.injectJwtData(),
-    (request, response, next) => campaign_user_controller
-        .addUserToCampaign(request, response)
-        .catch(next)
-);
-
 api_routes.get(
     '/campaigns/:campaign_id/proposition-results',
     authentication_middleware.injectJwtData(),
@@ -150,6 +142,13 @@ api_routes.get(
         .catch(next)
 );
 
+api_routes.post(
+    '/campaigns/:campaign_id/users',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_user_controller
+        .addUserToCampaign(request, response)
+        .catch(next)
+);
 
 api_routes.post(
     '/campaigns/:campaign_id/users/:campaign_user_id/invite',
@@ -169,18 +168,18 @@ api_routes.post(
 );
 
 api_routes.get(
-    '/campaigns/:campaign_id/propositions/:proposition_id',
-    authentication_middleware.injectJwtData(),
-    (request, response, next) => proposition_controller
-        .read(request, response)
-        .catch(next)
-);
-
-api_routes.get(
     '/campaigns/:campaign_id/propositions',
     authentication_middleware.injectJwtData(),
     (request, response, next) => proposition_controller
         .search(request, response)
+        .catch(next)
+);
+
+api_routes.get(
+    '/campaigns/:campaign_id/propositions/:proposition_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => proposition_controller
+        .read(request, response)
         .catch(next)
 );
 
