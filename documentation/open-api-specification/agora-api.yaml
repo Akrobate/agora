@@ -85,6 +85,35 @@ paths:
       security:
         - bearer: []
 
+  /api/v1/users/login/guest:
+
+  /api/v1/users/token/renew:
+
+  /api/v1/users/:user_id:
+
+  /api/v1/campaigns:
+
+  /api/v1/campaigns/:campaign_id:
+
+
+  /api/v1/campaigns/:campaign_id/proposition-results:
+
+  /api/v1/campaigns/:campaign_id/users/:campaign_user_id:
+
+  /api/v1/campaigns/:campaign_id/users:
+
+  /api/v1/campaigns/:campaign_id/users/:campaign_user_id/invite:
+  /api/v1/campaigns/:campaign_id/propositions:
+  /api/v1/campaigns/:campaign_id/propositions/:proposition_id:
+  /api/v1/campaigns/:campaign_id/status:
+  /api/v1/campaigns/:campaign_id/init-ranking:
+  /api/v1/campaigns/:campaign_id/update-ranking:
+  /api/v1/campaigns/:campaign_id/own-proposition-results:
+  /api/v1/campaigns/:campaign_id/init-elo-ranking:
+  /api/v1/campaigns/:campaign_id/elo-duel-result:
+  /api/v1/campaigns/:campaign_id/elo-ranking:
+  /api/v1/campaigns/:campaign_id/elo-random-propositions:
+
 components:
 
   securitySchemes:
