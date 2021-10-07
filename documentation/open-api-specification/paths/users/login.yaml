@@ -1,0 +1,29 @@
+post:
+  summary: Login method returns auth token
+  tags:
+    - user
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            login:
+              type: string
+            password:
+              type: string
+          required:
+            - login
+            - password
+  responses:
+    200:
+      description: Return the security jwt token
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              jwt:
+                type: string
+    401:
+      description: Not authorized
