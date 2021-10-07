@@ -1,0 +1,20 @@
+get:
+  summary: Get types
+  tags:
+    - meta
+  responses:
+    200:
+      description: Return Array of results
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              some_type_list:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SomeType'
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
