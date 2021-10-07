@@ -11,79 +11,14 @@ servers:
 paths:
 
   /api/v1/users/login:
-    post:
-      summary: Login method returns auth token
-      tags:
-        - user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                login:
-                  type: string
-                password:
-                  type: string
-              required:
-                - login
-                - password
-      responses:
-        200:
-          description: Return the security jwt token
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  jwt:
-                    type: string
-        401:
-          description: Not authorized
+    $ref: "./paths/users/login.yaml"
 
   /api/v1/users/register:
-    get:
-      summary: Get types
-      tags:
-        - user
-      responses:
-        200:
-          description: Return Array of results
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  news_type_list:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/SomeType'
-        401:
-          description: Not authorized
-      security:
-        - bearer: []
-
+    $ref: "./paths/users/register.yaml"
+    
   /api/v1/users:
-    get:
-      summary: Get types
-      tags:
-        - meta
-      responses:
-        200:
-          description: Return Array of results
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  some_type_list:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/SomeType'
-        401:
-          description: Not authorized
-      security:
-        - bearer: []
+    $ref: "./paths/users.yaml"
+
 
   /api/v1/users/login/guest:
 
