@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-doc": "swagger-cli bundle agora-api.yaml --outfile _build/agora-api.yaml --type yaml"
   },
   "author": "",
   "license": "ISC",
