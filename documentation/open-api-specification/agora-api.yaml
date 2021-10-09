@@ -19,8 +19,8 @@ paths:
   /api/v1/users:
     $ref: "./paths/users.yaml"
 
-
   /api/v1/users/login/guest:
+    $ref: "./paths/users/login_guest.yaml"
 
   /api/v1/users/token/renew:
 
