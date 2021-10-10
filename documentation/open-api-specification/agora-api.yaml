@@ -23,6 +23,7 @@ paths:
     $ref: "./paths/users/login_guest.yaml"
 
   /api/v1/users/token/renew:
+    $ref: "./paths/users/token_renew.yaml"
 
   /api/v1/users/{user_id}:
 
