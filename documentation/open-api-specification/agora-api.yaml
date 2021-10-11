@@ -26,6 +26,7 @@ paths:
     $ref: "./paths/users/token_renew.yaml"
 
   /api/v1/users/{user_id}:
+    $ref: "./paths/users/user_id.yaml"
 
   /api/v1/campaigns:
 
