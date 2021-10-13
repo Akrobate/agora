@@ -35,14 +35,19 @@ paths:
     $ref: "./paths/campaigns/campaign_id.yaml"
 
   /api/v1/campaigns/{campaign_id}/proposition-results:
-
-  /api/v1/campaigns/{campaign_id}/users/{campaign_user_id}:
+    $ref: "./paths/campaigns/proposition_results.yaml"
 
   /api/v1/campaigns/{campaign_id}/users:
+    $ref: "./paths/campaigns/users.yaml"
+
+  /api/v1/campaigns/{campaign_id}/users/{campaign_user_id}:
+    $ref: "./paths/campaigns/users/campaign_user_id.yaml"
 
   /api/v1/campaigns/{campaign_id}/users/{campaign_user_id}/invite:
+    $ref: "./paths/campaigns/users/campaign_user_id_invite.yaml"
 
   /api/v1/campaigns/{campaign_id}/propositions:
+    $ref: "./paths/campaigns/propositions.yaml"
 
   /api/v1/campaigns/{campaign_id}/propositions/{proposition_id}:
 
