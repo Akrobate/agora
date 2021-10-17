@@ -65,6 +65,7 @@ paths:
     $ref: "./paths/campaigns/own_proposition_results.yaml"
 
   /api/v1/campaigns/{campaign_id}/init-elo-ranking:
+    $ref: "./paths/campaigns/init_elo_ranking.yaml"
 
   /api/v1/campaigns/{campaign_id}/elo-duel-result:
 
