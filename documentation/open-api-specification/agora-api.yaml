@@ -68,8 +68,10 @@ paths:
     $ref: "./paths/campaigns/init_elo_ranking.yaml"
 
   /api/v1/campaigns/{campaign_id}/elo-duel-result:
+    $ref: "./paths/campaigns/elo_duel_ranking.yaml"
 
   /api/v1/campaigns/{campaign_id}/elo-ranking:
+    $ref: "./paths/campaigns/elo_ranking.yaml"
 
   /api/v1/campaigns/{campaign_id}/elo-random-propositions:
 
