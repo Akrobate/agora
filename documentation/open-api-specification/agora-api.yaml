@@ -74,6 +74,7 @@ paths:
     $ref: "./paths/campaigns/elo_ranking.yaml"
 
   /api/v1/campaigns/{campaign_id}/elo-random-propositions:
+    $ref: "./paths/campaigns/elo_random_propositions.yaml"
 
 components:
 
