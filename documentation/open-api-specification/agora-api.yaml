@@ -1,5 +1,8 @@
 # https://davidgarcia.dev/posts/how-to-split-open-api-spec-into-multiple-files/
 # https://nordicapis.com/7-open-source-openapi-documentation-generators/
+
+# Todo test dependencies Schemas in root docomunet
+
 openapi: 3.0.0
 info:
   title: Agora
