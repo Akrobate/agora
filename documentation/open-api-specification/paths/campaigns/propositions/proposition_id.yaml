@@ -1,0 +1,10 @@
+response of read
+
+{
+  id: 1,
+  campaign_id: 10,
+  payload: 'If you see me, the developper is a genius!',
+  creator_user_id: 100,
+  created_at: '2021-10-23T12:42:16.000Z',
+  updated_at: '2021-10-23T12:42:16.000Z'
+}
