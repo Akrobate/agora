@@ -1,11 +1,26 @@
-
-// response of creation
-
-{
+# /api/v1/campaigns/{campaign_id}/propositions
+get:
+  summary: Search propositions
+  tags:
+    - propositions
+  parameters:
+    - campaign_id
+  responses:
+    '200':
+      description: Proposition object
+      content:
+        application/json:
+          schema:
+          example:
+            jsonObject:
+              summary: A reponse example
+              value: "{
   id: 4,
   created_at: '2021-10-23T12:40:25.412Z',
   updated_at: '2021-10-23T12:40:25.412Z',
   campaign_id: '10',
   creator_user_id: 100,
   payload: 'Test 1'
-}
+}""
+
+
