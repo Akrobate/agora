@@ -15,12 +15,12 @@ get:
             jsonObject:
               summary: A reponse example
               value: "{
-  id: 4,
-  created_at: '2021-10-23T12:40:25.412Z',
-  updated_at: '2021-10-23T12:40:25.412Z',
-  campaign_id: '10',
-  creator_user_id: 100,
-  payload: 'Test 1'
-}""
+                id: 4,
+                created_at: '2021-10-23T12:40:25.412Z',
+                updated_at: '2021-10-23T12:40:25.412Z',
+                campaign_id: '10',
+                creator_user_id: 100,
+                payload: 'Test 1'
+              }"
 
 
