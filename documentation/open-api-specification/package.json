@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-doc": "swagger-cli bundle agora-api.yaml --outfile _build/agora-api.yaml --type yaml"
+    "build-doc": "swagger-cli bundle agora-api.yaml --outfile _build/agora-api.yaml --type yaml",
+    "build-html": "redoc-cli bundle -o output/html/agora-api.html _build/agora-api.yaml"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "redoc": "^2.0.0-rc.56",
+    "redoc-cli": "^0.13.0",
     "swagger-cli": "^4.0.4"
   }
 }
