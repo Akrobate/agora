@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build-doc": "swagger-cli bundle agora-api.yaml --outfile _build/agora-api.yaml --type yaml",
-    "build-html": "redoc-cli bundle -o output/html/agora-api.html _build/agora-api.yaml"
+    "build-html": "redoc-cli bundle -o output/html/agora-api.html _build/agora-api.yaml",
+    "generate-html-doc": "npm run build-doc && npm run build-html"
   },
   "author": "",
   "license": "ISC",
