@@ -27,11 +27,22 @@ post:
           schema:
             type: object
             properties:
-              news_type_list:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SomeType'
+              id:
+                type: number
+              email:
+                type: string
+              password:
+                type: string
+              first_name:
+                type: string
+              last_name:
+                type: string
+              created_at:
+                type: string
+              updated_at:
+                type: string
     401:
       description: Not authorized
+
   security:
     - bearer: []
