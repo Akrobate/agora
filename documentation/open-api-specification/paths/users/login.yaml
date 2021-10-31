@@ -1,5 +1,5 @@
 post:
-  summary: Login method returns auth token
+  summary: Login method returns JWT authentiacation token
   tags:
     - user
   requestBody:
@@ -8,7 +8,7 @@ post:
         schema:
           type: object
           properties:
-            login:
+            email:
               type: string
             password:
               type: string
@@ -23,7 +23,7 @@ post:
           schema:
             type: object
             properties:
-              jwt:
+              token:
                 type: string
     401:
       description: Not authorized
