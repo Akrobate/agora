@@ -1,4 +1,4 @@
-get:
+post:
   summary: Get types
   tags:
     - user
