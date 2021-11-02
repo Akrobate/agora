@@ -19,17 +19,14 @@ paths:
   /api/v1/users/register:
     $ref: "./paths/users/register.yaml"
 
-#  /api/v1/users:
-#    $ref: "./paths/users.yaml"
-#
 #  /api/v1/users/login/guest:
 #    $ref: "./paths/users/login_guest.yaml"
 
   /api/v1/users/token/renew:
     $ref: "./paths/users/token_renew.yaml"
 
-#  /api/v1/users/{user_id}:
-#    $ref: "./paths/users/user_id.yaml"
+  /api/v1/users/{user_id}:
+    $ref: "./paths/users/user_id.yaml"
 #
 #  /api/v1/campaigns:
 #    $ref: "./paths/campaigns.yaml"
