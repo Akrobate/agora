@@ -1,0 +1,31 @@
+get:
+  summary: Register user method
+  tags:
+    - user
+  responses:
+    200:
+      description: Return Object of results
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+              email:
+                type: string
+              password:
+                type: string
+              first_name:
+                type: string
+              last_name:
+                type: string
+              created_at:
+                type: string
+              updated_at:
+                type: string
+    401:
+      description: Not authorized
+
+  security:
+    - bearer: []
