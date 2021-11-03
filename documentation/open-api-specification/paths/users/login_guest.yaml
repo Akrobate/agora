@@ -8,13 +8,11 @@ post:
         schema:
           type: object
           properties:
-            login:
-              type: string
-            token:
+            public_token:
               type: string
           required:
-            - login
-            - token
+            - public_token
+
   responses:
     200:
       description: Return the security jwt token
@@ -23,7 +21,7 @@ post:
           schema:
             type: object
             properties:
-              jwt:
+              token:
                 type: string
     401:
       description: Not authorized
