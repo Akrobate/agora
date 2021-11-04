@@ -27,10 +27,10 @@ paths:
 
   /api/v1/users/{user_id}:
     $ref: "./paths/users/user_id.yaml"
-#
-#  /api/v1/campaigns:
-#    $ref: "./paths/campaigns.yaml"
-#
+
+  /api/v1/campaigns:
+    $ref: "./paths/campaigns.yaml"
+
 #  /api/v1/campaigns/{campaign_id}:
 #    $ref: "./paths/campaigns/campaign_id.yaml"
 #
