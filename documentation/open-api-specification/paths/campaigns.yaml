@@ -1,0 +1,43 @@
+get:
+  summary: Search campaigns
+  tags:
+    - campaign
+  responses:
+    200:
+      description: Return Array of campaigns
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              campaign_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    campaign_status:
+                      type: number
+                    start_date:
+                      type: string
+                    end_date:
+                      type: string
+                    owner_user_id:
+                      type: number
+                    user_access_level:
+                      type: string
+                    user_is_participant:
+                      type: boolean
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
