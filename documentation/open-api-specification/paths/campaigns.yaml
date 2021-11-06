@@ -2,6 +2,22 @@ get:
   summary: Search campaigns
   tags:
     - campaign
+  parameters:
+    - in: query
+      name: id_list
+      description: The number of items to skip before starting to collect the result set
+      schema:
+        type: array
+        items:
+          type: number
+    - in: query
+      name: campaign_status_list
+      description: The numbers of items to return
+      schema:
+        type: array
+        items:
+          type: number
+
   responses:
     200:
       description: Return Array of campaigns
