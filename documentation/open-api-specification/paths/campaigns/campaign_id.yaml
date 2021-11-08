@@ -1,15 +1,13 @@
 get:
-  summary: Search campaigns
+  summary: Read a campaign
   tags:
     - campaign
   parameters:
     - in: path
-      name: user_id
-      description: The number of items to skip before starting to collect the result set
+      name: campaign_id
+      description: Campaign id
       schema:
-        type: array
-        items:
-          type: number
+        type: number
 
   responses:
     200:
@@ -45,3 +43,67 @@ get:
       description: Not authorized
   security:
     - bearer: []
+
+
+patch:
+  summary: Update campaign
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            description:
+              type: string
+            campaign_status:
+              type: string
+            start_date:
+              type: string
+            end_date:
+              type: string
+
+  responses:
+    200:
+      description: a campaign
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+              title:
+                type: string
+              description:
+                type: string
+              campaign_status:
+                type: number
+              start_date:
+                type: string
+              end_date:
+                type: string
+              owner_user_id:
+                type: number
+              user_access_level:
+                type: string
+              user_is_participant:
+                type: boolean
+              created_at:
+                type: string
+              updated_at:
+                type: string
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
+
