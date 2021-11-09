@@ -1,0 +1,43 @@
+get:
+  summary: Get propositions results
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+    - in: query
+      name: user_id_list
+      description: List of users to get results from
+      schema:
+        type: array
+        items:
+          type: number
+    - in: query
+      name: algorithm
+      description: "algorithm to apply. possible values: 'borda' ok 'relative_majority'"
+      schema:
+        type: string
+
+  responses:
+    200:
+      description: a campaign
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              proposition_id:
+                type: number
+              rank:
+                type: number
+              payload:
+                type: string
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
+
