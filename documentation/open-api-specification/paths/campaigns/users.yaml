@@ -1,0 +1,44 @@
+get:
+  summary: Searcg campaign users
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+    - in: query
+      name: id_list
+      description: List of users to get
+      schema:
+        type: array
+        items:
+          type: number
+    - in: query
+      name: status_id_list
+      description: Status id list filters
+      schema:
+        type: string
+
+  responses:
+    200:
+      description: a campaign
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+              email:
+                type: string
+              user_status_list:
+                type: array
+                items:
+                  type: number
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
