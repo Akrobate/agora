@@ -42,3 +42,51 @@ get:
       description: Not authorized
   security:
     - bearer: []
+
+post:
+  summary: Searcg campaign users
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            access_level:
+              type: number
+            is_participant:
+              type: boolean
+          required:
+            - email
+            - access_level
+
+  responses:
+    201:
+      description: a campaign
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+              email:
+                type: string
+              user_status_list:
+                type: array
+                items:
+                  type: number
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
