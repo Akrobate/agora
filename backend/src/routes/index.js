@@ -118,22 +118,6 @@ api_routes.get(
         .catch(next)
 );
 
-api_routes.patch(
-    '/campaigns/:campaign_id/users/:campaign_user_id',
-    authentication_middleware.injectJwtData(),
-    (request, response, next) => campaign_user_controller
-        .updateCampaignUser(request, response)
-        .catch(next)
-);
-
-api_routes.delete(
-    '/campaigns/:campaign_id/users/:campaign_user_id',
-    authentication_middleware.injectJwtData(),
-    (request, response, next) => campaign_user_controller
-        .removeCampaignUser(request, response)
-        .catch(next)
-);
-
 api_routes.get(
     '/campaigns/:campaign_id/users',
     authentication_middleware.injectJwtData(),
@@ -150,6 +134,23 @@ api_routes.post(
         .catch(next)
 );
 
+api_routes.patch(
+    '/campaigns/:campaign_id/users/:campaign_user_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_user_controller
+        .updateCampaignUser(request, response)
+        .catch(next)
+);
+
+api_routes.delete(
+    '/campaigns/:campaign_id/users/:campaign_user_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_user_controller
+        .removeCampaignUser(request, response)
+        .catch(next)
+);
+
+
 api_routes.post(
     '/campaigns/:campaign_id/users/:campaign_user_id/invite',
     authentication_middleware.injectJwtData(),
@@ -157,7 +158,6 @@ api_routes.post(
         .sendCampaignUserInvitation(request, response)
         .catch(next)
 );
-
 
 api_routes.post(
     '/campaigns/:campaign_id/propositions',
