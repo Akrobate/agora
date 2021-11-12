@@ -1,0 +1,28 @@
+delete:
+  summary: Delete a campaign member
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+    - in: path
+      name: campaign_user_id
+      description: Campaign member id
+      schema:
+        type: number
+
+  responses:
+    200:
+      description: Empty object
+      content:
+        application/json:
+          schema:
+            type: object
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
