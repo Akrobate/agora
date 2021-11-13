@@ -71,7 +71,7 @@ post:
 
   responses:
     201:
-      description: a campaign
+      description: Campaign member
       content:
         application/json:
           schema:
