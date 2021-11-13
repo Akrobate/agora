@@ -1,3 +1,49 @@
+patch:
+  summary: Update a campaign member
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+    - in: path
+      name: campaign_user_id
+      description: Campaign member id
+      schema:
+        type: number
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            access_level:
+              type: number
+            is_participant:
+              type: boolean
+  responses:
+    200:
+      description: Campaign member
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+              email:
+                type: string
+              user_status_list:
+                type: array
+                items:
+                  type: number
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
+
 delete:
   summary: Delete a campaign member
   tags:
