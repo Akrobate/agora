@@ -1,0 +1,37 @@
+post:
+  summary: Send invitation to a campaign member
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+    - in: path
+      name: campaign_user_id
+      description: Campaign member id
+      schema:
+        type: number
+
+  responses:
+    200:
+      description: Campaign member
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              campaign_id:
+                type: number
+              status_id:
+                type: number
+              user_id:
+                type: number
+              date:
+                type: string
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []

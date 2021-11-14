@@ -42,10 +42,10 @@ paths:
 
   /api/v1/campaigns/{campaign_id}/users/{campaign_user_id}:
     $ref: "./paths/campaigns/users/campaign_user_id.yaml"
-#
-#  /api/v1/campaigns/{campaign_id}/users/{campaign_user_id}/invite:
-#    $ref: "./paths/campaigns/users/campaign_user_id_invite.yaml"
-#
+
+  /api/v1/campaigns/{campaign_id}/users/{campaign_user_id}/invite:
+    $ref: "./paths/campaigns/users/campaign_user_id_invite.yaml"
+
 #  /api/v1/campaigns/{campaign_id}/propositions:
 #    $ref: "./paths/campaigns/propositions.yaml"
 #
