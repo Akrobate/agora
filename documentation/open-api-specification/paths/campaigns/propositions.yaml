@@ -1,26 +1,73 @@
 # /api/v1/campaigns/{campaign_id}/propositions
-get:
-  summary: Search propositions
+
+post:
+  summary: Search campaigns
   tags:
-    - propositions
+    - campaign
   parameters:
-    - campaign_id
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: array
+        items:
+          type: number
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            payload:
+              type: string
+          required:
+            - payload
+
   responses:
-    '200':
-      description: Proposition object
+    200:
+      description: Campaign member
       content:
         application/json:
           schema:
-          example:
-            jsonObject:
-              summary: A reponse example
-              value: "{
-                id: 4,
-                created_at: '2021-10-23T12:40:25.412Z',
-                updated_at: '2021-10-23T12:40:25.412Z',
-                campaign_id: '10',
-                creator_user_id: 100,
-                payload: 'Test 1'
-              }"
+            type: object
+            properties:
+              id:
+                type: number
+              email:
+                type: string
+              user_status_list:
+                type: array
+                items:
+                  type: number
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
 
 
+# get:
+#   summary: Search propositions
+#   tags:
+#     - propositions
+#   parameters:
+#     - campaign_id
+#   responses:
+#     '200':
+#       description: Proposition object
+#       content:
+#         application/json:
+#           schema:
+#           example:
+#             jsonObject:
+#               summary: A reponse example
+#               value: "{
+#                 id: 4,
+#                 created_at: '2021-10-23T12:40:25.412Z',
+#                 updated_at: '2021-10-23T12:40:25.412Z',
+#                 campaign_id: '10',
+#                 creator_user_id: 100,
+#                 payload: 'Test 1'
+#               }"
+# 
+# 
