@@ -1,7 +1,7 @@
 # /api/v1/campaigns/{campaign_id}/propositions
 
 post:
-  summary: Search campaigns
+  summary: Create a proposition in campaign
   tags:
     - campaign
   parameters:
@@ -46,12 +46,44 @@ post:
     - bearer: []
 
 
-# get:
-#   summary: Search propositions
-#   tags:
-#     - propositions
-#   parameters:
-#     - campaign_id
+get:
+  summary: Search a campaign propositions
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: array
+        items:
+          type: number
+  responses:
+    200:
+      description: Campaign member
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+              campaign_id:
+                type: number
+              creator_user_id:
+                type: number
+              payload:
+                type: string
+              created_at:
+                type: string
+              updated_at:
+                type: string
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
+
 #   responses:
 #     '200':
 #       description: Proposition object
@@ -69,5 +101,3 @@ post:
 #                 creator_user_id: 100,
 #                 payload: 'Test 1'
 #               }"
-# 
-# 
