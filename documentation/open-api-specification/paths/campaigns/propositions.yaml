@@ -66,18 +66,23 @@ get:
           schema:
             type: object
             properties:
-              id:
-                type: number
-              campaign_id:
-                type: number
-              creator_user_id:
-                type: number
-              payload:
-                type: string
-              created_at:
-                type: string
-              updated_at:
-                type: string
+              proposition_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    campaign_id:
+                      type: number
+                    creator_user_id:
+                      type: number
+                    payload:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
 
     401:
       description: Not authorized
