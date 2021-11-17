@@ -1,29 +1,41 @@
-response of read
-
-
 # /api/v1/campaigns/{campaign_id}/propositions/{proposition_id}
 get:
   summary: Get propositions by id
   tags:
-    - propositions
+    - campaign
   parameters:
-    - campaign_id
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: array
+        items:
+          type: number
+    - in: path
+      name: proposition_id
+      description: Proposition id
+      schema:
+        type: array
+        items:
+          type: number
+    
   responses:
-    '200':
-      description: Proposition object
+    200:
+      description: Get a proposition id
       content:
         application/json:
           schema:
-          example:
-            jsonObject:
-              summary: A reponse example
-              value: "{
-                id: 1,
-                campaign_id: 10,
-                payload: 'If you see me, the developper is a genius!',
-                creator_user_id: 100,
-                created_at: '2021-10-23T12:42:16.000Z',
-                updated_at: '2021-10-23T12:42:16.000Z'
-              }"
-
-
+            type: object
+            properties:
+              id:
+                type: number
+              campaign_id:
+                type: number
+              creator_user_id:
+                type: number
+              payload:
+                type: string
+              created_at:
+                type: string
+              updated_at:
+                type: string
