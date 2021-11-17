@@ -49,9 +49,9 @@ paths:
   /api/v1/campaigns/{campaign_id}/propositions:
     $ref: "./paths/campaigns/propositions.yaml"
 
-#  /api/v1/campaigns/{campaign_id}/propositions/{proposition_id}:
-#    $ref: "./paths/campaigns/propositions/proposition_id.yaml"
-#
+  /api/v1/campaigns/{campaign_id}/propositions/{proposition_id}:
+    $ref: "./paths/campaigns/propositions/proposition_id.yaml"
+
 #  /api/v1/campaigns/{campaign_id}/status:
 #    $ref: "./paths/campaigns/status.yaml"
 #
