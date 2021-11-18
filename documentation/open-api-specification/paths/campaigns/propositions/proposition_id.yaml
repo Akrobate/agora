@@ -1,4 +1,3 @@
-# /api/v1/campaigns/{campaign_id}/propositions/{proposition_id}
 get:
   summary: Get propositions by id
   tags:
@@ -39,3 +38,31 @@ get:
                 type: string
               updated_at:
                 type: string
+
+delete:
+  summary: Delete propositions by id
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: array
+        items:
+          type: number
+    - in: path
+      name: proposition_id
+      description: Proposition id
+      schema:
+        type: array
+        items:
+          type: number
+    
+  responses:
+    200:
+      description: Get a proposition id
+      content:
+        application/json:
+          schema:
+            type: object
