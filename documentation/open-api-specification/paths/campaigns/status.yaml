@@ -1,0 +1,41 @@
+post:
+  summary: Update / create a status campaign
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: array
+        items:
+          type: number
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status_id:
+              type: number
+          required:
+            - status_id
+
+  responses:
+    200:
+      description: Campaign member
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              campaign_id:
+                type: number
+              status_id:
+                type: number
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
