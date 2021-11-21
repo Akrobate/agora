@@ -30,12 +30,17 @@ post:
           schema:
             type: object
             properties:
+              id:
+                type: number
               campaign_id:
                 type: number
               status_id:
                 type: number
               user_id:
                 type: number
+              date:
+                type: string
+
     401:
       description: Not authorized
   security:
@@ -68,12 +73,16 @@ get:
           schema:
             type: object
             properties:
+              id:
+                type: number
               campaign_id:
                 type: number
               status_id:
                 type: number
               user_id:
                 type: number
+              date:
+                type: string
 
     401:
       description: Not authorized
