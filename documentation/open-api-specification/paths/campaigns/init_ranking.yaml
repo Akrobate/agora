@@ -1,0 +1,36 @@
+post:
+  summary: Init user ranking
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+
+  responses:
+    200:
+      description: Return Array of campaigns
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              campaign_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    campaign_id:
+                      type: number
+                    proposition_id:
+                      type: number
+                    user_id:
+                      type: number
+                    rank:
+                      type: number        
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
