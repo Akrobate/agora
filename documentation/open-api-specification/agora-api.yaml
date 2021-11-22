@@ -55,9 +55,9 @@ paths:
   /api/v1/campaigns/{campaign_id}/status:
     $ref: "./paths/campaigns/status.yaml"
 
-#  /api/v1/campaigns/{campaign_id}/init-ranking:
-#    $ref: "./paths/campaigns/init_ranking.yaml"
-#
+  /api/v1/campaigns/{campaign_id}/init-ranking:
+    $ref: "./paths/campaigns/init_ranking.yaml"
+
 #  /api/v1/campaigns/{campaign_id}/update-ranking:
 #    $ref: "./paths/campaigns/update_ranking.yaml"
 #
