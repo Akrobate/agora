@@ -17,7 +17,7 @@ post:
           schema:
             type: object
             properties:
-              campaign_list:
+              user_proposition_result_list:
                 type: array
                 items:
                   type: object
