@@ -1,0 +1,38 @@
+post:
+  summary: Create a proposition in campaign
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: array
+        items:
+          type: number
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            proposition_id_list:
+                type: array
+                items:
+                  type: number
+          required:
+            - proposition_id_list
+
+  responses:
+    200:
+      description: Proposition
+      content:
+        application/json:
+          schema:
+            type: object
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
