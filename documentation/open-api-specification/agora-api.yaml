@@ -58,8 +58,8 @@ paths:
   /api/v1/campaigns/{campaign_id}/init-ranking:
     $ref: "./paths/campaigns/init_ranking.yaml"
 
-#  /api/v1/campaigns/{campaign_id}/update-ranking:
-#    $ref: "./paths/campaigns/update_ranking.yaml"
+  /api/v1/campaigns/{campaign_id}/update-ranking:
+    $ref: "./paths/campaigns/update_ranking.yaml"
 
 #  /api/v1/campaigns/{campaign_id}/own-proposition-results:
 #    $ref: "./paths/campaigns/own_proposition_results.yaml"
