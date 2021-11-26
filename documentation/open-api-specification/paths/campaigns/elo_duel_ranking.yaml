@@ -1,0 +1,48 @@
+post:
+  summary: Save result of an elo duel
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            proposition_id_1:
+              type: number
+            proposition_id_2:
+              type: number
+            winner:
+              type: number
+
+  responses:
+    200:
+      description: Players propositions results
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user_proposition_elo_result_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    elo_score:
+                      type: number
+                    display_count:
+                      type: number
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
