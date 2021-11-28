@@ -1,0 +1,43 @@
+get:
+  summary: Generate 2 random propositions for elo game
+  tags:
+    - campaign
+  parameters:
+    - in: path
+      name: campaign_id
+      description: Campaign id
+      schema:
+        type: number
+
+  responses:
+    200:
+      description: Two random propositions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              random_propositions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    elo_score:
+                      type: number
+                    display_count:
+                      type: number
+                    proposition:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        payload:
+                          type: string
+
+
+    401:
+      description: Not authorized
+  security:
+    - bearer: []
