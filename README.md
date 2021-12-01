@@ -38,16 +38,32 @@ cert=$(cat jwtRS256.key)
 echo "${cert//$'\n'/\\n}"
 ```
 
+### Generate documentation
 
-====================
-======= Draft=======
-====================
+Documentation is in open api 3 specification format and can be found in /documentation/open-api-specification
 
-Sorting
+#### Documentation is written in splitted format
 
-1. Start sorting Copy propositions if not exists with random order to results list
-2. Update list ranks
-
-SortingElo
+* agora-api.yaml is the main file and contains all inclusions
+* ./paths contains routes verbs definitions
 
 
+#### Generate documenation
+
+* First you'll need to aggregate splitted documentation to single yaml file
+
+```bash
+npm run build-doc
+```
+
+* Second you(ll need to generate the readable html file
+
+```bash
+npm run build-html
+```
+
+* Both steps can be run with command
+
+```bash
+npm run generate-html-doc
+```
