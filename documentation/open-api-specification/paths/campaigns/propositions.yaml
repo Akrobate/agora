@@ -3,7 +3,7 @@
 post:
   summary: Create a proposition in campaign
   tags:
-    - campaign
+    - proposition
   parameters:
     - in: path
       name: campaign_id

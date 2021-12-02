@@ -1,7 +1,7 @@
 patch:
   summary: Update a campaign member
   tags:
-    - campaign
+    - member
   parameters:
     - in: path
       name: campaign_id
@@ -47,7 +47,7 @@ patch:
 delete:
   summary: Delete a campaign member
   tags:
-    - campaign
+    - member
   parameters:
     - in: path
       name: campaign_id

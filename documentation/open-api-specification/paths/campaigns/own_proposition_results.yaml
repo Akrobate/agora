@@ -1,7 +1,7 @@
 get:
   summary: Get own proposition result
   tags:
-    - campaign
+    - proposition
   parameters:
     - in: path
       name: campaign_id
