@@ -1,7 +1,7 @@
 get:
-  summary: Searcg campaign users
+  summary: Search campaign member
   tags:
-    - campaign
+    - member
   parameters:
     - in: path
       name: campaign_id
@@ -44,9 +44,9 @@ get:
     - bearer: []
 
 post:
-  summary: Searcg campaign users
+  summary: Create a campaign member
   tags:
-    - campaign
+    - member
   parameters:
     - in: path
       name: campaign_id

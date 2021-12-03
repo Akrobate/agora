@@ -42,7 +42,7 @@ get:
 delete:
   summary: Delete propositions by id
   tags:
-    - campaign
+    - proposition
   parameters:
     - in: path
       name: campaign_id
