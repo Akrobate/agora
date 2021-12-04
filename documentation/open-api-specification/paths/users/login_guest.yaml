@@ -1,5 +1,5 @@
 post:
-  summary: Login guest method returns auth token
+  summary: Login guest
   tags:
     - user
   requestBody:

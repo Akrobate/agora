@@ -1,5 +1,5 @@
 post:
-  summary: Login method returns JWT authentiacation token
+  summary: Login
   tags:
     - user
   requestBody:

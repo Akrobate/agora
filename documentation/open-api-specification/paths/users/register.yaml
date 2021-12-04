@@ -1,5 +1,5 @@
 post:
-  summary: Register user method
+  summary: Register user
   tags:
     - user
   requestBody:
@@ -21,7 +21,7 @@ post:
             - password
   responses:
     200:
-      description: Return Object of results
+      description: User data
       content:
         application/json:
           schema:

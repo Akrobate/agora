@@ -1,5 +1,5 @@
 post:
-  summary: Get types
+  summary: Renew user token
   tags:
     - user
   responses:
