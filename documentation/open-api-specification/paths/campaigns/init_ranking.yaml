@@ -1,7 +1,7 @@
 post:
   summary: Init user ranking
   tags:
-    - campaign
+    - member
   parameters:
     - in: path
       name: campaign_id

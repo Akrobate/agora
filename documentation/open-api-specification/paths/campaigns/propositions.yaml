@@ -47,9 +47,9 @@ post:
 
 
 get:
-  summary: Search a campaign propositions
+  summary: Search a propositions
   tags:
-    - campaign
+    - proposition
   parameters:
     - in: path
       name: campaign_id

@@ -1,7 +1,7 @@
 get:
   summary: Generate 2 random propositions for elo game
   tags:
-    - campaign
+    - proposition
   parameters:
     - in: path
       name: campaign_id
