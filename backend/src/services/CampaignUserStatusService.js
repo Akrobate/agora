@@ -13,10 +13,6 @@ const {
     CampaignUserStatusRepository,
 } = require('../repositories');
 
-// const {
-//     CustomError,
-// } = require('../CustomError');
-
 
 class CampaignUserStatusService {
 

@@ -15,11 +15,6 @@ const {
     UserRepository,
 } = require('../repositories');
 
-// const {
-//     CustomError,
-// } = require('../CustomError');
-
-
 class CampaignUserService {
 
     /**

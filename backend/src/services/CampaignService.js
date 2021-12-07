@@ -1,9 +1,5 @@
 'use strict';
 
-// const {
-//     CustomError,
-// } = require('../CustomError');
-
 const {
     CampaignRepository,
     CampaignUserRepository,
@@ -12,10 +8,6 @@ const {
 const {
     Acl,
 } = require('./commons');
-
-// const {
-//     CustomError,
-// } = require('../CustomError');
 
 
 class CampaignService {
