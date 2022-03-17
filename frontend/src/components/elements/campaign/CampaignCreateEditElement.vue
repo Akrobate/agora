@@ -21,6 +21,14 @@
                         required
                     ></v-text-field>
 
+                    <v-text-field
+                        v-model="proposition_type"
+                        :counter="255"
+                        :rules="proposition_type_rules"
+                        label="Type de propositions"
+                        required
+                    ></v-text-field>
+
                     <v-textarea
                         v-model="description"
                         label="Description"
@@ -66,12 +74,15 @@ export default {
         title_rules: [
             v => !!v || 'Le nom de campagne est obligatoire',
         ],
+        proposition_type: '',
+        proposition_type_rules: [
+            v => !!v || 'Le type de propositions est obligatoire',
+        ],
         description: '',
         description_rules: [],
     }),
     async mounted() {
-        console.log("CampaignCreateEditElement - Mounted")
-        this.loadCampaingToEditIfCampaignIdIsSetted()
+        await this.loadCampaingToEditIfCampaignIdIsSetted()
     },
     watch: {
         async campaign_id() {
@@ -88,7 +99,7 @@ export default {
         async save () {
             if (!this.$refs.form.validate()) {
                 this.$emit('validation_error')
-                return;
+                return
             }
             if (this.campaign_id) {
                 await this.updateCampaign(
@@ -96,14 +107,16 @@ export default {
                     {
                         title: this.title,
                         description: this.description,
+                        proposition_type: this.proposition_type,
                     }
                 )
                 this.$emit('saved')
-                return;
+                return
             }
             const creation_result = await this.createCampaign({
                 title: this.title,
                 description: this.description,
+                proposition_type: this.proposition_type,
             })
             this.$emit('update:campaign_id', creation_result.id)
             this.$emit('saved')
@@ -114,14 +127,14 @@ export default {
         },
         async loadCampaingToEditIfCampaignIdIsSetted() {
             if (this.campaign_id) {
-                const campaign = await this.getCampaign({ campaign_id: this.campaign_id });
+                const campaign = await this.getCampaign({ campaign_id: this.campaign_id })
                 this.title = campaign.title
                 this.description = campaign.description
+                this.proposition_type = campaign.proposition_type
             } else {
                 this.reset()
             }
         }
     },
-
 }
 </script>
