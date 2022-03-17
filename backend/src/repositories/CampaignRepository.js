@@ -67,6 +67,10 @@ class CampaignRepository extends AbstractSequelizeRepository {
                     allowNull: true,
                     type: DataTypes.STRING,
                 },
+                proposition_type: {
+                    allowNull: true,
+                    type: DataTypes.STRING,
+                },
                 campaign_status: {
                     allowNull: false,
                     type: DataTypes.INTEGER.UNSIGNED,

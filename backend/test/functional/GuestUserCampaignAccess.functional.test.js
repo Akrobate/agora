@@ -150,6 +150,7 @@ describe('CampaignAccess', () => {
             .send({
                 title: v4(),
                 description: v4(),
+                proposition_type: v4(),
             })
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {

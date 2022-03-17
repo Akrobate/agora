@@ -12,6 +12,7 @@ const campaign_seed = {
     id: 10,
     title: 'Title of campaignsss',
     description: 'Somethings',
+    proposition_type: 'Proposition_type',
     campaign_status: 2,
     owner_user_id: manager_user_seed.id,
 };

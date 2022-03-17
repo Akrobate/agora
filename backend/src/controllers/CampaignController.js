@@ -65,6 +65,9 @@ class CampaignController extends AbstractController {
                             .allow(null)
                             .optional()
                             .default(null),
+                        proposition_type: joi.string()
+                            .min(1)
+                            .required(),
                         campaign_status: joi.number()
                             .min(1)
                             .optional()
@@ -90,6 +93,7 @@ class CampaignController extends AbstractController {
             {
                 title: value.body.title,
                 description: value.body.description,
+                proposition_type: value.body.proposition_type,
                 campaign_status: value.body.campaign_status,
                 start_date: value.body.start_date,
                 end_date: value.body.end_date,
@@ -124,6 +128,9 @@ class CampaignController extends AbstractController {
                             .min(1)
                             .optional(),
                         description: joi.string()
+                            .min(1)
+                            .optional(),
+                        proposition_type: joi.string()
                             .min(1)
                             .optional(),
                         campaign_status: joi.number()

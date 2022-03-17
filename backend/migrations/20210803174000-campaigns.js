@@ -23,6 +23,11 @@ module.exports = {
                     type: sequelize.STRING,
                     unique: false,
                 },
+                proposition_type: {
+                    allowNull: true,
+                    type: sequelize.STRING,
+                    unique: false,
+                },
                 campaign_status: {
                     allowNull: false,
                     type: sequelize.INTEGER.UNSIGNED,

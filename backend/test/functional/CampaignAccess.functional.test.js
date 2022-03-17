@@ -41,6 +41,7 @@ describe('CampaignAccess', () => {
             .send({
                 title: 'Title of campaign',
                 description: 'Something',
+                proposition_type: 'PROPOSITION_TYPE',
                 campaign_status: 2,
             })
             .expect(HTTP_CODE.CREATED)
@@ -57,6 +58,7 @@ describe('CampaignAccess', () => {
             .send({
                 title: 'Title of campaign',
                 description: 'Something',
+                proposition_type: 'PROPOSITION_TYPE',
                 campaign_status: 2,
             })
             .expect(HTTP_CODE.UNAUTHORIZED)
@@ -70,6 +72,7 @@ describe('CampaignAccess', () => {
         const campaign_create_data = {
             title: 'Title of campaign',
             description: 'Something',
+            proposition_type: 'PROPOSITION_TYPE',
             campaign_status: 2,
         };
 
@@ -96,8 +99,6 @@ describe('CampaignAccess', () => {
                 expect(response.body).to.have.property('campaign_status', campaign_create_data.campaign_status);
                 expect(response.body).to.have.property('title', 'Title of campaign Updated');
             });
-
-
     });
 
 });
