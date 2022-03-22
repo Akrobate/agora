@@ -32,7 +32,7 @@
                 text
                 @click="reset"
             >
-                Effacer
+                Annuler
             </v-btn>
             <v-btn
                 color="blue darken-1"
