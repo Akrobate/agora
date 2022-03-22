@@ -102,14 +102,14 @@ export default {
                 return
             }
             if (this.campaign_id) {
-                await this.updateCampaign(
-                    this.campaign_id,
-                    {
+                await this.updateCampaign({
+                    campaign_id: this.campaign_id,
+                    data: {
                         title: this.title,
                         description: this.description,
                         proposition_type: this.proposition_type,
                     }
-                )
+                })
                 this.$emit('saved')
                 return
             }
