@@ -35,6 +35,9 @@
                         hint="La description de la campagne sera visible a tous les participants"
                     ></v-textarea>
 
+
+                    <proposition-type-ui-selector-element />
+
                 </v-form>
             </v-container> 
         </v-card-text>
@@ -62,9 +65,13 @@
 <script>
 
 import { mapActions } from 'vuex'
+import PropositionTypeUiSelectorElement from '@/components/elements/proposition/types/PropositionTypeUiSelectorElement'
 
 export default {
     name: 'CampaignCreateEditElement',
+    components: {
+        PropositionTypeUiSelectorElement,
+    },
     props: [
         'campaign_id'
     ],
