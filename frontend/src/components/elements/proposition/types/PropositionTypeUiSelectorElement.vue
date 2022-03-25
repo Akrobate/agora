@@ -5,15 +5,14 @@
             flat
             tile
         >
-
             <v-card
-                v-for="n in 3"
-                :key="n"
+                v-for="item in proposition_types"
+                :key="item.type"
                 class="pa-2"
                 outlined
                 tile
             >
-                Flex item {{ n }}
+                {{ item.label }}
             </v-card>
 
         </v-card>
@@ -27,7 +26,13 @@ import { propositionTypes } from './propositionTypes'
 export default {
     name: 'PropositionTypeUiSelectorElement',
     data: () => ({
-        propositionTypes,
-    })
+        proposition_types: propositionTypes,
+    }),
+    props: {
+        value: String,
+    },
+    mounted() {
+        
+    }
 }
 </script>
