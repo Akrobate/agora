@@ -8,21 +8,11 @@ const routes = require('./routes');
 const {
     error_manager_middleware,
     not_found_error_middleware,
-} = require('./middlewares/HttpErrorManager');
-
+    access_control_allow_middleware,
+} = require('./middlewares');
 
 const app = express();
-
-// Headers middleware
-app.use((request, response, next) => {
-    if (request.headers) {
-        response.header('Access-Control-Allow-Origin', '*');
-        response.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
-        response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
-        response.header('Access-Control-Allow-Credentials', 'false');
-    }
-    return next();
-});
+app.use(access_control_allow_middleware);
 app.use(express.json());
 app.use(express.urlencoded({
     extended: false,
