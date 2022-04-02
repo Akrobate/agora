@@ -35,9 +35,8 @@ class AuthenticationMiddleware {
 
 
     /**
-     *
      * @param {Object|*} request
-     * @return {Promise<string>}
+     * @return {string}
      */
     static getJwtFromHeader(request) {
         const authorization = request.get('Authorization');
@@ -60,9 +59,8 @@ class AuthenticationMiddleware {
 
 
     /**
-     *
      * @param {string} jwt_token
-     * @return {Promise<Object>} - return jwt_data on success
+     * @return {Object} return jwt_data on success
      */
     checkJwtValidity(jwt_token) {
         let jwt_data = null;
