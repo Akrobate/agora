@@ -12,6 +12,8 @@ const {
 } = require('./middlewares');
 
 const app = express();
+
+app.disable('x-powered-by');
 app.use(access_control_allow_middleware);
 app.use(express.json());
 app.use(express.urlencoded({
