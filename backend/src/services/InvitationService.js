@@ -68,7 +68,7 @@ class InvitationService {
     /**
      * @param {*} user
      * @param {*} input
-     * @return {Object}
+     * @return {Promise<Object>}
      */
     async sendCampaignUserInvitation(user, input) {
         const {

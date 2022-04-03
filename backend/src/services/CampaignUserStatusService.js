@@ -74,15 +74,13 @@ class CampaignUserStatusService {
 
         await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
 
-        const campaign_user_status = await this.campaign_user_status_repository
+        return this.campaign_user_status_repository
             .upsertCampaignUserStatus({
                 campaign_id,
                 status_id,
                 user_id,
                 date: moment().toISOString(),
             });
-
-        return campaign_user_status;
     }
 
 
@@ -91,7 +89,7 @@ class CampaignUserStatusService {
      * @param {Object} input
      * @returns {Promise<*|Error>}
      */
-    async getCampaignStatus(user, input) {
+    getCampaignStatus(user, input) {
 
         const {
             user_id,
@@ -102,14 +100,12 @@ class CampaignUserStatusService {
             status_id,
         } = input;
 
-        const campaign_user_status = await this.campaign_user_status_repository
+        return this.campaign_user_status_repository
             .search({
                 campaign_id,
                 user_id,
                 status_id,
             });
-
-        return campaign_user_status;
     }
 
 }

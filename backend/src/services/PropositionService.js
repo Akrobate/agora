@@ -71,9 +71,7 @@ class PropositionService {
         } = input;
 
         await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
-        const proposition = this.proposition_repository.read(proposition_id);
-        return proposition;
-
+        return this.proposition_repository.read(proposition_id);
     }
 
 
@@ -96,13 +94,11 @@ class PropositionService {
 
         await this.acl.checkUserIsCampaignManager(user_id, campaign_id);
 
-        const proposition = await this.proposition_repository.create({
+        return this.proposition_repository.create({
             campaign_id,
             creator_user_id: user_id,
             payload,
         });
-
-        return proposition;
     }
 
     /**
@@ -149,11 +145,9 @@ class PropositionService {
         } = input;
 
         await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
-        const proposition_list = await this.proposition_repository.search({
+        return this.proposition_repository.search({
             campaign_id,
         });
-
-        return proposition_list;
     }
 
 }

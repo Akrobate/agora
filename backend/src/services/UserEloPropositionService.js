@@ -12,11 +12,6 @@ const {
     UserPropositionEloResultRepository,
 } = require('../repositories');
 
-// const {
-//     CustomError,
-// } = require('../CustomError');
-
-
 class UserEloPropositionService {
 
     /**
@@ -236,7 +231,7 @@ class UserEloPropositionService {
     /**
      * @param {Object} user
      * @param {Object} input
-     * @returns {Array}
+     * @returns {Promise<Array>}
      */
     async randomPropositions(user, input) {
         const {
@@ -312,18 +307,14 @@ class UserEloPropositionService {
         let proposition_group = [];
 
         all_propositions_list.forEach((proposition) => {
-
-            if (last_display_count === null) {
+            if (
+                last_display_count === null
+                || last_display_count === proposition.display_count
+            ) {
                 last_display_count = proposition.display_count;
                 proposition_group.push(proposition);
-
-            } else if (last_display_count === proposition.display_count) {
-                last_display_count = proposition.display_count;
-                proposition_group.push(proposition);
-
             } else {
                 last_display_count = proposition.display_count;
-
                 grouped_by_display_count_propositions.push(proposition_group);
                 proposition_group = [
                     proposition,

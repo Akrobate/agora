@@ -48,7 +48,7 @@ class EmailService {
 
 
     /**
-     * @returns {Object}
+     * @returns {Promise<Object>}
      */
     async createConnection() {
         let connection = null;
@@ -76,7 +76,7 @@ class EmailService {
 
 
     /**
-     * @returns {Object}
+     * @returns {Promise<Object>}
      */
     async getConnectionInstance() {
         if (this.connection === null) {
@@ -88,7 +88,7 @@ class EmailService {
 
     /**
      * @param {Object} input
-     * @returns {Object}
+     * @returns {Promise<Object>}
      */
     async sendMail(input) {
         const {
@@ -101,7 +101,7 @@ class EmailService {
         } = input;
 
         const connection = await this.getConnectionInstance();
-        const response = await connection
+        return connection
             .sendMail({
                 from: `"${from_name}" <${from_email}>`,
                 to: to_list.join(', '),
@@ -109,7 +109,6 @@ class EmailService {
                 text,
                 html,
             });
-        return response;
     }
 
 
@@ -119,7 +118,7 @@ class EmailService {
      * @param {*} input.campaign_name
      * @param {*} input.campaign_description
      * @param {*} input.invitation_token
-     * @returns {Object}
+     * @returns {Promise<Object>}
      */
     async sendInvitationMail(input) {
 
@@ -149,7 +148,7 @@ class EmailService {
                 }
             );
 
-        const result = await this.sendMail({
+        return this.sendMail({
             to_list: [
                 to,
             ],
@@ -159,8 +158,6 @@ class EmailService {
             html,
             text: null,
         });
-
-        return result;
     }
 
 }

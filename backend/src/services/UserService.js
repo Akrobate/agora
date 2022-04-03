@@ -73,18 +73,17 @@ class UserService {
         });
 
         if (existing_user === null) {
-            const user = await this.user_repository
+            return this.user_repository
                 .create(Object.assign({}, input, {
                     password: UserService.hashPassword(password),
                 }));
-            return user;
         }
 
         if (existing_user.password !== null) {
             throw new CustomError(CustomError.BAD_PARAMETER, 'Email already exists');
         }
 
-        const updated_user = await this.user_repository.update(
+        return this.user_repository.update(
             Object.assign(
                 {},
                 input,
@@ -96,9 +95,6 @@ class UserService {
                 }
             )
         );
-
-        return updated_user;
-
     }
 
 

@@ -72,7 +72,7 @@ class CampaignUserService {
             is_participant,
         } = input;
 
-        await this.acl.forbidGuestAccessType(user);
+        this.acl.forbidGuestAccessType(user);
 
         await this.acl.checkCampaignExists(campaign_id);
 
@@ -80,7 +80,7 @@ class CampaignUserService {
 
         const user_to_add = await this.getOrCreateUserToInvite(email);
 
-        const campaign_user = await this.campaign_user_repository
+        return this.campaign_user_repository
             .create({
                 campaign_id,
                 user_id: user_to_add.id,
@@ -88,8 +88,6 @@ class CampaignUserService {
                 is_participant,
                 public_token: `${v4()}`.replace(/-/g, ''),
             });
-
-        return campaign_user;
     }
 
     /**
@@ -105,7 +103,7 @@ class CampaignUserService {
             campaign_id,
         } = input;
 
-        await this.acl.forbidGuestAccessType(user);
+        this.acl.forbidGuestAccessType(user);
 
         await this.acl.checkCampaignExists(campaign_id);
 
@@ -134,7 +132,7 @@ class CampaignUserService {
             is_participant,
         } = input;
 
-        await this.acl.forbidGuestAccessType(user);
+        this.acl.forbidGuestAccessType(user);
 
         await this.acl.checkCampaignExists(campaign_id);
 
@@ -187,7 +185,7 @@ class CampaignUserService {
             id,
         } = input;
 
-        await this.acl.forbidGuestAccessType(user);
+        this.acl.forbidGuestAccessType(user);
 
         await this.acl.checkCampaignExists(campaign_id);
 
@@ -200,7 +198,7 @@ class CampaignUserService {
 
     /**
      * @param {String} email
-     * @returns {Object}
+     * @returns {Promise<Object>}
      */
     async getOrCreateUserToInvite(email) {
         let user_to_add = await this.user_repository.find({

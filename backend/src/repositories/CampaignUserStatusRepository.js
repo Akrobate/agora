@@ -162,7 +162,7 @@ class CampaignUserStatusRepository extends AbstractSequelizeRepository {
 
     /**
      * @param {*} input
-     * @return {Object}
+     * @return {Promise<Object>}
      */
     async upsertCampaignUserStatus(input) {
         const {

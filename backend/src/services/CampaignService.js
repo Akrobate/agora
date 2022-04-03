@@ -130,10 +130,9 @@ class CampaignService {
         await this.campaign_repository
             .update(input);
 
-        const campaign = await this.campaign_repository.find({
+        return this.campaign_repository.find({
             id: campaign_id,
         });
-        return campaign;
     }
 
 

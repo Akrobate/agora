@@ -115,17 +115,18 @@ class AbstractSequelizeRepository {
      * @throws {CustomError}
      */
     async create(input) {
+        let object = null;
         const data = AbstractSequelizeRepository.enrichDataWithTechnicalDates(input);
         try {
             const sequelize_entity = await this.sequelize_model.create(data);
-            const object = AbstractSequelizeRepository._formatOutput(sequelize_entity);
-            return object;
+            object = AbstractSequelizeRepository._formatOutput(sequelize_entity);
         } catch (error) {
             throw new CustomError(
                 CustomError.ORM_ERROR,
                 error.message
             );
         }
+        return object;
     }
 
 
