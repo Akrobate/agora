@@ -20,13 +20,13 @@ class EloCalculator {
      * @param {Number} player_elo
      * @param {Number} opponent_elo
      * @param {Number} player_k
-     * @returns {Void}
+     * @returns {Number}
      * @throws {CustomError}
      */
     getScorePlayerWins(player_elo, opponent_elo, player_k = 40) {
         const prob = this.calculateWinProbability(opponent_elo, player_elo);
-        const new_elo = player_elo + (player_k * (1 - prob));
-        return new_elo;
+        // new_elo
+        return player_elo + (player_k * (1 - prob));
     }
 
 
@@ -34,13 +34,13 @@ class EloCalculator {
      * @param {Number} player_elo
      * @param {Number} opponent_elo
      * @param {Number} player_k
-     * @returns {Void}
+     * @returns {Number}
      * @throws {CustomError}
      */
     getScorePlayerLose(player_elo, opponent_elo, player_k = 40) {
         const prob = this.calculateWinProbability(opponent_elo, player_elo);
-        const new_elo = player_elo + (player_k * (0 - prob));
-        return new_elo;
+        // new_elo
+        return player_elo + (player_k * (0 - prob));
     }
 
 
@@ -48,13 +48,13 @@ class EloCalculator {
      * @param {Number} player_elo
      * @param {Number} opponent_elo
      * @param {Number} player_k
-     * @returns {Void}
+     * @returns {Number}
      * @throws {CustomError}
      */
     getScorePlayerEgality(player_elo, opponent_elo, player_k = 40) {
         const prob = this.calculateWinProbability(opponent_elo, player_elo);
-        const new_elo = player_elo + (player_k * (0.5 - prob));
-        return new_elo;
+        // new_elo;
+        return player_elo + (player_k * (0.5 - prob));
     }
 
 

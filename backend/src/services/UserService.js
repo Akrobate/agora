@@ -103,11 +103,10 @@ class UserService {
      * @returns {String}
      */
     static hashPassword(password) {
-        const hashed_password = crypto
+        return crypto
             .createHash('sha256')
             .update(`${configuration.security.salt}${password}`)
             .digest('base64');
-        return hashed_password;
     }
 
 
