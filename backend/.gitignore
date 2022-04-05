@@ -7,6 +7,8 @@ configuration.yml
 configuration.test.yml
 .nyc_output/
 coverage/
+.scannerwork/
+sonar-scan-docker.sh
 
 # Editor directories and files
 .idea

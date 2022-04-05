@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# User configuration
+SONAR_HOST_URL=YOUR_SONAR_HOST_URL_TO_DEFINE
+SONAR_LOGIN=YOUR_SONAR_LOGIN_TO_DEFINE
+
+SOURCE_PATH=$(pwd)
+
+docker run \
+    --rm \
+    -e SONAR_HOST_URL=${SONAR_HOST_URL} \
+    -e SONAR_LOGIN="${SONAR_LOGIN}" \
+    -v "${SOURCE_PATH}:/usr/src" \
+    sonarsource/sonar-scanner-cli
