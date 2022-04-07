@@ -13,6 +13,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+sonar-scan-docker.sh
+
 # Editor directories and files
 .idea
 .vscode
