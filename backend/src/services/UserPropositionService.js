@@ -267,7 +267,7 @@ class UserPropositionService {
      */
     prepareUserVoteFormat(user_proposition_result_list) {
 
-        const sorted_proposition_list = user_proposition_result_list
+        const sorted_proposition_list = [...user_proposition_result_list]
             .sort((a, b) => a.rank - b.rank);
 
         const user_vote_list = {};

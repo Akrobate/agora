@@ -37,7 +37,7 @@ class BordaAlgorithm extends AbstractVotingAlgorithm {
         const item_score_list = this
             .transformItemScoreObjectToArray(item_score, possibilities_list);
 
-        return item_score_list.sort((a, b) => b.score - a.score)
+        return [...item_score_list].sort((a, b) => b.score - a.score)
             .map((item_score_elem) => item_score_elem.item);
     }
 
