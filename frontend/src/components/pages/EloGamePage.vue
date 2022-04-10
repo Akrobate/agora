@@ -102,10 +102,10 @@
         <v-simple-table>
             <thead>
                 <tr>
-                <th class="text-left">
+                <th class="text-left" scope="col">
                     Proposition
                 </th>
-                <th class="text-right">
+                <th class="text-right" scope="col">
                     ELO score
                 </th>
                 </tr>

@@ -78,10 +78,9 @@
             <v-simple-table>
                 <thead>
                     <tr>
-                    <th class="text-left">
-                        Name
-                    </th>
-
+                        <th class="text-left" scope="col">
+                            Name
+                        </th>
                     </tr>
                 </thead>
 

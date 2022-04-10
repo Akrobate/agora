@@ -17,10 +17,10 @@
 
             <thead>
                 <tr>
-                    <th class="text-left">
+                    <th class="text-left" scope="col">
                         Proposition
                     </th>
-                    <th class="text-left">
+                    <th class="text-left" scope="col">
                         Rang
                     </th>
                 </tr>
