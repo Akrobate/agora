@@ -11,11 +11,5 @@ export default {
         valid: true,
         payload: '',
     }),
-    computed: { 
-    },
-    mounted() {
-    },
-    methods: {
-    },
 }
 </script>

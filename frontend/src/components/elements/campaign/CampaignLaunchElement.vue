@@ -85,16 +85,11 @@ export default {
             this.initialize()
         }
     },
-    mounted () {
-        this.initialize()
-    },
     methods: {
         ...mapActions({
             getCampaign: 'campaign_store/getCampaign',
             updateCampaign: 'campaign_store/updateCampaign',
         }),
-        initialize () {
-        },
         launchCampaignConfirm () {
             const update_campaign_params = {
                 campaign_id: this.campaign_id,

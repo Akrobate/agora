@@ -12,8 +12,6 @@
 
 <script>
 
-// import store from '@/store'
-
 export default {
     name: 'CreateEditElement',
     data: () => ({
