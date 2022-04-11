@@ -21,11 +21,5 @@ export default {
             v => !!v || 'Le contenu de la proposition est obligatoire',
         ],
     }),
-    computed: { 
-    },
-    mounted() {
-    },
-    methods: {
-    },
 }
 </script>

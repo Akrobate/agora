@@ -31,8 +31,5 @@ export default {
     props: {
         value: String,
     },
-    mounted() {
-        
-    }
 }
 </script>
