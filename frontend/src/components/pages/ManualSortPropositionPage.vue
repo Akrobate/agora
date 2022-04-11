@@ -119,13 +119,6 @@
 
 import draggable from "vuedraggable";
 
-
-// export default {
-//     name: 'EloGamePage',
-//     data: () => ({
-//     }),
-// }
-
 //https://github.com/SortableJS/Vue.Draggable/issues/61
 
 const message = [

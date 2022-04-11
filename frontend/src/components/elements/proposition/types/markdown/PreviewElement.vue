@@ -10,11 +10,5 @@ export default {
     data: () => ({
         payload: '',
     }),
-    computed: { 
-    },
-    mounted() {
-    },
-    methods: {
-    },
 }
 </script>
