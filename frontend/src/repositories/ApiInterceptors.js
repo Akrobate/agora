@@ -1,14 +1,15 @@
 import router from '@/router'
-// import status_code from '@/constants/httpStatusCodes'
 import store from '@/store'
 import moment from 'moment'
+import http_status from 'http-status'
+
 
 const responseSuccess = (response) => {
     return response
 }
 
 const responseError = (error) => {
-    if (error.response.status === 401) {
+    if (error.response.status === http_status.UNAUTHORIZED) {
         router.push({ name: 'login' })
     }
     return Promise.reject(error)

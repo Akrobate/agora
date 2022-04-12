@@ -160,8 +160,6 @@ export default {
         campaign_id: Number,
     },
     watch: {
-        tab() {
-        },
         algorithm() {
             this.updatePropositionList()
         },

@@ -8,10 +8,10 @@ const state = () => ({
 })
 
 const getters = {
-    isLoading: (state) => state.is_loading,
-    hasDrawer: (state) => state.has_drawer,
-    isOpenedDrawer: (state) => state.is_opened_drawer,
-    getAppVersion: (state) => state.app_version,
+    isLoading: (_state) => _state.is_loading,
+    hasDrawer: (_state) => _state.has_drawer,
+    isOpenedDrawer: (_state) => _state.is_opened_drawer,
+    getAppVersion: (_state) => _state.app_version,
 }
 
 const actions = {
@@ -27,14 +27,14 @@ const actions = {
 }
 
 const mutations = {
-    set_loading(state, is_loading) {
-        state.is_loading = is_loading
+    set_loading(_state, is_loading) {
+        _state.is_loading = is_loading
     },
-    has_drawer(state, has_drawer) {
-        state.has_drawer = has_drawer
+    has_drawer(_state, has_drawer) {
+        _state.has_drawer = has_drawer
     },
-    is_opened_drawer(state, is_open) {
-        state.is_opened_drawer = is_open
+    is_opened_drawer(_state, is_open) {
+        _state.is_opened_drawer = is_open
     },
 }
 

@@ -65,37 +65,28 @@ const routes = [
     {
         path: '/campaigns/elo-game/:campaign_id',
         name: 'campaign-elo-game',
-        props: (route) => Object.assign(
-            {},
-            route.params,
-            {
-                campaign_id: parseInt(route.params.campaign_id)
-            }
-        ),
+        props: (route) => ({
+            ...route.params,
+            campaign_id: parseInt(route.params.campaign_id)
+        }),
         component: () => import('@/components/pages/EloGamePage.vue')
     },
     {
         path: '/campaigns/:campaign_id/results',
         name: 'campaign-result',
-        props: (route) => Object.assign(
-            {},
-            route.params,
-            {
-                campaign_id: parseInt(route.params.campaign_id)
-            }
-        ),
+        props: (route) => ({
+            ...route.params,
+            campaign_id: parseInt(route.params.campaign_id)
+        }),
         component: () => import('@/components/pages/CampaignResultPage.vue')
     },
     {
         path: '/campaigns/:campaign_id/participate',
         name: 'campaign-participate',
-        props: (route) => Object.assign(
-            {},
-            route.params,
-            {
-                campaign_id: parseInt(route.params.campaign_id)
-            }
-        ),
+        props: (route) => ({
+            ...route.params,
+            campaign_id: parseInt(route.params.campaign_id)
+        }),
         component: () => import('@/components/pages/CampaignParticipationMainPage.vue')
     },
     {
