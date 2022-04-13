@@ -118,28 +118,28 @@ const actions = {
 
 const mutations = {
 
-    set_campaign_draft_list(state, campaign_list) {
-        state.campaign_draft_list = campaign_list;    
+    set_campaign_draft_list(_state, campaign_list) {
+        _state.campaign_draft_list = campaign_list;    
     },
-    set_campaign_in_progress_list(state, campaign_list) {
-        state.campaign_in_progress_list = campaign_list;    
+    set_campaign_in_progress_list(_state, campaign_list) {
+        _state.campaign_in_progress_list = campaign_list;    
     },
-    set_campaign_finished_list(state, campaign_list) {
-        state.campaign_finished_list = campaign_list;    
-    },
-
-    set_proposition_list(state, proposition_list) {
-        state.proposition_list = proposition_list
-    },
-    set_empty_proposition_list(state) {
-        state.proposition_list = []
+    set_campaign_finished_list(_state, campaign_list) {
+        _state.campaign_finished_list = campaign_list;    
     },
 
-    set_campaign_user_list(state, campaign_user_list) {
-        state.campaign_user_list = campaign_user_list
+    set_proposition_list(_state, proposition_list) {
+        _state.proposition_list = proposition_list
     },
-    set_empty_campaign_user_list(state) {
-        state.campaign_user_list = []
+    set_empty_proposition_list(_state) {
+        _state.proposition_list = []
+    },
+
+    set_campaign_user_list(_state, campaign_user_list) {
+        _state.campaign_user_list = campaign_user_list
+    },
+    set_empty_campaign_user_list(_state) {
+        _state.campaign_user_list = []
     },
 }
 

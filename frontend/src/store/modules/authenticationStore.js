@@ -85,27 +85,27 @@ const actions = {
 }
 
 const mutations = {
-    authentication_request(state) {
-        state.authentication_status = 'loading'
+    authentication_request(_state) {
+        _state.authentication_status = 'loading'
     },
-    set_is_renewing_token(state, value) {
-        state.is_renewing_token = value
+    set_is_renewing_token(_state, value) {
+        _state.is_renewing_token = value
     },
-    authentication_success(state, token) {
-        state.authentication_status = 'success'
-        state.is_connected = true
-        state.token = token
-        state.token_data = user_repository.decodeToken(token);
+    authentication_success(_state, token) {
+        _state.authentication_status = 'success'
+        _state.is_connected = true
+        _state.token = token
+        _state.token_data = user_repository.decodeToken(token);
     },
-    authentication_error(state) {
-        state.authentication_status = 'error'
-        state.is_connected = false
+    authentication_error(_state) {
+        _state.authentication_status = 'error'
+        _state.is_connected = false
     },
-    logout(state) {
-        state.status = ''
-        state.token = null
-        state.is_connected = false
-        state.token_data = {}
+    logout(_state) {
+        _state.status = ''
+        _state.token = null
+        _state.is_connected = false
+        _state.token_data = {}
     },
 }
 
