@@ -15,12 +15,12 @@ const state = () => ({
 })
 
 const getters = {
-    propositionList: (state) => state.proposition_list,
-    campaignUserList: (state) => state.campaign_user_list,
+    propositionList: (_state) => _state.proposition_list,
+    campaignUserList: (_state) => _state.campaign_user_list,
     
-    campaignDraftList: (state) => state.campaign_draft_list,
-    campaignInProgressList: (state) => state.campaign_in_progress_list,
-    campaignFinishedList: (state) => state.campaign_finished_list,
+    campaignDraftList: (_state) => _state.campaign_draft_list,
+    campaignInProgressList: (_state) => _state.campaign_in_progress_list,
+    campaignFinishedList: (_state) => _state.campaign_finished_list,
 }
 
 const actions = {
@@ -50,11 +50,8 @@ const actions = {
         return response
     },
 
-
-
-    async createProposition(_, { campaign_id, data }) {
-        const response = await proposition_repository.create(campaign_id, data)
-        return response
+    createProposition(_, { campaign_id, data }) {
+        return proposition_repository.create(campaign_id, data)
     },
     async loadPropositionList({ commit }, { criteria = {}, campaign_id } ) {
         const response = await proposition_repository.search(campaign_id, criteria)
@@ -70,7 +67,6 @@ const actions = {
         return response
     },
 
-
     async getCampaignUser(_, { campaign_id, id }) {
         const campaign_user_list = await campaign_user_repository.search(campaign_id, {
             id_list: [id],
@@ -80,17 +76,14 @@ const actions = {
         ] = campaign_user_list.campaign_user_list
         return campaign_user
     },
-    async addCampaignUser(_, { campaign_id, data }) {
-        const response = await campaign_user_repository.create(campaign_id, data)
-        return response
+    addCampaignUser(_, { campaign_id, data }) {
+        return campaign_user_repository.create(campaign_id, data)
     },
-    async deleteCampaignUser(_, { campaign_id, id}) {
-        const response = await campaign_user_repository.delete(campaign_id, id)
-        return response
+    deleteCampaignUser(_, { campaign_id, id}) {
+        return campaign_user_repository.delete(campaign_id, id)
     },
-    async updateCampaignUser(_, { campaign_id, id, data }) {
-        const response = await campaign_user_repository.update(campaign_id, id, data)
-        return response
+    updateCampaignUser(_, { campaign_id, id, data }) {
+        return campaign_user_repository.update(campaign_id, id, data)
     },
     async searchCampaignUserList(_, { criteria = {}, campaign_id } ) {
         const {
@@ -99,7 +92,6 @@ const actions = {
         return campaign_user_list
     },
     async loadCampaignUserList({ dispatch, commit }, { criteria = {}, campaign_id } ) {
-        // const response = await campaign_user_repository.search(campaign_id, criteria)
         const campaign_user_list = await dispatch('searchCampaignUserList', { criteria, campaign_id })
         commit('set_campaign_user_list', campaign_user_list)
         return campaign_user_list

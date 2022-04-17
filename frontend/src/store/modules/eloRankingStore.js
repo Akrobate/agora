@@ -10,7 +10,7 @@ const state = () => ({
 })
 
 const getters = {
-    eloPropositionRankingList: (state) => state.elo_proposition_ranking_list,
+    eloPropositionRankingList: (_state) => _state.elo_proposition_ranking_list,
 }
 
 const actions = {
@@ -55,8 +55,8 @@ const actions = {
 
 const mutations = {
 
-    set_elo_proposition_ranking_list(state, elo_proposition_ranking_list) {
-        state.elo_proposition_ranking_list = elo_proposition_ranking_list  
+    set_elo_proposition_ranking_list(_state, elo_proposition_ranking_list) {
+        _state.elo_proposition_ranking_list = elo_proposition_ranking_list  
     },
 
 }
