@@ -14,11 +14,11 @@ const state = () => ({
 })
 
 const getters = {
-    isConnected: (state) => state.is_connected,
-    authenticationStatus: (state) => state.authentication_status,
-    token: (state) => state.token,
-    tokenData: (state) => state.token_data,
-    isRenewingToken: (state) => state.is_renewing_token,
+    isConnected: (_state) => _state.is_connected,
+    authenticationStatus: (_state) => _state.authentication_status,
+    token: (_state) => _state.token,
+    tokenData: (_state) => _state.token_data,
+    isRenewingToken: (_state) => _state.is_renewing_token,
 }
 
 const actions = {

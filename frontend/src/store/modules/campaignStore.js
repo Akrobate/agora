@@ -35,9 +35,8 @@ const actions = {
     async getCampaign(_, { campaign_id }) {
         return campaign_repository.read(campaign_id)
     },
-    async createCampaign(_, data) {
-        const response = await campaign_repository.create(data)
-        return response
+    createCampaign(_, data) {
+        return campaign_repository.create(data)
     },
     async updateCampaign({ dispatch }, { campaign_id, data }) {
         const response = await campaign_repository.update(campaign_id, data)
