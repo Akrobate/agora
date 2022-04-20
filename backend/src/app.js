@@ -1,28 +1,24 @@
 'use strict';
 
-const cors = require('cors');
 const express = require('express');
-
 const routes = require('./routes');
 
 const {
     error_manager_middleware,
     not_found_error_middleware,
     access_control_allow_middleware,
+    express_urlencoded_middleware,
+    cors_middleware,
+    express_json,
 } = require('./middlewares');
 
 const app = express();
-
 app.disable('x-powered-by');
-app.use(access_control_allow_middleware);
-app.use(express.json());
-app.use(express.urlencoded({
-    extended: false,
-}));
 
-app.use(cors({
-    optionsSuccessStatus: 200, /* some legacy browsers (IE11, various SmartTVs) choke on 204 */
-}));
+app.use(access_control_allow_middleware);
+app.use(express_json);
+app.use(express_urlencoded_middleware);
+app.use(cors_middleware);
 
 app.use(routes.url_prefix, routes.api_routes);
 
