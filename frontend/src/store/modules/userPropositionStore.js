@@ -8,7 +8,7 @@ const state = () => ({
 })
 
 const getters = {
-    propositionResultList: (state) => state.proposition_result_list
+    propositionResultList: (_state) => _state.proposition_result_list
 }
 
 const actions = {
@@ -39,8 +39,8 @@ const actions = {
 }
 
 const mutations = {
-    set_proposition_result_list(state, proposition_result_list) {
-        state.proposition_result_list = proposition_result_list  
+    set_proposition_result_list(_state, proposition_result_list) {
+        _state.proposition_result_list = proposition_result_list  
     },
 }
 
