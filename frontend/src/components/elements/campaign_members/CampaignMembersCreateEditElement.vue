@@ -91,10 +91,7 @@ export default {
             creation_mode: true,
         }
     },
-
     async mounted() {
-        console.log("mounted...")
-        console.log("this.is_participant mounted", this.is_participant)
         this.init()
     },
     watch: {

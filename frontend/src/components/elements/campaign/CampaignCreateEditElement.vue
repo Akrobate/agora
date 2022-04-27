@@ -43,18 +43,25 @@
         </v-card-text>
 
         <v-card-actions>
+            <v-btn
+                color="blue darken-1"
+                text
+                @click="cancel()"
+            >
+                Annuler
+            </v-btn>
             <v-spacer></v-spacer>
             <v-btn
                 color="blue darken-1"
                 text
-                @click="reset"
+                @click="reset()"
             >
                 Effacer
             </v-btn>
             <v-btn
                 color="blue darken-1"
                 text
-                @click="save"
+                @click="save()"
             >
                 Sauvegarder
             </v-btn>
@@ -128,9 +135,13 @@ export default {
             this.$emit('update:campaign_id', creation_result.id)
             this.$emit('saved')
         },
-        reset () {
+        reset() {
             this.$refs.form.reset()
             this.$emit('reset')
+        },
+        cancel() {
+            this.$refs.form.reset()
+            this.$emit('cancel')
         },
         async loadCampaingToEditIfCampaignIdIsSetted() {
             if (this.campaign_id) {

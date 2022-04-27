@@ -14,13 +14,13 @@
           color="primary"
           dark
           class="mb-2"
-          @click="createItem"
+          @click="createItem()"
         >
           Nouvelle campagne
         </v-btn>
         <v-dialog v-model="dialog" max-width="500px">
             <campaign-create-edit-element
-                @reset="close"
+                @cancel="close"
                 @saved="close"
                 :module_technical_name="editing_module_technical_name"
             />

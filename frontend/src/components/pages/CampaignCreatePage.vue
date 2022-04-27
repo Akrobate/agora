@@ -125,7 +125,6 @@ export default {
         }
     },
     mounted() {
-        console.log("Campaign create Page - Mounted")
         this.loadAllCampaignData()
     },
     methods: {
