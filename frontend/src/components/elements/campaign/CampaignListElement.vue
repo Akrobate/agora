@@ -14,19 +14,13 @@
           color="primary"
           dark
           class="mb-2"
-          @click="createItem()"
+          :to="{'name': 'campaign-create', params: { campaign_status: 'create'}}"
+          :exact="true"
         >
           Nouvelle campagne
         </v-btn>
-        <v-dialog v-model="dialog" max-width="500px">
-            <campaign-create-edit-element
-                @cancel="close"
-                @saved="close"
-                :module_technical_name="editing_module_technical_name"
-            />
-        </v-dialog>
 
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog v-model="dialog_delete" max-width="500px">
           <v-card>
             <v-card-title class="headline">Are you sure you want to delete this module?</v-card-title>
             <v-card-actions>
@@ -99,20 +93,15 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
-import CampaignCreateEditElement from '@/components/elements/campaign/CampaignCreateEditElement'
 import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
 
   export default {
     name: 'CampaignListElement',
-    components: {
-      CampaignCreateEditElement,
-    },
     props: [
         'campaign_status',
     ],
     data: () => ({
-        dialog: false,
-        dialogDelete: false,
+        dialog_delete: false,
         headers: [
             {
                 text: 'Nom de la campagne',
@@ -137,9 +126,6 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
             campaignFinishedList: 'campaign_store/campaignFinishedList',
             campaignInProgressList: 'campaign_store/campaignInProgressList',
         }),
-        formTitle() {
-            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-        },
         campaignData() {
             switch (this.campaign_status) {
                 case 'in-progress':
@@ -157,7 +143,7 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
         dialog (val) {
             val || this.close()
         },
-        dialogDelete (val) {
+        dialog_delete (val) {
             val || this.closeDelete()
         },
         campaign_status () {
@@ -170,10 +156,10 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
     methods: {
         ...mapActions({
             loadCampaigns: 'campaign_store/loadCampaigns',
-            deleteModule: 'campaign_store/deleteCampaign',
+            deleteCampaign: 'campaign_store/deleteCampaign',
         }),
         initialize () {
-            
+
             switch (this.campaign_status) {
                 case 'in-progress':
                     this.list_title = 'Campagnes en cours'
@@ -190,25 +176,18 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
                 default:
                     break
             }
-            
+
         },
-        createItem() {
-            this.editing_module_technical_name = null
-            this.dialog = true
-        },
-        deleteItem (item) {
+        deleteItem(item) {
             this.editing_module_technical_name = item.technical_name
-            this.dialogDelete = true
+            this.dialog_delete = true
         },
-        deleteItemConfirm () {
-            this.deleteModule(this.editing_module_technical_name)
+        deleteItemConfirm() {
+            this.deleteCampaign(this.editing_module_technical_name)
             this.closeDelete()
         },
-        close () {
-            this.dialog = false
-        },
-        closeDelete () {
-            this.dialogDelete = false
+        closeDelete() {
+            this.dialog_delete = false
         },
     },
   }

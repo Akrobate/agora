@@ -50,7 +50,7 @@
 import { mapActions } from 'vuex'
 
 export default {
-    name: 'CampaignCreateEditElement',
+    name: 'PropositionCreateEditElement',
     props: {
         campaign_id: Number,
     },
