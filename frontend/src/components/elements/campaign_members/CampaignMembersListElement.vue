@@ -69,17 +69,33 @@
 
     <template v-slot:[`item.actions`]="{ item }">
 
-        <v-icon class="mr-2" @click="invite(item)">
-            mdi-email-send-outline
-        </v-icon>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon class="mr-2" @click="invite(item)" v-bind="attrs" v-on="on">
+                mdi-email-send-outline
+            </v-icon>
+          </template>
+          <span>Envoyer une invitation par mail</span>
+        </v-tooltip>
 
-        <v-icon class="mr-2" @click="editItem(item)">
-            mdi-pencil
-        </v-icon>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon class="mr-2" @click="editItem(item)" v-bind="attrs" v-on="on">
+                mdi-pencil
+            </v-icon>
+          </template>
+          <span>Modifier le membre</span>
+        </v-tooltip>
         
-        <v-icon class="mr-2" @click="deleteItem(item)">
-            mdi-delete
-        </v-icon>
+
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon class="mr-2" @click="deleteItem(item)" v-bind="attrs" v-on="on">
+                mdi-delete
+            </v-icon>
+          </template>
+          <span>Supprimer le membre de la campagne</span>
+        </v-tooltip>
 
     </template>
 
