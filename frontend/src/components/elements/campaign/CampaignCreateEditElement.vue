@@ -21,22 +21,13 @@
                         required
                     ></v-text-field>
 
-                    <v-text-field
-                        v-model="proposition_type"
-                        :counter="255"
-                        :rules="proposition_type_rules"
-                        label="Type de propositions"
-                        required
-                    ></v-text-field>
-
+                    <proposition-type-ui-selector-element v-model="proposition_type" />
+                    
                     <v-textarea
                         v-model="description"
                         label="Description"
                         hint="La description de la campagne sera visible a tous les participants"
                     ></v-textarea>
-
-
-                    <proposition-type-ui-selector-element />
 
                 </v-form>
             </v-container> 
@@ -94,6 +85,7 @@ export default {
         ],
         description: '',
         description_rules: [],
+        default_proposition_type: 'raw_string'
     }),
     async mounted() {
         await this.loadCampaingToEditIfCampaignIdIsSetted()
@@ -138,10 +130,14 @@ export default {
         reset() {
             this.$refs.form.reset()
             this.$emit('reset')
+            this.proposition_type = this.default_proposition_type
+            console.log(this.proposition_type)
         },
         cancel() {
-            this.$refs.form.reset()
-            this.$emit('cancel')
+            // this.$refs.form.reset()
+            // this.$emit('cancel')
+            this.proposition_type = this.default_proposition_type
+            console.log(this.proposition_type)
         },
         async loadCampaingToEditIfCampaignIdIsSetted() {
             if (this.campaign_id) {
