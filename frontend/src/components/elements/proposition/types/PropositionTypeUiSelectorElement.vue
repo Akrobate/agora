@@ -1,8 +1,6 @@
 <template>
     <div>
-
         <p class="body-1">Types de propositions</p>
-
         <v-radio-group v-model="proposition_type">
             <v-radio
                 v-for="item in proposition_type_list"
@@ -37,17 +35,11 @@ export default {
     ],
     watch: {
         proposition_type(value) {
-            console.log('proposition_type changed', value)
+            this.$emit('input', value)
         },
-        value() {
-            this.proposition_type = this.value
-            console.log("value changed detected ", this.value)
+        value(value) {
+            this.proposition_type = value
         }
-    },
-    mounted() {
-        this.proposition_type = this.value;
-        console.log("mounted this.value ", this.value)
-    }
-    
+    },    
 }
 </script>

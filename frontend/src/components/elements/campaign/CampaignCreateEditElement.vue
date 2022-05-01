@@ -93,7 +93,7 @@ export default {
     watch: {
         async campaign_id() {
             await this.loadCampaingToEditIfCampaignIdIsSetted()
-        }
+        },
     },
     methods: {
         ...mapActions({
@@ -129,15 +129,20 @@ export default {
         },
         reset() {
             this.$refs.form.reset()
+            this.$nextTick (() => {
+                this.setFormDefalutValues()
+            })
             this.$emit('reset')
-            this.proposition_type = this.default_proposition_type
-            console.log(this.proposition_type)
         },
         cancel() {
-            // this.$refs.form.reset()
-            // this.$emit('cancel')
+            this.$refs.form.reset()
+            this.$nextTick (() => {
+                this.setFormDefalutValues()
+            })
+            this.$emit('cancel')
+        },
+        setFormDefalutValues() {
             this.proposition_type = this.default_proposition_type
-            console.log(this.proposition_type)
         },
         async loadCampaingToEditIfCampaignIdIsSetted() {
             if (this.campaign_id) {
