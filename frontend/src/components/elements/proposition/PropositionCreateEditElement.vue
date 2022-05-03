@@ -22,7 +22,11 @@
                     ></v-text-field>
 
                 </v-form>
-            </v-container> 
+                
+                <p v-if="debug">
+                    {{ campaign }}
+                </p>
+            </v-container>
         </v-card-text>
 
         <v-card-actions>
@@ -60,10 +64,16 @@ export default {
         payload_rules: [
             v => !!v || 'Le contenu de la proposition est obligatoire',
         ],
+        debug: true,
+        campaign: {},
     }),
+    async mounted() {
+        await this.init()
+    },
     methods: {
         ...mapActions({
             createProposition: 'campaign_store/createProposition',
+            getCampaign: 'campaign_store/getCampaign',
         }),
         async save() {
             if (!this.$refs.form.validate()) {
@@ -85,6 +95,18 @@ export default {
             this.$refs.form.reset()
             this.$emit('reset')
         },
+        async init() {
+            if (this.campaign_id) {
+                this.campaign = await this.getCampaign({
+                    campaign_id: this.campaign_id
+                })
+            }
+        }
     },
+    watch: {
+        campaign_id() {
+            this.init()
+        }
+    }
 }
 </script>
