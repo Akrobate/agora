@@ -1,19 +1,25 @@
 <template>
     <div>
-        <v-text-field
-            v-model="payload"
-            :counter="255"
-            :rules="payload_rules"
-            label="Contenu de la proposition"
-            required
-        ></v-text-field>
+
+        <markdown-edition-element />
+        
+        <raw-string-edition-element />
+
     </div>
 </template>
 
 <script>
 
+import MarkdownEditionElement from '@/components/elements/proposition/types/markdown/EditionElement'
+import RawStringEditionElement from '@/components/elements/proposition/types/raw_string/EditionElement'
+
+
 export default {
     name: 'CreateEditElement',
+    components: {
+        MarkdownEditionElement,
+        RawStringEditionElement,
+    },
     data: () => ({
         valid: true,
         payload: '',
