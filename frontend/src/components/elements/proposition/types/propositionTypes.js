@@ -1,5 +1,10 @@
 'use strict';
 
+const propositionType = {
+    RAW_STRING: 'raw_string',
+    MARKDOWN: 'markdown',
+}
+
 const propositionTypes = [
     {
         description: 'One line proposition',
@@ -16,4 +21,5 @@ const propositionTypes = [
 
 export {
     propositionTypes,
+    propositionType,
 }
