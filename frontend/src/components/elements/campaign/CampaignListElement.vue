@@ -20,13 +20,13 @@
           Nouvelle campagne
         </v-btn>
 
-        <v-dialog v-model="dialog_delete" max-width="500px">
+        <v-dialog v-model="dialog_delete" max-width="400px">
           <v-card>
-            <v-card-title class="headline">Are you sure you want to delete this module?</v-card-title>
+            <v-card-title class="headline">Supprimer la campagne?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDelete">Annuler</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm">Oui</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>

@@ -90,7 +90,7 @@
 
         <v-tooltip top>
           <template v-slot:activator="{ on, attrs }">
-            <v-icon class="mr-2" @click="deleteItem(item)" v-bind="attrs" v-on="on">
+            <v-icon class="mr-2" @click="deleteItem(item)" v-bind="attrs" v-on="on" color="red">
                 mdi-delete
             </v-icon>
           </template>

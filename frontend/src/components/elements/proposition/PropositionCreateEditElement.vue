@@ -24,6 +24,7 @@
                 </v-form>
                 
                 <p v-if="debug">
+                    <strong>{{ proposition_id ? proposition_id : 'NULL' }}</strong>
                     {{ campaign }}
                 </p>
             </v-container>
@@ -57,6 +58,7 @@ export default {
     name: 'PropositionCreateEditElement',
     props: {
         campaign_id: Number,
+        proposition_id: Number,
     },
     data: () => ({
         valid: true,

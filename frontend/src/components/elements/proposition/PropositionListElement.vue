@@ -20,6 +20,7 @@
         <v-dialog v-model="dialog" max-width="500px">
             <proposition-create-edit-element
                 :campaign_id="campaign_id"
+                :proposition_id="editing_proposition_id"
                 @reset="close"
                 @saved="saved"
             />
