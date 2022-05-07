@@ -90,6 +90,51 @@ class PropositionController extends AbstractController {
      * @param {express.Response} response
      * @returns {Promise<*|Error>}
      */
+    async update(request, response) {
+
+        const {
+            campaign_id,
+            proposition_id,
+        } = request.params;
+
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                body: joi.object()
+                    .keys({
+                        payload: joi.string()
+                            .trim()
+                            .min(1)
+                            .required(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        this.checkValidationError(error);
+
+        const proposition = await this.proposition_service.update(
+            request.jwt_data,
+            {
+                proposition_id,
+                campaign_id,
+                payload: value.body.payload,
+            }
+        );
+
+        return response.status(HTTP_CODE.CREATED).send(proposition);
+    }
+
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
     async read(request, response) {
 
         const {

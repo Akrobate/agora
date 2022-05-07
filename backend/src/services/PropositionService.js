@@ -101,6 +101,33 @@ class PropositionService {
         });
     }
 
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async update(user, input) {
+        const {
+            user_id,
+        } = user;
+
+        const {
+            proposition_id,
+            campaign_id,
+            payload,
+        } = input;
+
+        this.acl.forbidGuestAccessType(user);
+
+        await this.acl.checkUserIsCampaignManager(user_id, campaign_id);
+
+        return this.proposition_repository.update({
+            id: proposition_id,
+            payload,
+        });
+    }
+
     /**
      * @param {Object} user
      * @param {Object} input

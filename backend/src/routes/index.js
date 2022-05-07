@@ -191,6 +191,14 @@ api_routes.delete(
         .catch(next)
 );
 
+api_routes.patch(
+    '/campaigns/:campaign_id/propositions/:proposition_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => proposition_controller
+        .update(request, response)
+        .catch(next)
+);
+
 api_routes.post(
     '/campaigns/:campaign_id/status',
     authentication_middleware.injectJwtData(),
