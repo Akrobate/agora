@@ -160,9 +160,11 @@ import PropositionCreateEditElement from '@/components/elements/proposition/Prop
         },
         close () {
             this.dialog = false
+            this.editing_proposition_id = null
         },
         closeDelete () {
             this.dialogDelete = false
+            this.editing_proposition_id = null
         },
     },
   }

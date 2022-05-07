@@ -49,8 +49,14 @@ const actions = {
         return response
     },
 
+    readProposition(_, {campaign_id, proposition_id}) {
+        return proposition_repository.read(campaign_id, proposition_id)
+    },
     createProposition(_, { campaign_id, data }) {
         return proposition_repository.create(campaign_id, data)
+    },
+    updateProposition(_, { campaign_id, proposition_id, data }) {
+        return proposition_repository.update(campaign_id, proposition_id, data)
     },
     async loadPropositionList({ commit }, { criteria = {}, campaign_id } ) {
         const response = await proposition_repository.search(campaign_id, criteria)

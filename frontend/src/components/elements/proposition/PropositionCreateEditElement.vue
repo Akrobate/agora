@@ -74,26 +74,41 @@ export default {
     },
     methods: {
         ...mapActions({
-            createProposition: 'campaign_store/createProposition',
             getCampaign: 'campaign_store/getCampaign',
+            createProposition: 'campaign_store/createProposition',
+            updateProposition: 'campaign_store/updateProposition',
+            getProposition: 'campaign_store/readProposition',
         }),
         async save() {
             if (!this.$refs.form.validate()) {
                 this.$emit('validation_error')
                 return;
             }
-            await this.createProposition(
-                {
-                    campaign_id: this.campaign_id,
-                    data: {
-                        payload: this.payload,
+            if (this.proposition_id) {
+                await this.updateProposition(
+                    {
+                        campaign_id: this.campaign_id,
+                        proposition_id: this.proposition_id,
+                        data: {
+                            payload: this.payload,
+                        }
                     }
-                }
-            )
+                )
+            } else {
+                await this.createProposition(
+                    {
+                        campaign_id: this.campaign_id,
+                        data: {
+                            payload: this.payload,
+                        }
+                    }
+                )
+            }
             this.$emit('saved')
             this.reset()
         },
         reset() {
+            this.payload = ''
             this.$refs.form.reset()
             this.$emit('reset')
         },
@@ -103,12 +118,22 @@ export default {
                     campaign_id: this.campaign_id
                 })
             }
+            if (this.proposition_id) {
+                const proposition_data = await this.getProposition({
+                    campaign_id: this.campaign_id,
+                    proposition_id: this.proposition_id,
+                })
+                this.payload = proposition_data.payload
+            }
         }
     },
     watch: {
         campaign_id() {
             this.init()
-        }
+        },
+        proposition_id() {
+            this.init()
+        },
     }
 }
 </script>
