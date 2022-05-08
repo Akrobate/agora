@@ -1,5 +1,6 @@
 <template>
     <div>
+         <p>Raw string</p>
         <v-text-field
             v-model="payload"
             :counter="255"
@@ -14,7 +15,7 @@
 
 
 export default {
-    name: 'CreateEditElement',
+    name: 'EditionElement',
     data: () => ({
         valid: true,
         payload: '',

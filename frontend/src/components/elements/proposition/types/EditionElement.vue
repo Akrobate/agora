@@ -26,7 +26,7 @@ export default {
     },
     props: {
         payload: String,
-        propotisiton_type: String,
+        proposition_type: String,
     },
     data: () => ({
         propositionType,

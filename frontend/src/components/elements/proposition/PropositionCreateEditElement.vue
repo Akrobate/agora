@@ -13,6 +13,7 @@
                     v-model="valid"
                     lazy-validation
                 >
+                <!--
                     <v-text-field
                         v-model="payload"
                         :counter="255"
@@ -20,12 +21,18 @@
                         label="Contenu de la proposition"
                         required
                     ></v-text-field>
+                -->
+
+                    <edition-element :proposition_type="campaign.proposition_type" />
 
                 </v-form>
                 
                 <p v-if="debug">
                     <strong>{{ proposition_id ? proposition_id : 'NULL' }}</strong>
                     {{ campaign }}
+                    <br />
+                    <br />
+                    {{ proposition }}
                 </p>
             </v-container>
         </v-card-text>
@@ -53,9 +60,12 @@
 <script>
 
 import { mapActions } from 'vuex'
-
+import EditionElement from '@/components/elements/proposition/types/EditionElement'
 export default {
     name: 'PropositionCreateEditElement',
+    components: {
+        EditionElement,
+    },
     props: {
         campaign_id: Number,
         proposition_id: Number,
@@ -68,9 +78,18 @@ export default {
         ],
         debug: true,
         campaign: {},
+        proposition: {},
     }),
     async mounted() {
         await this.init()
+    },
+    watch: {
+        campaign_id() {
+            this.init()
+        },
+        proposition_id() {
+            this.init()
+        },
     },
     methods: {
         ...mapActions({
@@ -79,6 +98,21 @@ export default {
             updateProposition: 'campaign_store/updateProposition',
             getProposition: 'campaign_store/readProposition',
         }),
+        async init() {
+            if (this.campaign_id) {
+                this.campaign = await this.getCampaign({
+                    campaign_id: this.campaign_id
+                })
+            }
+            if (this.proposition_id) {
+                const proposition_data = await this.getProposition({
+                    campaign_id: this.campaign_id,
+                    proposition_id: this.proposition_id,
+                })
+                this.payload = proposition_data.payload
+                this.proposition = proposition_data
+            }
+        },
         async save() {
             if (!this.$refs.form.validate()) {
                 this.$emit('validation_error')
@@ -112,28 +146,6 @@ export default {
             this.$refs.form.reset()
             this.$emit('reset')
         },
-        async init() {
-            if (this.campaign_id) {
-                this.campaign = await this.getCampaign({
-                    campaign_id: this.campaign_id
-                })
-            }
-            if (this.proposition_id) {
-                const proposition_data = await this.getProposition({
-                    campaign_id: this.campaign_id,
-                    proposition_id: this.proposition_id,
-                })
-                this.payload = proposition_data.payload
-            }
-        }
     },
-    watch: {
-        campaign_id() {
-            this.init()
-        },
-        proposition_id() {
-            this.init()
-        },
-    }
 }
 </script>

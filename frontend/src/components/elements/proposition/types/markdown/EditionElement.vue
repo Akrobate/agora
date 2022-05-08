@@ -1,5 +1,6 @@
 <template>
     <div>
+        <p>Markdown</p>
         <v-text-field
             v-model="payload"
             :counter="255"
@@ -13,7 +14,7 @@
 <script>
 
 export default {
-    name: 'CreateEditElement',
+    name: 'EditionElementElement',
     data: () => ({
         valid: true,
         payload: '',
