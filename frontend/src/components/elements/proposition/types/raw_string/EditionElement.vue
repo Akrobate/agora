@@ -23,5 +23,16 @@ export default {
             v => !!v || 'Le contenu de la proposition est obligatoire',
         ],
     }),
+    mounted() {
+        this._payload = this.value
+    },
+    watch: {
+        _payload() {
+            this.$emit('input', this._payload)
+        },
+        value() {
+            this._payload = this.value
+        }
+    },
 }
 </script>

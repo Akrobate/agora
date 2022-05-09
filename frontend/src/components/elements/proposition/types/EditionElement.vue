@@ -25,7 +25,7 @@ export default {
         RawStringEditionElement,
     },
     props: {
-        payload: String,
+        value: String,
         proposition_type: String,
     },
     data: () => ({
@@ -33,7 +33,15 @@ export default {
         _payload: '',
     }),
     mounted() {
-        this._payload = this.payload
+        this._payload = this.value
+    },
+    watch: {
+        _payload() {
+            this.$emit('input', this._payload)
+        },
+        value() {
+            this._payload = this.value
+        }
     },
 
 }

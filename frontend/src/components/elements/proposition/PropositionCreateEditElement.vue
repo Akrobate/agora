@@ -23,11 +23,11 @@
                     ></v-text-field>
                 -->
 
-                    <edition-element :proposition_type="campaign.proposition_type" />
+                    <edition-element :proposition_type="campaign.proposition_type" v-model="payload" />
 
                 </v-form>
                 
-                <p v-if="debug">
+                <p v-if="debug && 0">
                     <strong>{{ proposition_id ? proposition_id : 'NULL' }}</strong>
                     {{ campaign }}
                     <br />
