@@ -16,6 +16,9 @@
 
 export default {
     name: 'EditionElement',
+    props: {
+        value: String,
+    },
     data: () => ({
         valid: true,
         payload: '',
@@ -24,14 +27,14 @@ export default {
         ],
     }),
     mounted() {
-        this._payload = this.value
+        this.payload = this.value
     },
     watch: {
-        _payload() {
-            this.$emit('input', this._payload)
+        payload() {
+            this.$emit('input', this.payload)
         },
         value() {
-            this._payload = this.value
+            this.payload = this.value
         }
     },
 }

@@ -2,11 +2,11 @@
     <div>
         
         <markdown-edition-element 
-            v-model="_payload"
+            v-model="payload"
             v-if="proposition_type === propositionType.MARKDOWN "/>
         
         <raw-string-edition-element
-            v-model="_payload"
+            v-model="payload"
             v-if="proposition_type === propositionType.RAW_STRING" />
 
     </div>
@@ -30,17 +30,17 @@ export default {
     },
     data: () => ({
         propositionType,
-        _payload: '',
+        payload: '',
     }),
     mounted() {
-        this._payload = this.value
+        this.payload = this.value
     },
     watch: {
-        _payload() {
-            this.$emit('input', this._payload)
+        payload() {
+            this.$emit('input', this.payload)
         },
         value() {
-            this._payload = this.value
+            this.payload = this.value
         }
     },
 
