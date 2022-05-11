@@ -1,6 +1,6 @@
 <template>
     <div>
-         <p>Raw string</p>
+        <p>Raw string</p>
         <v-text-field
             v-model="payload"
             :counter="255"
@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 
 export default {
     name: 'EditionElement',
