@@ -1,17 +1,18 @@
 <template>
     <div>
-        <p>Markdown</p>
-        <v-text-field
+        <p>Markdown preview</p>
+        <div v-html="payload_html" class="markdown_preview" />
+        <v-textarea
             v-model="payload"
-            :counter="255"
-            :rules="payload_rules"
-            label="Contenu de la proposition"
+            label="Edition de la proposition en markdown"
             required
-        ></v-text-field>
+        ></v-textarea>
     </div>
 </template>
 
 <script>
+
+import { marked } from 'marked'
 
 export default {
     name: 'EditionElement',
@@ -21,19 +22,25 @@ export default {
     data: () => ({
         valid: true,
         payload: '',
-        payload_rules: [
-            v => !!v || 'Le contenu de la proposition est obligatoire',
-        ],
+        payload_html: '',
     }),
     mounted() {
-        this.payload = this.value
+        this.updatePayload()
+    },
+    methods: {
+        updatePayload() {
+            this.payload = this.value
+            if (this.value) {
+                this.payload_html = marked.parse(this.value)
+            }
+        },
     },
     watch: {
         payload() {
             this.$emit('input', this.payload)
         },
         value() {
-            this.payload = this.value
+           this.updatePayload()
         }
     },
 }
