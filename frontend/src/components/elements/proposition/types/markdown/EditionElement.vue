@@ -1,7 +1,8 @@
 <template>
     <div>
         <p>Markdown preview</p>
-        <div v-html="payload_html" class="markdown_preview" />
+        <preview-element :payload="payload" />
+
         <v-textarea
             v-model="payload"
             label="Edition de la proposition en markdown"
@@ -12,17 +13,18 @@
 
 <script>
 
-import { marked } from 'marked'
+import PreviewElement from './PreviewElement.vue'
 
 export default {
     name: 'EditionElement',
+    components: {
+        PreviewElement,
+    },
     props: {
         value: String,
     },
     data: () => ({
-        valid: true,
         payload: '',
-        payload_html: '',
     }),
     mounted() {
         this.updatePayload()
@@ -30,9 +32,6 @@ export default {
     methods: {
         updatePayload() {
             this.payload = this.value
-            if (this.value) {
-                this.payload_html = marked.parse(this.value)
-            }
         },
     },
     watch: {
