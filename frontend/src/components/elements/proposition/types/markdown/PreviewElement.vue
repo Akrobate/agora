@@ -1,25 +1,28 @@
 
 <template>
     <div>
-        {{ payload_display }}
+        {{ payload_preview }}
     </div>
 </template>
 
 <script>
+
+import removeMarkdown from 'remove-markdown'
+
 export default {
     name: 'PreviewElement',
     props: {
         payload: String,
     },
     data: () => ({
-        payload_display: '',
+        payload_preview: '',
     }),
     mounted() {
         this.updatePayloadDisplay()
     },
     methods: {
         updatePayloadDisplay() {
-            this.payload_display = this.payload
+            this.payload_preview = removeMarkdown(this.payload)
         },
     },
     watch: {
