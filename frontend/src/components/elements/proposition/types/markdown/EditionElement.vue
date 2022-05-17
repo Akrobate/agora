@@ -1,7 +1,7 @@
 <template>
     <div>
         <p>Markdown preview</p>
-        <preview-element :payload="payload" />
+        <view-element :payload="payload" />
 
         <v-textarea
             v-model="payload"
@@ -13,12 +13,12 @@
 
 <script>
 
-import PreviewElement from './PreviewElement.vue'
+import ViewElement from './ViewElement.vue'
 
 export default {
     name: 'EditionElement',
     components: {
-        PreviewElement,
+        ViewElement,
     },
     props: {
         value: String,

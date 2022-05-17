@@ -1,29 +1,31 @@
+
 <template>
-    <div v-html="payload_html" class="markdown_preview" />
+    <div>
+        {{ payload_display }}
+    </div>
 </template>
 
 <script>
-import { marked } from 'marked'
 export default {
     name: 'PreviewElement',
     props: {
         payload: String,
     },
     data: () => ({
-        payload_html: '',
+        payload_display: '',
     }),
     mounted() {
-        this.updatePayloadHtml()
+        this.updatePayloadDisplay()
+    },
+    methods: {
+        updatePayloadDisplay() {
+            this.payload_display = this.payload
+        },
     },
     watch: {
         payload() {
-            this.updatePayloadHtml()
-        },
+           this.updatePayloadDisplay()
+        }
     },
-    methods: {
-        updatePayloadHtml() {
-            this.payload_html = marked.parse(this.payload)
-        },
-    }
 }
 </script>
