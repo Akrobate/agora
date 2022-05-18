@@ -8,7 +8,6 @@
 export default {
     name: 'PreviewElement',
     data: () => ({
-        valid: true,
         payload: '',
     }),
 }

@@ -1,6 +1,5 @@
 <template>
     <div>
-        
         <markdown-edition-element 
             v-model="payload"
             v-if="proposition_type === propositionType.MARKDOWN "/>
@@ -8,7 +7,6 @@
         <raw-string-edition-element
             v-model="payload"
             v-if="proposition_type === propositionType.RAW_STRING" />
-
     </div>
 </template>
 
