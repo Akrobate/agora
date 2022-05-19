@@ -41,7 +41,13 @@
       </v-toolbar>
     </template>
 
+    <template v-slot:[`item.payload`]="{ item }">
+        {{ item.payload }}
+    </template>
+
     <template v-slot:[`item.actions`]="{ item }">
+        <!-- @todo router link to update -->
+        <!--
         <router-link 
             tag="span"
             style="cursor: pointer"
@@ -49,6 +55,7 @@
         >
             <v-icon class="mr-2" small>mdi-format-list-bulleted-square</v-icon>
         </router-link>
+        -->
         <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
         </v-icon>
@@ -90,6 +97,7 @@ import PropositionCreateEditElement from '@/components/elements/proposition/Prop
                 text: 'Proposition',
                 align: 'start',
                 value: 'payload',
+                sortable: false,
             },
             {
                 text: 'Actions',
