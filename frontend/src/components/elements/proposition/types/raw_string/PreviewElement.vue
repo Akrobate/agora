@@ -7,8 +7,8 @@
 <script>
 export default {
     name: 'PreviewElement',
-    data: () => ({
-        payload: '',
-    }),
+    props: {
+        payload: String,
+    },
 }
 </script>
