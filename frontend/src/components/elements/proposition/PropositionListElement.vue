@@ -42,7 +42,10 @@
     </template>
 
     <template v-slot:[`item.payload`]="{ item }">
-        {{ item.payload }}
+        <preview-element 
+            :proposition_type="campaign.proposition_type"
+            :payload="item.payload"
+        />
     </template>
 
     <template v-slot:[`item.actions`]="{ item }">
@@ -80,11 +83,13 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import PropositionCreateEditElement from '@/components/elements/proposition/PropositionCreateEditElement'
+import PreviewElement from '@/components/elements/proposition/types/PreviewElement'
 
-  export default {
+export default {
     name: 'PropositionListElement',
     components: {
         PropositionCreateEditElement,
+        PreviewElement,
     },
     props: [
         'campaign_id',
@@ -107,6 +112,7 @@ import PropositionCreateEditElement from '@/components/elements/proposition/Prop
             },
         ],
         editing_proposition_id: null,
+        campaign: {},
     }),
     computed: {
         ...mapGetters({
@@ -135,14 +141,18 @@ import PropositionCreateEditElement from '@/components/elements/proposition/Prop
             loadPropositionList: 'campaign_store/loadPropositionList',
             clearPropositionList: 'campaign_store/clearPropositionList',
             deleteProposition: 'campaign_store/deleteProposition',
+            getCampaign: 'campaign_store/getCampaign',
         }),
         saved() {
-            this.loadPropositionList({ campaign_id: this.campaign_id });
+            this.loadPropositionList({ campaign_id: this.campaign_id })
             this.dialog = false
         },
-        initialize () {
+        async initialize () {
             if (this.campaign_id) {
-                this.loadPropositionList({ campaign_id: this.campaign_id });
+                this.campaign = await this.getCampaign({
+                    campaign_id: this.campaign_id
+                })
+                this.loadPropositionList({ campaign_id: this.campaign_id })
             } else {
                 this.clearPropositionList()
             }

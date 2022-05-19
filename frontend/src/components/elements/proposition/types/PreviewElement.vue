@@ -1,11 +1,11 @@
 <template>
     <div>
         <markdown-preview-element 
-            :payload="value"
+            :payload="payload"
             v-if="proposition_type === propositionType.MARKDOWN "/>
         
         <raw-string-preview-element
-            :payload="value"
+            :payload="payload"
             v-if="proposition_type === propositionType.RAW_STRING" />
     </div>
 </template>
