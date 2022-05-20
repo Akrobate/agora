@@ -7,9 +7,8 @@
 <script>
 export default {
     name: 'ViewElement',
-    data: () => ({
-        valid: true,
-        payload: '',
-    }),
+    props: {
+        payload: String,
+    },
 }
 </script>
