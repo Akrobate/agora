@@ -22,7 +22,11 @@ export default {
     },
     methods: {
         updatePayloadHtml() {
-            this.payload_html = marked.parse(this.payload)
+            if (this.payload === null || this.payload === undefined) {
+                this.payload_html = ''
+            } else {
+                this.payload_html = marked.parse(this.payload)
+            }
         },
     }
 }
