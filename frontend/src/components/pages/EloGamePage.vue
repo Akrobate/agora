@@ -157,7 +157,6 @@ export default {
             getRandomPropositions: 'elo_ranking_store/getRandomPropositions',
             initRanking: 'user_proposition_store/init',
             updateRanking: 'user_proposition_store/update',
-            setCampaignUserStatusInvited: 'campaign_user_status_store/setCampaignUserStatusInvited',
             setCampaignUserStatusResultSubmited: 'campaign_user_status_store/setCampaignUserStatusResultSubmited',
             checkAndsetCampaignUserStatusStarted: 'campaign_user_status_store/checkAndsetCampaignUserStatusStarted',
         }),
