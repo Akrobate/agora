@@ -147,6 +147,8 @@ export default {
 
             last_winner_proposition_id: null,
             last_loser_proposition_id: null,
+
+            campaign: {},
         };
     },
     methods: {
@@ -157,6 +159,7 @@ export default {
             getRandomPropositions: 'elo_ranking_store/getRandomPropositions',
             initRanking: 'user_proposition_store/init',
             updateRanking: 'user_proposition_store/update',
+            getCampaign: 'campaign_store/getCampaign',
             setCampaignUserStatusResultSubmited: 'campaign_user_status_store/setCampaignUserStatusResultSubmited',
             checkAndsetCampaignUserStatusStarted: 'campaign_user_status_store/checkAndsetCampaignUserStatusStarted',
         }),
@@ -200,6 +203,7 @@ export default {
         }
     },
     async mounted() {
+        this.campaign = await this.getCampaign({ campaign_id: this.campaign_id })
         await this.checkAndsetCampaignUserStatusStarted({ campaign_id: this.campaign_id })
         await this.initEloData({ campaign_id: this.campaign_id })
         await this.initRanking({ campaign_id: this.campaign_id })
