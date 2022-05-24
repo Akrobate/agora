@@ -39,9 +39,15 @@
                     >
                         <v-layout align-center fill-height>
                             <v-flex>
+                                <!--
                                 <p class="text-h5 text--secondary">
                                     {{ proposition_1 ? proposition_1.proposition.payload : '' }}
                                 </p>
+                                -->
+                                <view-element
+                                    :proposition_type="campaign.proposition_type"
+                                    :payload="proposition_1.proposition.payload"
+                                />
                             </v-flex>
                         </v-layout>
                     </v-card>
@@ -84,9 +90,15 @@
                     >
                         <v-layout align-center fill-height>
                             <v-flex>
+                                <!--
                                 <p class="text-h5 text--secondary">
                                     {{ proposition_2 ? proposition_2.proposition.payload : '' }}
                                 </p>
+                                -->
+                                <view-element
+                                    :proposition_type="campaign.proposition_type"
+                                    :payload="proposition_2.proposition.payload"
+                                />
                             </v-flex>
                         </v-layout>
                     </v-card>
@@ -132,11 +144,15 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex'
+import ViewElement from '@/components/elements/proposition/types/ViewElement'
 
 export default {
     name: "EloGamePage",
     props: {
         campaign_id: Number,
+    },
+    components: {
+        ViewElement,
     },
     data() {
         return {
