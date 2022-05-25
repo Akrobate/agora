@@ -39,11 +39,6 @@
                     >
                         <v-layout align-center fill-height>
                             <v-flex>
-                                <!--
-                                <p class="text-h5 text--secondary">
-                                    {{ proposition_1 ? proposition_1.proposition.payload : '' }}
-                                </p>
-                                -->
                                 <view-element
                                     :proposition_type="campaign.proposition_type"
                                     :payload="proposition_1.proposition.payload"
@@ -90,11 +85,6 @@
                     >
                         <v-layout align-center fill-height>
                             <v-flex>
-                                <!--
-                                <p class="text-h5 text--secondary">
-                                    {{ proposition_2 ? proposition_2.proposition.payload : '' }}
-                                </p>
-                                -->
                                 <view-element
                                     :proposition_type="campaign.proposition_type"
                                     :payload="proposition_2.proposition.payload"
@@ -124,15 +114,22 @@
             </thead>
             <tbody name="list" is="transition-group">
                 <tr
-                v-for="proposition in eloPropositionRankingList"
-                :key="proposition.id"
-                :class="{
-                    'winner': proposition.proposition_id === last_winner_proposition_id,
-                    'loser': proposition.proposition_id === last_loser_proposition_id,
-                }"
+                    v-for="proposition in eloPropositionRankingList"
+                    :key="proposition.id"
+                    :class="{
+                        'winner': proposition.proposition_id === last_winner_proposition_id,
+                        'loser': proposition.proposition_id === last_loser_proposition_id,
+                    }"
                 >
-                    <td class="text-left">{{ proposition.proposition.payload }}</td>
-                    <td class="text-right">{{ proposition.elo_score }}</td>
+                    <td class="text-left">
+                        <preview-element
+                            :proposition_type="campaign.proposition_type"
+                            :payload="proposition.proposition.payload"
+                        />
+                    </td>
+                    <td class="text-right">
+                        {{ proposition.elo_score }}
+                    </td>
                 </tr>
             </tbody>
         </v-simple-table>
@@ -145,6 +142,7 @@
 
 import { mapActions, mapGetters } from 'vuex'
 import ViewElement from '@/components/elements/proposition/types/ViewElement'
+import PreviewElement from '@/components/elements/proposition/types/PreviewElement'
 
 export default {
     name: "EloGamePage",
@@ -153,6 +151,7 @@ export default {
     },
     components: {
         ViewElement,
+        PreviewElement,
     },
     data() {
         return {
