@@ -1,10 +1,5 @@
 # Agora
 
-## Project setup
-```
-npm install
-```
-
 ### Compiles and hot-reloads for development
 ```
 npm run serve
@@ -20,5 +15,7 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### TODO
+
+* Authentication failed message (toast or alert)
+* On Authentication "NavigationDuplicated: Avoided redundant navigation to current location: "/login"."
