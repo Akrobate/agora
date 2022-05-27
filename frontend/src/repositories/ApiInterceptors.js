@@ -10,7 +10,9 @@ const responseSuccess = (response) => {
 
 const responseError = (error) => {
     if (error.response.status === http_status.UNAUTHORIZED) {
-        router.push({ name: 'login' })
+        if (router.currentRoute.name !== 'login') {
+            router.push({ name: 'login' })
+        }
     }
     return Promise.reject(error)
 }

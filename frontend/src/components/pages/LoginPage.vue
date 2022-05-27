@@ -63,6 +63,21 @@
 
             </v-col>
         </v-row>
+
+        <v-snackbar
+            :timeout="10000"
+            :top="true"
+            color="error"
+            v-model="snackbar"
+        >
+            {{ snackbar_text }}
+            <v-btn
+                text
+                @click.native="snackbar = false"
+            >
+                Fermer
+            </v-btn>
+        </v-snackbar>
     </v-container>
 </template>
 
