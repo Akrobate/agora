@@ -73,7 +73,8 @@
         <v-list dense nav>
             <v-list-item
                 link
-                @click="logout"
+                :to="{'name': 'user-profile'}"
+                :exact="true"
             >
                 <v-list-item-icon>
                     <v-icon>mdi-account</v-icon>

@@ -100,6 +100,16 @@ const routes = [
         }
     },
     {
+        path: '/user/profile',
+        name: 'user-profile',
+        props: true,
+        component: () => import('@/components/pages/UserProfilePage.vue'),
+        meta: {
+            layout: 'AppLayout',
+            requiresAuth: true,
+        }
+    },
+    {
         path: '/about',
         name: 'about',
         component: () => import('@/components/pages/AboutPage.vue'),
