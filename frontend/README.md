@@ -21,4 +21,5 @@ npm run lint
 * *27/05/22* Create login element to include in LoginPage
 * *28/05/22* Add update password on UserProfilePage
 * *29/05/22* Add campaign delete method to the backend
+* *29/05/22* Update PUML
 
