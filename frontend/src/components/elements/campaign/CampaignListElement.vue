@@ -74,7 +74,7 @@
         <v-icon
             v-if="item.user_access_level === USER_ACCESS_LEVEL.MANAGER"
             color="red"
-            @click="deleteItem(item)"
+            @click="deleteItem(item.id)"
         >
             mdi-delete
         </v-icon>
@@ -115,7 +115,7 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
                 sortable: false,
             },
         ],
-        editing_module_technical_name: null,
+        to_delete_campaign_id: null,
         list_title: 'Campagnes',
         CAMPAIGN_STATUS: CAMPAIGN_STATUS,
         USER_ACCESS_LEVEL,
@@ -178,12 +178,12 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
             }
 
         },
-        deleteItem(item) {
-            this.editing_module_technical_name = item.technical_name
+        deleteItem(campaign_id) {
+            this.to_delete_campaign_id = campaign_id
             this.dialog_delete = true
         },
         deleteItemConfirm() {
-            this.deleteCampaign(this.editing_module_technical_name)
+            this.deleteCampaign(this.to_delete_campaign_id)
             this.closeDelete()
         },
         closeDelete() {
