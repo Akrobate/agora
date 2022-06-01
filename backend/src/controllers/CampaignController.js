@@ -239,6 +239,32 @@ class CampaignController extends AbstractController {
         return response.status(HTTP_CODE.OK).send(data);
     }
 
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async delete(request, response) {
+
+        const {
+            campaign_id,
+        } = request.params;
+
+        const {
+            jwt_data,
+        } = request;
+
+        const data = await this.campaign_service.delete(
+            jwt_data,
+            {
+                campaign_id,
+            }
+        );
+
+        return response.status(HTTP_CODE.OK).send(data);
+    }
+
 }
 
 CampaignController.instance = null;

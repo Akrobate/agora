@@ -141,6 +141,29 @@ class CampaignService {
      * @param {Object} input
      * @returns {Promise<*|Error>}
      */
+    async delete(user, input) {
+        const {
+            user_id,
+        } = user;
+        const {
+            id: campaign_id,
+        } = input;
+        this.acl.forbidGuestAccessType(user);
+        this.acl.checkUserIsCampaignManager(user_id, campaign_id);
+
+        // @todo
+        // await this.campaign_repository
+        //     .update(input);
+
+        return null;
+    }
+
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
     async search(user, input) {
 
         const campain_user_list = await this.campaign_user_repository

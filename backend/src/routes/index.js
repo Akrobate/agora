@@ -110,6 +110,14 @@ api_routes.patch(
         .catch(next)
 );
 
+api_routes.delete(
+    '/campaigns/:campaign_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => campaign_controller
+        .delete(request, response)
+        .catch(next)
+);
+
 api_routes.get(
     '/campaigns/:campaign_id/proposition-results',
     authentication_middleware.injectJwtData(),
