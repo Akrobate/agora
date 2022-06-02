@@ -124,6 +124,7 @@ class CampaignService {
         const {
             id: campaign_id,
         } = input;
+
         this.acl.forbidGuestAccessType(user);
         this.acl.checkUserIsCampaignManager(user_id, campaign_id);
 
@@ -151,9 +152,23 @@ class CampaignService {
         this.acl.forbidGuestAccessType(user);
         this.acl.checkUserIsCampaignManager(user_id, campaign_id);
 
-        // @todo
-        // await this.campaign_repository
-        //     .update(input);
+        await this.campaign_repository
+            .delete(campaign_id);
+
+        const campaign_user_list = await this.campaign_user_repository
+            .search({
+                campaign_id,
+            });
+
+        await Promise.all(
+            campaign_user_list
+                .map(
+                    (campaign_user) => this.campaign_user_repository
+                        .delete(campaign_user.id)
+                )
+        );
+
+        // @todo add remove related items
 
         return null;
     }

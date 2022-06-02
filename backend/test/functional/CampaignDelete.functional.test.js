@@ -37,7 +37,7 @@ const {
 
 const superApp = superTest(app);
 
-describe.only('[WIP] CampaignDelete', () => {
+describe('[WIP] CampaignDelete', () => {
 
     before(async () => {
 
@@ -72,18 +72,18 @@ describe.only('[WIP] CampaignDelete', () => {
 
     });
 
+    it('Guest user should not be able to delete a campaign', async () => {
+        await superApp
+            .delete(`/api/v1/campaigns/${campaign_seed.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
+            .expect(HTTP_CODE.UNAUTHORIZED);
+    });
 
-    it.skip('[WIP] Manager user should be able to delete a campaign', async () => {
+    it.only('[WIP] Manager user should be able to delete a campaign', async () => {
         await superApp
             .delete(`/api/v1/campaigns/${campaign_seed.id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
             .expect(HTTP_CODE.OK);
     });
 
-    it.skip('[WIP] Guest user should not be able to delete a campaign', async () => {
-        await superApp
-            .delete(`/api/v1/campaigns/${campaign_seed.id}`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(guest_user_seed)}`)
-            .expect(HTTP_CODE.OK);
-    });
 });

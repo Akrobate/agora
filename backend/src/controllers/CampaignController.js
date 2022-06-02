@@ -258,7 +258,7 @@ class CampaignController extends AbstractController {
         const data = await this.campaign_service.delete(
             jwt_data,
             {
-                campaign_id,
+                id: Number(campaign_id),
             }
         );
 
