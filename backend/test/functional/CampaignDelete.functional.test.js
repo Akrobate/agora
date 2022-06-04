@@ -89,17 +89,14 @@ describe('[WIP] CampaignDelete', () => {
         await superApp
             .delete(`/api/v1/campaigns/${campaign_seed.id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .expect(HTTP_CODE.OK)
-            // @todo change to async await mecanic
-            .then(() => campaign_repository
-                .search({
-                    id_list: campaign_seed.id,
-                })
-                .then((campaign_list) => {
-                    expect(campaign_list.map((campaign) => campaign.id))
-                        .not.to.include(campaign_seed.id);
-                })
-            );
+            .expect(HTTP_CODE.OK);
+        const campaign_list = await campaign_repository.search({
+            id_list: campaign_seed.id,
+        });
+        // @todo check other entities
+        expect(campaign_list.map((campaign) => campaign.id))
+            .not.to.include(campaign_seed.id);
+
     });
 
 });
