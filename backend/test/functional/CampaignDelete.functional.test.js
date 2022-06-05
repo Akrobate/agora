@@ -13,9 +13,19 @@ const {
 
 const {
     CampaignRepository,
-} = require('../../src/repositories/CampaignRepository');
+    CampaignUserRepository,
+    PropositionRepository,
+    CampaignUserStatusRepository,
+    UserPropositionResultRepository,
+    UserPropositionEloResultRepository,
+} = require('../../src/repositories');
 
 const campaign_repository = CampaignRepository.getInstance();
+const campaign_user_repository = CampaignUserRepository.getInstance();
+const proposition_repository = PropositionRepository.getInstance();
+const campaign_user_status_repository = CampaignUserStatusRepository.getInstance();
+const user_proposition_result_repository = UserPropositionResultRepository.getInstance();
+const user_proposition_elo_result_repository = UserPropositionEloResultRepository.getInstance();
 
 const {
     DataSeeder,
