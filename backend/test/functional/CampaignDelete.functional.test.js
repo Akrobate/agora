@@ -101,18 +101,21 @@ describe('[WIP] CampaignDelete', () => {
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
             .expect(HTTP_CODE.OK);
 
+        // Should not include campaign anymore
         const campaign_list = await campaign_repository.search({
             id_list: campaign_seed.id,
         });
         expect(campaign_list.map((campaign) => campaign.id))
             .not.to.include(campaign_seed.id);
 
+        // Should not include campaign user
         const campaign_user_list = await campaign_user_repository.search({
             campaign_id: campaign_seed.id,
         });
         expect(campaign_user_list.map((campaign_user) => campaign_user.campaign_id))
             .not.to.include(campaign_seed.id);
 
+        // Should not include proposition_list
         const proposition_list = await proposition_repository.search({
             campaign_id: campaign_seed.id,
         });
@@ -120,7 +123,12 @@ describe('[WIP] CampaignDelete', () => {
             .not.to.include(campaign_seed.id);
 
         // @todo check other entities
-
+        const campaign_user_status_list = await campaign_user_status_repository.search({
+            campaign_id: campaign_seed.id,
+        });
+        expect(campaign_user_status_list
+            .map((campaign_user_status) => campaign_user_status.campaign_id))
+            .not.to.include(campaign_seed.id);
     });
 
 

@@ -4,6 +4,7 @@ const {
     CampaignRepository,
     CampaignUserRepository,
     PropositionRepository,
+    CampaignUserStatusRepository,
 } = require('../repositories');
 
 const {
@@ -19,17 +20,20 @@ class CampaignService {
      * @param {CampaignRepository} campaign_repository
      * @param {CampaignUserRepository} campaign_user_repository
      * @param {PropositionRepository} proposition_repository
+     * @param {CampaignUserStatusRepository} campaign_user_status_repository
      */
     constructor(
         acl,
         campaign_repository,
         campaign_user_repository,
-        proposition_repository
+        proposition_repository,
+        campaign_user_status_repository
     ) {
         this.acl = acl;
         this.campaign_repository = campaign_repository;
         this.campaign_user_repository = campaign_user_repository;
         this.proposition_repository = proposition_repository;
+        this.campaign_user_status_repository = campaign_user_status_repository;
     }
 
 
@@ -44,7 +48,8 @@ class CampaignService {
                 Acl.getInstance(),
                 CampaignRepository.getInstance(),
                 CampaignUserRepository.getInstance(),
-                PropositionRepository.getInstance()
+                PropositionRepository.getInstance(),
+                CampaignUserStatusRepository.getInstance()
             );
         }
         return CampaignService.instance;
@@ -183,6 +188,19 @@ class CampaignService {
                         .delete(proposition.id)
                 )
         );
+
+        const campaign_user_status_list = await this.campaign_user_status_repository
+            .search({
+                campaign_id,
+            });
+        await Promise.all(
+            campaign_user_status_list
+                .map(
+                    (campaign_user_status) => this.campaign_user_status_repository
+                        .delete(campaign_user_status.id)
+                )
+        );
+
 
         // @todo add remove related items
 
