@@ -122,12 +122,12 @@ describe('[WIP] CampaignDelete', () => {
         expect(proposition_list.map((proposition) => proposition.campaign_id))
             .not.to.include(campaign_seed.id);
 
-        // @todo check other entities
-        const campaign_user_status_list = await campaign_user_status_repository.search({
+        // Should not include user_proposition_result_list
+        const user_proposition_result_list = await user_proposition_result_repository.search({
             campaign_id: campaign_seed.id,
         });
-        expect(campaign_user_status_list
-            .map((campaign_user_status) => campaign_user_status.campaign_id))
+        expect(user_proposition_result_list
+            .map((user_proposition_result) => user_proposition_result.campaign_id))
             .not.to.include(campaign_seed.id);
     });
 

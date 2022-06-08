@@ -5,6 +5,7 @@ const {
     CampaignUserRepository,
     PropositionRepository,
     CampaignUserStatusRepository,
+    UserPropositionResultRepository,
 } = require('../repositories');
 
 const {
@@ -21,19 +22,22 @@ class CampaignService {
      * @param {CampaignUserRepository} campaign_user_repository
      * @param {PropositionRepository} proposition_repository
      * @param {CampaignUserStatusRepository} campaign_user_status_repository
+     * @param {CampaignUserStatusRepository} user_proposition_result_repository
      */
     constructor(
         acl,
         campaign_repository,
         campaign_user_repository,
         proposition_repository,
-        campaign_user_status_repository
+        campaign_user_status_repository,
+        user_proposition_result_repository
     ) {
         this.acl = acl;
         this.campaign_repository = campaign_repository;
         this.campaign_user_repository = campaign_user_repository;
         this.proposition_repository = proposition_repository;
         this.campaign_user_status_repository = campaign_user_status_repository;
+        this.user_proposition_result_repository = user_proposition_result_repository;
     }
 
 
@@ -49,7 +53,8 @@ class CampaignService {
                 CampaignRepository.getInstance(),
                 CampaignUserRepository.getInstance(),
                 PropositionRepository.getInstance(),
-                CampaignUserStatusRepository.getInstance()
+                CampaignUserStatusRepository.getInstance(),
+                UserPropositionResultRepository.getInstance()
             );
         }
         return CampaignService.instance;
@@ -198,6 +203,18 @@ class CampaignService {
                 .map(
                     (campaign_user_status) => this.campaign_user_status_repository
                         .delete(campaign_user_status.id)
+                )
+        );
+
+        const user_proposition_result_list = await this.user_proposition_result_repository
+            .search({
+                campaign_id,
+            });
+        await Promise.all(
+            user_proposition_result_list
+                .map(
+                    (user_proposition_result) => this.user_proposition_result_repository
+                        .delete(user_proposition_result.id)
                 )
         );
 
