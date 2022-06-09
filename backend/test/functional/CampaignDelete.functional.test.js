@@ -95,7 +95,7 @@ describe('[WIP] CampaignDelete', () => {
             .expect(HTTP_CODE.UNAUTHORIZED);
     });
 
-    it.only('[WIP] Manager user should be able to delete a campaign', async () => {
+    it('[WIP] Manager user should be able to delete a campaign', async () => {
         await superApp
             .delete(`/api/v1/campaigns/${campaign_seed.id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
@@ -122,12 +122,30 @@ describe('[WIP] CampaignDelete', () => {
         expect(proposition_list.map((proposition) => proposition.campaign_id))
             .not.to.include(campaign_seed.id);
 
+        // Should not include campaign_user_status_list
+        const campaign_user_status_list = await campaign_user_status_repository.search({
+            campaign_id: campaign_seed.id,
+        });
+        expect(campaign_user_status_list
+            .map((campaign_user_status) => campaign_user_status.campaign_id))
+            .not.to.include(campaign_seed.id);
+
         // Should not include user_proposition_result_list
         const user_proposition_result_list = await user_proposition_result_repository.search({
             campaign_id: campaign_seed.id,
         });
         expect(user_proposition_result_list
             .map((user_proposition_result) => user_proposition_result.campaign_id))
+            .not.to.include(campaign_seed.id);
+
+        // Should not include user_proposition_elo_result_list
+        const user_proposition_elo_result_list = await user_proposition_elo_result_repository
+            .search({
+                campaign_id: campaign_seed.id,
+            });
+
+        expect(user_proposition_elo_result_list
+            .map((user_proposition_elo_result) => user_proposition_elo_result.campaign_id))
             .not.to.include(campaign_seed.id);
     });
 

@@ -6,6 +6,7 @@ const {
     PropositionRepository,
     CampaignUserStatusRepository,
     UserPropositionResultRepository,
+    UserPropositionEloResultRepository,
 } = require('../repositories');
 
 const {
@@ -23,6 +24,7 @@ class CampaignService {
      * @param {PropositionRepository} proposition_repository
      * @param {CampaignUserStatusRepository} campaign_user_status_repository
      * @param {CampaignUserStatusRepository} user_proposition_result_repository
+     * @param {UserPropositionEloResultRepository} user_proposition_elo_result_repository
      */
     constructor(
         acl,
@@ -30,7 +32,8 @@ class CampaignService {
         campaign_user_repository,
         proposition_repository,
         campaign_user_status_repository,
-        user_proposition_result_repository
+        user_proposition_result_repository,
+        user_proposition_elo_result_repository
     ) {
         this.acl = acl;
         this.campaign_repository = campaign_repository;
@@ -38,6 +41,7 @@ class CampaignService {
         this.proposition_repository = proposition_repository;
         this.campaign_user_status_repository = campaign_user_status_repository;
         this.user_proposition_result_repository = user_proposition_result_repository;
+        this.user_proposition_elo_result_repository = user_proposition_elo_result_repository;
     }
 
 
@@ -54,7 +58,8 @@ class CampaignService {
                 CampaignUserRepository.getInstance(),
                 PropositionRepository.getInstance(),
                 CampaignUserStatusRepository.getInstance(),
-                UserPropositionResultRepository.getInstance()
+                UserPropositionResultRepository.getInstance(),
+                UserPropositionEloResultRepository.getInstance()
             );
         }
         return CampaignService.instance;
@@ -215,6 +220,18 @@ class CampaignService {
                 .map(
                     (user_proposition_result) => this.user_proposition_result_repository
                         .delete(user_proposition_result.id)
+                )
+        );
+
+        const user_proposition_elo_result_list = await this.user_proposition_elo_result_repository
+            .search({
+                campaign_id,
+            });
+        await Promise.all(
+            user_proposition_elo_result_list
+                .map(
+                    (user_proposition_elo_result) => this.user_proposition_elo_result_repository
+                        .delete(user_proposition_elo_result.id)
                 )
         );
 
