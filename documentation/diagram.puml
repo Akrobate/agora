@@ -2,56 +2,96 @@
 
 title Data model
 
-class "users" {
-  * id
+entity "users" {
+  * id: int
+  --
   * first_name
   * last_name
   * password
   * email
   --
+  * created_at
+  * updated_at
 }
 
-class "campaigns" {
-  * id
+entity "campaigns" {
+  * id: int
+  --
+  * owner_user_id: int <<FK>>
+  --
   * title
   * description
   * proposition_type
+  * campaign_status
   * start_date
   * end_date
-  * status
-  * owner_user_id
   --
+  * created_at
+  * updated_at
 }
 
-class "propositions" {
+entity "campaigns_users" {
   * id
   * campaign_id
-  * creator_user_id
+  * user_id
+  * public_token
+  * access_level
+  * is_participant
+  --
+  * created_at
+  * updated_at
+}
+
+entity "campaigns_users_status" {
+  * id
+  * campaign_id
+  * user_id
+  * status_id
+  * date
+  --
+  * created_at
+  * updated_at
+}
+
+entity "propositions" {
+  * id: int
+  --
+  * campaign_id: int <<FK>>
+  * creator_user_id: int <<FK>>
+  --
   * payload
   --
+  * created_at
+  * updated_at
 }
 
-class "users_propositions_results" {
+entity "users_propositions_results" {
   * id
   * campaign_id
-  * proposition_id
   * user_id
+  * proposition_id
   * rank
+  * created_at
+  * updated_at
   --
 }
 
-class "users_propositions_elo_results" {
+entity "users_propositions_elo_results" {
   * id
   * campaign_id
-  * proposition_id
   * user_id
+  * proposition_id
   * elo_score
+  * display_count
+  * created_at
+  * updated_at
   --
 }
 
 
 
-campaigns --|> users
-propositions --|> campaigns
+campaigns --> users
+propositions --> campaigns
+propositions --> users
 
 @enduml
