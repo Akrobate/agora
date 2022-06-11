@@ -158,7 +158,7 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
             loadCampaigns: 'campaign_store/loadCampaigns',
             deleteCampaign: 'campaign_store/deleteCampaign',
         }),
-        initialize () {
+        initialize() {
 
             switch (this.campaign_status) {
                 case 'in-progress':
@@ -182,8 +182,9 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
             this.to_delete_campaign_id = campaign_id
             this.dialog_delete = true
         },
-        deleteItemConfirm() {
-            this.deleteCampaign(this.to_delete_campaign_id)
+        async deleteItemConfirm() {
+            await this.deleteCampaign(this.to_delete_campaign_id)
+            // this.initialize()
             this.closeDelete()
         },
         closeDelete() {

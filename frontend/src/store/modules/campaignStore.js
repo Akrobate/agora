@@ -38,14 +38,12 @@ const actions = {
     createCampaign(_, data) {
         return campaign_repository.create(data)
     },
-    async updateCampaign({ dispatch }, { campaign_id, data }) {
+    async updateCampaign(_, { campaign_id, data }) {
         const response = await campaign_repository.update(campaign_id, data)
-        await dispatch('loadCampaigns')
         return response
     },
-    async deleteCampaign({ dispatch }, campaign_technical_name) {
+    async deleteCampaign(_, campaign_technical_name) {
         const response = await campaign_repository.delete(campaign_technical_name)
-        await dispatch('loadCampaigns')
         return response
     },
 
