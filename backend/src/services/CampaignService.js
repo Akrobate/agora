@@ -235,9 +235,6 @@ class CampaignService {
                 )
         );
 
-
-        // @todo add remove related items
-
         return null;
     }
 
