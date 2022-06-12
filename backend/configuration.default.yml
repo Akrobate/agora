@@ -5,7 +5,7 @@ storage:
   mysql:
     username: example_user
     password: example_password
-    host: 192.168.1.11
+    host: 192.168.1.19
     port: 3336
     database_name: agora
 
@@ -25,4 +25,4 @@ security:
   salt: 
 
 frontend:
-  url: 'http://192.168.1.11:8080/login'
+  url: 'http://192.168.1.19:8080/login'
