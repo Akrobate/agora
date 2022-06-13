@@ -80,11 +80,6 @@ export default {
             campaignInProgressList: 'campaign_store/campaignInProgressList',
         }),
     },
-    watch: {
-        campaign_id () {
-            this.initialize()
-        }
-    },
     methods: {
         ...mapActions({
             getCampaign: 'campaign_store/getCampaign',
@@ -99,7 +94,6 @@ export default {
                     campaign_status: 2,
                 }
             };
-            console.log(update_campaign_params);
             this.updateCampaign(update_campaign_params)
             this.closeLaunchCampaign()
         },
