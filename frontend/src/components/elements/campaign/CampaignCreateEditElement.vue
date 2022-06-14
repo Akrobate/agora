@@ -80,9 +80,6 @@ export default {
             v => !!v || 'Le nom de campagne est obligatoire',
         ],
         proposition_type: '',
-        proposition_type_rules: [
-            v => !!v || 'Le type de propositions est obligatoire',
-        ],
         description: '',
         description_rules: [],
         default_proposition_type: 'raw_string'

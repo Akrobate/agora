@@ -136,8 +136,7 @@ export default {
             clearCampaignUserList: 'campaign_store/clearCampaignUserList',
             getCampaign: 'campaign_store/getCampaign',
         }),
-        campaignSaved(data) {
-            console.log(data);
+        campaignSaved() {
             this.stepper_index = 2;
         },
         loadAllCampaignData() {
@@ -152,19 +151,10 @@ export default {
         }
     },
     watch: {
-        stepper_index: (value) => {
-            console.log("stepper_index", value)
-        },
         id() {
             this.stepper_index = 1;
             this.campaign_id = this.id;
-            console.log('in id watcher')
-            console.log('in id watcher id', this.id)
-            console.log('in id watcher campaign_id', this.campaign_id)
         },
-        campaign_id() {
-            console.log("page watch campaignid", this.campaign_id)
-        }
     },
 
 }

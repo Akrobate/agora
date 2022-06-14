@@ -109,7 +109,6 @@ export default {
         if (public_token) {
             try {
                 await this.authenticateGuest({ public_token })
-                console.log("in login mounted", public_token)
                 this.$router.push({ name: 'guest-access' })
                 return null
             } catch (error) {

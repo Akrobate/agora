@@ -28,7 +28,6 @@ class CampaignUserStatusRepository {
      * @returns {Promise} 
      */
     async getStatus(campaign_id, status_id) {
-        console.log(status_id)
         const result = await axios.get(`${this.ressource_url}/${campaign_id}/status`, {
             params: {
                 status_id,
