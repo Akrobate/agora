@@ -59,7 +59,7 @@
             <v-icon class="mr-2" small>mdi-format-list-bulleted-square</v-icon>
         </router-link>
         -->
-        <v-icon small class="mr-2" @click="editItem(item)">
+        <v-icon small class="mr-2" @click="editItem(item)" v-if="isEditableProposition">
             mdi-pencil
         </v-icon>
         <v-icon small @click="deleteItem(item)">
@@ -84,6 +84,8 @@
 import { mapActions, mapGetters } from 'vuex';
 import PropositionCreateEditElement from '@/components/elements/proposition/PropositionCreateEditElement'
 import PreviewElement from '@/components/elements/proposition/types/PreviewElement'
+
+import { CAMPAIGN_STATUS } from '@/constants'
 
 export default {
     name: 'PropositionListElement',
@@ -121,6 +123,9 @@ export default {
         formTitle () {
             return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
         },
+        isEditableProposition() {
+            return this.campaign.campaign_status != CAMPAIGN_STATUS.IN_PROGRESS
+        }
     },
     watch: {
         dialog (val) {
@@ -152,6 +157,7 @@ export default {
                 this.campaign = await this.getCampaign({
                     campaign_id: this.campaign_id
                 })
+                console.log(this.campaign)
                 this.loadPropositionList({ campaign_id: this.campaign_id })
             } else {
                 this.clearPropositionList()
