@@ -1,7 +1,7 @@
 <template>
     <div>
         <p class="body-1">Types de propositions</p>
-        <v-radio-group v-model="proposition_type">
+        <v-radio-group v-model="proposition_type" :disabled="disabled">
             <v-radio
                 v-for="item in proposition_type_list"
                 :key="item.type"
@@ -32,6 +32,7 @@ export default {
     }),
     props: [
         'value',
+        'disabled'
     ],
     watch: {
         proposition_type(value) {

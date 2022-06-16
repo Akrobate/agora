@@ -59,7 +59,7 @@ const actions = {
     async loadPropositionList({ commit }, { criteria = {}, campaign_id } ) {
         const response = await proposition_repository.search(campaign_id, criteria)
         commit('set_proposition_list', response.proposition_list)
-        return response.campaign_list
+        return response.proposition_list
     },
     async clearPropositionList({ commit } ) {
         commit('set_empty_proposition_list')

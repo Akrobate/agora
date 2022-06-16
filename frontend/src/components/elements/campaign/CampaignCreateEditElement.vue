@@ -21,7 +21,7 @@
                         required
                     ></v-text-field>
 
-                    <proposition-type-ui-selector-element v-model="proposition_type" />
+                    <proposition-type-ui-selector-element v-model="proposition_type" :disabled="propositionList.length > 0"/>
                     
                     <v-textarea
                         v-model="description"
@@ -62,7 +62,7 @@
 
 <script>
 
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import PropositionTypeUiSelectorElement from '@/components/elements/proposition/types/PropositionTypeUiSelectorElement'
 
 export default {
@@ -92,12 +92,18 @@ export default {
             await this.loadCampaingToEditIfCampaignIdIsSetted()
         },
     },
+    computed: {
+        ...mapGetters({
+            propositionList: 'campaign_store/propositionList',
+        }),
+    },
     methods: {
         ...mapActions({
             createCampaign: 'campaign_store/createCampaign',
             updateCampaign: 'campaign_store/updateCampaign',
             getCampaign: 'campaign_store/getCampaign',
-            setEditionCampaignId: 'campaign_store/setEditionCampaignId'
+            setEditionCampaignId: 'campaign_store/setEditionCampaignId',
+            loadPropositionList: 'campaign_store/loadPropositionList'
         }),
         async save () {
             if (!this.$refs.form.validate()) {
@@ -143,6 +149,7 @@ export default {
         },
         async loadCampaingToEditIfCampaignIdIsSetted() {
             if (this.campaign_id) {
+                await this.loadPropositionList({ campaign_id: this.campaign_id })
                 const campaign = await this.getCampaign({ campaign_id: this.campaign_id })
                 this.title = campaign.title
                 this.description = campaign.description
