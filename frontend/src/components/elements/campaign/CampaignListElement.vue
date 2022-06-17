@@ -79,6 +79,16 @@
             mdi-delete
         </v-icon>
     </template>
+
+
+    <template v-slot:[`item.start`]="{ item }">
+        {{item.start_date | formatDate}}
+    </template>
+
+    <template v-slot:[`item.end`]="{ item }">
+        {{item.end_date | formatDate}}
+    </template>
+
     <template v-slot:no-data>
       <v-btn
         color="primary"
@@ -107,6 +117,16 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
                 text: 'Nom de la campagne',
                 align: 'start',
                 value: 'title',
+            },
+            {
+                text: 'Date de début',
+                align: 'end',
+                value: 'start',
+            },
+            {
+                text: 'Date de fin',
+                align: 'end',
+                value: 'end',
             },
             {
                 text: 'Actions',
