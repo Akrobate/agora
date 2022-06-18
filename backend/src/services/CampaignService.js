@@ -10,6 +10,10 @@ const {
 } = require('../repositories');
 
 const {
+    CustomError,
+} = require('../CustomError');
+
+const {
     Acl,
 } = require('./commons');
 
@@ -147,6 +151,7 @@ class CampaignService {
 
         this.acl.forbidGuestAccessType(user);
         this.acl.checkUserIsCampaignManager(user_id, campaign_id);
+        this.checkCanUpdateCampaignFields(input);
 
         await this.campaign_repository
             .update(input);
@@ -278,6 +283,20 @@ class CampaignService {
                 }
             );
         });
+    }
+
+
+    /**
+     * @todo finish implementation, add test
+     * @param {Object} input
+     * @returns {Void|Throw<Error>}
+     */
+    checkCanUpdateCampaignFields(input) {
+        console.log(input);
+        const condition = false;
+        if (condition) {
+            throw new CustomError(CustomError.BAD_PARAMETER, 'This campaign has allready some setted proposition, proposition type cannot be modified');
+        }
     }
 
 }
