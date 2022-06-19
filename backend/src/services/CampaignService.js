@@ -287,14 +287,34 @@ class CampaignService {
 
 
     /**
-     * @todo finish implementation, add test
+     * @todo Cover with test
      * @param {Object} input
      * @returns {Void|Throw<Error>}
      */
-    checkCanUpdateCampaignFields(input) {
-        console.log(input);
-        const condition = false;
-        if (condition) {
+    async checkCanUpdateCampaignFields(input) {
+
+        const proposition_list = await this.proposition_repository.search({
+            campaign_id: input.id,
+        });
+
+        const campaign_list = await this.campaign_repository.search({
+            id_list: [
+                input.id,
+            ],
+        });
+
+        const [
+            campaign,
+        ] = campaign_list;
+
+        const has_propositions = proposition_list.length > 0;
+
+        const campaign_proposition_type_changed = (
+            (input.proposition_type !== undefined)
+            && (input.proposition_type !== campaign.proposition_type)
+        );
+
+        if (campaign_proposition_type_changed && has_propositions) {
             throw new CustomError(CustomError.BAD_PARAMETER, 'This campaign has allready some setted proposition, proposition type cannot be modified');
         }
     }
