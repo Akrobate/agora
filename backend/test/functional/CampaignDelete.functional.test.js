@@ -53,16 +53,18 @@ const {
 
 const superApp = superTest(app);
 
-describe('[WIP] CampaignDelete', () => {
+describe('CampaignDelete', () => {
 
     before(async () => {
 
-        await DataSeeder.truncate('CampaignRepository');
-        await DataSeeder.truncate('CampaignUserRepository');
-        await DataSeeder.truncate('CampaignUserStatusRepository');
-        await DataSeeder.truncate('UserRepository');
-        await DataSeeder.truncate('PropositionRepository');
-        await DataSeeder.truncate('UserPropositionResultRepository');
+        await DataSeeder.truncateList([
+            'CampaignRepository',
+            'CampaignUserRepository',
+            'CampaignUserStatusRepository',
+            'UserRepository',
+            'PropositionRepository',
+            'UserPropositionResultRepository',
+        ]);
 
         await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.create('CampaignRepository', campaign_seed);
@@ -95,7 +97,7 @@ describe('[WIP] CampaignDelete', () => {
             .expect(HTTP_CODE.UNAUTHORIZED);
     });
 
-    it('[WIP] Manager user should be able to delete a campaign', async () => {
+    it('Manager user should be able to delete a campaign', async () => {
         await superApp
             .delete(`/api/v1/campaigns/${campaign_seed.id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)

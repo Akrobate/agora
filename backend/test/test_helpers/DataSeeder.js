@@ -9,6 +9,19 @@ const {
 
 class DataSeeder {
 
+
+    /**
+     * @param {Array<String>} repository_name_list
+     * @returns {Promise}
+     */
+    static truncateList(repository_name_list) {
+        return Promise.all(
+            repository_name_list
+                .map((repository_name) => DataSeeder.truncate(repository_name))
+        );
+    }
+
+
     /**
      * @param {String} repository_name
      * @returns {Promise}
