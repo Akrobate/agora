@@ -150,8 +150,8 @@ class CampaignService {
         } = input;
 
         this.acl.forbidGuestAccessType(user);
-        this.acl.checkUserIsCampaignManager(user_id, campaign_id);
-        // this.checkPropositionTypeCanBeChanged(input);
+        await this.acl.checkUserIsCampaignManager(user_id, campaign_id);
+        await this.checkPropositionTypeCanBeChanged(input);
 
         await this.campaign_repository
             .update(input);
@@ -175,7 +175,7 @@ class CampaignService {
             id: campaign_id,
         } = input;
         this.acl.forbidGuestAccessType(user);
-        this.acl.checkUserIsCampaignManager(user_id, campaign_id);
+        await this.acl.checkUserIsCampaignManager(user_id, campaign_id);
 
         await this.campaign_repository
             .delete(campaign_id);
