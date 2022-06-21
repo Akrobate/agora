@@ -151,7 +151,7 @@ class CampaignService {
 
         this.acl.forbidGuestAccessType(user);
         this.acl.checkUserIsCampaignManager(user_id, campaign_id);
-        this.checkCanUpdateCampaignFields(input);
+        // this.checkPropositionTypeCanBeChanged(input);
 
         await this.campaign_repository
             .update(input);
@@ -291,7 +291,7 @@ class CampaignService {
      * @param {Object} input
      * @returns {Void|Throw<Error>}
      */
-    async checkCanUpdateCampaignFields(input) {
+    async checkPropositionTypeCanBeChanged(input) {
 
         const proposition_list = await this.proposition_repository.search({
             campaign_id: input.id,
