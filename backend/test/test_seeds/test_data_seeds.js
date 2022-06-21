@@ -36,17 +36,37 @@ const guest_campaign_user_seed = {
     access_level: 1,
 };
 
+const observer_user_seed = {
+    id: 300,
+    email: 'observer.user@test.com',
+};
+
+const observer_campaign_user_seed = {
+    id: 301,
+    campaign_id: campaign_seed.id,
+    user_id: observer_user_seed.id,
+    public_token: null,
+    access_level: 1,
+};
+
 const campaign_user_status_1_seed = {
     campaign_id: campaign_seed.id,
-    status_id: 3,
+    status_id: 3, // RESULT_SUBMITED
     user_id: manager_user_seed.id,
     date: moment().toISOString(),
 };
 
 const campaign_user_status_2_seed = {
     campaign_id: campaign_seed.id,
-    status_id: 3,
+    status_id: 3, // RESULT_SUBMITED
     user_id: guest_user_seed.id,
+    date: moment().toISOString(),
+};
+
+const campaign_user_status_3_seed = {
+    campaign_id: campaign_seed.id,
+    status_id: 2, // STARTED
+    user_id: observer_user_seed.id,
     date: moment().toISOString(),
 };
 
@@ -136,10 +156,13 @@ module.exports = {
     manager_campaign_user_seed,
     guest_user_seed,
     guest_campaign_user_seed,
+    observer_user_seed,
+    observer_campaign_user_seed,
     guest_campaign_user_to_delete_seed,
     guest_user_to_delete_seed,
     campaign_user_status_1_seed,
     campaign_user_status_2_seed,
+    campaign_user_status_3_seed,
     proposition_1_seed,
     proposition_2_seed,
     proposition_3_seed,
