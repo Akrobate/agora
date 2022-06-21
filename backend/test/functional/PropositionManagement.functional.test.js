@@ -86,7 +86,7 @@ describe('CampaignAccess', () => {
             })
             .expect(HTTP_CODE.CREATED)
             .expect((response) => {
-                console.log(response.body);
+                // console.log(response.body);
                 expect(response.body).to.have.property('campaign_id', `${campaign_seed.id}`);
                 expect(response.body).to.have.property('payload', 'Test 1');
             });

@@ -40,7 +40,8 @@ describe('UserEloPropositionService unit tests', () => {
 
     it('groupArrayByDisplayCount', () => {
         const result = user_elo_proposition_service.groupArrayByDisplayCount(data);
-        console.log(result);
+        // @todo missing assertion
+        console.log('MISSING ASSERT', result);
     });
 
     it('groupArrayByDisplayCount empty array', () => {
@@ -51,7 +52,8 @@ describe('UserEloPropositionService unit tests', () => {
     it('buildDistributedList', () => {
         const grouped_list = user_elo_proposition_service.groupArrayByDisplayCount(data);
         const probability_list = user_elo_proposition_service.buildDistributedList(grouped_list);
-        console.log(probability_list);
+        // @todo missing assertion
+        console.log('MISSING ASSERT', probability_list);
     });
 
     it('buildDistributedList and buildDistributedList - Large data', () => {
