@@ -119,8 +119,8 @@ class PropositionService {
         } = input;
 
         this.acl.forbidGuestAccessType(user);
-
         await this.acl.checkUserIsCampaignManager(user_id, campaign_id);
+        await this.throwErrorIfCampaignStarted(campaign_id);
 
         return this.proposition_repository.update({
             id: proposition_id,
@@ -175,6 +175,26 @@ class PropositionService {
         return this.proposition_repository.search({
             campaign_id,
         });
+    }
+
+
+    /**
+     * @param {*} campaign_id
+     * @return {Void|Throw<CustomError>}
+     */
+    async throwErrorIfCampaignStarted(campaign_id) {
+        const [
+            campaign,
+        ] = await this.campaign_repository
+            .search({
+                id_list: [
+                    campaign_id,
+                ],
+            });
+
+        if (campaign.campaign_status === CampaignRepository.STATUS_IN_PROGRESS) {
+            throw new CustomError(CustomError.BAD_PARAMETER, 'Proposition cannot be modified once campaign started');
+        }
     }
 
 }
