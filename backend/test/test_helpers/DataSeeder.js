@@ -11,6 +11,21 @@ class DataSeeder {
 
 
     /**
+     * @returns {Promise}
+     */
+    static truncateAll() {
+        return DataSeeder.truncateList([
+            'CampaignRepository',
+            'CampaignUserRepository',
+            'CampaignUserStatusRepository',
+            'UserRepository',
+            'PropositionRepository',
+            'UserPropositionResultRepository',
+        ]);
+    }
+
+
+    /**
      * @param {Array<String>} repository_name_list
      * @returns {Promise}
      */
