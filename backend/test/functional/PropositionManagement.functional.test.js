@@ -16,17 +16,18 @@ const {
 } = require('../test_helpers/DataSeeder');
 
 const {
-    manager_user_seed,
     campaign_seed,
+    manager_user_seed,
     manager_campaign_user_seed,
     guest_user_seed,
     guest_campaign_user_seed,
+    proposition_1_seed,
 } = require('../test_seeds/test_data_seeds');
 
 
 const superApp = superTest(app);
 
-describe('CampaignAccess', () => {
+describe('PopositionManagement functionnal', () => {
 
     const not_manager_user_seed = {
         id: 400,
@@ -35,21 +36,21 @@ describe('CampaignAccess', () => {
     };
 
     const proposition_to_read_seed = {
-        id: 1,
+        id: 101,
         campaign_id: campaign_seed.id,
         payload: 'If you see me, the developper is a genius!',
         creator_user_id: manager_user_seed.id,
     };
 
     const proposition_to_delete_seed = {
-        id: 2,
+        id: 102,
         campaign_id: campaign_seed.id,
         payload: 'If you see me, the developper is an ass hole!',
         creator_user_id: manager_user_seed.id,
     };
 
     const proposition_to_not_delete_seed = {
-        id: 3,
+        id: 103,
         campaign_id: campaign_seed.id,
         payload: 'If dont see me, the developper is an ass hole!',
         creator_user_id: manager_user_seed.id,
@@ -57,13 +58,11 @@ describe('CampaignAccess', () => {
 
     before(async () => {
 
-        await DataSeeder.truncate('CampaignRepository');
-        await DataSeeder.truncate('CampaignUserRepository');
-        await DataSeeder.truncate('UserRepository');
-        await DataSeeder.truncate('PropositionRepository');
+        await DataSeeder.truncateAll();
 
         await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.createUserHashPassword(not_manager_user_seed);
+
         await DataSeeder.create('CampaignRepository', campaign_seed);
         await DataSeeder.create('CampaignUserRepository', manager_campaign_user_seed);
 
@@ -73,90 +72,132 @@ describe('CampaignAccess', () => {
         await DataSeeder.create('PropositionRepository', proposition_to_read_seed);
         await DataSeeder.create('PropositionRepository', proposition_to_delete_seed);
         await DataSeeder.create('PropositionRepository', proposition_to_not_delete_seed);
+        await DataSeeder.create('PropositionRepository', proposition_1_seed);
+    });
+
+
+    describe('Create proposition', () => {
+
+        it('Manager should be able to add a proposition', async () => {
+            await superApp
+                .post(`/api/v1/campaigns/${campaign_seed.id}/propositions`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send({
+                    payload: 'Test 1',
+                })
+                .expect(HTTP_CODE.CREATED)
+                .expect((response) => {
+                    // console.log(response.body);
+                    expect(response.body).to.have.property('campaign_id', `${campaign_seed.id}`);
+                    expect(response.body).to.have.property('payload', 'Test 1');
+                });
+        });
+
+
+        it('Guest should not be able add a proposition', async () => {
+            await superApp
+                .post(`/api/v1/campaigns/${campaign_seed.id}/propositions`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
+                .send({
+                    payload: 'Test 1',
+                })
+                .expect(HTTP_CODE.UNAUTHORIZED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('message', 'Guest user is forbiden');
+                });
+        });
+
+
+        it('User that not a campaign manager should not be able to create a proposition', async () => {
+            await superApp
+                .post(`/api/v1/campaigns/${campaign_seed.id}/propositions`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(not_manager_user_seed)}`)
+                .send({
+                    payload: 'Test 1',
+                })
+                .expect(HTTP_CODE.UNAUTHORIZED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('message', 'User must be a campaign manager');
+                });
+        });
+    });
+
+
+    describe('Read proposition', () => {
+        it('Manager should be able to read a proposition', async () => {
+            await superApp
+                .get(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_to_read_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response.body).to.have.property('id', proposition_to_read_seed.id);
+                    expect(response.body).to.have.property('payload', proposition_to_read_seed.payload);
+                });
+        });
+
+        it('Non manager should not be able to read a proposition', async () => {
+            await superApp
+                .get(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_to_read_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(not_manager_user_seed)}`)
+                .expect(HTTP_CODE.UNAUTHORIZED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('message', 'User must be a campaign member');
+                });
+        });
+    });
+
+
+    describe('Delete proposition', () => {
+
+        it('Manager should be able to delete a proposition', async () => {
+            await superApp
+                .delete(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_to_delete_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .expect(HTTP_CODE.NO_CONTENT);
+        });
+
+        it('Guest should not be able to delete a proposition', async () => {
+            await superApp
+                .delete(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_to_not_delete_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
+                .expect(HTTP_CODE.UNAUTHORIZED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('message', 'Guest user is forbiden');
+                });
+        });
 
     });
 
 
-    it('Manager should be able to add a proposition', async () => {
-        await superApp
-            .post(`/api/v1/campaigns/${campaign_seed.id}/propositions`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .send({
-                payload: 'Test 1',
-            })
-            .expect(HTTP_CODE.CREATED)
-            .expect((response) => {
-                // console.log(response.body);
-                expect(response.body).to.have.property('campaign_id', `${campaign_seed.id}`);
-                expect(response.body).to.have.property('payload', 'Test 1');
-            });
-    });
+    describe('Update proposition', () => {
 
+        it('Manager should not be able to update a proposition on started campaign', async () => {
+            await superApp
+                .patch(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_1_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send({
+                    payload: 'change',
+                })
+                .expect(HTTP_CODE.BAD_REQUEST)
+                .expect((response) => {
+                    expect(response.body).to.have.property(
+                        'message',
+                        'Proposition cannot be modified once campaign started'
+                    );
+                });
+        });
 
-    it('Guest should not be able add a proposition', async () => {
-        await superApp
-            .post(`/api/v1/campaigns/${campaign_seed.id}/propositions`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
-            .send({
-                payload: 'Test 1',
-            })
-            .expect(HTTP_CODE.UNAUTHORIZED)
-            .expect((response) => {
-                expect(response.body).to.have.property('message', 'Guest user is forbiden');
-            });
-    });
-
-
-    it('User that not a campaign manager should not be able to create a proposition', async () => {
-        await superApp
-            .post(`/api/v1/campaigns/${campaign_seed.id}/propositions`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(not_manager_user_seed)}`)
-            .send({
-                payload: 'Test 1',
-            })
-            .expect(HTTP_CODE.UNAUTHORIZED)
-            .expect((response) => {
-                expect(response.body).to.have.property('message', 'User must be a campaign manager');
-            });
-    });
-
-
-    it('Manager should be able to read a proposition', async () => {
-        await superApp
-            .get(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_to_read_seed.id}`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .expect(HTTP_CODE.OK)
-            .expect((response) => {
-                expect(response.body).to.have.property('id', proposition_to_read_seed.id);
-                expect(response.body).to.have.property('payload', proposition_to_read_seed.payload);
-            });
-    });
-
-    it('Non manager should not be able to read a proposition', async () => {
-        await superApp
-            .get(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_to_read_seed.id}`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(not_manager_user_seed)}`)
-            .expect(HTTP_CODE.UNAUTHORIZED)
-            .expect((response) => {
-                expect(response.body).to.have.property('message', 'User must be a campaign member');
-            });
-    });
-
-    it('Manager should be able to delete a proposition', async () => {
-        await superApp
-            .delete(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_to_delete_seed.id}`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .expect(HTTP_CODE.NO_CONTENT);
-    });
-
-    it('Guest should not be able to delete a proposition', async () => {
-        await superApp
-            .delete(`/api/v1/campaigns/${campaign_seed.id}/propositions/${proposition_to_not_delete_seed.id}`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtGuestAccessToken(guest_user_seed)}`)
-            .expect(HTTP_CODE.UNAUTHORIZED)
-            .expect((response) => {
-                expect(response.body).to.have.property('message', 'Guest user is forbiden');
-            });
+        // @Todo: implement not found instead of error 500
+        it('Should return 404 when trying to update not existing proposition', async () => {
+            const NOT_EXISTING_PROPOSITION_ID = 10001;
+            await superApp
+                .patch(`/api/v1/campaigns/${campaign_seed.id}/propositions/${NOT_EXISTING_PROPOSITION_ID}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send({
+                    payload: 'change',
+                })
+                .expect(HTTP_CODE.NOT_FOUND);
+        });
     });
 
     it('Manager should be able to search propositions', async () => {
