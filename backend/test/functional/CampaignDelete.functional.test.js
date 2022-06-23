@@ -57,14 +57,7 @@ describe('CampaignDelete', () => {
 
     before(async () => {
 
-        await DataSeeder.truncateList([
-            'CampaignRepository',
-            'CampaignUserRepository',
-            'CampaignUserStatusRepository',
-            'UserRepository',
-            'PropositionRepository',
-            'UserPropositionResultRepository',
-        ]);
+        await DataSeeder.truncateAll();
 
         await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.create('CampaignRepository', campaign_seed);
