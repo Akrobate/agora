@@ -157,13 +157,16 @@ class AbstractSequelizeRepository {
             const sequelize_entity = await this.sequelize_model.findByPk(id);
             if (sequelize_entity === null) {
                 throw new CustomError(
-                    CustomError.ORM_OBJECT_NOT_FOUND,
+                    CustomError.NOT_FOUND,
                     `No object found with id ${id}`
                 );
             }
             object = AbstractSequelizeRepository._formatOutput(sequelize_entity);
         } catch (error) {
-            throw new CustomError(CustomError.ORM_ERROR, error.message);
+            throw new CustomError(
+                error.code ? error.code : CustomError.ORM_ERROR,
+                error.message
+            );
         }
         return object;
     }
@@ -180,7 +183,7 @@ class AbstractSequelizeRepository {
             const sequelize_entity = await this.sequelize_model.findByPk(input.id);
             if (sequelize_entity === null) {
                 throw new CustomError(
-                    CustomError.ORM_OBJECT_NOT_FOUND,
+                    CustomError.NOT_FOUND,
                     `No object found with id ${input.id}`
                 );
             }
@@ -195,7 +198,7 @@ class AbstractSequelizeRepository {
             object = AbstractSequelizeRepository._formatOutput(sequelize_entity);
         } catch (error) {
             throw new CustomError(
-                CustomError.ORM_ERROR,
+                error.code ? error.code : CustomError.ORM_ERROR,
                 error.message
             );
         }
@@ -214,7 +217,7 @@ class AbstractSequelizeRepository {
             const sequelize_entity = await this.sequelize_model.findByPk(id);
             if (sequelize_entity === null) {
                 throw new CustomError(
-                    CustomError.ORM_OBJECT_NOT_FOUND,
+                    CustomError.NOT_FOUND,
                     `No object found with id ${id}`
                 );
             }
