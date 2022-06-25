@@ -56,6 +56,21 @@ describe('PopositionManagement functionnal', () => {
         creator_user_id: manager_user_seed.id,
     };
 
+    const draft_campaign_seed = {
+        id: 20,
+        title: 'Title of draft campaignsss',
+        description: 'Somethings draft',
+        proposition_type: 'Proposition_type',
+        campaign_status: 1, // STATUS_IN_PROGRESS
+        owner_user_id: manager_user_seed.id,
+    };
+
+    const manager_draft_campaign_user_seed = {
+        campaign_id: draft_campaign_seed.id,
+        user_id: 100,
+        access_level: 3,
+    };
+
     before(async () => {
 
         await DataSeeder.truncateAll();
@@ -63,6 +78,11 @@ describe('PopositionManagement functionnal', () => {
         await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.createUserHashPassword(not_manager_user_seed);
 
+        // Draft campaign
+        await DataSeeder.create('CampaignRepository', draft_campaign_seed);
+        await DataSeeder.create('CampaignUserRepository', manager_draft_campaign_user_seed);
+
+        // Started campaign (from seeds files)
         await DataSeeder.create('CampaignRepository', campaign_seed);
         await DataSeeder.create('CampaignUserRepository', manager_campaign_user_seed);
 
@@ -187,15 +207,22 @@ describe('PopositionManagement functionnal', () => {
                 });
         });
 
-        // @Todo: implement not found instead of error 500
         it('Should return 404 when trying to update not existing proposition', async () => {
             const NOT_EXISTING_PROPOSITION_ID = 10001;
             await superApp
-                .patch(`/api/v1/campaigns/${campaign_seed.id}/propositions/${NOT_EXISTING_PROPOSITION_ID}`)
+                .patch(`/api/v1/campaigns/${draft_campaign_seed.id}/propositions/${NOT_EXISTING_PROPOSITION_ID}`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
                 .send({
                     payload: 'change',
                 })
+                .expect(HTTP_CODE.NOT_FOUND);
+        });
+
+        it('Should return 404 when trying to read not existing proposition', async () => {
+            const NOT_EXISTING_PROPOSITION_ID = 10001;
+            await superApp
+                .get(`/api/v1/campaigns/${draft_campaign_seed.id}/propositions/${NOT_EXISTING_PROPOSITION_ID}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
                 .expect(HTTP_CODE.NOT_FOUND);
         });
     });
