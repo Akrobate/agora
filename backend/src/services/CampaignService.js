@@ -287,7 +287,6 @@ class CampaignService {
 
 
     /**
-     * @todo Cover with test
      * @param {Object} input
      * @returns {Void|Throw<Error>}
      */
@@ -319,6 +318,14 @@ class CampaignService {
         }
     }
 
+    /**
+     * @todo Implement
+     * @param {Object} campaign_id
+     * @returns {Void|Throw<Error>}
+     */
+    async updateCampaignIfFinished(campaign_id) {
+        console.log('Campaign id to pdate', campaign_id);
+    }
 }
 
 CampaignService.instance = null;
