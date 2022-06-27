@@ -325,6 +325,12 @@ class CampaignService {
      */
     async updateCampaignIfFinished(campaign_id) {
         console.log('Campaign id to pdate', campaign_id);
+        const campaign_list = await this.campaign_repository.search({
+            id_list: [
+                campaign_id,
+            ],
+        });
+        console.log(campaign_list);
     }
 }
 
