@@ -1,5 +1,7 @@
 'use strict';
 
+const moment = require('moment');
+
 const {
     expect,
 } = require('chai');
@@ -28,6 +30,12 @@ describe.only('CampaignUpdateFinished', () => {
         proposition_type: 'Proposition_type',
         campaign_status: CampaignRepository.STATUS_IN_PROGRESS, // STATUS_IN_PROGRESS
         owner_user_id: 10001,
+        start_date: moment()
+            .subtract(8, 'days')
+            .toISOString(),
+        end_date: moment()
+            .subtract(1, 'days')
+            .toISOString(),
     };
 
     before(async () => {
@@ -46,9 +54,10 @@ describe.only('CampaignUpdateFinished', () => {
             ],
         });
         const [
-            updated_campaign_id,
+            updated_campaign,
         ] = updated_campaign_list;
-        expect(updated_campaign_id).to.have.property('campaign_status', CampaignRepository.STATUS_FINISHED);
+        console.log(updated_campaign);
+        expect(updated_campaign).to.have.property('campaign_status', CampaignRepository.STATUS_FINISHED);
     });
 
 });

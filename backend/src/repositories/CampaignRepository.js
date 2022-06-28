@@ -115,6 +115,7 @@ class CampaignRepository extends AbstractSequelizeRepository {
             id,
             id_list,
             campaign_status_list,
+            end_date_lte,
         } = criteria;
 
 
@@ -137,6 +138,12 @@ class CampaignRepository extends AbstractSequelizeRepository {
         if (campaign_status_list !== undefined) {
             where[Op.and].campaign_status = {
                 [Op.in]: campaign_status_list,
+            };
+        }
+
+        if (end_date_lte !== undefined) {
+            where[Op.and].end_date = {
+                [Op.lte]: end_date_lte,
             };
         }
 
