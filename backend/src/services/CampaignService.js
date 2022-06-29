@@ -1,5 +1,7 @@
 'use strict';
 
+const moment = require('moment');
+
 const {
     CampaignRepository,
     CampaignUserRepository,
@@ -319,18 +321,28 @@ class CampaignService {
     }
 
     /**
-     * @todo Implement
+     * @todo plug it in process
      * @param {Object} campaign_id
      * @returns {Void|Throw<Error>}
      */
     async updateCampaignIfFinished(campaign_id) {
-        console.log('Campaign id to pdate', campaign_id);
-        const campaign_list = await this.campaign_repository.search({
-            id_list: [
-                campaign_id,
-            ],
+
+        const [
+            campaign,
+        ] = await this.campaign_repository.search({
+            id: campaign_id,
+            end_date_upper_boundary: moment().toISOString(),
         });
-        console.log(campaign_list);
+
+        if (campaign === undefined) {
+            return false;
+        }
+
+        await this.campaign_repository.update({
+            id: campaign.id,
+            campaign_status: CampaignRepository.STATUS_FINISHED,
+        });
+        return true;
     }
 }
 
