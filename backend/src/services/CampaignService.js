@@ -320,6 +320,35 @@ class CampaignService {
         }
     }
 
+
+    /**
+     * @returns {Void|Throw<Error>}
+     */
+    async processUpdateExpiredCampaigns() {
+        const campaign_list = await this.searchExpiredCampaigns();
+        for (const campaign of campaign_list) {
+            // eslint-disable-next-line no-await-in-loop
+            await this.updateCampaignIfFinished(campaign.id);
+        }
+    }
+
+
+    /**
+     * @returns {Void|Throw<Error>}
+     */
+    async searchExpiredCampaigns() {
+        const campaign_list = await this.campaign_repository
+            .search({
+                end_date_upper_boundary: moment()
+                    .toISOString(),
+                campaign_status_list: [
+                    CampaignRepository.STATUS_IN_PROGRESS,
+                ],
+            });
+        return campaign_list;
+    }
+
+
     /**
      * @todo plug it in process
      * @param {Object} campaign_id
@@ -331,7 +360,11 @@ class CampaignService {
             campaign,
         ] = await this.campaign_repository.search({
             id: campaign_id,
-            end_date_upper_boundary: moment().toISOString(),
+            end_date_upper_boundary: moment()
+                .toISOString(),
+            campaign_status_list: [
+                CampaignRepository.STATUS_IN_PROGRESS,
+            ],
         });
 
         if (campaign === undefined) {
