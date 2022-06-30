@@ -23,6 +23,9 @@ const {
 const {
     manager_user_seed,
     campaign_seed,
+    campaign_user_status_1_seed,
+    campaign_user_status_2_seed,
+    campaign_user_status_3_seed,
     manager_campaign_user_seed,
     guest_user_seed,
     guest_campaign_user_seed,
@@ -39,6 +42,7 @@ describe('CampaignAccess', () => {
         await DataSeeder.truncate('CampaignRepository');
         await DataSeeder.truncate('CampaignUserRepository');
         await DataSeeder.truncate('UserRepository');
+        await DataSeeder.truncate('CampaignUserStatusRepository');
 
         await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.create('CampaignRepository', campaign_seed);
@@ -49,6 +53,10 @@ describe('CampaignAccess', () => {
 
         await DataSeeder.create('UserRepository', guest_user_to_delete_seed);
         await DataSeeder.create('CampaignUserRepository', guest_campaign_user_to_delete_seed);
+
+        await DataSeeder.create('CampaignUserStatusRepository', campaign_user_status_1_seed);
+        await DataSeeder.create('CampaignUserStatusRepository', campaign_user_status_2_seed);
+        await DataSeeder.create('CampaignUserStatusRepository', campaign_user_status_3_seed);
 
     });
 
@@ -84,6 +92,36 @@ describe('CampaignAccess', () => {
                         .find((user) => user.user_id === manager_user_seed.id);
                     expect(manager_member).to.have.property('access_level', manager_campaign_user_seed.access_level);
                     expect(manager_member).to.have.property('email', manager_user_seed.email);
+                });
+        });
+
+
+        it('Manager should be able to filter campaign members per status', async () => {
+            await superApp
+                .get(`/api/v1/campaigns/${campaign_seed.id}/users`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .query(qs.stringify({
+                    status_id_list: [
+                        3, // RESULT_SUBMITED
+                    ],
+                }))
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    // console.log(response.body);
+                    expect(response.body).to.have.property('campaign_user_list');
+
+                    const {
+                        campaign_user_list,
+                    } = response.body;
+
+                    for (const campaign_user of campaign_user_list) {
+                        console.log(campaign_user);
+                        const {
+                            user_status_list,
+                        } = campaign_user;
+                        expect(user_status_list.map((user_status) => user_status.status_id))
+                            .to.include(3); // RESULT_SUBMITED
+                    }
                 });
         });
 
