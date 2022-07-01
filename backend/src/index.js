@@ -7,8 +7,14 @@ const {
 } = require('./app');
 
 const {
+    initAllCrons,
+} = require('./crons');
+
+const {
     configuration,
 } = require('./configuration');
+
+initAllCrons();
 
 app.listen(configuration.server.port, (error) => {
     if (error) {
