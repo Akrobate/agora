@@ -40,8 +40,34 @@ describe('UserEloPropositionService unit tests', () => {
 
     it('groupArrayByDisplayCount', () => {
         const result = user_elo_proposition_service.groupArrayByDisplayCount(data);
-        // @todo missing assertion
-        console.log('MISSING ASSERT', result);
+        expect(result).to.deep.equal([
+            [
+                {
+                    id: 1,
+                    display_count: 100,
+                },
+            ],
+            [
+                {
+                    id: 2,
+                    display_count: 10,
+                },
+                {
+                    id: 3,
+                    display_count: 10,
+                },
+            ],
+            [
+                {
+                    id: 4,
+                    display_count: 0,
+                },
+                {
+                    id: 5,
+                    display_count: 0,
+                },
+            ],
+        ]);
     });
 
     it('groupArrayByDisplayCount empty array', () => {
@@ -52,8 +78,52 @@ describe('UserEloPropositionService unit tests', () => {
     it('buildDistributedList', () => {
         const grouped_list = user_elo_proposition_service.groupArrayByDisplayCount(data);
         const probability_list = user_elo_proposition_service.buildDistributedList(grouped_list);
-        // @todo missing assertion
-        console.log('MISSING ASSERT', probability_list);
+        expect(probability_list).to.deep.equal([
+            {
+                id: 1,
+                display_count: 100,
+            },
+            {
+                id: 2,
+                display_count: 10,
+            },
+            {
+                id: 2,
+                display_count: 10,
+            },
+            {
+                id: 3,
+                display_count: 10,
+            },
+            {
+                id: 3,
+                display_count: 10,
+            },
+            {
+                id: 4,
+                display_count: 0,
+            },
+            {
+                id: 4,
+                display_count: 0,
+            },
+            {
+                id: 4,
+                display_count: 0,
+            },
+            {
+                id: 5,
+                display_count: 0,
+            },
+            {
+                id: 5,
+                display_count: 0,
+            },
+            {
+                id: 5,
+                display_count: 0,
+            },
+        ]);
     });
 
     it('buildDistributedList and buildDistributedList - Large data', () => {

@@ -350,7 +350,6 @@ class CampaignService {
 
 
     /**
-     * @todo plug it in process
      * @param {Object} campaign_id
      * @returns {Void|Throw<Error>}
      */
