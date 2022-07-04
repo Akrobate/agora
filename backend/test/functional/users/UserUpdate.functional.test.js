@@ -1,0 +1,62 @@
+'use strict';
+
+const superTest = require('supertest');
+const HTTP_CODE = require('http-status');
+
+const {
+    v4,
+} = require('uuid');
+const {
+    expect,
+} = require('chai');
+const {
+    DataSeeder,
+} = require('../../test_helpers/DataSeeder');
+const {
+    app,
+} = require('../../../src/app');
+
+const superApp = superTest(app);
+
+describe('User should be able to update it self', () => {
+
+    const user_seed = {
+        id: 300,
+        first_name: 'Artiom',
+        last_name: 'Fedorov',
+        password: 'ShouldHaveLettersDigitsAndAtLeast8chars',
+        email: `artiom.fedorov@${v4()}.com`,
+    };
+
+    before(async () => {
+        await DataSeeder.truncateAll();
+        await DataSeeder.createUserHashPassword(user_seed);
+    });
+
+    // @todo implement update service function
+    it('Should be able to update a user', async () => {
+
+        await superApp
+            .get(`/api/v1/users/${user_seed.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response.body).to.have.property('first_name', user_seed.first_name);
+                expect(response.body).to.have.property('last_name', user_seed.last_name);
+            });
+
+        await superApp
+            .patch(`/api/v1/users/${user_seed.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(user_seed)}`)
+            .send({
+                first_name: 'Artiom UPDATED',
+            })
+            .expect(HTTP_CODE.CREATED)
+            .expect((response) => {
+                expect(response.body).to.have.property('id');
+                expect(response.body).to.have.property('first_name', user_seed.first_name);
+            });
+
+    });
+
+});
