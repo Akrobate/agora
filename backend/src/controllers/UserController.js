@@ -111,14 +111,6 @@ class UserController extends AbstractController {
             .keys({
                 body: joi.object()
                     .keys({
-                        email: joi.string()
-                            .trim()
-                            .min(1)
-                            .optional(),
-                        password: joi.string()
-                            .trim()
-                            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)
-                            .optional(),
                         first_name: joi.string()
                             .trim()
                             .optional(),
@@ -136,11 +128,8 @@ class UserController extends AbstractController {
         const user = await this.user_service.update(
             request.jwt_data,
             {
-                id: user_id,
-                email: value.body.email,
-                password: value.body.password,
-                first_name: value.body.first_name,
-                last_name: value.body.last_name,
+                id: parseInt(user_id, 10),
+                ...value.body,
             }
         );
 

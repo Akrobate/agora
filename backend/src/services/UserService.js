@@ -16,18 +16,25 @@ const {
     configuration,
 } = require('../configuration');
 
+const {
+    Acl,
+} = require('./commons');
+
 
 class UserService {
 
     /**
      * Constructor.
+     * @param {Acl} acl
      * @param {UserRepository} user_repository
      * @param {CampaignUserRepository} campaign_user_repository
      */
     constructor(
+        acl,
         user_repository,
         campaign_user_repository
     ) {
+        this.acl = acl;
         this.user_repository = user_repository;
         this.campaign_user_repository = campaign_user_repository;
 
@@ -48,6 +55,7 @@ class UserService {
     static getInstance() {
         if (UserService.instance === null) {
             UserService.instance = new UserService(
+                Acl.getInstance(),
                 UserRepository.getInstance(),
                 CampaignUserRepository.getInstance()
             );
@@ -180,6 +188,21 @@ class UserService {
         return {
             token: jwt_token,
         };
+    }
+
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async update(user, input) {
+        const {
+            id,
+        } = input;
+        this.acl.checkUserModifiesOwnData(user.user_id, id);
+        const user_updated = await this.user_repository.update(input);
+        return user_updated;
     }
 
 
