@@ -119,6 +119,18 @@ class Acl {
         return campaign;
     }
 
+
+    /**
+     * @param {Object} jwt_user_id
+     * @param {Number} user_id
+     * @returns {Object|Error}
+     */
+    checkUserModifiesOwnData(jwt_user_id, user_id) {
+        if (jwt_user_id !== user_id) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'User can only modify own data');
+        }
+    }
+
 }
 
 Acl.instance = null;
