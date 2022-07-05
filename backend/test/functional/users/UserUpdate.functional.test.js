@@ -18,7 +18,7 @@ const {
 
 const superApp = superTest(app);
 
-describe('User should be able to update it self', () => {
+describe.only('User should be able to update it self', () => {
 
     const user_seed = {
         id: 300,
@@ -54,9 +54,25 @@ describe('User should be able to update it self', () => {
             .expect(HTTP_CODE.CREATED)
             .expect((response) => {
                 expect(response.body).to.have.property('id');
-                expect(response.body).to.have.property('first_name', user_seed.first_name);
+                expect(response.body).to.have.property('first_name', 'Artiom UPDATED');
             });
 
+    });
+
+    it('Should not be able to update an other user', async () => {
+        await superApp
+            .patch(`/api/v1/users/${user_seed.id + 10000}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(user_seed)}`)
+            .send({
+                first_name: 'Artiom UPDATED',
+            })
+            .expect(HTTP_CODE.UNAUTHORIZED)
+            .expect((response) => {
+                expect(response.body).to.have.property(
+                    'message',
+                    'User can only modify own data'
+                );
+            });
     });
 
 });
