@@ -63,7 +63,7 @@ api_routes.post(
 );
 
 api_routes.patch(
-    '/users/:user_id',
+    '/users/:user_id(\\d+)/',
     authentication_middleware.injectJwtData(),
     (request, response, next) => user_controller
         .update(request, response)
