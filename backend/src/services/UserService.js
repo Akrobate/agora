@@ -207,6 +207,21 @@ class UserService {
 
 
     /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async updatePassword(user, input) {
+        const {
+            id,
+        } = input;
+        this.acl.checkUserModifiesOwnData(user.user_id, id);
+        const user_updated = await this.user_repository.update(input);
+        return user_updated;
+    }
+
+
+    /**
      * @param {Object} user_data
      * @param {Object} input
      * @returns {Promise<*|Error>}
@@ -220,7 +235,7 @@ class UserService {
             throw new CustomError(CustomError.UNAUTHORIZED, 'User can only read own data');
         }
         const user = await this.user_repository.find({
-            id_list: [id],
+            id,
         });
 
         if (user === null) {
