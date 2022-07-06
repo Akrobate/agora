@@ -74,3 +74,5 @@ npm run generate-html-doc
 * *28/05/22* Add update password on UserProfilePage backend
 * *28/05/22* Add update password on UserProfilePage frontend
 * *17/06/22* Implementer le nombre de jours restants avant finalisation campagne
+* *03/07/22* Replace all object assign by spreading syntax
+* *04/07/22* Last name first name update
