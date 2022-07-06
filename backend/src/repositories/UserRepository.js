@@ -84,6 +84,7 @@ class UserRepository extends AbstractSequelizeRepository {
      */
     static _formatCriteria(criteria) {
         const {
+            id,
             id_list,
             email,
         } = criteria;
@@ -91,6 +92,12 @@ class UserRepository extends AbstractSequelizeRepository {
         const where = {
             [Op.and]: {},
         };
+
+        if (id !== undefined) {
+            where[Op.and].id = {
+                [Op.eq]: id,
+            };
+        }
 
         if (id_list !== undefined) {
             where[Op.and].id = {
