@@ -18,7 +18,7 @@ const {
 
 const superApp = superTest(app);
 
-describe.only('User should be able to update it self', () => {
+describe('User should be able to update it self', () => {
 
     const user_seed = {
         id: 300,

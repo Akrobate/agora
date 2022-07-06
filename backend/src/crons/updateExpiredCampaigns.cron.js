@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 'use strict';
 
 const cron = require('node-cron');
