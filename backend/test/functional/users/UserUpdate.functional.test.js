@@ -18,7 +18,7 @@ const {
 
 const superApp = superTest(app);
 
-describe('User should be able to update it self', () => {
+describe.only('User should be able to update it self', () => {
 
     const user_seed = {
         id: 300,
@@ -28,7 +28,7 @@ describe('User should be able to update it self', () => {
         email: `artiom.fedorov@${v4()}.com`,
     };
 
-    before(async () => {
+    beforeEach(async () => {
         await DataSeeder.truncateAll();
         await DataSeeder.createUserHashPassword(user_seed);
     });
@@ -59,6 +59,7 @@ describe('User should be able to update it self', () => {
 
     });
 
+
     it('Should not be able to update an other user', async () => {
         await superApp
             .patch(`/api/v1/users/${user_seed.id + 10000}`)
@@ -75,4 +76,39 @@ describe('User should be able to update it self', () => {
             });
     });
 
+
+    describe('Update user own password', () => {
+
+        it('Should be able to update password', async () => {
+
+            const new_password = 'CoucouNouveauPass8';
+
+            await superApp
+                .post('/api/v1/users/login')
+                .send({
+                    password: user_seed.password,
+                    email: user_seed.email,
+                })
+                .expect(HTTP_CODE.OK);
+
+            await superApp
+                .patch(`/api/v1/users/${user_seed.id}/password`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(user_seed)}`)
+                .send({
+                    old_password: user_seed.password,
+                    new_password,
+                })
+                .expect(HTTP_CODE.CREATED);
+
+            await superApp
+                .post('/api/v1/users/login')
+                .send({
+                    password: new_password,
+                    email: user_seed.email,
+                })
+                .expect(HTTP_CODE.OK);
+        });
+    });
+
 });
+
