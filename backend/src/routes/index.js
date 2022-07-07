@@ -70,6 +70,14 @@ api_routes.patch(
         .catch(next)
 );
 
+api_routes.patch(
+    '/users/:user_id(\\d+)/password',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_controller
+        .updatePassword(request, response)
+        .catch(next)
+);
+
 api_routes.get(
     '/users/:user_id',
     authentication_middleware.injectJwtData(),

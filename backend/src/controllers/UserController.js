@@ -136,6 +136,49 @@ class UserController extends AbstractController {
         return response.status(HTTP_CODE.CREATED).send(user);
     }
 
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async updatePassword(request, response) {
+        const {
+            user_id,
+        } = request.params;
+
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                body: joi.object()
+                    .keys({
+                        old_password: joi.string()
+                            .required(),
+                        new_password: joi.string()
+                            .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)
+                            .required(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        this.checkValidationError(error);
+
+        const user = await this.user_service.updatePassword(
+            request.jwt_data,
+            {
+                id: parseInt(user_id, 10),
+                ...value.body,
+            }
+        );
+
+        return response.status(HTTP_CODE.CREATED).send(user);
+    }
+
     /**
      * @param {express.Request} request
      * @param {express.Response} response

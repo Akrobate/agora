@@ -214,9 +214,24 @@ class UserService {
     async updatePassword(user, input) {
         const {
             id,
+            old_password,
+            new_password,
         } = input;
         this.acl.checkUserModifiesOwnData(user.user_id, id);
-        const user_updated = await this.user_repository.update(input);
+
+        const stored_user = await this.user_repository.find({
+            id,
+        });
+
+        if (UserService.hashPassword(old_password) !== stored_user.password) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Bad password');
+        }
+
+        const user_updated = await this.user_repository.update({
+            id,
+            password: UserService.hashPassword(new_password),
+        });
+
         return user_updated;
     }
 

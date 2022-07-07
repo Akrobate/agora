@@ -18,7 +18,7 @@ const {
 
 const superApp = superTest(app);
 
-describe.only('User should be able to update it self', () => {
+describe('User should be able to update it self', () => {
 
     const user_seed = {
         id: 300,
@@ -107,6 +107,25 @@ describe.only('User should be able to update it self', () => {
                     email: user_seed.email,
                 })
                 .expect(HTTP_CODE.OK);
+
+            await superApp
+                .post('/api/v1/users/login')
+                .send({
+                    password: user_seed.password,
+                    email: user_seed.email,
+                })
+                .expect(HTTP_CODE.UNAUTHORIZED);
+        });
+
+        it('Should not be able to update password with bad old password', async () => {
+            await superApp
+                .patch(`/api/v1/users/${user_seed.id}/password`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(user_seed)}`)
+                .send({
+                    old_password: 'BAD_PASSWORD',
+                    new_password: 'CoucouNouveauPass8',
+                })
+                .expect(HTTP_CODE.UNAUTHORIZED);
         });
     });
 
