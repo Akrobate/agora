@@ -237,6 +237,23 @@ class UserService {
 
 
     /**
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async forgottenPassword(input) {
+        const {
+            email,
+        } = input;
+
+        const stored_user = await this.user_repository.find({
+            email,
+        });
+
+        console.log(stored_user);
+    }
+
+
+    /**
      * @param {Object} user_data
      * @param {Object} input
      * @returns {Promise<*|Error>}

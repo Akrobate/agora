@@ -48,6 +48,13 @@ api_routes.post(
 );
 
 api_routes.post(
+    '/users/forgotten-password',
+    (request, response, next) => user_controller
+        .forgottenPassword(request, response)
+        .catch(next)
+);
+
+api_routes.post(
     '/users/login/guest',
     (request, response, next) => user_controller
         .loginGuest(request, response)

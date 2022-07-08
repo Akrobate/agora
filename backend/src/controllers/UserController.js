@@ -184,6 +184,39 @@ class UserController extends AbstractController {
      * @param {express.Response} response
      * @returns {Promise<*|Error>}
      */
+    async forgottenPassword(request, response) {
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                body: joi.object()
+                    .keys({
+                        email: joi.string()
+                            .trim()
+                            .min(1)
+                            .required(),
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        this.checkValidationError(error);
+
+        await this.user_service.forgottenPassword({
+            ...value.body,
+        });
+
+        return response.status(HTTP_CODE.CREATED).send({});
+    }
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
     async read(request, response) {
         const {
             user_id,
