@@ -152,13 +152,10 @@ class CampaignController extends AbstractController {
 
         const user = await this.campaign_service.update(
             request.jwt_data,
-            Object.assign(
-                {},
-                value.body,
-                {
-                    id: Number(campaign_id),
-                }
-            )
+            {
+                ...value.body,
+                id: Number(campaign_id),
+            }
         );
 
         return response.status(HTTP_CODE.CREATED).send(user);

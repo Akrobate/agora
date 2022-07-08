@@ -154,13 +154,10 @@ class UserPropositionController extends AbstractController {
 
         const data = await this.proposition_user_service.getPropositionResult(
             request.jwt_data,
-            Object.assign(
-                {},
-                value.query,
-                {
-                    campaign_id,
-                }
-            )
+            {
+                ...value.query,
+                campaign_id,
+            }
         );
 
         return response.status(HTTP_CODE.OK).send({

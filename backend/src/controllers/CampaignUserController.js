@@ -185,13 +185,10 @@ class CampaignUserController extends AbstractController {
 
         const campaign_user_list = await this.campaign_user_service.searchCampaignUsers(
             request.jwt_data,
-            Object.assign(
-                {},
-                value.query,
-                {
-                    campaign_id,
-                }
-            )
+            {
+                ...value.query,
+                campaign_id,
+            }
         );
 
         return response.status(HTTP_CODE.OK).send({
