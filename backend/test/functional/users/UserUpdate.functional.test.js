@@ -33,7 +33,7 @@ describe('User should be able to update it self', () => {
         await DataSeeder.createUserHashPassword(user_seed);
     });
 
-    // @todo implement update service function
+
     it('Should be able to update a user', async () => {
 
         await superApp
