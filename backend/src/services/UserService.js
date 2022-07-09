@@ -9,6 +9,10 @@ const {
 } = require('../repositories');
 
 const {
+    EmailService,
+} = require('./EmailService');
+
+const {
     CustomError,
 } = require('../CustomError');
 
@@ -28,15 +32,18 @@ class UserService {
      * @param {Acl} acl
      * @param {UserRepository} user_repository
      * @param {CampaignUserRepository} campaign_user_repository
+     * @param {EmailService} email_service
      */
     constructor(
         acl,
         user_repository,
-        campaign_user_repository
+        campaign_user_repository,
+        email_service
     ) {
         this.acl = acl;
         this.user_repository = user_repository;
         this.campaign_user_repository = campaign_user_repository;
+        this.email_service = email_service;
 
         this.jwt_private_key = configuration.jwt.private_key;
         this.jwt_public_key = configuration.jwt.public_key;
@@ -57,7 +64,8 @@ class UserService {
             UserService.instance = new UserService(
                 Acl.getInstance(),
                 UserRepository.getInstance(),
-                CampaignUserRepository.getInstance()
+                CampaignUserRepository.getInstance(),
+                EmailService.getInstance()
             );
         }
         return UserService.instance;
@@ -247,6 +255,10 @@ class UserService {
 
         const stored_user = await this.user_repository.find({
             email,
+        });
+
+        await this.email_service.sendForgottenPasswordMail({
+            to: email,
         });
 
         console.log(stored_user);
