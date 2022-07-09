@@ -10,15 +10,23 @@ const {
     expect,
 } = require('chai');
 const {
+    mock,
+} = require('sinon');
+const {
     DataSeeder,
 } = require('../../test_helpers/DataSeeder');
+const {
+    EmailService,
+} = require('../../../src/services');
 const {
     app,
 } = require('../../../src/app');
 
 const superApp = superTest(app);
 
-describe.only('Forgotten password', () => {
+describe('Forgotten password', () => {
+
+    const mocks = {};
 
     const user_seed = {
         id: 300,
@@ -32,10 +40,23 @@ describe.only('Forgotten password', () => {
     beforeEach(async () => {
         await DataSeeder.truncateAll();
         await DataSeeder.createUserHashPassword(user_seed);
+
+        mocks.service_email = mock(EmailService.getInstance());
+    });
+
+
+    afterEach(() => {
+        mocks.service_email.restore();
     });
 
 
     it('Should be able to request forgotten password mail', async () => {
+
+        mocks.service_email
+            .expects('sendMail')
+            // .withArgs({})
+            .returns(Promise.resolve({}));
+
         await superApp
             .post('/api/v1/users/forgotten-password')
             .send({
@@ -47,7 +68,7 @@ describe.only('Forgotten password', () => {
                 expect(response.body).to.deep.equal({});
             });
 
-        // @todo implement mock email
+        mocks.service_email.verify();
 
         // Implement call to update password
 

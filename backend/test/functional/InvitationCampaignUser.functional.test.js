@@ -82,6 +82,9 @@ describe('InvitationCampaignUser', () => {
                 expect(response.body).to.have.property('status_id');
                 expect(response.body).to.have.property('user_id');
                 expect(response.body).to.have.property('date');
+
+                mocks.service_email.verify();
+
             });
     });
 });
