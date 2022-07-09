@@ -160,6 +160,49 @@ class EmailService {
         });
     }
 
+
+    /**
+     * @param {*} input
+     * @param {*} input.to
+     * @param {*} input.campaign_name
+     * @param {*} input.campaign_description
+     * @param {*} input.invitation_token
+     * @returns {Promise<Object>}
+     */
+    async sendForgottenPasswordMail(input) {
+
+        const {
+            to,
+        } = input;
+
+        const frontend_url = configuration.frontend.url;
+
+        const invitation_template = await fs.readFile(
+            `${EmailService.TEMPLATES_FOLDER}invitation.html`,
+            'utf8'
+        );
+
+        const html = mustache
+            .render(
+                invitation_template,
+                {
+                    to,
+                    frontend_url,
+                }
+            );
+
+        return this.sendMail({
+            to_list: [
+                to,
+            ],
+            from_email: 'agora.social.app@gmail.com',
+            from_name: 'Agora Social App',
+            subject: 'Agora - Mot de passe oublié',
+            html,
+            text: null,
+        });
+    }
+
 }
 
 EmailService.instance = null;
