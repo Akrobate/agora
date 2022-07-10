@@ -17,12 +17,19 @@ const {
 } = require('../../test_helpers/DataSeeder');
 const {
     EmailService,
+    UserService,
 } = require('../../../src/services');
+const {
+    UserRepository,
+} = require('../../../src/repositories');
 const {
     app,
 } = require('../../../src/app');
 
 const superApp = superTest(app);
+
+const user_repository = UserRepository.getInstance();
+const user_service = UserService.getInstance();
 
 describe('Forgotten password', () => {
 
@@ -52,6 +59,8 @@ describe('Forgotten password', () => {
 
     it('Should be able to request forgotten password mail', async () => {
 
+        const new_password = 'New_Password_Forgotten321';
+
         mocks.service_email
             .expects('sendMail')
             // .withArgs({})
@@ -70,10 +79,34 @@ describe('Forgotten password', () => {
 
         mocks.service_email.verify();
 
-        // Implement call to update password
+        const stored_user = await user_repository.find({
+            id: user_seed.id,
+        });
 
-        // Implement connection test with new password
+        const forgotten_password_token = user_service.generateForgottenPasswordToken(stored_user);
 
+        await superApp
+            .patch(`/api/v1/users/${user_seed.id}/forgotten-password`)
+            .send({
+                forgotten_password_token,
+                new_password,
+            })
+            .expect(HTTP_CODE.CREATED);
+
+        await superApp
+            .post('/api/v1/users/login')
+            .send({
+                email: user_seed.email,
+                password: new_password,
+            })
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response.body).to.have.property('token');
+                const decoded = DataSeeder.decodeJwt(response.body.token);
+                expect(decoded).to.be.an('Object');
+                expect(decoded).to.have.property('exp');
+                expect(decoded).to.have.property('iat');
+            });
     });
 
 });
