@@ -257,13 +257,61 @@ class UserService {
             email,
         });
 
+        const forgotten_password_token = await this.generateForgottenPasswordToken(stored_user);
+
         await this.email_service.sendForgottenPasswordMail({
             to: email,
+            forgotten_password_token,
+            user_id: stored_user.id,
         });
-
-        console.log(stored_user);
     }
 
+
+    /**
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async updateForgottenPassword(input) {
+        const {
+            id,
+            forgotten_password_token,
+            new_password,
+        } = input;
+
+        const stored_user = await this.user_repository.find({
+            id,
+        });
+
+        const generated_forgotten_password_token = await this
+            .generateForgottenPasswordToken(stored_user);
+
+        if (generated_forgotten_password_token !== forgotten_password_token) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Cannot update forgotten password, please retry');
+        }
+
+        await this.user_repository.update({
+            id,
+            password: UserService.hashPassword(new_password),
+        });
+    }
+
+
+    /**
+     * @param {Object} user
+     * @return {String}
+     */
+    generateForgottenPasswordToken(user) {
+        const {
+            email,
+            id,
+            password,
+        } = user;
+
+        return crypto
+            .createHash('sha256')
+            .update(`${configuration.security.salt}${id}${email}${password}`)
+            .digest('base64');
+    }
 
     /**
      * @param {Object} user_data
