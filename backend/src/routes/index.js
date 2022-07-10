@@ -85,6 +85,13 @@ api_routes.patch(
         .catch(next)
 );
 
+api_routes.patch(
+    '/users/:user_id(\\d+)/forgotten-password',
+    (request, response, next) => user_controller
+        .updateForgottenPassword(request, response)
+        .catch(next)
+);
+
 api_routes.get(
     '/users/:user_id',
     authentication_middleware.injectJwtData(),
