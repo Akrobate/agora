@@ -186,12 +186,10 @@ class AbstractSequelizeRepository {
                 );
             }
             await sequelize_entity
-                .set(Object.assign(
-                    {
-                        updated_at: moment().toDate(),
-                    },
-                    input
-                ))
+                .set({
+                    updated_at: moment().toDate(),
+                    ...input,
+                })
                 .save();
             object = AbstractSequelizeRepository._formatOutput(sequelize_entity);
         } catch (error) {
@@ -241,12 +239,10 @@ class AbstractSequelizeRepository {
     async find(criteria = {}, options = {}) {
         let result = null;
         try {
-            const sequelize_entity = await this.sequelize_model.findOne(
-                Object.assign(
-                    this.constructor._formatCriteria(criteria),
-                    AbstractSequelizeRepository._formatOptions(options)
-                )
-            );
+            const sequelize_entity = await this.sequelize_model.findOne({
+                ...this.constructor._formatCriteria(criteria),
+                ...AbstractSequelizeRepository._formatOptions(options),
+            });
             if (sequelize_entity !== null) {
                 result = AbstractSequelizeRepository._formatOutput(sequelize_entity);
             }
@@ -273,12 +269,10 @@ class AbstractSequelizeRepository {
     ) {
         let object_list = [];
         try {
-            const sequelize_entity_list = await this.sequelize_model.findAll(
-                Object.assign(
-                    this.constructor._formatCriteria(criteria),
-                    this.constructor._formatOptions(options)
-                )
-            );
+            const sequelize_entity_list = await this.sequelize_model.findAll({
+                ...this.constructor._formatCriteria(criteria),
+                ...this.constructor._formatOptions(options),
+            });
             object_list = sequelize_entity_list.map(
                 (sequelize_entity) => AbstractSequelizeRepository._formatOutput(sequelize_entity)
             );

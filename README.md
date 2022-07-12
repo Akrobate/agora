@@ -81,5 +81,4 @@ npm run generate-html-doc
 
 ## Backend
 
-* *03/07/22* Replace all object assign by spreading syntax
 * *07/07/22* Update documentation for user password update
