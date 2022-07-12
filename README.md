@@ -75,12 +75,11 @@ npm run generate-html-doc
 * *27/05/22* Create login element to include in LoginPage
 * *28/05/22* Add update password on UserProfilePage frontend
 * *17/06/22* Implementer le nombre de jours restants avant finalisation campagne
-* *04/07/22* Last name first name update frontend
-* *08/07/22* Mot de passe oublié backend
+* *08/07/22* Mot de passe oublié frontend
+* *13/07/22* Tableau de bord, propositions de campagnes a participer ne doit pas montrer les terminées
+* *13/07/22* Ajouter les résultats des campagnes terminés sur le tableau de bord
 
 ## Backend
 
 * *03/07/22* Replace all object assign by spreading syntax
 * *07/07/22* Update documentation for user password update
-* *08/07/22* Mot de passe oublié backend
-
