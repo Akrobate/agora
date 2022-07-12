@@ -53,13 +53,10 @@ const routes = [
     {
         path: '/campaigns/edit/:id',
         name: 'campaign-edit',
-        props: (route) => Object.assign(
-            {},
-            route.params,
-            {
-                id: parseInt(route.params.id)
-            }
-        ),
+        props: (route) => ({
+            ...route.params,
+            id: parseInt(route.params.id),
+        }),
         component: () => import('@/components/pages/CampaignCreatePage.vue')
     },
     {

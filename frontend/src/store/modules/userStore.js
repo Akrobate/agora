@@ -7,7 +7,9 @@ const state = () => ({
     user: {},
 })
 
-const getters = {}
+const getters = {
+    getUser: (state) => state.user,
+}
 
 const actions = {
     async register(_, {
@@ -23,6 +25,22 @@ const actions = {
             last_name,
         })
     },
+
+    getUser(_, user_id) {
+        return user_repository.getUser(user_id)
+    },
+
+    updateUser(_, {
+        id,
+        last_name,
+        first_name,
+    }) {
+        return user_repository.updateUser(id, {
+            last_name,
+            first_name,
+        })
+    }
+
 }
 
 const mutations = {}

@@ -80,6 +80,7 @@ export default {
             ],
             is_participant: true,
             access_level: 0,
+            // @todo Should be a constant referential
             access_level_list: [
                 { id: 1, label: 'Aucun' },
                 { id: 2, label: 'Observateur' },

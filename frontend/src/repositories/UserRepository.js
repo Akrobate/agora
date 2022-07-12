@@ -46,6 +46,16 @@ class UserRepository {
         return response.data
     }
 
+    async getUser(user_id) {
+        const response = await axios.get(`${api_configuration.url_api}/api/v1/users/${user_id}`)
+        return response.data
+    }
+
+    async updateUser(user_id, data) {
+        const response = await axios.patch(`${api_configuration.url_api}/api/v1/users/${user_id}`, data)
+        return response.data
+    }
+
     getTokenLocalStorage() {
         return localStorage.token ? localStorage.token : null
     }
