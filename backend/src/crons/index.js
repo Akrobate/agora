@@ -4,7 +4,7 @@
 
 const {
     init: initUpdateExpiredCampaignsCron,
-} = require('updateExpiredCampaigns.cron');
+} = require('./updateExpiredCampaigns.cron');
 
 function initAllCrons() {
     initUpdateExpiredCampaignsCron('*/10 * * * *');
