@@ -162,15 +162,12 @@ class CampaignUserService {
                 }
                 return true;
             })
-            .map((campaign_user) => Object.assign(
-                {},
-                campaign_user,
-                {
-                    email: user_list.find((_user) => campaign_user.user_id === _user.id).email,
-                    user_status_list: campaign_user_status_list
-                        .filter((_user_status) => _user_status.user_id === campaign_user.user_id),
-                }
-            ));
+            .map((campaign_user) => ({
+                ...campaign_user,
+                email: user_list.find((_user) => campaign_user.user_id === _user.id).email,
+                user_status_list: campaign_user_status_list
+                    .filter((_user_status) => _user_status.user_id === campaign_user.user_id),
+            }));
     }
 
 

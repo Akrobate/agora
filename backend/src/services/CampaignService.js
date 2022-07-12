@@ -98,14 +98,11 @@ class CampaignService {
             id: campaign_id,
         });
 
-        return Object.assign(
-            {},
-            campaign,
-            {
-                user_access_level: campain_user.access_level,
-                user_is_participant: campain_user.is_participant,
-            }
-        );
+        return {
+            ...campaign,
+            user_access_level: campain_user.access_level,
+            user_is_participant: campain_user.is_participant,
+        };
     }
 
 
@@ -119,13 +116,10 @@ class CampaignService {
         this.acl.forbidGuestAccessType(user);
 
         const campaign = await this.campaign_repository
-            .create(Object.assign(
-                {},
-                input,
-                {
-                    owner_user_id: user.user_id,
-                }
-            ));
+            .create({
+                ...input,
+                owner_user_id: user.user_id,
+            });
 
         await this.campaign_user_repository
             .create({
@@ -263,27 +257,21 @@ class CampaignService {
         }
 
         const campaign_list = await this.campaign_repository
-            .search(Object.assign(
-                {},
-                input,
-                {
-                    id_list: campain_user_list.map((campaign_user) => campaign_user.campaign_id),
-                }
-            ));
+            .search({
+                ...input,
+                id_list: campain_user_list.map((campaign_user) => campaign_user.campaign_id),
+            });
 
 
         return campaign_list.map((campaign) => {
             const campaign_user = campain_user_list
                 .find((_campaign_user) => _campaign_user.campaign_id === campaign.id);
 
-            return Object.assign(
-                {},
-                campaign,
-                {
-                    user_access_level: campaign_user.access_level,
-                    user_is_participant: campaign_user.is_participant,
-                }
-            );
+            return {
+                ...campaign,
+                user_access_level: campaign_user.access_level,
+                user_is_participant: campaign_user.is_participant,
+            };
         });
     }
 

@@ -44,9 +44,10 @@ describe('UserLogin', () => {
     it('Should not be able to login with unexisting user', async () => {
         await superApp
             .post('/api/v1/users/login')
-            .send(Object.assign({}, user_seed, {
+            .send({
+                ...user_seed,
                 email: 'et.si.tu@nexistais.pas',
-            }))
+            })
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
                 expect(response.body).to.have.property('message', 'Bad login or password');
@@ -56,9 +57,10 @@ describe('UserLogin', () => {
     it('Should not be able to login with bad user password', async () => {
         await superApp
             .post('/api/v1/users/login')
-            .send(Object.assign({}, user_seed, {
+            .send({
+                ...user_seed,
                 password: 'tu.tappes.pupuce.comme.une.pupuce',
-            }))
+            })
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
                 expect(response.body).to.have.property('message', 'Bad login or password');

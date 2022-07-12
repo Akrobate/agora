@@ -79,9 +79,10 @@ class DataSeeder {
      */
     static hashPasswordInObject(input) {
         if (input.password) {
-            return Object.assign({}, input, {
+            return {
+                ...input,
                 password: DataSeeder.hashPassword(input.password),
-            });
+            };
         }
         return input;
     }

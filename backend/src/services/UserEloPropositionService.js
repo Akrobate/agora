@@ -139,16 +139,12 @@ class UserEloPropositionService {
                 .map((elo_result_proposition) => elo_result_proposition.proposition_id),
         });
 
-        return elo_result_proposition_list.map((elo_result_proposition) => Object.assign(
-            {},
-            elo_result_proposition,
-            {
-                proposition: proposition_list
-                    .find(
-                        (proposition) => proposition.id === elo_result_proposition.proposition_id
-                    ),
-            }
-        ));
+        return elo_result_proposition_list.map((elo_result_proposition) => ({
+            ...elo_result_proposition,
+            proposition: proposition_list.find(
+                (proposition) => proposition.id === elo_result_proposition.proposition_id
+            ),
+        }));
     }
 
 
@@ -275,17 +271,12 @@ class UserEloPropositionService {
                 .map((elo_result_proposition) => elo_result_proposition.proposition_id),
         });
 
-        return proposition_random_list.map((proposition_random) => Object.assign(
-            {},
-            proposition_random,
-            {
-                proposition: proposition_list
-                    .find(
-                        (proposition) => proposition.id === proposition_random.proposition_id
-                    ),
-            }
-        ));
-
+        return proposition_random_list.map((proposition_random) => ({
+            ...proposition_random,
+            proposition: proposition_list.find(
+                (proposition) => proposition.id === proposition_random.proposition_id
+            ),
+        }));
     }
 
 

@@ -136,13 +136,11 @@ class AbstractSequelizeRepository {
      * @returns {Object}
      */
     static enrichDataWithTechnicalDates(input) {
-        return Object.assign(
-            {
-                created_at: moment().toDate(),
-                updated_at: moment().toDate(),
-            },
-            input
-        );
+        return {
+            created_at: moment().toDate(),
+            updated_at: moment().toDate(),
+            ...input,
+        };
     }
 
 
