@@ -39,6 +39,17 @@ const actions = {
             last_name,
             first_name,
         })
+    },
+
+    updateUserPassword(_, {
+        id,
+        old_password,
+        new_password,
+    }) {
+        return user_repository.updateUserPassword(id, {
+            old_password,
+            new_password,
+        })
     }
 
 }

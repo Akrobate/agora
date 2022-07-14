@@ -56,6 +56,11 @@ class UserRepository {
         return response.data
     }
 
+    async updateUserPassword(user_id, data) {
+        const response = await axios.patch(`${api_configuration.url_api}/api/v1/users/${user_id}/password`, data)
+        return response.data
+    }
+
     getTokenLocalStorage() {
         return localStorage.token ? localStorage.token : null
     }
