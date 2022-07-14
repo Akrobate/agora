@@ -9,7 +9,7 @@
             <v-row>
                 <v-col cols="6">
                     <v-text-field
-                        label="Prénom"
+                        :label="$t('first_name')"
                         name="first_name"
                         v-model="first_name"
                         prepend-icon="mdi-account"
@@ -170,3 +170,17 @@ export default {
 }
 
 </script>
+
+
+
+<i18n>
+{
+    "fr": {
+        "close": "Fermer",
+        "first_name": "Prénom"
+    },
+    "en": {
+        "close": "Blabla"
+    }
+}
+</i18n>
