@@ -28,6 +28,9 @@ paths:
   /api/v1/users/{user_id}:
     $ref: "./paths/users/user_id.yaml"
 
+  /api/v1/users/{user_id}/password:
+    $ref: "./paths/users/user_id_password.yaml"
+
   /api/v1/campaigns:
     $ref: "./paths/campaigns.yaml"
 
