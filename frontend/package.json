@@ -16,12 +16,15 @@
     "moment": "^2.29.1",
     "remove-markdown": "^0.5.0",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.27.0",
     "vue-router": "^3.2.0",
     "vuedraggable": "^2.24.3",
     "vuetify": "^2.4.0",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^4.2.0",
+    "@kazupon/vue-i18n-loader": "^0.5.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "^4.5.12",
@@ -31,6 +34,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.32.0",
     "sass-loader": "^10.0.0",
+    "vue-cli-plugin-i18n": "^2.3.1",
     "vue-cli-plugin-vuetify": "~2.3.1",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
