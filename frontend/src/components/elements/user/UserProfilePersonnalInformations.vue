@@ -1,5 +1,8 @@
 <template>
     <v-card class="mt-6">
+        <v-card-title>
+            Informations personnelles
+        </v-card-title>
         <v-card-text>
             <v-form v-model="valid">
                 <v-container>
@@ -49,7 +52,7 @@
             </v-btn>
         </v-card-actions>
 
-        
+        <!--
         <v-snackbar
             :timeout="3000"
             :top="true"
@@ -67,7 +70,7 @@
         >
             Une erreur est survenue
         </v-snackbar>
-
+-->
     </v-card>
 </template>
 
@@ -97,6 +100,8 @@ export default {
         ...mapActions({
             getUser: 'user_store/getUser',
             updateUser: 'user_store/updateUser',
+            triggerError: 'snack_bar_store/triggerError',
+            triggerSuccess: 'snack_bar_store/triggerSuccess'
         }),
         async save() {
             try {
@@ -106,8 +111,13 @@ export default {
                     last_name: this.last_name
                 })
                 this.snackbar = true
+                this.triggerSuccess({
+                    text: 'Mise a jour du profil réussie'
+                })
             } catch (error) {
-                this.snackbar_error = true
+                this.triggerError({
+                    text: 'Une erreur est survenue'
+                })
             }
         },
         async reset() {
