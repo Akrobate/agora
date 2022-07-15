@@ -257,10 +257,15 @@ class CampaignService {
         }
 
         const campaign_list = await this.campaign_repository
-            .search({
-                ...input,
-                id_list: campain_user_list.map((campaign_user) => campaign_user.campaign_id),
-            });
+            .search(
+                {
+                    ...input,
+                    id_list: campain_user_list.map((campaign_user) => campaign_user.campaign_id),
+                },
+                {
+                    sort_list: input.sort_list,
+                }
+            );
 
 
         return campaign_list.map((campaign) => {

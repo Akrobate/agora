@@ -193,6 +193,14 @@ class CampaignController extends AbstractController {
                                     .required()
                             )
                             .optional(),
+                        sort_list: joi
+                            .array()
+                            .items(
+                                joi
+                                    .string()
+                                    .required()
+                            )
+                            .optional(),
                     })
                     .required(),
             })
