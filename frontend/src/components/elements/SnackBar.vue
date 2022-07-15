@@ -44,7 +44,6 @@ export default {
                 return this._active
             },
             set(value) {
-                console.log('from setter this active', this.active)
                 return this.set_active(value)
             }
         }
@@ -54,10 +53,5 @@ export default {
             set_active: 'snack_bar_store/set_active',
         })
     },
-    watch: {
-        active() {
-            console.log('active changed: ', this.active)
-        }
-    }
 }
 </script>

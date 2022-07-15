@@ -25,64 +25,76 @@ const getters = {
 }
 
 const actions = {
-    triggerError({ commit }, data) {
+    
+    processDefaultsParams(_, input) {
+        let default_params = {
+            timeout: DEFAULT_TIMEOUT,
+            has_close_button: false,
+            color: DEFAULT_INFO_COLOR,
+            text: '',
+        }
+        
+        if (input.constructor == Object) {
+            return {
+                ...default_params,
+                ...input,
+            }
+        }
+        return {
+            ...default_params,
+            text: input,
+        }
+    },
+
+    trigger({ commit }, data) {
+
         const {
-            text,
             timeout,
             has_close_button,
+            color,
+            text,
         } = data
+
+        commit('set_timeout', 0)
         commit('set_active', false)
-        
+
         commit('set_text', text)
-        commit('set_timeout', timeout ? timeout : DEFAULT_TIMEOUT)
-        commit('set_has_close_button', has_close_button ? true : false)
-        commit('set_color', DEFAULT_ERROR_COLOR)
+        commit('set_timeout', timeout)
+        commit('set_has_close_button', has_close_button)
+        commit('set_color', color)
         commit('set_active', true)
     },
 
-    triggerInfo({ commit }, data) {
-        const {
-            text,
-            timeout,
-            has_close_button,
-        } = data
-        commit('set_active', false)
-        
-        commit('set_text', text)
-        commit('set_timeout', timeout ? timeout : DEFAULT_TIMEOUT)
-        commit('set_has_close_button', has_close_button ? true : false)
-        commit('set_color', DEFAULT_INFO_COLOR)
-        commit('set_active', true)
+    async triggerSuccess({ dispatch }, data) {
+        const params = await dispatch('processDefaultsParams', data)
+        dispatch('trigger', {
+            ...params,
+            color: DEFAULT_SUCCESS_COLOR,
+        })
     },
 
-    triggerSuccess({ commit }, data) {
-        const {
-            text,
-            timeout,
-            has_close_button,
-        } = data
-        commit('set_active', false)
-        
-        commit('set_text', text)
-        commit('set_timeout', timeout ? timeout : DEFAULT_TIMEOUT)
-        commit('set_has_close_button', has_close_button ? true : false)
-        commit('set_color', DEFAULT_SUCCESS_COLOR)
-        commit('set_active', true)
+    async triggerError({ dispatch }, data) {
+        const params = await dispatch('processDefaultsParams', data)
+        dispatch('trigger', {
+            ...params,
+            color: DEFAULT_ERROR_COLOR,
+        })
     },
 
-    triggerWarning({ commit }, data) {
-        const {
-            text,
-            timeout,
-            has_close_button,
-        } = data
-        commit('set_active', false)
-        
-        commit('set_text', text)
-        commit('set_timeout', timeout ? timeout : DEFAULT_TIMEOUT)
-        commit('set_has_close_button', has_close_button ? true : false)
-        commit('set_color', DEFAULT_WARN_COLOR)
-        commit('set_active', true)
+    async triggerInfo({ dispatch }, data) {
+        const params = await dispatch('processDefaultsParams', data)
+        dispatch('trigger', {
+            ...params,
+            color: DEFAULT_INFO_COLOR,
+        })
+    },
+
+    async triggerWarning({ dispatch }, data) {
+        const params = await dispatch('processDefaultsParams', data)
+        dispatch('trigger', {
+            ...params,
+            color: DEFAULT_WARN_COLOR,
+        })
     },
 }
 
