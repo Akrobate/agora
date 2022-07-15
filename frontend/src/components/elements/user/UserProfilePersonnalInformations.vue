@@ -1,7 +1,7 @@
 <template>
     <v-card class="mt-6">
         <v-card-title>
-            Informations personnelles
+            {{ $t('personnal_information') }}
         </v-card-title>
         <v-card-text>
             <v-form v-model="valid">
@@ -14,7 +14,7 @@
                             <v-text-field
                                 v-model="first_name"
                                 :counter="25"
-                                label="Prénom"
+                                :label="$t('first_name')"
                                 required
                             />
                         </v-col>
@@ -26,7 +26,7 @@
                             <v-text-field
                                 v-model="last_name"
                                 :counter="25"
-                                label="Nom"
+                                :label="$t('last_name')"
                                 required
                             />
                         </v-col>
@@ -41,36 +41,16 @@
                 text
                 @click="reset"
             >
-                Annuler
+                {{ $t('cancel') }}
             </v-btn>
             <v-btn
                 color="blue darken-1"
                 text
                 @click="save"
             >
-                Sauvegarder
+                {{ $t('save') }}
             </v-btn>
         </v-card-actions>
-
-        <!--
-        <v-snackbar
-            :timeout="3000"
-            :top="true"
-            color="success"
-            v-model="snackbar"
-        >
-            Mise a jour du profil réussie
-        </v-snackbar>
-        
-        <v-snackbar
-            :timeout="3000"
-            :top="true"
-            color="error"
-            v-model="snackbar_error"
-        >
-            Une erreur est survenue
-        </v-snackbar>
--->
     </v-card>
 </template>
 
@@ -84,8 +64,6 @@ export default {
             last_name: null,
             first_name: null,
             valid: true,
-            snackbar: false, 
-            snackbar_error: false, 
         }
     },
     computed: {
@@ -101,23 +79,18 @@ export default {
             getUser: 'user_store/getUser',
             updateUser: 'user_store/updateUser',
             triggerError: 'snack_bar_store/triggerError',
-            triggerSuccess: 'snack_bar_store/triggerSuccess'
+            triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         async save() {
             try {
                 await this.updateUser({
                     id: this.token_data.user_id,
                     first_name: this.first_name,
-                    last_name: this.last_name
+                    last_name: this.last_name,
                 })
-                this.snackbar = true
-                this.triggerSuccess({
-                    text: 'Mise a jour du profil réussie'
-                })
+                this.triggerSuccess(this.$t('information_updated_success'))
             } catch (error) {
-                this.triggerError({
-                    text: 'Une erreur est survenue'
-                })
+                this.triggerError(this.$t('information_updated_fail'))
             }
         },
         async reset() {
@@ -132,3 +105,16 @@ export default {
 }
 
 </script>
+
+
+<i18n locale="fr">
+{
+    "personnal_information": "Informations personnelles",
+    "cancel": "Annuler",
+    "save": "Savegarder",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "information_updated_success": "Mise a jour du profil réussie",
+    "information_updated_fail": "Une erreur est survenue"
+}
+</i18n>

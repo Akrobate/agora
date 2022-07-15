@@ -5,7 +5,7 @@
 
         <user-profile-personnal-informations />
 
-        <user-profile-update-password v-if = "false" />
+        <user-profile-update-password v-if = "true" />
 
     </v-container>
 </template>

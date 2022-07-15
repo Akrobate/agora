@@ -232,7 +232,7 @@ class UserService {
         });
 
         if (UserService.hashPassword(old_password) !== stored_user.password) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'Bad password');
+            throw new CustomError(CustomError.ACCESS_FORBIDDEN, 'Bad old password');
         }
 
         const user_updated = await this.user_repository.update({

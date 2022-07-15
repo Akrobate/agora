@@ -1,10 +1,10 @@
 <template>
     <v-card class="mt-6">
         <v-card-title>
-            Mise à jour du mot de passe
+            {{ $t('update_password_card_title') }}
         </v-card-title>
         <v-card-text>
-            <v-form v-model="valid">
+            <v-form v-model="valid" ref="form">
                 <v-container>
                     <v-row>
                         <v-col
@@ -14,12 +14,9 @@
                             <v-text-field
                                 v-model="old_password"
                                 :append-icon="old_password_show ? 'mdi-eye' : 'mdi-eye-off'"
-                                :rules="[rules.required, rules.min]"
+                                :rules="[rules.required, rules.password]"
                                 :type="old_password_show ? 'text' : 'password'"
-                                name="input-10-1"
-                                label="Mot de passe actuel"
-                                hint="At least 8 characters"
-                                counter
+                                :label="$t('field_label_old_password')"
                                 @click:append="old_password_show = !old_password_show"
                             ></v-text-field>
                         </v-col>
@@ -31,11 +28,9 @@
                             <v-text-field
                                 v-model="new_password"
                                 :append-icon="new_password_show ? 'mdi-eye' : 'mdi-eye-off'"
-                                :rules="[rules.required, rules.min]"
+                                :rules="[rules.required, rules.password]"
                                 :type="new_password_show ? 'text' : 'password'"
-                                name="input-10-1"
-                                label="Nouveau mot de passe"
-                                hint="At least 8 characters"
+                                :label="$t('field_label_new_password')"
                                 counter
                                 @click:append="new_password_show = !new_password_show"
                             ></v-text-field>
@@ -43,12 +38,9 @@
                             <v-text-field
                                 v-model="new_password_confirmation"
                                 :append-icon="new_password_confirmation_show ? 'mdi-eye' : 'mdi-eye-off'"
-                                :rules="[rules.required, rules.min]"
+                                :rules="[rules.required, rules.confirmationMatch]"
                                 :type="new_password_confirmation_show ? 'text' : 'password'"
-                                name="input-10-1"
-                                label="Confirmez le nouveau mot de passe"
-                                hint="At least 8 characters"
-                                counter
+                                :label="$t('field_label_new_password_confirmation')"
                                 @click:append="new_password_confirmation_show = !new_password_confirmation_show"
                             ></v-text-field>
                         </v-col>
@@ -63,28 +55,9 @@
                 text
                 @click="save"
             >
-                Mettre a jour le mot de passe
+                {{ $t('update_password') }}
             </v-btn>
         </v-card-actions>
-
-        
-        <v-snackbar
-            :timeout="3000"
-            :top="true"
-            color="success"
-            v-model="snackbar"
-        >
-            Mot de passe mis a jour
-        </v-snackbar>
-        
-        <v-snackbar
-            :timeout="3000"
-            :top="true"
-            color="error"
-            v-model="snackbar_error"
-        >
-            Une erreur est survenue
-        </v-snackbar>
 
     </v-card>
 </template>
@@ -96,20 +69,17 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            old_password: null,
-            new_password: null,
-            new_passord_confirmation: null,
+            old_password: '',
+            new_password: '',
+            new_password_confirmation: '',
             valid: true,
-            snackbar: false, 
-            snackbar_error: false,
-
             old_password_show: false,
             new_password_show: false,
             new_password_confirmation_show: false,
             rules: {
-                required: (value) => !!value || 'Required.',
-                min: (v) => v.length >= 8 || 'Min 8 characters',
-                emailMatch: () => (`The email and password you entered don't match`),
+                required: (value) => !!value || this.$t('validation_rule_required'),
+                password: (value) => RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/).test(value) || this.$t('validation_rule_password'),
+                confirmationMatch: (value) => (value === this.new_password) || this.$t('validation_rule_confirmation_match'),
             },
         }
     },
@@ -124,28 +94,51 @@ export default {
     methods: {
         ...mapActions({
             updateUserPassword: 'user_store/updateUserPassword',
+            triggerError: 'snack_bar_store/triggerError',
+            triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         async save() {
+            if (!this.$refs.form.validate()) {
+                return
+            }
             try {
                 await this.updateUserPassword({
                     id: this.token_data.user_id,
-                    old_password: this.first_name,
-                    new_password: this.last_name
+                    old_password: this.old_password,
+                    new_password: this.new_password
                 })
-                this.snackbar = true
+                this.triggerSuccess(this.$t('password_update_success'))
             } catch (error) {
-                this.snackbar_error = true
+                if (error.response.status == 403) {
+                    this.triggerError(this.$t('password_update_fail_bad_password'))
+                } else {
+                    this.triggerError(this.$t('password_update_fail'))
+                }
             }
             this.init()
         },
 
         init() {
-            this.old_password = ''
-            this.new_password = ''
-            this.new_password_confirmation = ''
+            this.$refs.form.reset()
             this.valid = true
         },
     },
 }
 
 </script>
+
+<i18n locale="fr">
+{
+    "update_password_card_title": "Mise à jour du mot de passe",
+    "update_password": "Mettre à jour le mot de passe",
+    "validation_rule_required": "Ce champ est obligatoire",
+    "validation_rule_password": "Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules",
+    "validation_rule_confirmation_match": "Confirmation est différente du mot de passe",
+    "password_update_success": "Mot de passe mis a jour",
+    "password_update_fail": "Une erreur est survenue",
+    "password_update_fail_bad_password": "Votre mot de passe actuel est incorrect",
+    "field_label_new_password": "Nouveau mot de passe",
+    "field_label_new_password_confirmation": "Confirmez le nouveau mot de passe",
+    "field_label_old_password": "Mot de passe actuel"
+}
+</i18n>
