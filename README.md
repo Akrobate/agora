@@ -70,10 +70,14 @@ npm run generate-html-doc
 
 ### TODO
 
+## Feature
+
+* *15/07/22* Implement contact list (with tag mecanic)
+* *15/07/22* Implement interface to transform guest account to real account
+
 ## Frontend
 
 * *27/05/22* Create login element to include in LoginPage
-* *28/05/22* Add update password on UserProfilePage frontend
 * *17/06/22* Implementer le nombre de jours restants avant finalisation campagne
 * *08/07/22* Mot de passe oublié frontend
 * *13/07/22* Tableau de bord, propositions de campagnes a participer ne doit pas montrer les terminées
@@ -82,3 +86,7 @@ npm run generate-html-doc
 ## Backend
 
 * *07/07/22* Update documentation for user password update
+
+## Latent tasks
+
+* *15/07/22* Process language translations refactor
