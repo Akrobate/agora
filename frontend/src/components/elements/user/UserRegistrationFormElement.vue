@@ -5,7 +5,6 @@
             v-model="valid"
             lazy-validation
         >
-
             <v-row>
                 <v-col cols="6">
                     <v-text-field
@@ -18,7 +17,7 @@
                 </v-col>
                 <v-col cols="6">
                     <v-text-field
-                        label="Nom"
+                        :label="$t('first_name')"
                         name="last_name"
                         v-model="last_name"
                         type="text"
@@ -27,7 +26,7 @@
             </v-row>
 
             <v-text-field
-                label="Email"
+                :label="$t('email')"
                 name="email"
                 v-model="email"
                 prepend-icon="mdi-email"
@@ -38,7 +37,7 @@
 
             <v-text-field
                 id="password"
-                label="Mot de passe"
+                :label="$t('password')"
                 name="password"
                 v-model="password"
                 prepend-icon="mdi-key"
@@ -48,7 +47,7 @@
 
             <v-text-field
                 id="password"
-                label="Confirmation de mot de passe"
+                :label="$t('password_confirmation')"
                 name="password_confirm"
                 v-model="password_confirm"
                 prepend-icon="mdi-key"
@@ -71,6 +70,8 @@
                 Fermer
             </v-btn>
         </v-snackbar>
+
+
     </div>
 </template>
 
@@ -83,7 +84,7 @@
  * 
  * props:
  * - email
- * -
+ *
  */
 import { mapActions } from 'vuex'
 
@@ -172,15 +173,13 @@ export default {
 </script>
 
 
-
-<i18n>
+<i18n locale="fr">
 {
-    "fr": {
-        "close": "Fermer",
-        "first_name": "Prénom"
-    },
-    "en": {
-        "close": "Blabla"
-    }
+    "close": "Fermer",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email": "Email",
+    "password": "Mot de passe",
+    "password_confirmation": "Confirmation de mot de passe"
 }
 </i18n>
