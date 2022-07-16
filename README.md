@@ -86,6 +86,7 @@ npm run generate-html-doc
 ## Backend
 
 * *07/07/22* Update documentation for user password update
+* *15/07/22* Should not be able to remove own management user
 
 ## Latent tasks
 

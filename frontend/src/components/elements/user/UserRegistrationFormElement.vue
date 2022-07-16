@@ -86,6 +86,10 @@
  * - email
  *
  */
+
+// @todo: Finish translation porting
+// @todo: refactor rules declaration (example UserProfileUpdatePassword component)
+
 import { mapActions } from 'vuex'
 
 export default {

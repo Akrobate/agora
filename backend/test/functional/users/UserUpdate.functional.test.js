@@ -125,7 +125,7 @@ describe('User should be able to update it self', () => {
                     old_password: 'BAD_PASSWORD',
                     new_password: 'CoucouNouveauPass8',
                 })
-                .expect(HTTP_CODE.UNAUTHORIZED);
+                .expect(HTTP_CODE.FORBIDDEN);
         });
     });
 

@@ -60,7 +60,7 @@
                 </v-radio-group>
 
 
-                <!-- LIST ---->
+                <!-- LIST -->
                 <v-simple-table>
                     <thead>
                         <tr>
