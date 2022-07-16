@@ -12,6 +12,17 @@ const getters = {}
 
 const actions = {
 
+    async getCampaignUserStatus(_, criteria) {
+        const {
+            campaign_id,
+            status_id,
+        } = criteria
+        const {
+            campaign_user_status_list,
+        } = await campaign_user_status_repository.getStatus(campaign_id, status_id)
+        return campaign_user_status_list
+    },
+
     async setCampaignUserStatusInvited(_, { campaign_id }) {
         await campaign_user_status_repository.upsertStatus(campaign_id, CAMPAIGN_USER_STATUS.INVITED)
     },
@@ -25,12 +36,12 @@ const actions = {
     },
 
     async checkAndsetCampaignUserStatusStarted({ dispatch }, { campaign_id }) {
-        const {
-            campaign_user_status_list,
-        } = await campaign_user_status_repository.getStatus(campaign_id, CAMPAIGN_USER_STATUS.STARTED)
-
+        const campaign_user_status_list = await dispatch('getCampaignUserStatus', {
+            campaign_id,
+            status_id: CAMPAIGN_USER_STATUS.STARTED
+        })
         if (campaign_user_status_list.length === 0) {
-            await dispatch('setCampaignUserStatusStarted', {campaign_id})
+            await dispatch('setCampaignUserStatusStarted', { campaign_id })
         }
     },
 }

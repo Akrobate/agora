@@ -24,15 +24,18 @@ const getters = {
 }
 
 const actions = {
-
-    async loadCampaigns({ commit }, { criteria = {}, list_to_update = 'draft' } = {}) {
+    async searchCampaign(_, criteria) {
         const {
             campaign_list,
         } = await campaign_repository.search(criteria)
+        return campaign_list
+    },
+    async loadCampaigns({ commit, dispatch }, { criteria = {}, list_to_update = 'draft' } = {}) {
+        const campaign_list = await dispatch('searchCampaign', criteria)
         commit(`set_campaign_${list_to_update}_list`, campaign_list)
         return campaign_list
     },
-    async getCampaign(_, { campaign_id }) {
+    getCampaign(_, { campaign_id }) {
         return campaign_repository.read(campaign_id)
     },
     createCampaign(_, data) {
