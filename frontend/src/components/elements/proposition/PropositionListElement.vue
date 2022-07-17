@@ -1,81 +1,99 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="propositionList"
-    hide-default-footer
-    class="elevation-1"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title>Propositions</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="primary"
-          dark
-          class="mb-2"
-          @click="createProposition"
-        >
-            Créer proposition
-        </v-btn>
-        <v-dialog v-model="dialog" max-width="500px">
-            <proposition-create-edit-element
-                :campaign_id="campaign_id"
-                :proposition_id="editing_proposition_id"
-                @reset="close"
-                @saved="saved"
-            />
-        </v-dialog>
+    <v-data-table
+        :headers="headers"
+        :items="propositionList"
+        hide-default-footer
+        :hide-default-header="propositionList.length === 0"
+        class="elevation-1"
+    >
+        <template v-slot:top>
+            <v-toolbar flat>
+                <v-toolbar-title>
+                    {{ $t('proposition_title') }}
+                </v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="primary"
+                    dark
+                    class="mb-2"
+                    @click="createProposition"
+                    v-if="propositionList.length > 0"
+                >
+                    {{ $t('create_proposition_button') }}
+                </v-btn>
+                <v-dialog v-model="dialog" max-width="500px">
+                    <proposition-create-edit-element
+                        :campaign_id="campaign_id"
+                        :proposition_id="editing_proposition_id"
+                        @reset="close"
+                        @saved="saved"
+                    />
+                </v-dialog>
 
-        <v-dialog v-model="dialogDelete" max-width="600px">
-          <v-card>
-            <v-card-title class="headline">Confirmer la suppression ?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteConfirm">OK</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+                <v-dialog v-model="dialogDelete" max-width="600px">
+                    <v-card>
+                        <v-card-title class="headline">
+                            {{ $t('delete_modal_title') }}
+                        </v-card-title>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="closeDelete">
+                                {{ $t('cancel') }}
+                            </v-btn>
+                            <v-btn color="blue darken-1" text @click="deleteConfirm">
+                                {{ $t('ok') }}
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-toolbar>
+        </template>
 
-      </v-toolbar>
-    </template>
-
-    <template v-slot:[`item.payload`]="{ item }">
-        <preview-element 
+        <template v-slot:[`item.payload`]="{ item }">
+            <preview-element 
             :proposition_type="campaign.proposition_type"
             :payload="item.payload"
-        />
-    </template>
+            />
+        </template>
 
-    <template v-slot:[`item.actions`]="{ item }">
-        <!-- @todo router link to update -->
-        <!--
-        <router-link 
-            tag="span"
-            style="cursor: pointer"
-            :to="{ name: 'field-setup', params: { module_technical_name: item.technical_name } }"
-        >
-            <v-icon class="mr-2" small>mdi-format-list-bulleted-square</v-icon>
-        </router-link>
-        -->
-        <v-icon small class="mr-2" @click="editItem(item)" v-if="isEditableProposition">
-            mdi-pencil
-        </v-icon>
-        <v-icon small @click="deleteItem(item)">
-            mdi-delete
-        </v-icon>
-    </template>
+        <template v-slot:[`item.actions`]="{ item }">
+            <v-tooltip top v-if="isEditableProposition">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-icon class="mr-2" @click="editItem(item)" v-bind="attrs" v-on="on">
+                        mdi-pencil
+                    </v-icon>
+                </template>
+                <span>
+                    {{ $t('tooltip_edit') }}
+                </span>
+            </v-tooltip>
+            <v-tooltip top v-if="isEditableProposition">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-icon class="mr-2" @click="deleteItem(item)" v-bind="attrs" v-on="on" color="red">
+                        mdi-delete
+                    </v-icon>
+                </template>
+                <span>
+                    {{ $t('tooltip_remove') }}
+                </span>
+            </v-tooltip>
+        </template>
 
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
-  </v-data-table>
+        <template v-slot:no-data>
+            <p class="text-h6">
+                {{ $t('no_proposition_help_text') }}
+            </p>
+            <v-btn
+                color="primary"
+                dark
+                class="mb-2"
+                @click="createProposition"
+            >
+                {{ $t('create_proposition_button') }}
+            </v-btn>
+        </template>
+    </v-data-table>
 
 </template>
 
@@ -96,33 +114,32 @@ export default {
     props: [
         'campaign_id',
     ],
-    data: () => ({
-        dialog: false,
-        dialogDelete: false,
-        headers: [
-            {
-                text: 'Proposition',
-                align: 'start',
-                value: 'payload',
-                sortable: false,
-            },
-            {
-                text: 'Actions',
-                value: 'actions',
-                align: 'end',
-                sortable: false,
-            },
-        ],
-        editing_proposition_id: null,
-        campaign: {},
-    }),
+    data() {
+        return {
+            dialog: false,
+            dialogDelete: false,
+            headers: [
+                {
+                    text: this.$t('table_header_proposition_label'),
+                    align: 'start',
+                    value: 'payload',
+                    sortable: false,
+                },
+                {
+                    text: this.$t('table_header_action_label'),
+                    value: 'actions',
+                    align: 'end',
+                    sortable: false,
+                },
+            ],
+            editing_proposition_id: null,
+            campaign: {},
+        }
+    },
     computed: {
         ...mapGetters({
             propositionList: 'campaign_store/propositionList',
         }),
-        formTitle () {
-            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-        },
         isEditableProposition() {
             return this.campaign.campaign_status != CAMPAIGN_STATUS.IN_PROGRESS
         }
@@ -193,3 +210,18 @@ export default {
     },
   }
 </script>
+
+<i18n locale="fr">
+{
+    "no_proposition_help_text": "Créez des propositions pour le sondage. Au moins deux propositions sont obligatiores. Vous avez la possibilité de les modifier ultérieurement.",
+    "table_header_action_label": "Actions",
+    "table_header_proposition_label": "Propositions",
+    "proposition_title": "Propositions",
+    "create_proposition_button": "Créer proposition",
+    "delete_modal_title": "Confirmer la suppression ?",
+    "cancel": "Annuler",
+    "ok": "Ok",
+    "tooltip_edit": "Modifier la proposition",
+    "tooltip_remove": "Supprimer la proposition"
+}
+</i18n>
