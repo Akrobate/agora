@@ -1,6 +1,6 @@
 <template>
     <div v-if="visible">
-        <h1 class="text-h5 mt-8">Les campagnes récentes que vous géréz</h1>
+        <h1 class="text-h5 mt-8">{{ $t('managed_campaigns_title') }}</h1>
         <v-row class="my-4">
             <v-col
                 v-for="campaign in campaign_list.slice(0, max_cards_count)"
@@ -9,12 +9,53 @@
                 <v-card>
                     <v-card-title>
                         {{ campaign.title }}
+                        <v-spacer />
+                        <v-menu
+                            bottom
+                            left
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    icon
+                                    v-bind="attrs"
+                                    v-on="on"
+                                >
+                                    <v-icon>mdi-dots-vertical</v-icon>
+                                </v-btn>
+                            </template>
+
+                            <v-list dense>
+                                <v-list-item
+                                    link
+                                    :to="{ name: 'campaign-result', params: { campaign_id: campaign.id } }"
+                                >
+                                    <v-list-item-icon class="mr-4">
+                                        <v-icon>mdi-format-list-bulleted-square</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title>{{ $t('more_button') }}</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item
+                                    link
+                                    :to="{ name: 'campaign-edit', params: { id: campaign.id } }"
+                                >
+                                    <v-list-item-icon class="mr-4">
+                                        <v-icon>mdi-pencil</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-content>
+                                        <v-list-item-title>{{ $t('edit_button') }}</v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
                     </v-card-title>
                     <v-card-subtitle v-if="campaign.campaign_status === CAMPAIGN_STATUS.FINISHED">
-                        Terminée {{ campaign.end_date | humanizeDate }}
+                        {{ $t('finished') }} {{ campaign.end_date | humanizeDate }}
                     </v-card-subtitle>
                     <v-card-subtitle v-else >
-                        En cours (il reste {{ campaign.end_date | humanizeFutureDuration }})
+                        {{ $t('in_progress') }} ({{ $t('remaining') }} {{ campaign.end_date | humanizeFutureDuration }})
                     </v-card-subtitle>
                     <v-card-text>
                         <v-row align="center">
@@ -42,24 +83,6 @@
                             </v-col>
                         </v-row>
                     </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn 
-                            text
-                            :to="{ name: 'campaign-edit', params: { id: campaign.id } }"
-                        >
-                            <v-icon class="mr-2">mdi-pencil</v-icon>
-                            Editer
-                        </v-btn>
-                        <v-btn 
-                            text
-                            :to="{ name: 'campaign-result', params: { campaign_id: campaign.id } }"
-                        >
-                            <v-icon class="mr-2">mdi-format-list-bulleted-square</v-icon>
-                            {{ $t('more_button') }}
-                        </v-btn>
-                    </v-card-actions>
                 </v-card>
             </v-col>
         </v-row>
@@ -120,6 +143,11 @@ export default {
 
 <i18n locale="fr">
 {
-    "more_button": "Résultats détaillés"
+    "managed_campaigns_title": "Les campagnes récentes que vous gérez",
+    "more_button": "Résultats détaillés",
+    "edit_button": "Modifier",
+    "finished": "Terminée",
+    "in_progress": "En cours",
+    "remaining": "il reste"
 }
 </i18n>
