@@ -78,10 +78,9 @@ npm run generate-html-doc
 ## Frontend
 
 * *27/05/22* Create login element to include in LoginPage
-* *17/06/22* Implementer le nombre de jours restants avant finalisation campagne
 * *08/07/22* Mot de passe oublié frontend
-* *13/07/22* Tableau de bord, propositions de campagnes a participer ne doit pas montrer les terminées
 * *13/07/22* Ajouter les résultats des campagnes terminés sur le tableau de bord
+* *16/07/22* Gravatar icons
 
 ## Backend
 

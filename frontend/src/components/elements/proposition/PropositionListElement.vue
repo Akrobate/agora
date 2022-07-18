@@ -60,19 +60,26 @@
         <template v-slot:[`item.actions`]="{ item }">
             <v-tooltip top v-if="isEditableProposition">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-icon class="mr-2" @click="editItem(item)" v-bind="attrs" v-on="on">
-                        mdi-pencil
-                    </v-icon>
+                    <v-btn
+                        icon
+                        @click="editItem(item)" v-bind="attrs" v-on="on"
+                    >
+                        <v-icon>mdi-pencil</v-icon>
+                    </v-btn>
                 </template>
                 <span>
                     {{ $t('tooltip_edit') }}
                 </span>
             </v-tooltip>
-            <v-tooltip top v-if="isEditableProposition">
+            <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-icon class="mr-2" @click="deleteItem(item)" v-bind="attrs" v-on="on" color="red">
-                        mdi-delete
-                    </v-icon>
+                    <v-btn
+                        icon
+                        color="red"
+                        @click="deleteItem(item)" v-bind="attrs" v-on="on"
+                    >
+                        <v-icon>mdi-delete</v-icon>
+                    </v-btn>
                 </template>
                 <span>
                     {{ $t('tooltip_remove') }}

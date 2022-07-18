@@ -13,16 +13,6 @@
                     v-model="valid"
                     lazy-validation
                 >
-                <!--
-                    <v-text-field
-                        v-model="payload"
-                        :counter="255"
-                        :rules="payload_rules"
-                        label="Contenu de la proposition"
-                        required
-                    ></v-text-field>
-                -->
-
                     <edition-element :proposition_type="campaign.proposition_type" v-model="payload" />
 
                 </v-form>
