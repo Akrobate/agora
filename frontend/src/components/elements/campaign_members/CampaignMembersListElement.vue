@@ -1,159 +1,170 @@
 <template>
-<v-data-table
-    :headers="headers"
-    :items="campaignUserList"
-    hide-default-footer
-    class="elevation-1"
->
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title>Membres de la campagne</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn
-          color="primary"
-          dark
-          class="mb-2"
-          @click="createProposition"
-        >
-            Ajouter un membre
-        </v-btn>
+    <v-data-table
+        :headers="headers"
+        :items="campaignUserList"
+        hide-default-footer
+        class="elevation-1"
+    >
+        <template v-slot:top>
+            <v-toolbar flat>
+                <v-toolbar-title>
+                    {{ $t('members_title') }}
+                </v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="primary"
+                    dark
+                    class="mb-2"
+                    @click="createProposition"
+                >
+                    {{ $t('add_member_button') }}
+                </v-btn>
 
-        <v-dialog v-model="dialog" max-width="500px">
-            <campaign-members-create-edit-element
-                v-if="dialog"
-                :campaign_id="campaign_id"
-                :campaign_user_id="editing_campaign_user_id"
-                @reset="close"
-                @saved="saved"
-            />
-        </v-dialog>
+                <v-dialog v-model="dialog" max-width="500px">
+                    <campaign-members-create-edit-element
+                        v-if="dialog"
+                        :campaign_id="campaign_id"
+                        :campaign_user_id="editing_campaign_user_id"
+                        @reset="close"
+                        @saved="saved"
+                    />
+                </v-dialog>
 
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="headline">
-                Supprimer membre?
-            </v-card-title>
+                <v-dialog v-model="dialogDelete" max-width="500px">
+                    <v-card>
+                        <v-card-title class="headline">
+                            Supprimer membre?
+                        </v-card-title>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Annuler</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">Oui</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
-
-        <v-dialog v-model="dialogInvite" max-width="500px">
-          <v-card>
-            <v-card-title class="headline">
-                Inviter le membre
-            </v-card-title>
-
-            <v-card-text>
-                Etes vous sur de vouloir inviter ce membre maintenant?
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeInvite">Annuler</v-btn>
-              <v-btn color="blue darken-1" text @click="InviteConfirm">Oui</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="closeDelete">Annuler</v-btn>
+                        <v-btn color="blue darken-1" text @click="deleteItemConfirm">Oui</v-btn>
+                        <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
 
 
-      </v-toolbar>
-    </template>
+                <v-dialog v-model="dialogInvite" max-width="500px">
+                    <v-card>
+                        <v-card-title class="headline">
+                            Inviter le membre
+                        </v-card-title>
 
-    <template v-slot:[`item.actions`]="{ item }">
+                        <v-card-text>
+                            Etes vous sur de vouloir inviter ce membre maintenant?
+                        </v-card-text>
 
-        <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon class="mr-2" @click="invite(item)" v-bind="attrs" v-on="on">
-                mdi-email-send-outline
-            </v-icon>
-          </template>
-          <span>Envoyer une invitation par mail</span>
-        </v-tooltip>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="closeInvite">
+                                Annuler
+                            </v-btn>
+                            <v-btn color="blue darken-1" text @click="InviteConfirm">
+                                Oui
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-toolbar>
+        </template>
 
-        <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon class="mr-2" @click="editItem(item)" v-bind="attrs" v-on="on">
-                mdi-pencil
-            </v-icon>
-          </template>
-          <span>Modifier le membre</span>
-        </v-tooltip>
-        
+        <template v-slot:[`item.actions`]="{ item }">
 
-        <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon class="mr-2" @click="deleteItem(item)" v-bind="attrs" v-on="on" color="red">
-                mdi-delete
-            </v-icon>
-          </template>
-          <span>Supprimer le membre de la campagne</span>
-        </v-tooltip>
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        @click="invite(item)" v-bind="attrs" v-on="on"
+                    >
+                        <v-icon>mdi-email-send-outline</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    Envoyer une invitation par mail
+                </span>
+            </v-tooltip>
 
-    </template>
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        @click="editItem(item)" v-bind="attrs" v-on="on"
+                    >
+                        <v-icon>mdi-pencil</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    Modifier le membre
+                </span>
+            </v-tooltip>
+            
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        color="red"
+                        @click="deleteItem(item)" v-bind="attrs" v-on="on"
+                    >
+                        <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    Supprimer le membre de la campagne
+                </span>
+            </v-tooltip>
+
+        </template>
 
 
-    <template v-slot:[`item.invitation`]="{ item }">
-        <div :set="sub = item.user_status_list.find((status) => status.status_id === 1)">
-            <div v-if="sub !== undefined">
-                Invité {{ sub.date | humanizeDate }}
+        <template v-slot:[`item.invitation`]="{ item }">
+            <div :set="sub = item.user_status_list.find((status) => status.status_id === 1)">
+                <div v-if="sub !== undefined">
+                    Invité {{ sub.date | humanizeDate }}
+                </div>
             </div>
-        </div>
-    </template>
+        </template>
 
 
-    <template v-slot:[`item.access_level`]="{ item }">
-        <v-chip
-            v-if="item.access_level === 2"
-            class="ma-2"
-            color="blue darken-1"
-            outlined
-            small
-        >
-            Observateur
-        </v-chip>
+        <template v-slot:[`item.access_level`]="{ item }">
+            <v-chip
+                v-if="item.access_level === 2"
+                class="ma-2"
+                color="blue darken-1"
+                outlined
+                small
+            >
+                Observateur
+            </v-chip>
 
-        <v-chip
-            v-if="item.access_level === 3"
-            class="ma-2"
-            color="red"
-            text-color="white"
-            small
-        >
-            Manager
-        </v-chip>
-    </template>
+            <v-chip
+                v-if="item.access_level === 3"
+                class="ma-2"
+                color="red"
+                text-color="white"
+                small
+            >
+                Manager
+            </v-chip>
+        </template>
 
-    <template v-slot:[`item.is_participant`]="{ item }">
-        <v-chip
-            v-if="item.is_participant === true"
-            class="ma-2"
-            color="blue"
-            outlined
-            small
-        >
-            Participant
-        </v-chip>
-    </template>
+        <template v-slot:[`item.is_participant`]="{ item }">
+            <v-chip
+                v-if="item.is_participant === true"
+                class="ma-2"
+                color="blue"
+                outlined
+                small
+            >
+                Participant
+            </v-chip>
+        </template>
 
-    <template v-slot:no-data>
-        <v-btn
-            color="primary"
-            @click="initialize"
-        >
-            Actualiser
-        </v-btn>
-    </template>
-</v-data-table>
-
+    </v-data-table>
 </template>
+
 
 <script>
 
@@ -285,3 +296,10 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
     },
   }
 </script>
+
+<i18n locale="fr">
+{
+    "members_title": "Membres de la campagne",
+    "add_member_button": "Ajouter un membre"
+}
+</i18n>
