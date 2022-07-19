@@ -2,105 +2,172 @@
     <v-card>
 
         <v-card-title>
-            <span class="headline">Lancement de la campagne</span>
+            <span class="headline" v-if="is_in_progress_campaign">
+                {{ $t('started_campaign_title') }}
+            </span>
+            <span class="headline" v-if="is_draft_campaign">
+                {{ $t('start_campaign_title') }}
+            </span>
         </v-card-title>
         <v-card-text>
 
-            <v-form
-                ref="form"
-                v-model="valid"
-                lazy-validation
-            >  
-                <v-select
-                    v-model="duration"
-                    :items="duration_list"
-                    item-text="label"
-                    item-value="duration_days"
-                    label="Durée de la campagne"
-                    :rules="duration_rules"
-                ></v-select>
-            </v-form>
-            <v-container>
-                <v-btn
-                color="primary"
-                dark
-                class="mb-2"
-                @click="launchCampaign"
+            <v-container v-if="is_in_progress_campaign">
+                <p>
+                    {{ $t('campaign_started_at') }} {{ campaign.start_date | humanizeDate}}
+                    {{ $t('and_ends_in') }} {{ campaign.end_date | humanizeFutureDuration }}
+                </p>
+            </v-container>
+
+            <v-container v-if="is_draft_campaign">
+                <v-form
+                    ref="form"
+                    v-model="valid"
+                    lazy-validation
                 >
-                    Lancer la campagne
+                    <v-select
+                        v-model="duration"
+                        :items="duration_list"
+                        item-text="label"
+                        item-value="duration_days"
+                        :label="$t('duration_label')"
+                        :rules="duration_rules"
+                    ></v-select>
+                </v-form>
+
+                <v-btn
+                    color="primary"
+                    @click="launchCampaign"
+                >
+                    {{ $t('start_campaign_button') }}
                 </v-btn>
                 <v-dialog v-model="dialogLaunch" max-width="500px">
-                <v-card>
-                    <v-card-title class="headline">Voulez vous lancer la campagne?</v-card-title>
-                    <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closeLaunchCampaign">Annuler</v-btn>
-                    <v-btn color="blue darken-1" text @click="launchCampaignConfirm">OK</v-btn>
-                    <v-spacer></v-spacer>
-                    </v-card-actions>
-                </v-card>
+                    <v-card>
+                        <v-card-title class="headline">
+                            {{ $t('confirmation_start_campaign_title') }}
+                        </v-card-title>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="closeLaunchCampaign">
+                                {{ $t('confirmation_start_campaign_cancel') }}
+                            </v-btn>
+                            <v-btn color="blue darken-1" text @click="launchCampaignConfirm">
+                                {{ $t('confirmation_start_campaign_ok') }}
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
                 </v-dialog>
             </v-container>
+
         </v-card-text>
     </v-card>
 </template>
 
 <script>
 
-import { mapActions, mapGetters } from 'vuex';
-import moment from 'moment';
+import { mapActions } from 'vuex'
+import moment from 'moment'
+import {
+    CAMPAIGN_STATUS,
+} from '@/constants'
 
 export default {
     name: 'CampaignLaunchElement',
     props: [
         'campaign_id',
     ],
-    data: () => ({
-        valid: true,
-        dialogLaunch: false,
-        duration: 0,
-        duration_list: [
-            { label: '1 jour', duration_days: 1 },
-            { label: '2 jours', duration_days: 2 },
-            { label: '3 jours', duration_days: 3 },
-            { label: '5 jours', duration_days: 5 },
-            { label: '1 semaine', duration_days: 7 },
-            { label: '2 semaines', duration_days: 14 },
-            { label: '3 semaines', duration_days: 21 },
-            { label: '1 mois', duration_days: 30 },
-        ],
-        duration_rules: [
-            (v) => !!v || 'Durée de campagne est obligatoire',
-        ],
-    }),
+    data() {
+        return {
+            valid: true,
+            dialogLaunch: false,
+            campaign: {},
+            duration: 0,
+            duration_list: [
+                {
+                    label: this.$tc('day', 1),
+                    duration_days: 1,
+                },
+                {
+                    label: this.$tc('day', 2),
+                    duration_days: 2,
+                },
+                {
+                    label: this.$tc('day', 3),
+                    duration_days: 3,
+                },
+                {
+                    label: this.$tc('day', 5),
+                    duration_days: 5,
+                },
+                {
+                    label: this.$tc('week', 1),
+                    duration_days: 7,
+                },
+                {
+                    label: this.$tc('week', 2),
+                    duration_days: 14,
+                },
+                {
+                    label: this.$tc('week', 3),
+                    duration_days: 21,
+                },
+                {
+                    label: this.$tc('month', 1),
+                    duration_days: 30,
+                },
+            ],
+            duration_rules: [
+                (value) => !!value || this.$t('validation_duration_required'),
+            ],
+            CAMPAIGN_STATUS,
+        }
+    },
+    watch: {
+        campaign_id () {
+            this.initialize()
+        },
+    },
     computed: {
-        ...mapGetters({
-            campaignDraftList: 'campaign_store/campaignDraftList',
-            campaignFinishedList: 'campaign_store/campaignFinishedList',
-            campaignInProgressList: 'campaign_store/campaignInProgressList',
-        }),
+        is_draft_campaign() {
+            return this.campaign.campaign_status == CAMPAIGN_STATUS.DRAFT
+        },
+        is_in_progress_campaign() {
+            return this.campaign.campaign_status == CAMPAIGN_STATUS.IN_PROGRESS
+        },
+        is_finished_campaign() {
+            return this.campaign.campaign_status == CAMPAIGN_STATUS.FINISHED
+        },
+    },
+    async mounted() {
+        await this.initialize()
     },
     methods: {
         ...mapActions({
             getCampaign: 'campaign_store/getCampaign',
             updateCampaign: 'campaign_store/updateCampaign',
         }),
-        launchCampaignConfirm () {
-            const update_campaign_params = {
+        async initialize () {
+            if (this.campaign_id) {
+                this.campaign = await this.getCampaign({
+                    campaign_id: this.campaign_id
+                })
+            }
+        },
+        async launchCampaignConfirm () {
+            await this.updateCampaign({
                 campaign_id: this.campaign_id,
                 data: {
                     start_date: moment().toISOString(),
                     end_date: moment().endOf('day').add(this.duration, 'd').toISOString(),
-                    campaign_status: 2,
+                    campaign_status: CAMPAIGN_STATUS.IN_PROGRESS,
                 }
-            };
-            this.updateCampaign(update_campaign_params)
+            })
             this.closeLaunchCampaign()
         },
         launchCampaign() {
             if (!this.$refs.form.validate()) {
                 this.$emit('validation_error')
-                return;
+                return
             }
             this.dialogLaunch = true
         },
@@ -110,3 +177,21 @@ export default {
     },
   }
 </script>
+
+<i18n locale='fr'>
+{
+    "start_campaign_title": "Lancement de la campagne",
+    "started_campaign_title": "Campagne en cours",
+    "campaign_started_at": "Campagne lancée",
+    "and_ends_in": "et se termine dans",
+    "duration_label": "Durée de la campagne",
+    "day": "1 jour | {n} jours",
+    "week": "1 semaine | {n} semaines",
+    "month": "1 mois | {n} mois",
+    "start_campaign_button": "Lancer la campagne",
+    "confirmation_start_campaign_title": "Voulez vous lancer la campagne?",
+    "confirmation_start_campaign_cancel": "Annuler",
+    "confirmation_start_campaign_ok": "Ok",
+    "validation_duration_required": "Durée de campagne est obligatoire"
+}
+</i18n>
