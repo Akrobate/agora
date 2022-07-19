@@ -64,10 +64,10 @@
                                 :rotate="90"
                                 :size="100"
                                 :width="15"
-                                :value="campaign.users.participation_count / campaign.users.participant_total_count * 100"
+                                :value="calculatePercentage(campaign.users.participation_count, campaign.users.participant_total_count)"
                                 color="green"
                                 >
-                                {{ Math.ceil(campaign.users.participation_count / campaign.users.participant_total_count * 100) }}%
+                                {{ Math.ceil(calculatePercentage(campaign.users.participation_count, campaign.users.participant_total_count)) }}%
                             </v-progress-circular>
                             </v-col>
                             <v-col align="center">
@@ -108,7 +108,13 @@ export default {
         ...mapActions({
             searchCampaign: 'campaign_store/searchCampaign',
             searchCampaignUserList: 'campaign_store/searchCampaignUserList',
-        })
+        }),
+        calculatePercentage(value, total_value) {
+            if (value == 0 || total_value == 0) {
+                return 0
+            }
+            return value / total_value * 100
+        },
     },
     async mounted() {
         const all_campaign_list = await this.searchCampaign({
