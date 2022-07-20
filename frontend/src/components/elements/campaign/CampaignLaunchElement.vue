@@ -16,6 +16,41 @@
                     {{ $t('campaign_started_at') }} {{ campaign.start_date | humanizeDate}}
                     {{ $t('and_ends_in') }} {{ campaign.end_date | humanizeFutureDuration }}
                 </p>
+
+                <v-list>
+                    <v-list-item two-line>
+                        <v-list-item-icon>
+                            <v-icon>
+                                mdi-calendar-check-outline
+                            </v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                {{ $t('campaign_started_at') }}
+                            </v-list-item-title>
+                            <v-list-item-subtitle>
+                                {{ campaign.start_date | formatDate}}
+                            </v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item two-line>
+                        <v-list-item-icon>
+                            <v-icon>
+                                mdi-calendar-clock-outline
+                            </v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                {{ $t('end_date') }}
+                            </v-list-item-title>
+                            <v-list-item-subtitle>
+                                {{ campaign.end_date | formatDate}}
+                            </v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+
+
             </v-container>
 
             <v-container v-if="is_draft_campaign">
@@ -183,6 +218,7 @@ export default {
     "start_campaign_title": "Lancement de la campagne",
     "started_campaign_title": "Campagne en cours",
     "campaign_started_at": "Campagne lancée",
+    "end_date": "Date de fin",
     "and_ends_in": "et se termine dans",
     "duration_label": "Durée de la campagne",
     "day": "1 jour | {n} jours",
