@@ -2,7 +2,9 @@
     <v-card>
 
         <v-card-title>
-            <span class="headline">Paramètres de campagne</span>
+            <span class="headline">
+                {{ $t('create_campaign_title') }}
+            </span>
         </v-card-title>
 
         <v-card-text>
@@ -17,44 +19,41 @@
                         v-model="title"
                         :counter="255"
                         :rules="title_rules"
-                        label="Nom de la campagne"
+                        :label="$t('input_campaign_name_label')"
                         required
                     ></v-text-field>
 
-                    <proposition-type-ui-selector-element v-model="proposition_type" :disabled="propositionList.length > 0"/>
+                    <proposition-type-ui-selector-element
+                        v-model="proposition_type"
+                        :disabled="propositionList.length > 0"
+                    />
                     
                     <v-textarea
                         v-model="description"
-                        label="Description"
-                        hint="La description de la campagne sera visible a tous les participants"
+                        :label="$t('input_campaign_description_label')"
+                        :hint="$t('input_campaign_description_hint')"
                     ></v-textarea>
 
                 </v-form>
+
             </v-container> 
         </v-card-text>
 
         <v-card-actions>
-            <v-btn
-                color="blue darken-1"
-                text
-                @click="cancel()"
-            >
-                Annuler
-            </v-btn>
             <v-spacer></v-spacer>
             <v-btn
                 color="blue darken-1"
                 text
                 @click="reset()"
             >
-                Effacer
+                {{ $t('button_clear') }}
             </v-btn>
             <v-btn
                 color="blue darken-1"
                 text
                 @click="save()"
             >
-                Sauvegarder
+                {{ $t('button_save') }}
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -73,17 +72,19 @@ export default {
     props: [
         'campaign_id'
     ],
-    data: () => ({
-        valid: true,
-        title: '',
-        title_rules: [
-            v => !!v || 'Le nom de campagne est obligatoire',
-        ],
-        proposition_type: '',
-        description: '',
-        description_rules: [],
-        default_proposition_type: 'raw_string'
-    }),
+    data() {
+        return {
+            valid: true,
+            title: '',
+            title_rules: [
+                v => !!v || this.$t('campaign_name_required'),
+            ],
+            proposition_type: '',
+            description: '',
+            description_rules: [],
+            default_proposition_type: 'raw_string',
+        }
+    },
     async mounted() {
         await this.loadCampaingToEditIfCampaignIdIsSetted()
     },
@@ -102,7 +103,6 @@ export default {
             createCampaign: 'campaign_store/createCampaign',
             updateCampaign: 'campaign_store/updateCampaign',
             getCampaign: 'campaign_store/getCampaign',
-            setEditionCampaignId: 'campaign_store/setEditionCampaignId',
             loadPropositionList: 'campaign_store/loadPropositionList'
         }),
         async save () {
@@ -137,13 +137,6 @@ export default {
             })
             this.$emit('reset')
         },
-        cancel() {
-            this.$refs.form.reset()
-            this.$nextTick (() => {
-                this.setFormDefalutValues()
-            })
-            this.$emit('cancel')
-        },
         setFormDefalutValues() {
             this.proposition_type = this.default_proposition_type
         },
@@ -161,3 +154,16 @@ export default {
     },
 }
 </script>
+
+
+<i18n locale='fr'>
+{
+    "create_campaign_title": "Paramètres de campagne",
+    "button_clear": "Effacer",
+    "button_save": "Sauvegarder",
+    "input_campaign_name_label": "Nom de la campagne",
+    "input_campaign_description_label": "Description",
+    "input_campaign_description_hint": "La description de la campagne sera visible a tous les participants",
+    "campaign_name_required": "Le nom de campagne est obligatoire"
+}
+</i18n>
