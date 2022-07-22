@@ -7,7 +7,9 @@
             <v-col cols="12" sm="8" md="4">
                 <v-card class="elevation-6">
                     <v-toolbar color="primary" dark flat>
-                        <v-toolbar-title>Créez votre compte</v-toolbar-title>
+                        <v-toolbar-title>
+                            {{ $t('register_user_title') }}
+                        </v-toolbar-title>
                     </v-toolbar>
 
                     <v-card-text>
@@ -20,14 +22,16 @@
 
                     <v-card-actions>
                         <v-spacer />
-                        <router-link class="mr-5" :to="{ name: 'login'}">Page de connection</router-link>
+                        <router-link class="mr-5" :to="{ name: 'login'}">
+                            {{ $t('login_page_link_label') }}
+                        </router-link>
                         <v-btn
                             color="primary"
                             @click="trigger_register = true"
                             :loading="loading"
                             large
                         >
-                            Créer mon compte
+                            {{ $t('register_user_button') }}
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -59,3 +63,11 @@ export default {
 }
 
 </script>
+
+<i18n locale='fr'>
+{
+    "register_user_title": "Créez votre compte",
+    "register_user_button": "Créer mon compte",
+    "login_page_link_label": "Page de connection"
+}
+</i18n>
