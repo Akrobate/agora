@@ -79,11 +79,11 @@
                         icon
                         @click="invite(item)" v-bind="attrs" v-on="on"
                     >
-                        <v-icon>mdi-email-send-outline</v-icon>
+                        <v-icon>mdi-email-fast-outline</v-icon>
                     </v-btn>
                 </template>
                 <span>
-                    Envoyer une invitation par mail
+                    {{ $t('send_invitation_tooltip') }}
                 </span>
             </v-tooltip>
 
@@ -97,7 +97,7 @@
                     </v-btn>
                 </template>
                 <span>
-                    Modifier le membre
+                    {{ $t('edit_member_tooltip') }}
                 </span>
             </v-tooltip>
             
@@ -112,7 +112,7 @@
                     </v-btn>
                 </template>
                 <span>
-                    Supprimer le membre de la campagne
+                    {{ $t('delete_member_tooltip') }}
                 </span>
             </v-tooltip>
 
@@ -241,6 +241,8 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
             clearCampaignUserList: 'campaign_store/clearCampaignUserList',
             inviteCampaignUser: 'campaign_store/inviteCampaignUser',
             deleteCampaignUser: 'campaign_store/deleteCampaignUser',
+            triggerError: 'snack_bar_store/triggerError',
+            triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         saved() {
             this.loadCampaignUserList({ campaign_id: this.campaign_id });
@@ -274,6 +276,7 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
                 id: this.editing_campaign_user_id,
                 campaign_id: this.campaign_id
             })
+            this.triggerSuccess(this.$t('invitation_success_message'))
             this.closeInvite()
         },
         async deleteItemConfirm () {
@@ -282,6 +285,7 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
                 campaign_id: this.campaign_id
             })
             this.loadCampaignUserList({ campaign_id: this.campaign_id });
+            this.triggerSuccess(this.$t('deleted_member_success_message'))
             this.closeDelete()
         },
         close () {
@@ -300,6 +304,11 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
 <i18n locale="fr">
 {
     "members_title": "Membres de la campagne",
-    "add_member_button": "Ajouter un membre"
+    "add_member_button": "Ajouter un membre",
+    "send_invitation_tooltip": "Envoyer une invitation par mail",
+    "edit_member_tooltip": "Modifier le membre",
+    "delete_member_tooltip": "Supprimer le membre de la campagne",
+    "invitation_success_message": "Invitation envoyée",
+    "deleted_member_success_message": "Membre supprimé de la campagne"
 }
 </i18n>
