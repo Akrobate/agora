@@ -27,7 +27,28 @@
                     v-model="password"
                     prepend-icon="mdi-key"
                     type="password"
-                />
+                >
+                    <template v-slot:append>
+                        <v-tooltip top>
+                            <template v-slot:activator="{ on, attrs }">
+                                
+                            <v-btn
+                                icon
+                                :to="{name: 'forgotten-password'}"
+                                v-bind="attrs" v-on="on"
+                            >
+                                <v-icon v-on="on">
+                                    mdi-lock-reset
+                                </v-icon>
+                            </v-btn>
+                            </template>
+                            <span>
+                                {{ $t('forgotten_password_button_tooltip') }}
+                            </span>
+                        </v-tooltip>
+                    </template>
+                </v-text-field>
+
             </v-form>
         </v-card-text>
 
@@ -108,6 +129,7 @@ export default {
     "connection_button": "Se connecter",
     "create_account_link": "Créer un compte",
     "technical_problem_message": "Probleme technique, veuillez essayer plus tard",
-    "bad_credential_message": "Votre email ou mot de passe est incorrect"
+    "bad_credential_message": "Votre email ou mot de passe est incorrect",
+    "forgotten_password_button_tooltip": "Mot de passe oublié"
 }
 </i18n>

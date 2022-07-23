@@ -23,6 +23,14 @@ const routes = [
         }
     },
     {
+        path: '/forgotten-password',
+        name: 'forgotten-password',
+        component: () => import('@/components/pages/ForgottenPasswordPage.vue'),
+        meta: {
+            layout: 'DefaultLayout',
+        }
+    },
+    {
         path: '/',
         name: 'home',
         component: () => import('@/components/pages/HomePage.vue'),
