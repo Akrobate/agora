@@ -78,10 +78,11 @@ npm run generate-html-doc
 
 ## Frontend
 
-* *27/05/22* Create login element to include in LoginPage
 * *08/07/22* Mot de passe oublié frontend
 * *13/07/22* Ajouter les résultats des campagnes terminés sur le tableau de bord
 * *16/07/22* Gravatar icons
+* *21/07/22* Dashboard votes expected, should not be proposed if user is not a participant in campaign
+* *23/07/22* Refactor login element to have the same patter than register element
 
 ## Backend
 
