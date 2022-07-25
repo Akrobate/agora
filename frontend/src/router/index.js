@@ -31,6 +31,14 @@ const routes = [
         }
     },
     {
+        path: '/set-forgotten-password',
+        name: 'set-forgotten-password',
+        component: () => import('@/components/pages/SetForgottenPasswordPage.vue'),
+        meta: {
+            layout: 'DefaultLayout',
+        }
+    },
+    {
         path: '/',
         name: 'home',
         component: () => import('@/components/pages/HomePage.vue'),
