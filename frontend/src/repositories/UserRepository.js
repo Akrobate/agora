@@ -23,6 +23,31 @@ class UserRepository {
         return response.data
     }
 
+    async forgottenPasswordRequest(email) {
+        const response = await axios.post(`${api_configuration.url_api}/api/v1/users/forgotten-password`,
+            {
+                email,
+            }
+        )
+        return response.data
+    }
+
+    async updateForgottenPassword(user_id, data) {
+        const {
+            forgotten_password_token,
+            new_password,
+        } = data
+
+        const response = await axios.patch(
+            `${api_configuration.url_api}/api/v1/users/${user_id}/forgotten-password`,
+            {
+                forgotten_password_token,
+                new_password,
+            }
+        )
+        return response.data
+    }
+
     async renewToken() {
         const response = await axios.post(`${api_configuration.url_api}/api/v1/users/token/renew`)
         return response.data
