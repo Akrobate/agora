@@ -8,48 +8,48 @@
                 <v-card class="elevation-6">
                     <v-toolbar color="primary" dark flat>
                         <v-toolbar-title>
-                            {{ $t('forgotten_password_title') }}
+                            {{ $t('set_forgotten_password_title') }}
                         </v-toolbar-title>
                     </v-toolbar>
 
-                    <v-form
-                        ref="form"
-                        v-model="valid"
-                        lazy-validation
-                    >
 
-                        <v-text-field
-                            id="password"
-                            :label="$t('password')"
-                            name="password"
-                            v-model="password"
-                            prepend-icon="mdi-key"
-                            type="password"
-                            :rules="rule_password"
-                        />
+                    <v-card-text>
+                        <v-form
+                            ref="form"
+                            v-model="valid"
+                            lazy-validation
+                        >
 
-                        <v-text-field
-                            id="password"
-                            :label="$t('password_confirmation')"
-                            name="password_confirm"
-                            v-model="password_confirm"
-                            prepend-icon="mdi-key"
-                            type="password"
-                            :rules="rule_password_confirmation"
-                        />
-                    </v-form>
+                            <v-text-field
+                                id="password"
+                                :label="$t('password')"
+                                name="password"
+                                v-model="password"
+                                prepend-icon="mdi-key"
+                                type="password"
+                                :rules="rule_password"
+                            />
+
+                            <v-text-field
+                                id="password"
+                                :label="$t('password_confirmation')"
+                                name="password_confirm"
+                                v-model="password_confirm"
+                                prepend-icon="mdi-key"
+                                type="password"
+                                :rules="rule_password_confirmation"
+                            />
+                        </v-form>
+                    </v-card-text>
 
                     <v-card-actions>
                         <v-spacer />
-                        <router-link class="mr-5" :to="{ name: 'login'}">
-                            {{ $t('login_page_link_label') }}
-                        </router-link>
                         <v-btn
                             color="primary"
                             :loading="loading"
                             large
                         >
-                            {{ $t('submit_request_button') }}
+                            {{ $t('validate_new_password_button') }}
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -85,6 +85,9 @@ export default {
 
 <i18n locale='fr'>
 {
-
+    "set_forgotten_password_title": "Choisissez un mot de passe",
+    "password": "Mot de passe",
+    "password_confirmation": "Confirmation de mot de passe",
+    "validate_new_password_button": "Mettre à jour le mot de passe"
 }
 </i18n>
