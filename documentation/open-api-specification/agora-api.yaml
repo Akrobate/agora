@@ -22,6 +22,9 @@ paths:
   /api/v1/users/login/guest:
     $ref: "./paths/users/login_guest.yaml"
 
+  /api/v1/users/forgotten-password:
+    $ref: "./paths/users/forgotten_password.yaml"
+
   /api/v1/users/token/renew:
     $ref: "./paths/users/token_renew.yaml"
 
@@ -30,6 +33,9 @@ paths:
 
   /api/v1/users/{user_id}/password:
     $ref: "./paths/users/user_id_password.yaml"
+
+  /api/v1/users/{user_id}/forgotten-password:
+    $ref: "./paths/users/user_id_forgotten_password.yaml"
 
   /api/v1/campaigns:
     $ref: "./paths/campaigns.yaml"
