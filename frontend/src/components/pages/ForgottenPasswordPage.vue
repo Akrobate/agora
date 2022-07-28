@@ -33,6 +33,7 @@
                             color="primary"
                             :loading="loading"
                             large
+                            @click="requestPassword()"
                         >
                             {{ $t('submit_request_button') }}
                         </v-btn>
@@ -45,6 +46,8 @@
 
 <script>
 
+import { mapActions } from 'vuex'
+
 export default {
     name: 'ForgottenPasswordPage',
     data() {
@@ -54,6 +57,15 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            requestForgottenPassword: 'authentication_store/forgottenPasswordRequest',
+        }),
+        requestPassword() {
+            console.log(this.email)
+            this.requestForgottenPassword({
+                email: this.email
+            })
+        },
     },
 }
 
