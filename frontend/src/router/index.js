@@ -31,9 +31,12 @@ const routes = [
         }
     },
     {
-        path: '/set-forgotten-password',
-        name: 'set-forgotten-password',
-        component: () => import('@/components/pages/SetForgottenPasswordPage.vue'),
+        path: '/update-forgotten-password',
+        name: 'update-forgotten-password',
+        component: () => import('@/components/pages/UpdateForgottenPasswordPage.vue'),
+        props: (route) => ({
+            ...route.query,
+        }),
         meta: {
             layout: 'DefaultLayout',
         }
