@@ -82,6 +82,20 @@ const actions = {
                 })
         })
     },
+    forgottenPasswordRequest(_, { email }) {
+        return user_repository.forgottenPasswordRequest(email)
+    },
+    updateForgottenPassword(_, data) {
+        const {
+            forgotten_password_token,
+            new_password,
+            user_id,
+        } = data
+        return user_repository.forgottenPasswordRequest(user_id, {
+            forgotten_password_token,
+            new_password,
+        })
+    }
 }
 
 const mutations = {
