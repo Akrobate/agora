@@ -173,7 +173,6 @@ class EmailService {
 
         const {
             to,
-            frontend_forgotten_password_url,
             forgotten_password_token,
             user_id,
         } = input;
@@ -189,9 +188,7 @@ class EmailService {
             .render(
                 invitation_template,
                 {
-                    frontend_forgotten_password_url: frontend_forgotten_password_url
-                        ? frontend_forgotten_password_url
-                        : frontend_url,
+                    frontend_url,
                     forgotten_password_token,
                     user_id,
                 }
