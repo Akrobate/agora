@@ -48,6 +48,7 @@
                             color="primary"
                             :loading="loading"
                             large
+                            @click="updatePassword()"
                         >
                             {{ $t('validate_new_password_button') }}
                         </v-btn>
@@ -60,8 +61,14 @@
 
 <script>
 
+import { mapActions } from 'vuex'
+
 export default {
     name: 'ForgottenPasswordPage',
+    props: [
+        'user_id',
+        'forgotten_password_token'
+    ],
     data() {
         return {
             password: '',
@@ -78,7 +85,21 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            updateForgottenPassword: 'user_authentication/updateForgottenPassword'
+        }),
+        async updatePassword() {
+            await this.updateForgottenPassword({
+                forgotten_password_token: this.forgotten_password_token,
+                new_password: this.password,
+                user_id: this.user_id,
+            })
+        },
     },
+    mounted() {
+        console.log('user_id', this.user_id)
+        console.log('forgotten_password_token', this.forgotten_password_token)
+    }
 }
 
 </script>
