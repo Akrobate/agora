@@ -64,6 +64,8 @@
 <script>
 
 import { mapActions } from 'vuex'
+import { USER_ACCESS_LEVEL } from '@/constants'
+
 
 export default {
     name: 'CampaignMembersCreateEditElement',
@@ -73,6 +75,7 @@ export default {
     },
     data() {
         return {
+            USER_ACCESS_LEVEL,
             valid: true,
             email: '',
             email_rules: [
@@ -80,11 +83,20 @@ export default {
             ],
             is_participant: true,
             access_level: 0,
-            // @todo Should be a constant referential
+            // @todo Add translations
             access_level_list: [
-                { id: 1, label: 'Aucun' },
-                { id: 2, label: 'Observateur' },
-                { id: 3, label: 'Manager' },
+                {
+                    id: USER_ACCESS_LEVEL.NONE,
+                    label: 'Aucun'
+                },
+                {
+                    id: USER_ACCESS_LEVEL.OBSERVER,
+                    label: 'Observateur'
+                },
+                {
+                    id: USER_ACCESS_LEVEL.MANAGER,
+                    label: 'Manager',
+                },
             ],
             access_level_rules: [
                 (v) => !!v || 'Un niveau d\'accès doit être renseigné',
