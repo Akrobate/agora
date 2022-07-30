@@ -63,6 +63,8 @@
 
 <script>
 
+// @todo: Finish processing i18n
+
 import { mapActions } from 'vuex'
 import { USER_ACCESS_LEVEL } from '@/constants'
 
@@ -83,19 +85,18 @@ export default {
             ],
             is_participant: true,
             access_level: 0,
-            // @todo Add translations
             access_level_list: [
                 {
                     id: USER_ACCESS_LEVEL.NONE,
-                    label: 'Aucun'
+                    label: this.$t('access_label_none'),
                 },
                 {
                     id: USER_ACCESS_LEVEL.OBSERVER,
-                    label: 'Observateur'
+                    label: this.$t('access_label_observer'),
                 },
                 {
                     id: USER_ACCESS_LEVEL.MANAGER,
-                    label: 'Manager',
+                    label: this.$t('access_label_manager'),
                 },
             ],
             access_level_rules: [
@@ -176,3 +177,11 @@ export default {
 
 }
 </script>
+
+<i18n locale='fr'>
+{
+    "access_label_none": "Aucun",
+    "access_label_manager": "Manager",
+    "access_label_observer": "Observateur"
+}
+</i18n>
