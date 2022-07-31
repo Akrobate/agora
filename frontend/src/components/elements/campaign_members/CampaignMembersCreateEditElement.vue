@@ -2,7 +2,7 @@
     <v-card>
 
         <v-card-title>
-            <span class="headline">Membre</span>
+            <span class="headline">{{ $t('title_member') }}</span>
         </v-card-title>
 
         <v-card-text>
@@ -17,7 +17,7 @@
                         v-model="email"
                         :counter="255"
                         :rules="email_rules"
-                        label="email"
+                        :label="$('email_field_label')"
                         required
                         :disabled="!creation_mode"
                     ></v-text-field>
@@ -27,14 +27,14 @@
                         :items="access_level_list"
                         item-text="label"
                         item-value="id"
-                        label="Privilèges"
+                        :label="$t('access_level_field_label')"
                         :rules="access_level_rules"
                     ></v-select>
                 </v-form>
 
                 <v-switch
                     v-model="is_participant"
-                    label="Participe a la campagne"
+                    :label="$t('is_participant_field_label')"
                 ></v-switch>
 
                 
@@ -48,14 +48,14 @@
                 text
                 @click="reset"
             >
-                Annuler
+                {{ $t('cancel_button') }}
             </v-btn>
             <v-btn
                 color="blue darken-1"
                 text
                 @click="save"
             >
-                Sauvegarder
+                {{ $t('save_button') }}
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -63,11 +63,8 @@
 
 <script>
 
-// @todo: Finish processing i18n
-
 import { mapActions } from 'vuex'
 import { USER_ACCESS_LEVEL } from '@/constants'
-
 
 export default {
     name: 'CampaignMembersCreateEditElement',
@@ -81,7 +78,7 @@ export default {
             valid: true,
             email: '',
             email_rules: [
-                v => !!v || 'Le mail est obligatoire',
+                (value) => !!value || this.$t('validation_required_email'),
             ],
             is_participant: true,
             access_level: 0,
@@ -100,7 +97,7 @@ export default {
                 },
             ],
             access_level_rules: [
-                (v) => !!v || 'Un niveau d\'accès doit être renseigné',
+                (value) => !! value || this.$t('validation_access_level_must_be_provided'),
             ],
             creation_mode: true,
         }
@@ -180,8 +177,16 @@ export default {
 
 <i18n locale='fr'>
 {
+    "title_member": "Membre",
     "access_label_none": "Aucun",
     "access_label_manager": "Manager",
-    "access_label_observer": "Observateur"
+    "access_label_observer": "Observateur",
+    "validation_access_level_must_be_provided": "Un niveau d'accès doit être renseigné",
+    "validation_required_email": "Le mail est obligatoire",
+    "email_field_label": "Email",
+    "access_level_field_label": "Privilèges",
+    "is_participant_field_label": "Participe a la campagne",
+    "cancel_button": "Annuler",
+    "save_button": "Sauvegarder"
 }
 </i18n>
