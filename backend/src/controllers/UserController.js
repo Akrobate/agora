@@ -11,6 +11,7 @@ const {
 const {
     UserService,
 } = require('../services');
+const logger = require('../logger');
 
 
 class UserController extends AbstractController {
@@ -179,12 +180,13 @@ class UserController extends AbstractController {
         return response.status(HTTP_CODE.CREATED).send(user);
     }
 
+
     /**
      * @param {express.Request} request
      * @param {express.Response} response
      * @returns {Promise<*|Error>}
      */
-    async forgottenPassword(request, response) {
+    async forgottenPassword(request, response) { // eslint-disable-line require-await
         const {
             error,
             value,
@@ -205,9 +207,13 @@ class UserController extends AbstractController {
 
         this.checkValidationError(error);
 
-        await this.user_service.forgottenPassword({
-            ...value.body,
-        });
+        try {
+            this.user_service.forgottenPassword({
+                ...value.body,
+            });
+        } catch (_) {
+            logger.info('forgotten password error');
+        }
 
         return response.status(HTTP_CODE.CREATED).send({});
     }
