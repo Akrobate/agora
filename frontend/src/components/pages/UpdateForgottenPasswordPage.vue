@@ -3,7 +3,7 @@
         class="fill-height"
         fluid
     >
-        <v-row align="center" justify="center">
+        <v-row justify="center">
             <v-col cols="12" sm="8" md="4">
                 <v-card class="elevation-6">
                     <v-toolbar color="primary" dark flat>

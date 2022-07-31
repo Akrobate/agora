@@ -3,7 +3,7 @@
         class="fill-height"
         fluid
     >
-        <v-row align="center" justify="center">
+        <v-row justify="center">
             <v-col cols="12" sm="8" md="4">
                 <v-card class="elevation-6">
                     <v-toolbar color="primary" dark flat>
@@ -59,12 +59,15 @@ export default {
     methods: {
         ...mapActions({
             requestForgottenPassword: 'authentication_store/forgottenPasswordRequest',
+            triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
-        requestPassword() {
+        async requestPassword() {
             console.log(this.email)
-            this.requestForgottenPassword({
+            this.triggerSuccess(this.$t('renew_password_requested_snack_bar'))
+            await this.requestForgottenPassword({
                 email: this.email
             })
+            this.$router.push({name: 'login'});
         },
     },
 }
@@ -76,6 +79,7 @@ export default {
     "forgotten_password_title": "Mot de passe oublié",
     "submit_request_button": "Reinitialiser mon mot de passe",
     "form_email_label": "Votre adresse email",
-    "login_page_link_label": "Connection"
+    "login_page_link_label": "Connection",
+    "renew_password_requested_snack_bar": "Votre demande de renouvellement de mot de passe à été prise en compte"
 }
 </i18n>
