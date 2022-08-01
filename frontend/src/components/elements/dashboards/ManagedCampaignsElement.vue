@@ -58,8 +58,8 @@
                         {{ $t('in_progress') }} ({{ $t('remaining') }} {{ campaign.end_date | humanizeFutureDuration }})
                     </v-card-subtitle>
                     <v-card-text>
-                        <v-row align="center">
-                            <v-col class="col-5" align="center">
+                        <v-row>
+                            <v-col class="col-5">
                             <v-progress-circular
                                 :rotate="90"
                                 :size="100"
@@ -70,7 +70,7 @@
                                 {{ Math.ceil(calculatePercentage(campaign.users.participation_count, campaign.users.participant_total_count)) }}%
                             </v-progress-circular>
                             </v-col>
-                            <v-col align="center">
+                            <v-col>
                                     <p>
                                         {{ campaign.users.participant_total_count }} participants au total
                                     </p>

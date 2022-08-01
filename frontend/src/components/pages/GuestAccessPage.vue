@@ -67,6 +67,8 @@
 
 <script>
 
+// @todo: i18n
+
 import { mapActions, mapGetters } from 'vuex'
 
 import UserRegistrationFormElement from '@/components/elements/user/UserRegistrationFormElement'
