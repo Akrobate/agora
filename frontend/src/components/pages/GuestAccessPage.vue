@@ -6,11 +6,11 @@
             <v-card-text>
 
                 <p class="text-h5">
-                    Bienvenue,
+                    {{ $t('welcome') }},
                 </p>
 
                 <p class="font-weight-medium body-2">
-                    Vous êtes connecté en tant qu'invité à participer a la campagne <br />
+                    {{ $t('connected_as_guest_to_participate_to_campaign') }}<br />
                 </p>
 
                 <p class="font-weight-medium body-2 font-weight-bold">
@@ -26,15 +26,15 @@
                     color="primary"
                     :to="{ name: 'campaign-participate', params: { campaign_id: campaign_id } }"
                 >
-                    Participer a la campagne en tant qu'invité
+                    {{ $t('participate_as_guest_button') }}
                 </v-btn>
 
                 <p class="text-h5 mt-12">
-                    Finalisez la création de votre compte <span class="body-1">(optionnel)</span>
+                    {{ $t('finish_the_account_creation') }} <span class="body-1">{{ $t('optionnal') }}</span>
                 </p>
 
                 <p class="font-weight-medium">
-                    Vous pouvez créer un compte pour vous reconnecter a vos campagnes et en créer vous même. Pour cela il vous suffit de renseigner le formulaire
+                    {{ $t('create_account_description') }}
                 </p>
 
                 <v-row>
@@ -54,7 +54,7 @@
                     @click="trigger_register = true"
                     :loading="loading"
                     >
-                    Finaliser la création
+                        {{ $t('finish_account_creation_button') }}
                     </v-btn>
                 </v-card-actions>
 
@@ -66,8 +66,6 @@
 
 
 <script>
-
-// @todo: i18n
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -111,3 +109,16 @@ export default {
     }
 }
 </script>
+
+
+<i18n locale="fr">
+{
+    "welcome": "Bienvenue",
+    "connected_as_guest_to_participate_to_campaign": "Vous êtes connecté en tant qu'invité à participer a la campagne",
+    "participate_as_guest_button": "Participer a la campagne en tant qu'invité",
+    "finish_the_account_creation": "Finalisez la création de votre compte",
+    "optionnal": "(optionnel)",
+    "create_account_description": "Vous pouvez créer un compte pour vous reconnecter a vos campagnes et en créer vous même. Pour cela il vous suffit de renseigner le formulaire",
+    "finish_account_creation_button": "Finaliser la création"
+}
+</i18n>
