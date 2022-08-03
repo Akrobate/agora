@@ -55,23 +55,6 @@
                 :rules="rule_password_confirmation"
             />
         </v-form>
-
-        <v-snackbar
-            :timeout="10000"
-            :top="true"
-            color="error"
-            v-model="snackbar"
-        >
-            {{ snackbar_text }}
-            <v-btn
-                text
-                @click.native="snackbar = false"
-            >
-                Fermer
-            </v-btn>
-        </v-snackbar>
-
-
     </div>
 </template>
 
@@ -86,8 +69,6 @@
  * - email
  *
  */
-
-// @todo: Finish translation porting
 // @todo: refactor rules declaration (example UserProfileUpdatePassword component)
 
 import { mapActions } from 'vuex'
@@ -107,8 +88,6 @@ export default {
             email: '',
             password: '',
             password_confirm: '',
-            snackbar: false,
-            snackbar_text: '',
             rule_not_empty: [
                 v => !!v || 'Ce champ est obligatoire',
             ],
@@ -140,6 +119,7 @@ export default {
     methods: {
         ...mapActions({
             registerUser: 'user_store/register',
+            triggerError: 'snack_bar_store/triggerError',
         }),
         init() {
             if (this.default_email) {
@@ -163,11 +143,10 @@ export default {
                 this.$emit('register_success')
             } catch (error) {
                 this.$emit('update:loading', false)
-                this.snackbar = true
                 if (error.response.status == 400) {
-                    this.snackbar_text = 'Format saisi incorrect'
+                    this.triggerError(this.$t('bad_format_snackbar'))
                 } else {
-                    this.snackbar_text = 'Probleme technique, veuillez essayer plus tard'
+                    this.triggerError(this.$t('technical_problem_snackbar'))
                 }
             }
         },
@@ -184,6 +163,8 @@ export default {
     "last_name": "Nom",
     "email": "Email",
     "password": "Mot de passe",
-    "password_confirmation": "Confirmation de mot de passe"
+    "password_confirmation": "Confirmation de mot de passe",
+    "bad_format_snackbar": "Format saisi incorrect",
+    "technical_problem_snackbar": "Probleme technique, veuillez essayer plus tard"
 }
 </i18n>
