@@ -27,12 +27,12 @@
 
             <v-text-field
                 :label="$t('email')"
+                :rules="[ rules.required ]"
                 name="email"
                 v-model="email"
                 prepend-icon="mdi-email"
                 type="text"
                 :disabled="disable_email"
-                :rules="rule_not_empty"
             />
 
             <v-text-field
@@ -42,7 +42,7 @@
                 v-model="password"
                 prepend-icon="mdi-key"
                 type="password"
-                :rules="rule_password"
+                :rules="[rules.password, rules.required]"
             />
 
             <v-text-field
@@ -52,7 +52,7 @@
                 v-model="password_confirm"
                 prepend-icon="mdi-key"
                 type="password"
-                :rules="rule_password_confirmation"
+                :rules="[rules.confirmationMatch, rules.required]"
             />
         </v-form>
     </div>
@@ -88,17 +88,11 @@ export default {
             email: '',
             password: '',
             password_confirm: '',
-            rule_not_empty: [
-                v => !!v || 'Ce champ est obligatoire',
-            ],
-            rule_password: [
-                v => !!v || 'Ce champ est obligatoire',
-                v => RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/).test(v) || 'Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules',
-            ],
-            rule_password_confirmation: [
-                v => (v === this.password) || 'Le mot de passe de confirmation différente',
-                 v => !!v || 'Ce champ est obligatoire',
-            ],
+            rules: {
+                required: (value) => !!value || this.$t('validation_rule_required'),
+                password: (value) => RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/).test(value) || this.$t('validation_rule_password'),
+                confirmationMatch: (value) => (value === this.password) || this.$t('validation_rule_confirmation_match'),
+            },
             disable_email: false,
         }
     },
@@ -165,6 +159,9 @@ export default {
     "password": "Mot de passe",
     "password_confirmation": "Confirmation de mot de passe",
     "bad_format_snackbar": "Format saisi incorrect",
-    "technical_problem_snackbar": "Probleme technique, veuillez essayer plus tard"
+    "technical_problem_snackbar": "Probleme technique, veuillez essayer plus tard",
+    "validation_rule_required": "Ce champ est obligatoire",
+    "validation_rule_confirmation_match": "Confirmation est différente du mot de passe",
+    "validation_rule_password": "Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules"
 }
 </i18n>
