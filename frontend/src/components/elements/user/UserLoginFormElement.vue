@@ -75,6 +75,7 @@
 
 import { mapActions, mapGetters } from 'vuex'
 import {version} from '../../../../package.json';
+import http_status from 'http-status'
 
 export default {
     name: 'UserLoginFormElement',
@@ -105,7 +106,7 @@ export default {
                 })
                 this.$router.push({ name: 'home' })
             } catch (error) {
-                if (error.response.status == 401) {
+                if (error.response.status == http_status.UNAUTHORIZED) {
                     this.triggerError(this.$t('bad_credential_message'))
                 } else {
                     this.triggerError(this.$t('technical_problem_message'))
@@ -113,7 +114,6 @@ export default {
                 this.email = ''
                 this.password = ''
                 this.loading = false
-                this.snackbar = true
             }
         },
     },

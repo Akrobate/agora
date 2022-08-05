@@ -1,6 +1,6 @@
 <template>
     <v-container class="fill-height" fluid>
-        <v-row align="center" justify="center">
+        <v-row justify="center">
             <v-col
                 cols="12"
                 sm="8"
@@ -9,19 +9,25 @@
                 <user-login-form-element />
             </v-col>
         </v-row>
-
     </v-container>
 </template>
 
 <script>
 
-import { mapActions } from 'vuex'
+import http_status from 'http-status'
+import { mapActions, mapGetters } from 'vuex'
+
 import UserLoginFormElement from '@/components/elements/user/UserLoginFormElement'
 
 export default {
     name: 'LoginPage',
     components: {
         UserLoginFormElement,
+    },
+    computed: {
+        ...mapGetters({
+            isConnected: 'authentication_store/isConnected',
+        })
     },
     methods: {
         ...mapActions({
@@ -37,9 +43,7 @@ export default {
                 this.$router.push({ name: 'guest-access' })
                 return null
             } catch (error) {
-                this.loading = false
-                this.snackbar = true
-                if (error.response.status == 401) {
+                if (error.response.status == http_status.UNAUTHORIZED) {
                     this.triggerError('Votre invitation est invalide')
                 } else {
                     this.triggerError('Probleme technique, veuillez essayer plus tard')
