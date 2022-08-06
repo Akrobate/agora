@@ -69,6 +69,8 @@
  * - email
  *
  */
+import http_status from 'http-status'
+
 import { mapActions } from 'vuex'
 
 export default {
@@ -135,7 +137,7 @@ export default {
                 this.$emit('register_success')
             } catch (error) {
                 this.$emit('update:loading', false)
-                if (error.response.status == 400) {
+                if (error.response.status == http_status.BAD_REQUEST) {
                     this.triggerError(this.$t('bad_format_snackbar'))
                 } else {
                     this.triggerError(this.$t('technical_problem_snackbar'))
