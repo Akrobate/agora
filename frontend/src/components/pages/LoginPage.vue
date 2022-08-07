@@ -44,9 +44,9 @@ export default {
                 return null
             } catch (error) {
                 if (error.response.status == http_status.UNAUTHORIZED) {
-                    this.triggerError('Votre invitation est invalide')
+                    this.triggerError(this.$t('invalid_invitation_snack_bar'))
                 } else {
-                    this.triggerError('Probleme technique, veuillez essayer plus tard')
+                    this.triggerError(this.$t('technical_problem_snack_bar'))
                 }
             }
         }
@@ -56,3 +56,10 @@ export default {
     },
 }
 </script>
+
+<i18n locale='fr'>
+{
+    "invalid_invitation_snack_bar": "Votre invitation est invalide",
+    "technical_problem_snack_bar": "Probleme technique, veuillez essayer plus tard"
+}
+</i18n>
