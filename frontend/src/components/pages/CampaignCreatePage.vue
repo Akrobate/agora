@@ -8,7 +8,7 @@
                     step="1"
                     :editable="true"
                 >
-                    Campagne
+                    {{ $t('campaign_step_campaign_title') }}
                 </v-stepper-step>
                 <v-divider></v-divider>
 
@@ -19,9 +19,10 @@
 
                     :editable="step_2_proposition_is_editable"
                 >
-                    Propositions
-                    <small v-if="!step_2_proposition_is_valid">Il faut au moins deux propositions</small>
-
+                    {{ $t('campaign_step_proposition_title') }}
+                    <small v-if="!step_2_proposition_is_valid">
+                        {{ $t('campaign_step_proposition_help_alert') }}
+                    </small>
                 </v-stepper-step>
 
                 <v-divider></v-divider>
@@ -31,7 +32,7 @@
                     step="3"
                     :editable="step_3_members_is_editable"
                 >
-                    Participants
+                    {{ $t('campaign_step_members_title') }}
                 </v-stepper-step>
                 <v-divider></v-divider>
 
@@ -40,7 +41,7 @@
                     step="4"
                     :editable="step_4_launch_is_editable"
                 >
-                    Lancement
+                    {{ $t('campaign_step_launch_title') }}
                 </v-stepper-step>
             </v-stepper-header>
 
@@ -105,7 +106,6 @@ export default {
     },
     computed: {
         ...mapGetters({
-            campaignUserList: 'campaign_store/campaignUserList',
             propositionList: 'campaign_store/propositionList',
         }),
         step_2_proposition_is_editable() {
@@ -129,7 +129,6 @@ export default {
     },
     methods: {
         ...mapActions({
-            setEditionCampaignId: 'campaign_store/setEditionCampaignId',
             loadCampaignUserList: 'campaign_store/loadCampaignUserList',
             loadPropositionList: 'campaign_store/loadPropositionList',
             clearPropositionList: 'campaign_store/clearPropositionList',
@@ -156,6 +155,16 @@ export default {
             this.campaign_id = this.id;
         },
     },
-
 }
 </script>
+
+
+<i18n locale='fr'>
+{
+    "campaign_step_campaign_title": "Campagne",
+    "campaign_step_proposition_title": "Propositions",
+    "campaign_step_proposition_help_alert": "Il faut au moins deux propositions",
+    "campaign_step_members_title": "Participants",
+    "campaign_step_launch_title": "Lancement"
+}
+</i18n>

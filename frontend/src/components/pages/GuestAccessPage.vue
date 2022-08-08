@@ -71,6 +71,8 @@ import { mapActions, mapGetters } from 'vuex'
 
 import UserRegistrationFormElement from '@/components/elements/user/UserRegistrationFormElement'
 
+// @todo: disabled_email_value: static value
+
 export default {
     name: "GuestAccessPage",
     data() {
@@ -78,7 +80,6 @@ export default {
             disabled_email_value: 'fedorov.artiom@gmail.com',
             trigger_register: null,
             loading: false,
-
             campaign_id: null,
             campaign_title: null,
             campaign_description: null,

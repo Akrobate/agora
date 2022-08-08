@@ -18,7 +18,6 @@
 
         <div>
         <v-row
-            align="center"
             justify="center"
             no-gutters
             style="height: 250px;"
@@ -54,11 +53,11 @@
 
 
             <v-col class="col-1" @click="is_loading = !is_loading">
-                <p class="text-h2" align="center"  v-if="!is_loading">
+                <p class="text-h2" v-if="!is_loading">
                     VS
                 </p>
 
-                <div align="center" v-if="is_loading">
+                <div v-if="is_loading">
                     <v-progress-circular
                         :size="50"
                         color="primary"
