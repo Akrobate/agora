@@ -73,17 +73,25 @@ export default {
         return {
             password: '',
             password_confirm: '',
+            // @todo refactor rules (uses below declaration
             rule_password: [
                 v => !!v || 'Ce champ est obligatoire',
                 v => RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/).test(v) || 'Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules',
             ],
+            // @todo refactor rules (uses below declaration)
             rule_password_confirmation: [
                 v => (v === this.password) || 'Le mot de passe de confirmation différente',
                  v => !!v || 'Ce champ est obligatoire',
             ],
+            rules: {
+                required: (value) => !!value || this.$t('validation_rule_required'),
+                password: (value) => RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/).test(value) || this.$t('validation_rule_password'),
+                confirmationMatch: (value) => (value === this.password) || this.$t('validation_rule_confirmation_match'),
+            },
             loading: false,
         }
     },
+    // @todo Add update password call
     methods: {
         ...mapActions({
             updateForgottenPassword: 'user_authentication/updateForgottenPassword'
@@ -109,6 +117,9 @@ export default {
     "set_forgotten_password_title": "Choisissez un mot de passe",
     "password": "Mot de passe",
     "password_confirmation": "Confirmation de mot de passe",
-    "validate_new_password_button": "Mettre à jour le mot de passe"
+    "validate_new_password_button": "Mettre à jour le mot de passe",
+    "validation_rule_required": "Ce champ est obligatoire",
+    "validation_rule_confirmation_match": "Confirmation est différente du mot de passe",
+    "validation_rule_password": "Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules"
 }
 </i18n>
