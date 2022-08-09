@@ -27,7 +27,7 @@
                                 v-model="password"
                                 prepend-icon="mdi-key"
                                 type="password"
-                                :rules="rule_password"
+                                :rules="[rules.required, rules.password]"
                             />
 
                             <v-text-field
@@ -37,7 +37,7 @@
                                 v-model="password_confirm"
                                 prepend-icon="mdi-key"
                                 type="password"
-                                :rules="rule_password_confirmation"
+                                :rules="[rules.confirmationMatch, rules.required]"
                             />
                         </v-form>
                     </v-card-text>
@@ -73,16 +73,6 @@ export default {
         return {
             password: '',
             password_confirm: '',
-            // @todo refactor rules (uses below declaration
-            rule_password: [
-                v => !!v || 'Ce champ est obligatoire',
-                v => RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/).test(v) || 'Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules',
-            ],
-            // @todo refactor rules (uses below declaration)
-            rule_password_confirmation: [
-                v => (v === this.password) || 'Le mot de passe de confirmation différente',
-                 v => !!v || 'Ce champ est obligatoire',
-            ],
             rules: {
                 required: (value) => !!value || this.$t('validation_rule_required'),
                 password: (value) => RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/).test(value) || this.$t('validation_rule_password'),
