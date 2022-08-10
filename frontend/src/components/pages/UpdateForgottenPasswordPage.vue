@@ -82,25 +82,28 @@ export default {
             loading: false,
         }
     },
-    // @todo Add update password call
     methods: {
         ...mapActions({
-            updateForgottenPassword: 'user_authentication/updateForgottenPassword'
+            updateForgottenPassword: 'authentication_store/updateForgottenPassword',
+            triggerSuccess: 'snack_bar_store/triggerSuccess',
+            triggerError: 'snack_bar_store/triggerError',
         }),
         async updatePassword() {
-            await this.updateForgottenPassword({
-                forgotten_password_token: this.forgotten_password_token,
-                new_password: this.password,
-                user_id: this.user_id,
-            })
+            try {
+                await this.updateForgottenPassword({
+                    forgotten_password_token: this.forgotten_password_token,
+                    new_password: this.password,
+                    user_id: this.user_id,
+                })
+            } catch (_) {
+                this.triggerError(this.$t('technical_problem_message'))
+                return
+            }
+            this.triggerSuccess(this.$t('password_updated_message'))
+            this.$router.push({name: 'login'})
         },
     },
-    mounted() {
-        console.log('user_id', this.user_id)
-        console.log('forgotten_password_token', this.forgotten_password_token)
-    }
 }
-
 </script>
 
 <i18n locale='fr'>
@@ -111,6 +114,8 @@ export default {
     "validate_new_password_button": "Mettre à jour le mot de passe",
     "validation_rule_required": "Ce champ est obligatoire",
     "validation_rule_confirmation_match": "Confirmation est différente du mot de passe",
-    "validation_rule_password": "Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules"
+    "validation_rule_password": "Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules",
+    "technical_problem_message": "Problème technique, veuillez essayer plus tard",
+    "password_updated_message": "Votre mot de passe a bien été mis à jour"
 }
 </i18n>

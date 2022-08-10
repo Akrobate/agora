@@ -128,7 +128,7 @@ export default {
     "form_password_label": "Mot de passe",
     "connection_button": "Se connecter",
     "create_account_link": "Créer un compte",
-    "technical_problem_message": "Probleme technique, veuillez essayer plus tard",
+    "technical_problem_message": "Problème technique, veuillez essayer plus tard",
     "bad_credential_message": "Votre email ou mot de passe est incorrect",
     "forgotten_password_button_tooltip": "Mot de passe oublié"
 }

@@ -159,7 +159,7 @@ export default {
     "password": "Mot de passe",
     "password_confirmation": "Confirmation de mot de passe",
     "bad_format_snackbar": "Format saisi incorrect",
-    "technical_problem_snackbar": "Probleme technique, veuillez essayer plus tard",
+    "technical_problem_snackbar": "Problème technique, veuillez essayer plus tard",
     "validation_rule_required": "Ce champ est obligatoire",
     "validation_rule_confirmation_match": "Confirmation est différente du mot de passe",
     "validation_rule_password": "Le mot de passe doit avoir 8 carracters, des chiffres et des lettres, majuscules et minuscules"

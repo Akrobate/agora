@@ -60,6 +60,6 @@ export default {
 <i18n locale='fr'>
 {
     "invalid_invitation_snack_bar": "Votre invitation est invalide",
-    "technical_problem_snack_bar": "Probleme technique, veuillez essayer plus tard"
+    "technical_problem_snack_bar": "Problème technique, veuillez essayer plus tard"
 }
 </i18n>
