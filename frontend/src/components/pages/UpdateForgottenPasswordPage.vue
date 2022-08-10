@@ -31,7 +31,7 @@
                             />
 
                             <v-text-field
-                                id="password"
+                                id="password_confirmation"
                                 :label="$t('password_confirmation')"
                                 name="password_confirm"
                                 v-model="password_confirm"
@@ -73,6 +73,7 @@ export default {
         return {
             password: '',
             password_confirm: '',
+            valid: true,
             rules: {
                 required: (value) => !!value || this.$t('validation_rule_required'),
                 password: (value) => RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/).test(value) || this.$t('validation_rule_password'),
