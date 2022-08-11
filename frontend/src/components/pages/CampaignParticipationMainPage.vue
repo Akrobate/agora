@@ -11,17 +11,17 @@
         <proposition-manual-sort-element :campaign_id="campaign_id" />
 
         <v-row class="my-10">
-            <v-col cols="6" align="center">
+            <v-col cols="6">
                 <v-btn
                     class="mt-3"
                     color="primary"
                     :to="{ name: 'campaign-participate', params: { campaign_id: campaign_id } }"
                     large
                 >
-                    Valider mon classement
+                    {{ $t('validate_button') }}
                 </v-btn>
             </v-col>
-            <v-col cols="6" align="center">
+            <v-col cols="6">
                 <v-btn
                     class="mt-3"
                     color="primary"
@@ -31,7 +31,7 @@
                     <v-icon class="mr-3">
                         mdi-play-circle
                     </v-icon>
-                    Lancer le classement ELO
+                    {{ $t('start_elo_session_button') }}
                 </v-btn>
             </v-col>
         </v-row>
@@ -74,3 +74,10 @@ export default {
     }
 }
 </script>
+
+<i18n locale='fr'>
+{
+    "validate_button": "Valider mon classement",
+    "start_elo_session_button": "Lancer le classement ELO"
+}
+</i18n>
