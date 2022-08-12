@@ -101,6 +101,8 @@
 
 <script>
 
+// @todo finish i18n
+
 import { mapActions, mapGetters } from 'vuex';
 import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
 
