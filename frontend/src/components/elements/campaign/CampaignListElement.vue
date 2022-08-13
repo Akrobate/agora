@@ -93,7 +93,7 @@
                 color="primary"
                 @click="initialize"
             >
-                Actualiser
+                {{ $t('refresh_button') }}
             </v-btn>
         </template>
     </v-data-table>
@@ -111,36 +111,38 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
     props: [
         'campaign_status',
     ],
-    data: () => ({
-        dialog_delete: false,
-        headers: [
-            {
-                text: 'Nom de la campagne',
-                align: 'start',
-                value: 'title',
-            },
-            {
-                text: 'Date de début',
-                align: 'end',
-                value: 'start',
-            },
-            {
-                text: 'Date de fin',
-                align: 'end',
-                value: 'end',
-            },
-            {
-                text: 'Actions',
-                value: 'actions',
-                align: 'end',
-                sortable: false,
-            },
-        ],
-        to_delete_campaign_id: null,
-        list_title: 'Campagnes',
-        CAMPAIGN_STATUS: CAMPAIGN_STATUS,
-        USER_ACCESS_LEVEL,
-    }),
+    data() {
+        return {
+            dialog_delete: false,
+            headers: [
+                {
+                    text: this.$t('campaign_name_table_header'),
+                    align: 'start',
+                    value: 'title',
+                },
+                {
+                    text: this.$t('start_date_table_header'),
+                    align: 'end',
+                    value: 'start',
+                },
+                {
+                    text: this.$t('end_date_table_header'),
+                    align: 'end',
+                    value: 'end',
+                },
+                {
+                    text: this.$t('actions_table_header'),
+                    value: 'actions',
+                    align: 'end',
+                    sortable: false,
+                },
+            ],
+            to_delete_campaign_id: null,
+            list_title: this.$t('default_list_title'),
+            CAMPAIGN_STATUS: CAMPAIGN_STATUS,
+            USER_ACCESS_LEVEL,
+        }
+    },
     computed: {
         ...mapGetters({
             campaignDraftList: 'campaign_store/campaignDraftList',
@@ -183,15 +185,15 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
 
             switch (this.campaign_status) {
                 case 'in-progress':
-                    this.list_title = 'Campagnes en cours'
+                    this.list_title = this.$t('in_progress_list_title')
                     this.loadCampaigns({ criteria: { campaign_status_list: [2] }, list_to_update: 'in_progress' })
                     break
                 case 'draft':
-                    this.list_title = 'Brouillons de campagnes'
+                    this.list_title = this.$t('draft_list_title')
                     this.loadCampaigns({ criteria: { campaign_status_list: [1] }, list_to_update: 'draft' })
                     break
                 case 'finished':
-                    this.list_title = 'Campagnes terminées'
+                    this.list_title = this.$t('finished_list_title')
                     this.loadCampaigns({ criteria:  { campaign_status_list: [3] }  , list_to_update:  'finished' })
                     break
                 default:
@@ -216,9 +218,18 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
 
 <i18n locale='fr'>
 {
+    "default_list_title": "Campagnes en cours",
+    "in_progress_list_title": "Campagnes en cours",
+    "draft_list_title": "Brouillons de campagnes",
+    "finished_list_title": "Campagnes terminées",
     "create_new_campaign_button": "Nouvelle campagne",
     "delete_campaign_modal_title": "Supprimer la campagne?",
     "cancel_button": "Annuler",
-    "yes_button": "Oui"
+    "yes_button": "Oui",
+    "refresh_button": "Actualiser",
+    "campaign_name_table_header": "Nom de la campagne",
+    "start_date_table_header": "Date de début",
+    "end_date_table_header": "Date de début",
+    "actions_table_header": "Actions"
 }
 </i18n>
