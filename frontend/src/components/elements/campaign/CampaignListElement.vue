@@ -101,8 +101,6 @@
 
 <script>
 
-// @todo finish i18n
-
 import { mapActions, mapGetters } from 'vuex';
 import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
 
@@ -218,7 +216,7 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
 
 <i18n locale='fr'>
 {
-    "default_list_title": "Campagnes en cours",
+    "default_list_title": "Campagnes",
     "in_progress_list_title": "Campagnes en cours",
     "draft_list_title": "Brouillons de campagnes",
     "finished_list_title": "Campagnes terminées",
