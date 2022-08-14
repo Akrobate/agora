@@ -184,15 +184,15 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
             switch (this.campaign_status) {
                 case 'in-progress':
                     this.list_title = this.$t('in_progress_list_title')
-                    this.loadCampaigns({ criteria: { campaign_status_list: [2] }, list_to_update: 'in_progress' })
+                    this.loadCampaigns({ criteria: { campaign_status_list: [CAMPAIGN_STATUS.IN_PROGRESS] }, list_to_update: 'in_progress' })
                     break
                 case 'draft':
                     this.list_title = this.$t('draft_list_title')
-                    this.loadCampaigns({ criteria: { campaign_status_list: [1] }, list_to_update: 'draft' })
+                    this.loadCampaigns({ criteria: { campaign_status_list: [CAMPAIGN_STATUS.DRAFT] }, list_to_update: 'draft' })
                     break
                 case 'finished':
                     this.list_title = this.$t('finished_list_title')
-                    this.loadCampaigns({ criteria:  { campaign_status_list: [3] }  , list_to_update:  'finished' })
+                    this.loadCampaigns({ criteria:  { campaign_status_list: [CAMPAIGN_STATUS.FINISHED] }  , list_to_update:  'finished' })
                     break
                 default:
                     break
