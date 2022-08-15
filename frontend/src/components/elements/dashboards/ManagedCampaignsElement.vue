@@ -72,13 +72,13 @@
                             </v-col>
                             <v-col>
                                     <p>
-                                        {{ campaign.users.participant_total_count }} participants au total
+                                        {{ campaign.users.participant_total_count }} {{ $('total_members') }}
                                     </p>
                                     <p>
-                                        {{ campaign.users.participation_count }} ont participé
+                                        {{ campaign.users.participation_count }} {{ $t('has_participated') }}
                                     </p>
                                     <p>
-                                        {{ campaign.users.participant_total_count - campaign.users.participation_count}} pas participé
+                                        {{ campaign.users.participant_total_count - campaign.users.participation_count}} {{ $t('not_participated') }}
                                     </p>
                             </v-col>
                         </v-row>
@@ -154,6 +154,9 @@ export default {
     "edit_button": "Modifier",
     "finished": "Terminée",
     "in_progress": "En cours",
-    "remaining": "il reste"
+    "remaining": "il reste",
+    "total_members": "participants au total",
+    "has_participated": "ont participé",
+    "not_participated": "pas participé"
 }
 </i18n>
