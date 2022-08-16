@@ -11,8 +11,8 @@
                     Membres ayant répondu
                 </v-card-subtitle>
                 <v-card-text>
-                    <v-row align="center">
-                        <v-col class="col-5" align="center">
+                    <v-row>
+                        <v-col class="col-5">
                         <v-progress-circular
                             :rotate="90"
                             :size="100"
@@ -23,7 +23,7 @@
                             {{ Math.ceil(participation_count / participant_total_count * 100) }}%
                         </v-progress-circular>
                         </v-col>
-                        <v-col align="center">
+                        <v-col>
                                 <p>
                                     {{ participant_total_count }} participants au total
                                 </p>
@@ -49,8 +49,8 @@
                     Membres invités
                 </v-card-subtitle>
                 <v-card-text>
-                    <v-row align="center">
-                        <v-col class="col-5" align="center">
+                    <v-row>
+                        <v-col class="col-5">
                         <v-progress-circular
                             :rotate="90"
                             :size="100"
@@ -61,7 +61,7 @@
                             {{ Math.ceil(invited_count / participant_total_count * 100) }}%
                         </v-progress-circular>
                         </v-col>
-                        <v-col align="center">
+                        <v-col>
                                 <p>
                                     {{ participant_total_count }} participants
                                 </p>
@@ -88,8 +88,8 @@
                     Membres exclus de la participation
                 </v-card-subtitle>
                 <v-card-text>
-                    <v-row align="center">
-                        <v-col class="col-5" align="center">
+                    <v-row>
+                        <v-col class="col-5">
                         <v-progress-circular
                             :rotate="90"
                             :size="100"
@@ -100,7 +100,7 @@
                             {{ Math.ceil((total_members_count - participant_total_count) / total_members_count * 100) }}%
                         </v-progress-circular>
                         </v-col>
-                        <v-col align="center">
+                        <v-col>
                                 <p>
                                     {{ total_members_count }} membres au total
                                 </p>
