@@ -175,6 +175,9 @@
 </template>
 
 <script>
+
+// @todo: i18n to finish
+
 import {
     CAMPAIGN_USER_STATUS,
     USER_ACCESS_LEVEL,
