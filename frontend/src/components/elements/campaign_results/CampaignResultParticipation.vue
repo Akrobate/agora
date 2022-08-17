@@ -128,35 +128,35 @@
 
         <template v-slot:[`item.access_level`]="{ item }">
             <v-chip
-                v-if="item.access_level === 2"
+                v-if="item.access_level === USER_ACCESS_LEVEL.OBSERVER"
                 class="ma-2"
                 color="blue darken-1"
                 outlined
                 small
             >
-                Observateur
+                {{ $t('observer') }}
             </v-chip>
 
             <v-chip
-                v-if="item.access_level === 3"
+                v-if="item.access_level === USER_ACCESS_LEVEL.MANAGER"
                 class="ma-2"
                 color="red"
                 text-color="white"
                 small
             >
-                Manager
+                {{ $t('manager') }}
             </v-chip>
         </template>
 
         <template v-slot:[`item.is_participant`]="{ item }">
             <v-chip
-                v-if="item.is_participant === true"
+                v-if="item.is_participant"
                 class="ma-2"
                 color="blue"
                 outlined
                 small
             >
-                Participant
+                {{ $t('participant') }}
             </v-chip>
         </template>
 
@@ -177,6 +177,7 @@
 <script>
 import {
     CAMPAIGN_USER_STATUS,
+    USER_ACCESS_LEVEL,
 } from '@/constants'
 
 import { mapActions, mapGetters } from 'vuex';
@@ -186,27 +187,30 @@ import { mapActions, mapGetters } from 'vuex';
     props: [
         'campaign_id',
     ],
-    data: () => ({
-        dialog: false,
-        dialogDelete: false,
-        headers: [
-            {
-                text: 'Email',
-                align: 'start',
-                value: 'email',
-            },
-            {
-                text: 'Participant',
-                value: 'is_participant',
-                sortable: true,
-            },
-            {
-                text: 'Niveau de privilège',
-                value: 'access_level',
-                sortable: true,
-            },
-        ],
-    }),
+    data() {
+        return {
+            dialog: false,
+            dialogDelete: false,
+            headers: [
+                {
+                    text: 'Email',
+                    align: 'start',
+                    value: 'email',
+                },
+                {
+                    text: 'Participant',
+                    value: 'is_participant',
+                    sortable: true,
+                },
+                {
+                    text: 'Niveau de privilège',
+                    value: 'access_level',
+                    sortable: true,
+                },
+            ],
+            USER_ACCESS_LEVEL,
+        }
+    },
     computed: {
         ...mapGetters({
             campaignUserList: 'campaign_store/campaignUserList',
@@ -256,3 +260,11 @@ import { mapActions, mapGetters } from 'vuex';
     },
   }
 </script>
+
+<i18n locale='fr'>
+{
+    "observer": "Observateur",
+    "manager": "Manager",
+    "participant": "Participant"
+}
+</i18n>
