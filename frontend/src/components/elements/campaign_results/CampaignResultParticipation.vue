@@ -201,12 +201,12 @@ import { mapActions, mapGetters } from 'vuex';
                     value: 'email',
                 },
                 {
-                    text: 'Participant',
+                    text: this.$t('participant_table_label'),
                     value: 'is_participant',
                     sortable: true,
                 },
                 {
-                    text: 'Niveau de privilège',
+                    text: this.$t('access_level_table_label'),
                     value: 'access_level',
                     sortable: true,
                 },
