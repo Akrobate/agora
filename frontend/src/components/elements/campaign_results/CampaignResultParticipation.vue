@@ -196,7 +196,7 @@ import { mapActions, mapGetters } from 'vuex';
             dialogDelete: false,
             headers: [
                 {
-                    text: 'Email',
+                    text: this.$t('email_table_label'),
                     align: 'start',
                     value: 'email',
                 },
@@ -268,6 +268,9 @@ import { mapActions, mapGetters } from 'vuex';
 {
     "observer": "Observateur",
     "manager": "Manager",
-    "participant": "Participant"
+    "participant": "Participant",
+    "email_table_label": "Email",
+    "participant_table_label": "Participant",
+    "access_level_table_label": "Niveau de privilège"
 }
 </i18n>
