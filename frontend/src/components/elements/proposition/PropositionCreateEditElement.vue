@@ -2,7 +2,9 @@
     <v-card>
 
         <v-card-title>
-            <span class="headline">Proposition</span>
+            <span class="headline">
+                {{ $t('proposition_title') }}
+            </span>
         </v-card-title>
 
         <v-card-text>
@@ -34,20 +36,22 @@
                 text
                 @click="reset"
             >
-                Annuler
+                {{ $t('cancel') }}
             </v-btn>
             <v-btn
                 color="blue darken-1"
                 text
                 @click="save"
             >
-                Sauvegarder
+                {{ $t('save') }}
             </v-btn>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
+
+// @todo: finish i18n
 
 import { mapActions } from 'vuex'
 import EditionElement from '@/components/elements/proposition/types/EditionElement'
@@ -63,6 +67,7 @@ export default {
     data: () => ({
         valid: true,
         payload: '',
+        // @todo refactor rules
         payload_rules: [
             v => !!v || 'Le contenu de la proposition est obligatoire',
         ],
@@ -139,3 +144,11 @@ export default {
     },
 }
 </script>
+
+<i18n locale='fr'>
+{
+    "proposition_title": "Proposition",
+    "cancel_button": "Annuler",
+    "save_button": "Sauvegarder"
+}
+</i18n>
