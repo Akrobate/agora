@@ -18,14 +18,6 @@
                     <edition-element :proposition_type="campaign.proposition_type" v-model="payload" />
 
                 </v-form>
-                
-                <p v-if="debug && 0">
-                    <strong>{{ proposition_id ? proposition_id : 'NULL' }}</strong>
-                    {{ campaign }}
-                    <br />
-                    <br />
-                    {{ proposition }}
-                </p>
             </v-container>
         </v-card-text>
 
@@ -51,8 +43,6 @@
 
 <script>
 
-// @todo: finish i18n
-
 import { mapActions } from 'vuex'
 import EditionElement from '@/components/elements/proposition/types/EditionElement'
 export default {
@@ -67,11 +57,9 @@ export default {
     data: () => ({
         valid: true,
         payload: '',
-        // @todo refactor rules
-        payload_rules: [
-            v => !!v || 'Le contenu de la proposition est obligatoire',
-        ],
-        debug: true,
+        rules: {
+            required: (value) => !!value || this.$t('validation_rule_required'),
+        },
         campaign: {},
         proposition: {},
     }),
@@ -149,6 +137,7 @@ export default {
 {
     "proposition_title": "Proposition",
     "cancel_button": "Annuler",
-    "save_button": "Sauvegarder"
+    "save_button": "Sauvegarder",
+    "validation_rule_required": "Le contenu de la proposition est obligatoire"
 }
 </i18n>
