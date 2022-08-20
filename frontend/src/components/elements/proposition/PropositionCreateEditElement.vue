@@ -57,9 +57,6 @@ export default {
     data: () => ({
         valid: true,
         payload: '',
-        rules: {
-            required: (value) => !!value || this.$t('validation_rule_required'),
-        },
         campaign: {},
         proposition: {},
     }),
@@ -137,7 +134,6 @@ export default {
 {
     "proposition_title": "Proposition",
     "cancel_button": "Annuler",
-    "save_button": "Sauvegarder",
-    "validation_rule_required": "Le contenu de la proposition est obligatoire"
+    "save_button": "Sauvegarder"
 }
 </i18n>
