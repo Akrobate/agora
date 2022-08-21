@@ -103,6 +103,8 @@
 
 <script>
 
+// @todo: finish i18n
+
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -176,3 +178,10 @@ export default {
 }
 
 </script>
+
+
+<i18n locale='fr'>
+{
+    "dashboard_label": "Tableau de bord"
+}
+</i18n>
