@@ -93,7 +93,7 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>Déconnection</v-list-item-title>
+                    <v-list-item-title>{{ $t('logout') }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -182,6 +182,7 @@ export default {
 
 <i18n locale='fr'>
 {
-    "dashboard_label": "Tableau de bord"
+    "dashboard_label": "Tableau de bord",
+    "logout": "Déconnection"
 }
 </i18n>
