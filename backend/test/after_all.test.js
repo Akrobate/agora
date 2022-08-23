@@ -9,5 +9,5 @@ const {
 after(async () => {
     await Promise.delay(500);
     await sequelize.close();
-    console.log('............... After all Teardown, closing mongoDb connection ..............');
+    console.log('............... After all Teardown, closing connection ..............');
 });
