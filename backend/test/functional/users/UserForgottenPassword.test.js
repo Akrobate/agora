@@ -30,6 +30,7 @@ const superApp = superTest(app);
 
 const user_repository = UserRepository.getInstance();
 const user_service = UserService.getInstance();
+const email_service = EmailService.getInstance();
 
 describe('Forgotten password', () => {
 
@@ -48,7 +49,7 @@ describe('Forgotten password', () => {
         await DataSeeder.truncateAll();
         await DataSeeder.createUserHashPassword(user_seed);
 
-        mocks.service_email = mock(EmailService.getInstance());
+        mocks.service_email = mock(email_service);
     });
 
 
@@ -63,8 +64,7 @@ describe('Forgotten password', () => {
 
         mocks.service_email
             .expects('sendMail')
-            // .withArgs({})
-            .returns(Promise.resolve({}));
+            .resolves({});
 
         await superApp
             .post('/api/v1/users/forgotten-password')
@@ -77,7 +77,6 @@ describe('Forgotten password', () => {
                 expect(response.body).to.deep.equal({});
             });
 
-        mocks.service_email.verify();
 
         const stored_user = await user_repository.find({
             id: user_seed.id,
@@ -107,6 +106,9 @@ describe('Forgotten password', () => {
                 expect(decoded).to.have.property('exp');
                 expect(decoded).to.have.property('iat');
             });
+
+        mocks.service_email.verify();
+
     });
 
 });
