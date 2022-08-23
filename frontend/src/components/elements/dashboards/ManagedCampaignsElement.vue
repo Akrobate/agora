@@ -72,7 +72,7 @@
                             </v-col>
                             <v-col>
                                     <p>
-                                        {{ campaign.users.participant_total_count }} {{ $('total_members') }}
+                                        {{ campaign.users.participant_total_count }} {{ $t('total_members') }}
                                     </p>
                                     <p>
                                         {{ campaign.users.participation_count }} {{ $t('has_participated') }}

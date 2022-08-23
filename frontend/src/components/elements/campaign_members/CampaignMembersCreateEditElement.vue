@@ -17,7 +17,7 @@
                         v-model="email"
                         :counter="255"
                         :rules="email_rules"
-                        :label="$('email_field_label')"
+                        :label="$t('email_field_label')"
                         required
                         :disabled="!creation_mode"
                     ></v-text-field>
