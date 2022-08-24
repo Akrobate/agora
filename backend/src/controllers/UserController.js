@@ -197,6 +197,11 @@ class UserController extends AbstractController {
                     .keys({
                         email: joi.string()
                             .trim()
+                            .email({
+                                tlds: {
+                                    allow: false,
+                                },
+                            })
                             .min(1)
                             .required(),
                     })

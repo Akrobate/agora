@@ -111,5 +111,13 @@ describe('Forgotten password', () => {
 
     });
 
-});
 
+    it('Should not be able to request forgotten password mail if is not email', async () => {
+        await superApp
+            .post('/api/v1/users/forgotten-password')
+            .send({
+                email: '1',
+            })
+            .expect(HTTP_CODE.BAD_REQUEST);
+    });
+});
