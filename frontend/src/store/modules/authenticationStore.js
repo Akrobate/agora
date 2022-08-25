@@ -91,7 +91,7 @@ const actions = {
             new_password,
             user_id,
         } = data
-        return user_repository.forgottenPasswordRequest(user_id, {
+        return user_repository.updateForgottenPassword(user_id, {
             forgotten_password_token,
             new_password,
         })
