@@ -78,7 +78,6 @@ npm run generate-html-doc
 
 ## Frontend
 
-* *08/07/22* Mot de passe oublié frontend
 * *13/07/22* Ajouter les résultats des campagnes terminés sur le tableau de bord
 * *16/07/22* Gravatar icons
 * *21/07/22* Dashboard votes expected, should not be proposed if user is not a participant in campaign
