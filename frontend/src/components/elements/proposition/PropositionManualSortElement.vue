@@ -9,7 +9,7 @@
             @click="sort()"
             x-small
         >
-            Reinitialiser l'ordre
+            {{ $t('reinit_order_button') }}
         </v-btn>
 
 
@@ -57,6 +57,8 @@
 </template>
 
 <script>
+
+// @todo : finish i18n
 
 import draggable from "vuedraggable";
 import { mapActions, mapGetters } from 'vuex';
@@ -129,3 +131,9 @@ export default {
 }
 
 </style>
+
+<i18n locale='fr'>
+{
+    "reinit_order_button": "Reinitialiser l'ordre"
+}
+</i18n>
