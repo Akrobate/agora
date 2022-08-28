@@ -1,7 +1,7 @@
 <template>
     <v-container>
 
-        <h1 class="text-h5 mt-8">Votre classement</h1>
+        <h1 class="text-h5 mt-8">{{ $t('your_results_title') }}</h1>
     
         <v-btn
             class="my-3"
@@ -18,10 +18,10 @@
             <thead>
                 <tr>
                     <th class="text-left" scope="col">
-                        Proposition
+                        {{ $t('proposition_table_label') }}
                     </th>
                     <th class="text-left" scope="col">
-                        Rang
+                        {{ $t('rank_table_label') }}
                     </th>
                 </tr>
             </thead>
@@ -57,8 +57,6 @@
 </template>
 
 <script>
-
-// @todo : finish i18n
 
 import draggable from "vuedraggable";
 import { mapActions, mapGetters } from 'vuex';
@@ -134,6 +132,9 @@ export default {
 
 <i18n locale='fr'>
 {
-    "reinit_order_button": "Reinitialiser l'ordre"
+    "your_results_title": "Votre classement",
+    "reinit_order_button": "Reinitialiser l'ordre",
+    "proposition_table_label": "Proposition",
+    "rank_table_label": "Rang"
 }
 </i18n>
