@@ -1,17 +1,19 @@
 <template>
     <div>
-        <p>Raw string</p>
+        <p>{{ $t('title') }}</p>
         <v-text-field
             v-model="payload"
             :counter="255"
             :rules="payload_rules"
-            label="Contenu de la proposition"
+            :label="this.$t('text_field_label')"
             required
         ></v-text-field>
     </div>
 </template>
 
 <script>
+
+// @todo: finish i18n validation rules
 
 export default {
     name: 'EditionElement',
@@ -38,3 +40,10 @@ export default {
     },
 }
 </script>
+
+<i18n locale='french'>
+{
+    "title": "Raw string",
+    "text_field_label": "Contenu de la proposition"
+}
+</i18n>

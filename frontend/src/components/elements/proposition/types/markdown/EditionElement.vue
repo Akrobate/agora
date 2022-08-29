@@ -1,11 +1,11 @@
 <template>
     <div>
-        <p>Markdown preview</p>
+        <p>{{ $t('title') }}</p>
         <view-element :payload="payload" />
 
         <v-textarea
             v-model="payload"
-            label="Edition de la proposition en markdown"
+            :label="this.$t('textarea_label')"
             required
         ></v-textarea>
     </div>
@@ -44,3 +44,10 @@ export default {
     },
 }
 </script>
+
+<i18n locale='french'>
+{
+    "title": "Markdown preview",
+    "textarea_label": "Edition de la proposition en markdown"
+}
+</i18n>
