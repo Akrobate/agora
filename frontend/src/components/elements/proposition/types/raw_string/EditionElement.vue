@@ -4,7 +4,7 @@
         <v-text-field
             v-model="payload"
             :counter="255"
-            :rules="payload_rules"
+            :rules="[rules.required]"
             :label="this.$t('text_field_label')"
             required
         ></v-text-field>
@@ -12,8 +12,6 @@
 </template>
 
 <script>
-
-// @todo: finish i18n validation rules
 
 export default {
     name: 'EditionElement',
@@ -23,9 +21,9 @@ export default {
     data: () => ({
         valid: true,
         payload: '',
-        payload_rules: [
-            v => !!v || 'Le contenu de la proposition est obligatoire',
-        ],
+        rules: {
+            required: (value) => !!value || this.$t('validation_rule_required'),
+        },
     }),
     mounted() {
         this.payload = this.value
@@ -44,6 +42,7 @@ export default {
 <i18n locale='french'>
 {
     "title": "Raw string",
-    "text_field_label": "Contenu de la proposition"
+    "text_field_label": "Contenu de la proposition",
+    "validation_rule_required": "Ce champ est obligatoire",
 }
 </i18n>
