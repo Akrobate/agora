@@ -43,6 +43,6 @@ export default {
 {
     "title": "Raw string",
     "text_field_label": "Contenu de la proposition",
-    "validation_rule_required": "Ce champ est obligatoire",
+    "validation_rule_required": "Ce champ est obligatoire"
 }
 </i18n>
