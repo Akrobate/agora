@@ -11,8 +11,7 @@
         </v-icon>
 
         <v-toolbar-title>
-
-            <span>Agora</span>
+            <span>{{ $t('app_title') }}</span>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -59,3 +58,9 @@ export default {
     }
 }
 </script>
+
+<i18n locale='french'>
+{
+    "app_title": "Agora"
+}
+</i18n>

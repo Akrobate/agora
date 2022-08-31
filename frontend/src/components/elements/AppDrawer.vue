@@ -18,7 +18,7 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>Tableau de bord</v-list-item-title>
+                    <v-list-item-title>{{ $t('dashboard_link_label') }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -28,10 +28,10 @@
         <v-list-item>
             <v-list-item-content>
                 <v-list-item-title class="title">
-                    Campagnes
+                    {{ $t('campaign_section_title') }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                    gestion campagnes
+                    {{ $t('campaign_section_subtitle') }}
                 </v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>
@@ -184,5 +184,13 @@ export default {
 {
     "dashboard_label": "Tableau de bord",
     "logout": "Déconnection"
+}
+</i18n>
+
+<i18n locale='french'>
+{
+    "dashboard_link_label": "Tableau de bord",
+    "campaign_section_title": "Campagnes",
+    "campaign_section_subtitle": "gestion campagnes"
 }
 </i18n>
