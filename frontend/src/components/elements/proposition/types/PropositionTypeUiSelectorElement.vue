@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="body-1">Types de propositions</p>
+        <p class="body-1">{{ $t('title') }}</p>
         <v-radio-group v-model="proposition_type" :disabled="disabled">
             <v-radio
                 v-for="item in proposition_type_list"
@@ -44,3 +44,10 @@ export default {
     },    
 }
 </script>
+
+
+<i18n locale='french'>
+{
+    "title": "Types de propositions"
+}
+</i18n>

@@ -12,7 +12,6 @@
             {{ $t('reinit_order_button') }}
         </v-btn>
 
-
         <v-simple-table>
 
             <thead>
@@ -26,7 +25,6 @@
                 </tr>
             </thead>
 
-        
             <draggable
                 class="list-group"
                 tag="tbody"
@@ -35,22 +33,19 @@
                 @start="drag = true"
                 @end="drag = false"
             >
-
-                    <tr
-                        class="list-group-item"
-                        v-for="element in list"
-                        :key="element.order"
-                    >
-                        <td>
-                            {{ element.payload }}
-                        </td>
-                        <td>
-                            {{ element.rank }}
-                        </td>
-                    </tr>
-
+                <tr
+                    class="list-group-item"
+                    v-for="element in list"
+                    :key="element.order"
+                >
+                    <td>
+                        {{ element.payload }}
+                    </td>
+                    <td>
+                        {{ element.rank }}
+                    </td>
+                </tr>
             </draggable>
-
         </v-simple-table>
     </v-container>
 
