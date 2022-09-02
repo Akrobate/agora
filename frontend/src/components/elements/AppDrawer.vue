@@ -60,10 +60,10 @@
         <v-list-item>
             <v-list-item-content>
                 <v-list-item-title class="title">
-                    Utilisateur
+                    {{ $t('user_section_title') }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                    Paramètres
+                    {{ $t('user_section_subtitle') }}
                 </v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>
@@ -81,7 +81,9 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>Profil</v-list-item-title>
+                    <v-list-item-title>
+                        {{ $t('user_profile_link_label') }}
+                    </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
             <v-list-item
@@ -93,7 +95,9 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{ $t('logout') }}</v-list-item-title>
+                    <v-list-item-title>
+                        {{ $t('logout') }}
+                    </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -103,60 +107,60 @@
 
 <script>
 
-// @todo: finish i18n
-
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    data: () => ({
-        items: [
-            {
-                title: 'Créer',
-                icon: 'mdi-text-box-plus-outline',
-                route: {
-                    name: 'campaign-create',
-                    params: {
-                        campaign_status: 'create',
+    data() {
+        return {
+            items: [
+                {
+                    title: this.$t('campaign_create_link_label'),
+                    icon: 'mdi-text-box-plus-outline',
+                    route: {
+                        name: 'campaign-create',
+                        params: {
+                            campaign_status: 'create',
+                        },
                     },
+                    route_exact: true,
                 },
-                route_exact: true,
-            },
-            {
-                title: 'Brouillons',
-                icon: 'mdi-file-document-edit-outline',
-                route: {
-                    name: 'campaign-list',
-                    params: {
-                        campaign_status: 'draft',
+                {
+                    title: this.$t('campaign_draft_link_label'),
+                    icon: 'mdi-file-document-edit-outline',
+                    route: {
+                        name: 'campaign-list',
+                        params: {
+                            campaign_status: 'draft',
+                        },
                     },
+                    route_exact: true,
                 },
-                route_exact: true,
-            },
-            {
-                title: 'En cours',
-                icon: 'mdi-file-document-multiple-outline',
-                route: {
-                    name: 'campaign-list',
-                    params: {
-                        campaign_status: 'in-progress',
+                {
+                    title: this.$t('campaign_in_progress_link_label'),
+                    icon: 'mdi-file-document-multiple-outline',
+                    route: {
+                        name: 'campaign-list',
+                        params: {
+                            campaign_status: 'in-progress',
+                        },
                     },
+                    route_exact: true,
                 },
-                route_exact: true,
-            },
-            {
-                title: 'Terminées',
-                icon: 'mdi-text-box-check-outline',
-                route: {
-                    name: 'campaign-list',
-                    params: {
-                        campaign_status: 'finished',
+                {
+                    title: this.$t('campaign_finished_link_label'),
+                    icon: 'mdi-text-box-check-outline',
+                    route: {
+                        name: 'campaign-list',
+                        params: {
+                            campaign_status: 'finished',
+                        },
                     },
+                    route_exact: true,
                 },
-                route_exact: true,
-            },
-        ],
-        right: null,
-    }),
+            ],
+            right: null,
+        }
+    },
     mounted() {
         this.setOpenedDrawer(this.$vuetify.breakpoint.lgAndUp)
     },
@@ -191,6 +195,13 @@ export default {
 {
     "dashboard_link_label": "Tableau de bord",
     "campaign_section_title": "Campagnes",
-    "campaign_section_subtitle": "gestion campagnes"
+    "campaign_section_subtitle": "gestion campagnes",
+    "campaign_create_link_label": "Créer",
+    "campaign_draft_link_label": "Brouillons",
+    "campaign_in_progress_link_label": "En cours",
+    "campaign_finished_link_label": "Terminées",
+    "user_section_title": "Utilisateur",
+    "user_section_subtitle": "Paramètres",
+    "user_profile_link_label": "Profil"
 }
 </i18n>
