@@ -3,8 +3,12 @@
         <v-tabs
             v-model="tab"
         >
-            <v-tab>Résultats</v-tab>
-            <v-tab>Participation</v-tab>
+            <v-tab>
+                {{ $t('results_tab_name') }}
+            </v-tab>
+            <v-tab>
+                {{ $t('participation_tab_name') }}
+            </v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tab">
@@ -14,7 +18,7 @@
                 <v-select
                     v-model="selected_participant_user_list"
                     :items="all_participant_user_list"
-                    label="Tous les participants de la campagne"
+                    :label="$t('user_selector_label')"
                     multiple
                     >
                     <template v-slot:selection="{ item, index }">
@@ -50,11 +54,11 @@
                 <!-- Algo selector -->
                 <v-radio-group v-model="algorithm">
                     <v-radio
-                        label="Recherche du consensus (Borda)"
+                        :label="$('algo_selector_radio_borda')"
                         value="borda"
                     ></v-radio>
                     <v-radio
-                        label="Majorité (Majorité relative)"
+                        :label="$t('algo_selector_radio_majority')"
                         value="relative_majority"
                     ></v-radio>
                 </v-radio-group>
@@ -65,10 +69,10 @@
                     <thead>
                         <tr>
                         <th class="text-left" scope="col">
-                            Proposition
+                            {{ $t('proposition_table_label') }}
                         </th>
                         <th class="text-right" scope="col">
-                            Rang
+                            {{ $t('rank_table_label') }}
                         </th>
                         </tr>
                     </thead>
@@ -169,3 +173,15 @@ export default {
     }
 }
 </script>
+
+<i18n locale='french'>
+{
+    "results_tab_name": "Résultats",
+    "participation_tab_name": "Participation",
+    "user_selector_label": "Tous les participants de la campagne",
+    "algo_selector_radio_borda": "Recherche du consensus (Borda)",
+    "algo_selector_radio_majority": "Majorité (Majorité relative)",
+    "proposition_table_label": "Proposition",
+    "rank_table_label": "Rang",
+}
+</i18n>
