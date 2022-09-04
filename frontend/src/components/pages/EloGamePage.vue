@@ -3,7 +3,9 @@
 
         <v-row>
             <v-col class="col-8">
-                <h1 class="text-h5 mt-8">EloGamePage</h1>
+                <h1 class="text-h5 mt-8">
+                    {{ $t('elo_ranking_page_title') }}
+                </h1>
             </v-col>
             <v-col class="col-4" align="right">
                 <v-btn
@@ -11,7 +13,7 @@
                     color="primary"
                     @click="validateUserResult"
                 >
-                    Valider mon classement
+                    {{ $t('validate_ranking_button') }}
                 </v-btn>
             </v-col>
         </v-row>
@@ -138,6 +140,8 @@
 </template>
 
 <script>
+
+// @todo: finish i18n
 
 import { mapActions, mapGetters } from 'vuex'
 import ViewElement from '@/components/elements/proposition/types/ViewElement'
@@ -269,3 +273,10 @@ export default {
 }
 
 </style>
+
+
+<i18n locale='french'>
+    "elo_ranking_page_title": "EloGamePage",
+    "validate_ranking_button": "Valider mon classement"
+
+</i18n>
