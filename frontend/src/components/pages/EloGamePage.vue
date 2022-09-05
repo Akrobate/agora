@@ -106,10 +106,10 @@
             <thead>
                 <tr>
                 <th class="text-left" scope="col">
-                    Proposition
+                    {{ $t('proposition_table_head_label') }}
                 </th>
                 <th class="text-right" scope="col">
-                    ELO score
+                    {{ $t('elo_score_table_head_label') }}
                 </th>
                 </tr>
             </thead>
@@ -140,8 +140,6 @@
 </template>
 
 <script>
-
-// @todo: finish i18n
 
 import { mapActions, mapGetters } from 'vuex'
 import ViewElement from '@/components/elements/proposition/types/ViewElement'
@@ -277,6 +275,7 @@ export default {
 
 <i18n locale='french'>
     "elo_ranking_page_title": "EloGamePage",
-    "validate_ranking_button": "Valider mon classement"
-
+    "validate_ranking_button": "Valider mon classement",
+    "proposition_table_head_label": "Proposition",
+    "elo_score_table_head_lable": "ELO score"
 </i18n>
