@@ -33,13 +33,17 @@
                 <v-dialog v-model="dialogDelete" max-width="500px">
                     <v-card>
                         <v-card-title class="headline">
-                            Supprimer membre?
+                            {{ $t('remove_campaign_dialog_title') }}
                         </v-card-title>
 
                         <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="closeDelete">Annuler</v-btn>
-                        <v-btn color="blue darken-1" text @click="deleteItemConfirm">Oui</v-btn>
+                        <v-btn color="blue darken-1" text @click="closeDelete">
+                            {{ $t('cancel_button') }}
+                        </v-btn>
+                        <v-btn color="blue darken-1" text @click="deleteItemConfirm">
+                            {{ $t('yes_button') }}
+                        </v-btn>
                         <v-spacer></v-spacer>
                         </v-card-actions>
                     </v-card>
@@ -49,20 +53,20 @@
                 <v-dialog v-model="dialogInvite" max-width="500px">
                     <v-card>
                         <v-card-title class="headline">
-                            Inviter le membre
+                            {{ $t('invite_member_dialog_title') }}
                         </v-card-title>
 
                         <v-card-text>
-                            Etes vous sur de vouloir inviter ce membre maintenant?
+                            {{ $t('invite_member_dialog_description') }}
                         </v-card-text>
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" text @click="closeInvite">
-                                Annuler
+                                {{ $t('cancel_button') }}
                             </v-btn>
                             <v-btn color="blue darken-1" text @click="InviteConfirm">
-                                Oui
+                                {{ $t('yes_button') }}
                             </v-btn>
                             <v-spacer></v-spacer>
                         </v-card-actions>
@@ -122,7 +126,7 @@
         <template v-slot:[`item.invitation`]="{ item }">
             <div :set="sub = item.user_status_list.find((status) => status.status_id === 1)">
                 <div v-if="sub !== undefined">
-                    Invité {{ sub.date | humanizeDate }}
+                    {{ $t('invited_string') }} {{ sub.date | humanizeDate }}
                 </div>
             </div>
         </template>
@@ -136,7 +140,7 @@
                 outlined
                 small
             >
-                Observateur
+                {{ $t('observer_chip') }}
             </v-chip>
 
             <v-chip
@@ -146,7 +150,7 @@
                 text-color="white"
                 small
             >
-                Manager
+                {{ $t('manager_chip') }}
             </v-chip>
         </template>
 
@@ -158,7 +162,7 @@
                 outlined
                 small
             >
-                Participant
+                {{ $t('participant_chip') }}
             </v-chip>
         </template>
 
@@ -309,6 +313,15 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
     "edit_member_tooltip": "Modifier le membre",
     "delete_member_tooltip": "Supprimer le membre de la campagne",
     "invitation_success_message": "Invitation envoyée",
-    "deleted_member_success_message": "Membre supprimé de la campagne"
+    "deleted_member_success_message": "Membre supprimé de la campagne",
+    "remove_campaign_dialog_title": "Supprimer membre?",
+    "invite_member_dialog_title": "Inviter le membre",
+    "invite_member_dialog_description": "Etes vous sur de vouloir inviter ce membre maintenant?",
+    "yes_button": "Oui",
+    "cancel_button": "Annuler",
+    "observer_chip": "Observateur",
+    "manager_chip": "Manager",
+    "participant_chip": "Participant",
+    "invited_string": "Invité"
 }
 </i18n>
