@@ -63,13 +63,13 @@
                         </v-col>
                         <v-col>
                                 <p>
-                                    {{ participant_total_count }} participants
+                                    {{ participant_total_count }} {{ $t('participants_statistic_label') }}
                                 </p>
                                 <p>
-                                    {{ invited_count }} ont été invités
+                                    {{ invited_count }} {{ $t('has_been_invited_static_label') }}
                                 </p>
                                 <p>
-                                    {{ participant_total_count - invited_count}} pas invité
+                                    {{ participant_total_count - invited_count}} {{ $t('has_not_been_invited_static_label') }}
                                 </p>
                         </v-col>
 
@@ -102,13 +102,13 @@
                         </v-col>
                         <v-col>
                                 <p>
-                                    {{ total_members_count }} membres au total
+                                    {{ total_members_count }} {{ $t('total_members_statistic_label') }}
                                 </p>
                                 <p>
-                                    {{ total_members_count - participant_total_count }} non participants
+                                    {{ total_members_count - participant_total_count }} {{ $t('not_participants_statistic_label') }}
                                 </p>
                                 <p>
-                                    {{ participant_total_count }} participants
+                                    {{ participant_total_count }} {{ $t('participants_statistic_label') }}
                                 </p>
                         </v-col>
 
@@ -271,6 +271,11 @@ import { mapActions, mapGetters } from 'vuex';
     "participant": "Participant",
     "email_table_label": "Email",
     "participant_table_label": "Participant",
-    "access_level_table_label": "Niveau de privilège"
+    "access_level_table_label": "Niveau de privilège",
+    "participants_statistic_label": "participants",
+    "not_participants_statistic_label": "non participant",
+    "total_members_statistic_label": "membres au total",
+    "has_been_invited_static_label": "ont été invités",
+    "has_not_been_invited_static_label": "pas invité$"
 }
 </i18n>
