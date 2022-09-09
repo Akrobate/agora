@@ -5,10 +5,10 @@
         <v-col>
             <v-card>
                 <v-card-title>
-                    Participation
+                    {{ $t('participation_section_title') }}
                 </v-card-title>
                 <v-card-subtitle>
-                    Membres ayant répondu
+                    {{ $t('participation_section_subtitle') }}
                 </v-card-subtitle>
                 <v-card-text>
                     <v-row>
@@ -25,13 +25,13 @@
                         </v-col>
                         <v-col>
                                 <p>
-                                    {{ participant_total_count }} participants au total
+                                    {{ participant_total_count }} {{ $t('participants_total_statistic_label') }}
                                 </p>
                                 <p>
-                                    {{ participation_count }} ont participé
+                                    {{ participation_count }} {{ $t('participated_statistic_label') }}
                                 </p>
                                 <p>
-                                    {{ participant_total_count - participation_count}} pas participé
+                                    {{ participant_total_count - participation_count}} {{ $t('not_participated_statistic_label') }}
                                 </p>
                         </v-col>
 
@@ -43,10 +43,10 @@
         <v-col>
             <v-card>
                 <v-card-title>
-                    Invitations
+                    {{ $t('members_section_title') }}
                 </v-card-title>
                 <v-card-subtitle>
-                    Membres invités
+                    {{ $t('members_section_subtitle') }}
                 </v-card-subtitle>
                 <v-card-text>
                     <v-row>
@@ -82,10 +82,10 @@
         <v-col>
             <v-card>
                 <v-card-title>
-                    Autres membres
+                    {{ $t('other_members_section_title') }}
                 </v-card-title>
                 <v-card-subtitle>
-                    Membres exclus de la participation
+                    {{ $t('other_members_section_subtitle') }}
                 </v-card-subtitle>
                 <v-card-text>
                     <v-row>
@@ -165,18 +165,15 @@
                 color="primary"
                 @click="initialize"
             >
-                Actualiser
+                {{ $t('refresh_button') }}
             </v-btn>
         </template>
     </v-data-table>
-
 
 </v-container>
 </template>
 
 <script>
-
-// @todo: i18n to finish
 
 import {
     CAMPAIGN_USER_STATUS,
@@ -272,10 +269,20 @@ import { mapActions, mapGetters } from 'vuex';
     "email_table_label": "Email",
     "participant_table_label": "Participant",
     "access_level_table_label": "Niveau de privilège",
+    "participants_total_statistic_label": "participants au total",
+    "participated_statistic_label": "ont participé",
+    "not_participated_statistic_label": "pas participé",
     "participants_statistic_label": "participants",
     "not_participants_statistic_label": "non participant",
     "total_members_statistic_label": "membres au total",
     "has_been_invited_static_label": "ont été invités",
-    "has_not_been_invited_static_label": "pas invité$"
+    "has_not_been_invited_static_label": "pas invité$",
+    "other_members_section_title": "Autres membres",
+    "other_members_section_subtitle": "Membres exclus de la participation",
+    "members_section_title": "Invitations",
+    "members_section_subtitle": "Membres invités",
+    "participation_section_title": "Participation",
+    "participation_section_subtitle": "Membres ayant répondu",
+    "refresh_button": "Actualiser"
 }
 </i18n>
