@@ -182,6 +182,6 @@ export default {
     "algo_selector_radio_borda": "Recherche du consensus (Borda)",
     "algo_selector_radio_majority": "Majorité (Majorité relative)",
     "proposition_table_label": "Proposition",
-    "rank_table_label": "Rang",
+    "rank_table_label": "Rang"
 }
 </i18n>

@@ -19,7 +19,7 @@
                             :width="15"
                             :value="participation_count / participant_total_count * 100"
                             color="green"
-                            >
+                        >
                             {{ Math.ceil(participation_count / participant_total_count * 100) }}%
                         </v-progress-circular>
                         </v-col>

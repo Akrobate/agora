@@ -234,6 +234,15 @@ export default {
 </script>
 
 
+<i18n locale='french'>
+{
+    "elo_ranking_page_title": "EloGamePage",
+    "validate_ranking_button": "Valider mon classement",
+    "proposition_table_head_label": "Proposition",
+    "elo_score_table_head_label": "ELO score"
+}
+</i18n>
+
 <style scoped>
 .list-enter-active,
 .list-leave-active {
@@ -271,11 +280,3 @@ export default {
 }
 
 </style>
-
-
-<i18n locale='french'>
-    "elo_ranking_page_title": "EloGamePage",
-    "validate_ranking_button": "Valider mon classement",
-    "proposition_table_head_label": "Proposition",
-    "elo_score_table_head_lable": "ELO score"
-</i18n>
