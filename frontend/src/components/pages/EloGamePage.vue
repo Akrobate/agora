@@ -56,7 +56,7 @@
 
             <v-col class="col-1" @click="is_loading = !is_loading">
                 <p class="text-h2" v-if="!is_loading">
-                    VS
+                    {{ $t('versus') }}
                 </p>
 
                 <div v-if="is_loading">
@@ -239,7 +239,8 @@ export default {
     "elo_ranking_page_title": "EloGamePage",
     "validate_ranking_button": "Valider mon classement",
     "proposition_table_head_label": "Proposition",
-    "elo_score_table_head_label": "ELO score"
+    "elo_score_table_head_label": "ELO score",
+    "versus": "VS"
 }
 </i18n>
 
