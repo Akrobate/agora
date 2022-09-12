@@ -100,8 +100,6 @@
 
         </div>
 
-        <!-- LIST ---->
-        
         <v-simple-table>
             <thead>
                 <tr>

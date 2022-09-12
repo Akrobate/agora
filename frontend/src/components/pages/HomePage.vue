@@ -1,7 +1,7 @@
 <template>
     <v-container>
 
-        <managed-campaigns-element v-if="true" />
+        <managed-campaigns-element />
 
         <expected-participation-element />
 

@@ -9,7 +9,9 @@
         <v-app-bar-nav-icon @click.stop="toggleDrawerState()"></v-app-bar-nav-icon>
 
         <v-toolbar-title>
-            <span>Agora</span>
+            <span>
+                {{ $t('agora_app_title') }}
+            </span>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -45,3 +47,9 @@ export default {
     }
 }
 </script>
+
+<i18n locale='french'>
+{
+    "agora_app_title": "Agora"
+}
+</i18n>
