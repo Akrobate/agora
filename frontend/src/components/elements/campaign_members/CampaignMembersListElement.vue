@@ -305,7 +305,7 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
   }
 </script>
 
-<i18n locale="fr">
+<i18n locale='fr'>
 {
     "members_title": "Membres de la campagne",
     "add_member_button": "Ajouter un membre",

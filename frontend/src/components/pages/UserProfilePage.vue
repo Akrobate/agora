@@ -26,7 +26,7 @@ export default {
 
 </script>
 
-<i18n locale='french'>
+<i18n locale='fr'>
 {
     "user_profile_title": "Profil utilisateur"
 }
