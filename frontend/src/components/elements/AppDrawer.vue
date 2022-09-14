@@ -187,12 +187,7 @@ export default {
 <i18n locale='fr'>
 {
     "dashboard_label": "Tableau de bord",
-    "logout": "Déconnection"
-}
-</i18n>
-
-<i18n locale='french'>
-{
+    "logout": "Déconnection",
     "dashboard_link_label": "Tableau de bord",
     "campaign_section_title": "Campagnes",
     "campaign_section_subtitle": "gestion campagnes",
