@@ -232,7 +232,7 @@ export default {
 </script>
 
 
-<i18n locale='french'>
+<i18n locale='fr'>
 {
     "elo_ranking_page_title": "EloGamePage",
     "validate_ranking_button": "Valider mon classement",

@@ -174,7 +174,7 @@ export default {
 }
 </script>
 
-<i18n locale='french'>
+<i18n locale='fr'>
 {
     "results_tab_name": "Résultats",
     "participation_tab_name": "Participation",

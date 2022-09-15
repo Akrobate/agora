@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<i18n locale='french'>
+<i18n locale='fr'>
 {
     "title": "Raw string",
     "text_field_label": "Contenu de la proposition",

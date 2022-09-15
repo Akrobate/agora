@@ -46,7 +46,7 @@ export default {
 </script>
 
 
-<i18n locale='french'>
+<i18n locale='fr'>
 {
     "title": "Types de propositions"
 }

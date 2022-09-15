@@ -45,7 +45,7 @@ export default {
 }
 </script>
 
-<i18n locale='french'>
+<i18n locale='fr'>
 {
     "title": "Markdown preview",
     "textarea_label": "Edition de la proposition en markdown"
