@@ -71,13 +71,11 @@ import { mapActions, mapGetters } from 'vuex'
 
 import UserRegistrationFormElement from '@/components/elements/user/UserRegistrationFormElement'
 
-// @todo: disabled_email_value: static value
-
 export default {
     name: "GuestAccessPage",
     data() {
         return {
-            disabled_email_value: 'fedorov.artiom@gmail.com',
+            disabled_email_value: null,
             trigger_register: null,
             loading: false,
             campaign_id: null,
@@ -97,6 +95,10 @@ export default {
         ...mapActions({
             getCampaign: 'campaign_store/getCampaign',
         }),
+        registerSuccess() {
+            this.loading = false
+            this.$router.push({ name: 'home' })
+        }
     },
     async mounted() {
 
@@ -106,6 +108,8 @@ export default {
         this.campaign_id = campaign.id
         this.campaign_title = campaign.title
         this.campaign_description = campaign.description
+
+        this.disabled_email_value = this.token_data.email
 
     }
 }

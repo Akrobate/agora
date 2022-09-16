@@ -92,7 +92,7 @@ npm run generate-html-doc
 
 ## Bug
 
-* *16/09/22* Static mail in guest interface
+* *16/09/22* Finish registration of guest user bug interface => To test
 
 ## Latent tasks
 
