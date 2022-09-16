@@ -73,7 +73,6 @@ npm run generate-html-doc
 ## Feature
 
 * *15/07/22* Implement contact list (with tag mecanic)
-* *15/07/22* Implement interface to transform guest account to real account
 * *21/07/22* Ajouter la notion de mail validé
 
 ## Frontend
@@ -90,6 +89,10 @@ npm run generate-html-doc
 * *15/07/22* Should not be able to remove own management user
 * *21/07/22* Ajouter champ mail valide
 * *21/07/22* Ajouter la gestion API du champ mail valide
+
+## Bug
+
+* *16/09/22* Static mail in guest interface
 
 ## Latent tasks
 
