@@ -10,7 +10,7 @@
 
         <v-toolbar-title>
             <span>
-                {{ $t('agora_app_title') }}
+                {{ $t('app_title') }}
             </span>
         </v-toolbar-title>
 
@@ -48,8 +48,8 @@ export default {
 }
 </script>
 
-<i18n locale='french'>
+<i18n locale='fr'>
 {
-    "agora_app_title": "Agora"
+    "app_title": "Agora"
 }
 </i18n>
