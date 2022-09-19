@@ -78,10 +78,12 @@ npm run generate-html-doc
 ## Frontend
 
 * *13/07/22* Ajouter les résultats des campagnes terminés sur le tableau de bord
-* *16/07/22* Gravatar icons
+* *16/07/22* Gravatar icons (work in progress)
 * *21/07/22* Dashboard votes expected, should not be proposed if user is not a participant in campaign
 * *23/07/22* Refactor login element to have the same patter than register element
 * *25/07/22* Remove snack back in registration Element to use generic snackbar in project
+* *18/09/22* Clicj sur une campagne dans la liste de campagnes devrait faire quelque chose (a detailler en sous taches)
+* *18/09/22* Splitter le composant avatar en avat pour profil qui utilise un composant generique parametrable utilisant gravatar
 
 ## Backend
 
