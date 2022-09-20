@@ -1,55 +1,33 @@
 <template>
-    <v-card>
-        <v-card-title>
-            {{ $t('avatar_card_title') }}
-        </v-card-title>
-        <v-card-text>
-            <v-avatar
-                color="primary"
-                size="200"
-            >
-            <img
-                :src="avatar_img"
-                alt="John"
-            >
-            
-            </v-avatar>
-
-            {{ email }}
-        </v-card-text>
-    </v-card>
+    <v-avatar
+        color="primary"
+        :size="size"
+    >
+        <img
+            :src="avatar_img"
+            :alt="alt"
+        >
+    </v-avatar>
 </template>
 
 <script>
 
 // Using gravatar, if doesn't gravatar found then own picto
-import { mapGetters } from 'vuex'
 import { MD5 } from 'crypto-js'
 
 export default {
-    data() {
-        return {
-            email: null
-        }
-    },
+    props: [
+        'email',
+        'size',
+        'alt'
+    ],
     computed: {
-        ...mapGetters({
-            token_data: 'authentication_store/tokenData',
-        }),
         avatar_img() {
-            const hash = MD5(this.token_data.email)
-            return `https://www.gravatar.com/avatar/${hash}?s=200`
+            const hash = MD5(this.email)
+            return `https://www.gravatar.com/avatar/${hash}?s=${this.size}`
         }
-    },
-    async mounted() {
-        this.email = this.token_data.email
     },
 }
 
 </script>
 
-<i18n locale="fr">
-{
-    "avatar_card_title": "Avatar"
-}
-</i18n>
