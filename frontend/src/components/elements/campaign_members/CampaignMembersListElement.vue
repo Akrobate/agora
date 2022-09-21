@@ -122,13 +122,16 @@
 
         </template>
 
-
         <template v-slot:[`item.invitation`]="{ item }">
             <div :set="sub = item.user_status_list.find((status) => status.status_id === 1)">
                 <div v-if="sub !== undefined">
                     {{ $t('invited_string') }} {{ sub.date | humanizeDate }}
                 </div>
             </div>
+        </template>
+
+        <template v-slot:[`item.avatar`]="{ item }">
+            <avatar-element size="30" :email="item.email" />
         </template>
 
 
@@ -174,11 +177,13 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import CampaignMembersCreateEditElement from '@/components/elements/campaign_members/CampaignMembersCreateEditElement'
+import AvatarElement from '@/components/elements/user/AvatarElement'
 
   export default {
     name: 'CampaignMembersListElement',
     components: {
         CampaignMembersCreateEditElement,
+        AvatarElement,
     },
     props: [
         'campaign_id',
@@ -188,6 +193,11 @@ import CampaignMembersCreateEditElement from '@/components/elements/campaign_mem
         dialogDelete: false,
         dialogInvite: false,
         headers: [
+            {
+                text: '',
+                align: 'start',
+                value: 'avatar',
+            },
             {
                 text: 'Email',
                 align: 'start',
