@@ -54,7 +54,7 @@
                 <!-- Algo selector -->
                 <v-radio-group v-model="algorithm">
                     <v-radio
-                        :label="$('algo_selector_radio_borda')"
+                        :label="$t('algo_selector_radio_borda')"
                         value="borda"
                     ></v-radio>
                     <v-radio

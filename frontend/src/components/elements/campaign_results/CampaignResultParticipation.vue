@@ -276,7 +276,7 @@ import { mapActions, mapGetters } from 'vuex';
     "not_participants_statistic_label": "non participant",
     "total_members_statistic_label": "membres au total",
     "has_been_invited_static_label": "ont été invités",
-    "has_not_been_invited_static_label": "pas invité$",
+    "has_not_been_invited_static_label": "pas invité",
     "other_members_section_title": "Autres membres",
     "other_members_section_subtitle": "Membres exclus de la participation",
     "members_section_title": "Invitations",
