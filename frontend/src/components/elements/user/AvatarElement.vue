@@ -2,6 +2,7 @@
     <v-avatar
         color="primary"
         :size="size"
+        :left="left ? true : false"
     >
         <img
             :src="avatar_img"
@@ -19,7 +20,8 @@ export default {
     props: [
         'email',
         'size',
-        'alt'
+        'alt',
+        'left',
     ],
     computed: {
         avatar_img() {

@@ -23,6 +23,7 @@
                     >
                     <template v-slot:selection="{ item, index }">
                         <v-chip v-if="[0, 1, 2].includes(index)">
+                            <avatar-element :left="true" :email="item.email" size="20" />
                             <span>{{ item.email }}</span>
                         </v-chip>
                         <span
@@ -38,6 +39,7 @@
                             <v-list-item-action>
                                 <v-checkbox :input-value="active"></v-checkbox>
                             </v-list-item-action>
+
                             <v-list-item-content>
                                 <v-list-item-title>
                                     <v-row no-gutters align="center">
@@ -45,6 +47,9 @@
                                     </v-row>
                                 </v-list-item-title>
                             </v-list-item-content>
+                            <v-list-item-avatar>
+                                <avatar-element :email="item.email" size="40" />
+                            </v-list-item-avatar>
                         </v-list-item>
                     </template>
 
@@ -111,12 +116,14 @@ import {
 } from 'vuex'
 
 import CampaignResultParticipation from '@/components/elements/campaign_results/CampaignResultParticipation'
+import AvatarElement from '@/components/elements/user/AvatarElement'
 
 
 export default {
     name: "CampaignResultPage",
     components: {
         CampaignResultParticipation,
+        AvatarElement,
     },
     data() {
         return {
