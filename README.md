@@ -87,7 +87,6 @@ npm run generate-html-doc
 
 * *07/07/22* Update documentation for user password update
 * *15/07/22* Should not be able to remove own management user
-* *21/07/22* Ajouter champ mail valide
 * *21/07/22* Ajouter la gestion API du champ mail valide
 
 ## Bug
