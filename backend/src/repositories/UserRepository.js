@@ -56,6 +56,10 @@ class UserRepository extends AbstractSequelizeRepository {
                     type: DataTypes.STRING,
                     unique: true,
                 },
+                is_verified_email: {
+                    allowNull: true,
+                    type: DataTypes.BOOLEAN,
+                },
                 password: {
                     allowNull: true,
                     type: DataTypes.STRING,
