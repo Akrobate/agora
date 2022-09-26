@@ -74,6 +74,9 @@ npm run generate-html-doc
 
 * *15/07/22* Implement contact list (with tag mecanic)
 * *21/07/22* Ajouter la notion de mail validé
+* *26/09/22* En brouillon on devrait pas pouvoir inviter d'utilisateurs
+* *26/09/22* Ajouter une mécanique d'invitation de tous
+* *26/09/22* Une campagne terminée ne doit plus accepter de votes
 
 ## Frontend
 
@@ -88,6 +91,9 @@ npm run generate-html-doc
 * *07/07/22* Update documentation for user password update
 * *15/07/22* Should not be able to remove own management user
 * *21/07/22* Ajouter la gestion API du champ mail valide
+* *26/09/22* Ajouter couverture de test sur le fait qu'une campagne ne peut rester sans aucun manager
+* *26/09/22* Ajouter couverture de test sur le fait qu'un utilisateur manager ne peut etre supprimé
+
 
 ## Bug
 
