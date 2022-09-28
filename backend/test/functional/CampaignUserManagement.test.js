@@ -45,7 +45,7 @@ describe('CampaignUserManagement', () => {
     });
 
     // @todo implement test
-    it.skip('Manager should be able remove last campaign manager', async () => {
+    it.skip('Manager should not be able to remove last campaign manager', async () => {
         await superApp
             .post(`/api/v1/campaigns/${campaign_seed.id}/status`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
@@ -57,5 +57,21 @@ describe('CampaignUserManagement', () => {
                 expect(response.body).to.have.property('status_id', 1);
             });
     });
+
+
+    // @todo implement test
+    it.skip('Manager should not be able to remove another manager', async () => {
+        await superApp
+            .post(`/api/v1/campaigns/${campaign_seed.id}/status`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .send({
+                status_id: 1,
+            })
+            .expect(HTTP_CODE.CREATED)
+            .expect((response) => {
+                expect(response.body).to.have.property('status_id', 1);
+            });
+    });
+
 
 });
