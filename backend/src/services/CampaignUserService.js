@@ -109,12 +109,13 @@ class CampaignUserService {
 
         await this.acl.checkUserIsCampaignManager(user.user_id, campaign_id);
 
+
         const manager_campaign_user = await this.campaign_user_repository
             .search({
                 campaign_id,
                 access_level: CampaignUserRepository.MANAGER,
             });
-
+console.log(manager_campaign_user)
         if (
             manager_campaign_user.length === 1
             && manager_campaign_user.find((item) => item.user_id === id) !== undefined
