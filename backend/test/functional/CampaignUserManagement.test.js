@@ -37,6 +37,7 @@ describe('CampaignUserManagement', () => {
 
         await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.create('CampaignRepository', campaign_seed);
+
         await DataSeeder.create('CampaignUserRepository', manager_campaign_user_seed);
 
         await DataSeeder.create('UserRepository', guest_user_seed);
@@ -45,17 +46,19 @@ describe('CampaignUserManagement', () => {
     });
 
     // @todo implement test
-    it.skip('Manager should not be able to remove last campaign manager', async () => {
+    it.only('Manager should not be able to remove last campaign manager', async () => {
+        console.log(manager_campaign_user_seed)
         await superApp
-            .post(`/api/v1/campaigns/${campaign_seed.id}/status`)
+            .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_seed.user_id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
             .send({
-                status_id: 1,
+                access_level: 1,
+                is_participant: true,
             })
-            .expect(HTTP_CODE.CREATED)
-            .expect((response) => {
-                expect(response.body).to.have.property('status_id', 1);
-            });
+            .expect(HTTP_CODE.UNAUTHORIZED)
+            // .expect((response) => {
+            //     expect(response.body).to.have.property('status_id', 1);
+            // });
     });
 
 
