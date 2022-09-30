@@ -18,6 +18,7 @@ const campaign_seed = {
 };
 
 const manager_campaign_user_seed = {
+    id: 200,
     campaign_id: campaign_seed.id,
     user_id: 100,
     access_level: 3,
