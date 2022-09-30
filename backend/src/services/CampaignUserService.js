@@ -9,6 +9,10 @@ const {
 } = require('../services/commons');
 
 const {
+    CustomError,
+} = require('../CustomError');
+
+const {
     CampaignRepository,
     CampaignUserRepository,
     CampaignUserStatusRepository,
@@ -115,11 +119,11 @@ class CampaignUserService {
                 campaign_id,
                 access_level: CampaignUserRepository.MANAGER,
             });
-console.log(manager_campaign_user)
+
         if (
             manager_campaign_user.length === 1
-            && manager_campaign_user.find((item) => item.user_id === id) !== undefined
-            && manager_campaign_user.find((item) => item.user_id === id).access_level !== CampaignUserRepository.MANAGER
+            && manager_campaign_user.find((item) => item.id == id) !== undefined
+            && manager_campaign_user.find((item) => item.id == id).access_level === CampaignUserRepository.MANAGER
         ) {
             throw new CustomError(CustomError.UNAUTHORIZED, 'Last manager cannot be unsetted');
         }

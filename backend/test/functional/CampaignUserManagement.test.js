@@ -45,20 +45,18 @@ describe('CampaignUserManagement', () => {
 
     });
 
-    // @todo implement test
-    it.only('Manager should not be able to remove last campaign manager', async () => {
-        console.log(manager_campaign_user_seed)
+    it('Manager should not be able to remove last campaign manager', async () => {
         await superApp
-            .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_seed.user_id}`)
+            .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_seed.id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
             .send({
                 access_level: 1,
                 is_participant: true,
             })
             .expect(HTTP_CODE.UNAUTHORIZED)
-            // .expect((response) => {
-            //     expect(response.body).to.have.property('status_id', 1);
-            // });
+            .expect((response) => {
+                expect(response.body).to.have.property('message', 'Last manager cannot be unsetted');
+            });
     });
 
 
