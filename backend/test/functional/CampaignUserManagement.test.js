@@ -21,24 +21,29 @@ const {
     manager_campaign_user_seed,
     guest_user_seed,
     guest_campaign_user_seed,
+    manager_user_2_seed,
+    manager_campaign_user_2_seed,
 } = require('../test_seeds/test_data_seeds');
+
+const {
+    CampaignUserRepository,
+} = require('../../src/repositories');
 
 const superApp = superTest(app);
 
 
 describe('CampaignUserManagement', () => {
 
-    before(async () => {
+    beforeEach(async () => {
+        await DataSeeder.truncateAll();
 
-        await DataSeeder.truncate('CampaignRepository');
-        await DataSeeder.truncate('CampaignUserRepository');
-        await DataSeeder.truncate('CampaignUserStatusRepository');
-        await DataSeeder.truncate('UserRepository');
-
-        await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.create('CampaignRepository', campaign_seed);
 
+        await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.create('CampaignUserRepository', manager_campaign_user_seed);
+
+        await DataSeeder.createUserHashPassword(manager_user_2_seed);
+        await DataSeeder.create('CampaignUserRepository', manager_campaign_user_2_seed);
 
         await DataSeeder.create('UserRepository', guest_user_seed);
         await DataSeeder.create('CampaignUserRepository', guest_campaign_user_seed);
@@ -50,7 +55,16 @@ describe('CampaignUserManagement', () => {
             .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_seed.id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
             .send({
-                access_level: 1,
+                access_level: CampaignUserRepository.GUEST,
+                is_participant: true,
+            })
+            .expect(HTTP_CODE.OK);
+
+        await superApp
+            .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_2_seed.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
+            .send({
+                access_level: CampaignUserRepository.GUEST,
                 is_participant: true,
             })
             .expect(HTTP_CODE.UNAUTHORIZED)
@@ -59,20 +73,14 @@ describe('CampaignUserManagement', () => {
             });
     });
 
-
-    // @todo implement test
-    it.skip('Manager should not be able to remove another manager', async () => {
+    it('Manager should not be able to remove another manager', async () => {
         await superApp
-            .post(`/api/v1/campaigns/${campaign_seed.id}/status`)
+            .delete(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_2_seed.id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .send({
-                status_id: 1,
-            })
-            .expect(HTTP_CODE.CREATED)
+            .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
-                expect(response.body).to.have.property('status_id', 1);
+                expect(response.body).to.have.property('message', 'Manager user cannot be removed');
             });
     });
-
 
 });

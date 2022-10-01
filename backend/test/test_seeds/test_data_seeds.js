@@ -8,6 +8,17 @@ const manager_user_seed = {
     email: 'manager.user@test.com',
 };
 
+const manager_user_2_seed = {
+    id: 105,
+    password: 'ShouldHaveLettersDigitsAndAtLeast8chars1_user_2',
+    email: 'manager.user_2@test.com',
+};
+
+const guest_user_seed = {
+    id: 200,
+    email: 'guest.user@test.com',
+};
+
 const campaign_seed = {
     id: 10,
     title: 'Title of campaignsss',
@@ -20,13 +31,15 @@ const campaign_seed = {
 const manager_campaign_user_seed = {
     id: 200,
     campaign_id: campaign_seed.id,
-    user_id: 100,
+    user_id: manager_user_seed.id,
     access_level: 3,
 };
 
-const guest_user_seed = {
-    id: 200,
-    email: 'guest.user@test.com',
+const manager_campaign_user_2_seed = {
+    id: 205,
+    campaign_id: campaign_seed.id,
+    user_id: manager_user_2_seed.id,
+    access_level: 3,
 };
 
 const guest_campaign_user_seed = {
@@ -173,4 +186,6 @@ module.exports = {
     manager_user_proposition_result_1,
     manager_user_proposition_result_2,
     manager_user_proposition_result_3,
+    manager_user_2_seed,
+    manager_campaign_user_2_seed,
 };
