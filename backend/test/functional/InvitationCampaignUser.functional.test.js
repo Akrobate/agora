@@ -38,7 +38,7 @@ describe('InvitationCampaignUser', () => {
 
     const mocks = {};
 
-    before(async () => {
+    beforeEach(async () => {
 
         await DataSeeder.truncate('CampaignRepository');
         await DataSeeder.truncate('CampaignUserRepository');
@@ -46,21 +46,21 @@ describe('InvitationCampaignUser', () => {
         await DataSeeder.truncate('UserRepository');
 
         await DataSeeder.createUserHashPassword(manager_user_seed);
-        await DataSeeder.create('CampaignRepository', campaign_seed);
-        await DataSeeder.create('CampaignUserRepository', manager_campaign_user_seed);
-
         await DataSeeder.create('UserRepository', guest_user_seed);
-        await DataSeeder.create('CampaignUserRepository', guest_campaign_user_seed);
-
+    
         mocks.service_email = mock(EmailService.getInstance());
 
     });
 
-    after(() => {
+    afterEach(() => {
         mocks.service_email.restore();
     });
 
     it('Manager should be able invite a guest', async () => {
+
+        await DataSeeder.create('CampaignRepository', campaign_seed);
+        await DataSeeder.create('CampaignUserRepository', manager_campaign_user_seed);
+        await DataSeeder.create('CampaignUserRepository', guest_campaign_user_seed);
 
         mocks.service_email
             .expects('sendInvitationMail')
@@ -85,6 +85,30 @@ describe('InvitationCampaignUser', () => {
 
                 mocks.service_email.verify();
 
+            });
+    });
+
+
+
+    it('RED TEST - Manager should not be able to invite somebody on a draft campaign', async () => {
+
+        await DataSeeder.create('CampaignRepository', {
+            ...campaign_seed,
+            campaign_status: 1,
+        });
+        await DataSeeder.create('CampaignUserRepository', manager_campaign_user_seed);
+        await DataSeeder.create('CampaignUserRepository', guest_campaign_user_seed);
+
+        mocks.service_email
+            .expects('sendInvitationMail')
+            .never();
+
+        await superApp
+            .post(`/api/v1/campaigns/${campaign_seed.id}/users/${guest_campaign_user_seed.id}/invite`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.UNAUTHORIZED)
+            .expect((response) => {
+                mocks.service_email.verify();
             });
     });
 });

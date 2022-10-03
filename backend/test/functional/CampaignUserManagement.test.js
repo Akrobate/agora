@@ -83,8 +83,4 @@ describe('CampaignUserManagement', () => {
             });
     });
 
-
-    it.skip('User should not be able to invite somebody on a draft campaign', async () => {
-    });
-
 });
