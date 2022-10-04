@@ -11,6 +11,10 @@ const {
 } = require('./EmailService');
 
 const {
+    CustomError,
+} = require('../CustomError');
+
+const {
     CampaignUserRepository,
     CampaignRepository,
     UserRepository,
@@ -81,6 +85,10 @@ class InvitationService {
         const campaign_user = await this.campaign_user_repository.read(id);
         const campaign = await this.campaign_repository.read(campaign_id);
         const user_to_invite = await this.user_repository.read(campaign_user.user_id);
+
+        if (campaign.campaign_status === CampaignRepository.STATUS_DRAFT) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Cannot invite on draft campaigns');
+        }
 
         const invitation_params = {
             to: user_to_invite.email,

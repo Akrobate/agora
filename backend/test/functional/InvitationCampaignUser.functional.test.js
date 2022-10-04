@@ -90,7 +90,7 @@ describe('InvitationCampaignUser', () => {
 
 
 
-    it('RED TEST - Manager should not be able to invite somebody on a draft campaign', async () => {
+    it('Manager should not be able to invite somebody on a draft campaign', async () => {
 
         await DataSeeder.create('CampaignRepository', {
             ...campaign_seed,
@@ -108,6 +108,7 @@ describe('InvitationCampaignUser', () => {
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {
+                expect(response.body).to.have.property('message', 'Cannot invite on draft campaigns');
                 mocks.service_email.verify();
             });
     });
