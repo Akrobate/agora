@@ -77,7 +77,7 @@
 
         <template v-slot:[`item.actions`]="{ item }">
 
-            <v-tooltip top>
+            <v-tooltip top v-if="campaign_status !== CAMPAIGN_STATUS.DRAFT">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         icon
@@ -175,6 +175,8 @@
 
 <script>
 
+import { CAMPAIGN_STATUS } from '@/constants'
+
 import { mapActions, mapGetters } from 'vuex';
 import CampaignMembersCreateEditElement from '@/components/elements/campaign_members/CampaignMembersCreateEditElement'
 import AvatarElement from '@/components/elements/user/AvatarElement'
@@ -192,6 +194,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         dialog: false,
         dialogDelete: false,
         dialogInvite: false,
+        campaign_status: {},
         headers: [
             {
                 text: '',
@@ -226,6 +229,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             },
         ],
         editing_campaign_user_id: null,
+        CAMPAIGN_STATUS,
     }),
     computed: {
         ...mapGetters({
@@ -253,18 +257,21 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         ...mapActions({
             loadCampaignUserList: 'campaign_store/loadCampaignUserList',
             clearCampaignUserList: 'campaign_store/clearCampaignUserList',
+            getCampaign: 'campaign_store/getCampaign',
             inviteCampaignUser: 'campaign_store/inviteCampaignUser',
             deleteCampaignUser: 'campaign_store/deleteCampaignUser',
             triggerError: 'snack_bar_store/triggerError',
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         saved() {
-            this.loadCampaignUserList({ campaign_id: this.campaign_id });
+            this.loadCampaignUserList({ campaign_id: this.campaign_id })
             this.dialog = false
         },
         initialize () {
             if (this.campaign_id) {
-                this.loadCampaignUserList({ campaign_id: this.campaign_id });
+                this.loadCampaignUserList({ campaign_id: this.campaign_id })
+                this.campaign = await this.getCampaign({ campaign_id: this.campaign_id })
+                this.campaign_status = this.campaign.campaign_status
             } else {
                 this.clearCampaignUserList()
             }
