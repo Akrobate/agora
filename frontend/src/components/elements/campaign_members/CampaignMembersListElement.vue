@@ -250,8 +250,8 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.initialize()
         }
     },
-    mounted () {
-        this.initialize()
+    async mounted () {
+        await this.initialize()
     },
     methods: {
         ...mapActions({
@@ -267,7 +267,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.loadCampaignUserList({ campaign_id: this.campaign_id })
             this.dialog = false
         },
-        initialize () {
+        async initialize () {
             if (this.campaign_id) {
                 this.loadCampaignUserList({ campaign_id: this.campaign_id })
                 this.campaign = await this.getCampaign({ campaign_id: this.campaign_id })
