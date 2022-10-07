@@ -3,6 +3,7 @@
         :headers="headers"
         :items="campaignData"
         class="elevation-1"
+        @click:row="clickOnRow"
     >
         <template v-slot:top>
             <v-toolbar flat>
@@ -206,6 +207,21 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
         async deleteItemConfirm() {
             await this.deleteCampaign(this.to_delete_campaign_id)
             this.closeDelete()
+        },
+        clickOnRow(item) {
+            switch (item.campaign_status) {
+                case CAMPAIGN_STATUS.IN_PROGRESS:
+                    this.$router.push({ name: 'campaign-result', params: { campaign_id: item.id } })
+                    break
+                case CAMPAIGN_STATUS.DRAFT:
+                    this.$router.push({ name: 'campaign-edit', params: { id: item.id } })
+                    break
+                case CAMPAIGN_STATUS.FINISHED:
+                    this.$router.push({ name: 'campaign-result', params: { campaign_id: item.id } })
+                    break
+                default:
+                    break
+            }
         },
         closeDelete() {
             this.dialog_delete = false

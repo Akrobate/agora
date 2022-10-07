@@ -83,7 +83,6 @@ npm run generate-html-doc
 * *21/07/22* Dashboard votes expected, should not be proposed if user is not a participant in campaign
 * *23/07/22* Refactor login element to have the same patter than register element
 * *25/07/22* Remove snack back in registration Element to use generic snackbar in project
-* *18/09/22* Click sur une campagne dans la liste de campagnes devrait faire quelque chose (a detailler en sous taches)
 
 ## Backend
 
