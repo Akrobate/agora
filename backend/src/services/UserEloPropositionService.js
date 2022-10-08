@@ -11,6 +11,9 @@ const {
     CampaignUserRepository,
     UserPropositionEloResultRepository,
 } = require('../repositories');
+const {
+    CustomError,
+} = require('../CustomError');
 
 class UserEloPropositionService {
 
@@ -166,6 +169,12 @@ class UserEloPropositionService {
         } = input;
 
         await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
+
+        const campaign = await this.campaign_repository.read(campaign_id)
+        if (campaign.campaign_status !== CampaignRepository.STATUS_IN_PROGRESS) {
+            throw new CustomError(CustomError.UNAUTHORIZED, 'Campaign must be in progress to be able to vote');
+        }
+
         const proposition_list = await this.user_proposition_elo_result_repository.search(
             {
                 campaign_id,
