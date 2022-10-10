@@ -3,9 +3,7 @@
 const {
     Acl,
 } = require('./commons');
-const {
-    CustomError,
-} = require('../CustomError');
+
 const {
     CampaignRepository,
     PropositionRepository,
@@ -138,11 +136,7 @@ class UserPropositionService {
         } = input;
 
         await this.acl.checkUserIsACampaignMember(user_id, campaign_id);
-
-        const campaign = await this.campaign_repository.read(campaign_id)
-        if (campaign.campaign_status !== CampaignRepository.STATUS_IN_PROGRESS) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'Campaign must be in progress to be able to vote');
-        }
+        await this.acl.checkCampaignStatusIsInProgress(campaign_id);
 
         const user_proposition_result_list = await this.user_proposition_result_repository
             .search({

@@ -121,6 +121,31 @@ class Acl {
 
 
     /**
+     * @param {Number} campaign_id
+     * @returns {Object|Error}
+     */
+     async checkCampaignStatusIsInProgress(campaign_id) {
+        await this.checkCampaignStatus(
+            campaign_id,
+            CampaignRepository.STATUS_IN_PROGRESS,
+            'Campaign must be in progress'
+        );
+    }
+
+
+    /**
+     * @param {Number} campaign_id
+     * @returns {Object|Error}
+     */
+     async checkCampaignStatus(campaign_id, status_id, message) {
+        const campaign = await this.campaign_repository.read(campaign_id)
+        if (campaign.campaign_status !== status_id) {
+            throw new CustomError(CustomError.UNAUTHORIZED, message);
+        }
+    }
+
+
+    /**
      * @param {Object} jwt_user_id
      * @param {Number} user_id
      * @returns {Object|Error}
