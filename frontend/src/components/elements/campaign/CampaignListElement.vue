@@ -63,7 +63,10 @@
             </router-link>
 
             <router-link
-                v-if="item.user_access_level === USER_ACCESS_LEVEL.MANAGER"
+                v-if="
+                    item.user_access_level === USER_ACCESS_LEVEL.MANAGER
+                    && [CAMPAIGN_STATUS.IN_PROGRESS, CAMPAIGN_STATUS.DRAFT].includes(item.campaign_status)
+                "
                 tag="span"
                 style="cursor: pointer"
                 :to="{ name: 'campaign-edit', params: { id: item.id } }"
@@ -211,7 +214,7 @@ import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
         clickOnRow(item) {
             switch (item.campaign_status) {
                 case CAMPAIGN_STATUS.IN_PROGRESS:
-                    this.$router.push({ name: 'campaign-result', params: { campaign_id: item.id } })
+                    this.$router.push({ name: 'campaign-participate', params: { campaign_id: item.id } })
                     break
                 case CAMPAIGN_STATUS.DRAFT:
                     this.$router.push({ name: 'campaign-edit', params: { id: item.id } })
