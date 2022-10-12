@@ -5,7 +5,7 @@
             v-model="payload"
             :counter="255"
             :rules="[rules.required]"
-            :label="this.$t('text_field_label')"
+            :label="$t('text_field_label')"
             required
         ></v-text-field>
     </div>
@@ -18,13 +18,15 @@ export default {
     props: {
         value: String,
     },
-    data: () => ({
-        valid: true,
-        payload: '',
-        rules: {
-            required: (value) => !!value || this.$t('validation_rule_required'),
-        },
-    }),
+    data() {
+        return {
+            valid: true,
+            payload: '',
+            rules: {
+                required: (value) => !!value || this.$t('validation_rule_required'),
+            },
+        }
+    },
     mounted() {
         this.payload = this.value
     },

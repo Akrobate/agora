@@ -18,6 +18,7 @@
                     v-model="email"
                     prepend-icon="mdi-account"
                     type="text"
+                    autofocus
                 />
 
                 <v-text-field
