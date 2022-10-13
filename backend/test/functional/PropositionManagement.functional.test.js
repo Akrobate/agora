@@ -186,6 +186,16 @@ describe('PopositionManagement functionnal', () => {
                 });
         });
 
+        it('Should not be able to delete a proposition if bad campaign id provided', async () => {
+            const fake_campaign_id_shift = 1;
+            await superApp
+                .delete(`/api/v1/campaigns/${campaign_seed.id + fake_campaign_id_shift}/propositions/${proposition_to_not_delete_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .expect(HTTP_CODE.UNAUTHORIZED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('message', 'Proposition does not belongs to campaign');
+                });
+        });
     });
 
 
