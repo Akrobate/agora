@@ -83,4 +83,15 @@ describe('CampaignUserManagement', () => {
             });
     });
 
+    it('Should not be able to do anything on bad campaign id', async () => {
+        const fake_campaign_id_shift = 878;
+        await superApp
+            .delete(`/api/v1/campaigns/${campaign_seed.id + fake_campaign_id_shift}/users/${manager_campaign_user_2_seed.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.UNAUTHORIZED)
+            .expect((response) => {
+                expect(response.body).to.have.property('message', 'Campaign does not exists');
+            });
+    });
+
 });
