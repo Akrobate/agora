@@ -148,13 +148,8 @@ class UserService {
             access_type: 'full',
         };
 
-        let jwt_token = null;
+        const jwt_token = this.tryToSignJwt(jwt_user_data, this.jwt_private_key, this.jwt_config);
 
-        try {
-            jwt_token = jwt.sign(jwt_user_data, this.jwt_private_key, this.jwt_config);
-        } catch (error) {
-            throw new CustomError(CustomError.INTERNAL_ERROR, error.message);
-        }
         return {
             token: jwt_token,
         };
@@ -186,13 +181,8 @@ class UserService {
             access_type,
         };
 
-        let jwt_token = null;
+        const jwt_token = this.tryToSignJwt(jwt_user_data, this.jwt_private_key, this.jwt_config);
 
-        try {
-            jwt_token = jwt.sign(jwt_user_data, this.jwt_private_key, this.jwt_config);
-        } catch (error) {
-            throw new CustomError(CustomError.INTERNAL_ERROR, error.message);
-        }
         return {
             token: jwt_token,
         };
@@ -368,16 +358,29 @@ class UserService {
             invited_to_campaign_id: campaign_user.campaign_id,
         };
 
-        let jwt_token = null;
+        const jwt_token = this.tryToSignJwt(jwt_user_data, this.jwt_private_key, this.jwt_config);
 
+        return {
+            token: jwt_token,
+        };
+    }
+
+
+    /**
+     * @param {Object} jwt_user_data 
+     * @param {String} jwt_private_key 
+     * @param {Object} jwt_config 
+     * 
+     * @return {Object|Error}
+     */
+    tryToSignJwt(jwt_user_data, jwt_private_key, jwt_config) {
+        let jwt_token = null;
         try {
             jwt_token = jwt.sign(jwt_user_data, this.jwt_private_key, this.jwt_config);
         } catch (error) {
             throw new CustomError(CustomError.INTERNAL_ERROR, error.message);
         }
-        return {
-            token: jwt_token,
-        };
+        return jwt_token;
     }
 
 
