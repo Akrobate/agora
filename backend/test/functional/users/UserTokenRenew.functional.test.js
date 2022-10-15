@@ -62,5 +62,19 @@ describe('UserTokenRenew', () => {
             });
     });
 
+    it('User should not be able to renew if email does not exists', async () => {
+        await superApp
+            .post('/api/v1/users/token/renew')
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken({
+                ...user_seed,
+                email: 'manager.user+changed@test.com',
+            })}`)
+            .expect(HTTP_CODE.UNAUTHORIZED)
+            .expect((response) => {
+                expect(response).to.be.an('Object');
+                expect(response.body).to.have.property('message', 'Access denied');
+            });
+    });
+
 
 });
