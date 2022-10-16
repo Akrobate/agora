@@ -1,10 +1,10 @@
 {
     "check-coverage": true,
     "per-file": false,
-    "statements": 97.23,
-    "branches": 84.51,
+    "statements": 97.31,
+    "branches": 84.98,
     "functions": 98.1,
-    "lines": 97.29,
+    "lines": 97.37,
     "include": [
         "src/**/*.js"
     ],

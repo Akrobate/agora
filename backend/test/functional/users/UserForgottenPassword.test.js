@@ -112,6 +112,40 @@ describe('Forgotten password', () => {
     });
 
 
+    it('Should not be able to request forgotten password mail when wrong generated_forgotten_password_token', async () => {
+
+        const new_password = 'New_Password_Forgotten321';
+
+        mocks.service_email
+            .expects('sendMail')
+            .resolves({});
+
+        await superApp
+            .post('/api/v1/users/forgotten-password')
+            .send({
+                email: user_seed.email,
+            })
+            .expect(HTTP_CODE.CREATED)
+            .expect((response) => {
+                expect(response).to.have.property('body');
+                expect(response.body).to.deep.equal({});
+            });
+
+        const forgotten_password_token = 'bad_token_string'
+
+        await superApp
+            .patch(`/api/v1/users/${user_seed.id}/forgotten-password`)
+            .send({
+                forgotten_password_token,
+                new_password,
+            })
+            .expect(HTTP_CODE.UNAUTHORIZED);
+
+    });
+
+
+
+
     it('Should not be able to request forgotten password mail if is not email', async () => {
         await superApp
             .post('/api/v1/users/forgotten-password')
