@@ -12,66 +12,106 @@ const {
 } = require('../logger');
 
 
-const CONFIGURATION_SAMPLE_YAML_FILE = './configuration.default.yml';
-let CONFIGURATION_YAML_FILE = './configuration.yml';
+class Configuration {
 
-if (process.env.CONFIGURATION_YAML_FILE) {
-    CONFIGURATION_YAML_FILE = process.env.CONFIGURATION_YAML_FILE;
-}
+    /**
+     * Constructor
+     */
+    constructor() {
+        this.CONFIGURATION_SAMPLE_YAML_FILE = './configuration.default.yml';
+        this.CONFIGURATION_YAML_FILE = './configuration.yml';
 
-let configuration = {};
-let configuration_file = {};
-const process_env_vars = process.env;
+        if (process.env.CONFIGURATION_YAML_FILE) {
+            this.CONFIGURATION_YAML_FILE = process.env.CONFIGURATION_YAML_FILE;
+        }
 
-try {
-    if (fs.existsSync(CONFIGURATION_SAMPLE_YAML_FILE)) {
-        configuration = yaml
-            .load(
-                fs.readFileSync(
-                    CONFIGURATION_SAMPLE_YAML_FILE,
-                    'utf8'
-                )
-            );
+        this.configuration = {};
+        this.configuration_file = {};
+        this.process_env_vars = process.env;
     }
-} catch (error) {
-    logger.log(error);
-}
 
-try {
-    if (fs.existsSync(CONFIGURATION_YAML_FILE)) {
-        configuration_file = yaml
-            .load(
-                fs.readFileSync(
-                    CONFIGURATION_YAML_FILE,
-                    'utf8'
-                )
-            );    
-        configuration = deepmerge(configuration, configuration_file);
+
+    /**
+     * @returns {Object}
+     */
+    load() {
+        this.tryToLoadSampleConfigurationFile();
+        this.tryToLoadConfigurationFile();
+        this.updateConfigurationWithEnvs(this.configuration);
+        return this.configuration;
     }
-} catch (error) {
-    logger.log(error);
-}
 
 
-function updateConfigurationWithEnvs(branch_to_parse, path = []) {
-    if (typeof branch_to_parse === 'object') {
-        for (const property in branch_to_parse) {
-            if (branch_to_parse.hasOwnProperty(property)) {
-                updateConfigurationWithEnvs(branch_to_parse[property], [].concat(path, [property]));
+    /**
+     * @returns {Void}
+     */
+    tryToLoadSampleConfigurationFile() {
+        try {
+            if (fs.existsSync(this.CONFIGURATION_SAMPLE_YAML_FILE)) {
+                this.configuration = yaml
+                    .load(
+                        fs.readFileSync(
+                            this.CONFIGURATION_SAMPLE_YAML_FILE,
+                            'utf8'
+                        )
+                    );
+            }
+        } catch (error) {
+            logger.log(error);
+        }
+    }
+
+
+    /**
+     * @returns {Void}
+     */
+    tryToLoadConfigurationFile() {
+        try {
+            if (fs.existsSync(this.CONFIGURATION_YAML_FILE)) {
+                this.configuration_file = yaml
+                    .load(
+                        fs.readFileSync(
+                            this.CONFIGURATION_YAML_FILE,
+                            'utf8'
+                        )
+                    );    
+                this.configuration = deepmerge(this.configuration, this.configuration_file);
+            }
+        } catch (error) {
+            logger.log(error);
+        }
+    }
+
+
+    /**
+     * @param {*} branch_to_parse 
+     * @param {*} path 
+     * @returns {Void}
+     */
+    updateConfigurationWithEnvs(branch_to_parse, path = []) {
+        if (typeof branch_to_parse === 'object') {
+            for (const property in branch_to_parse) {
+                if (branch_to_parse.hasOwnProperty(property)) {
+                    this.updateConfigurationWithEnvs(branch_to_parse[property], [].concat(path, [property]));
+                }
+            }
+        } else {
+            const env_var_name = ['appenv'].concat(path)
+                .join('_')
+                .toUpperCase();
+            if (this.process_env_vars[env_var_name] !== undefined) {
+                lodash.set(this.configuration, path, this.process_env_vars[env_var_name]);
             }
         }
-    } else {
-        const env_var_name = ['appenv'].concat(path)
-            .join('_')
-            .toUpperCase();
-        if (process_env_vars[env_var_name] !== undefined) {
-            lodash.set(configuration, path, process_env_vars[env_var_name]);
-        }
     }
 }
 
-updateConfigurationWithEnvs(configuration);
+
+const configuration_instance = new Configuration();
+const configuration = configuration_instance.load();
+
 
 module.exports = {
     configuration,
+    Configuration,
 };
