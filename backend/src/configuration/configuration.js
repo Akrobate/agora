@@ -26,7 +26,6 @@ class Configuration {
         }
 
         this.configuration = {};
-        this.configuration_file = {};
         this.process_env_vars = process.env;
     }
 
@@ -35,8 +34,11 @@ class Configuration {
      * @returns {Object}
      */
     load() {
-        this.tryToLoadSampleConfigurationFile();
-        this.tryToLoadConfigurationFile();
+        this.configuration = this.tryToLoadConfigurationFile(this.CONFIGURATION_SAMPLE_YAML_FILE);
+        this.configuration = deepmerge(
+            this.configuration,
+            this.tryToLoadConfigurationFile(this.CONFIGURATION_YAML_FILE)
+        );
         this.updateConfigurationWithEnvs(this.configuration);
         return this.configuration;
     }
@@ -45,13 +47,14 @@ class Configuration {
     /**
      * @returns {Void}
      */
-    tryToLoadSampleConfigurationFile() {
+    tryToLoadConfigurationFile(file_name) {
+        let configuration = {};
         try {
-            if (fs.existsSync(this.CONFIGURATION_SAMPLE_YAML_FILE)) {
-                this.configuration = yaml
+            if (fs.existsSync(file_name)) {
+                configuration = yaml
                     .load(
                         fs.readFileSync(
-                            this.CONFIGURATION_SAMPLE_YAML_FILE,
+                            file_name,
                             'utf8'
                         )
                     );
@@ -59,27 +62,7 @@ class Configuration {
         } catch (error) {
             logger.log(error);
         }
-    }
-
-
-    /**
-     * @returns {Void}
-     */
-    tryToLoadConfigurationFile() {
-        try {
-            if (fs.existsSync(this.CONFIGURATION_YAML_FILE)) {
-                this.configuration_file = yaml
-                    .load(
-                        fs.readFileSync(
-                            this.CONFIGURATION_YAML_FILE,
-                            'utf8'
-                        )
-                    );    
-                this.configuration = deepmerge(this.configuration, this.configuration_file);
-            }
-        } catch (error) {
-            logger.log(error);
-        }
+        return configuration;
     }
 
 
