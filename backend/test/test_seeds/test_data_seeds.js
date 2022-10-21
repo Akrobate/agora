@@ -64,6 +64,7 @@ const observer_campaign_user_seed = {
 };
 
 const campaign_user_status_1_seed = {
+    id: 301,
     campaign_id: campaign_seed.id,
     status_id: 3, // RESULT_SUBMITED
     user_id: manager_user_seed.id,
@@ -71,6 +72,7 @@ const campaign_user_status_1_seed = {
 };
 
 const campaign_user_status_2_seed = {
+    id: 302,
     campaign_id: campaign_seed.id,
     status_id: 3, // RESULT_SUBMITED
     user_id: guest_user_seed.id,
@@ -78,6 +80,7 @@ const campaign_user_status_2_seed = {
 };
 
 const campaign_user_status_3_seed = {
+    id: 303,
     campaign_id: campaign_seed.id,
     status_id: 2, // STARTED
     user_id: observer_user_seed.id,
