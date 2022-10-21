@@ -110,6 +110,7 @@ const proposition_3_seed = {
 
 // guest prop
 const guest_user_proposition_result_1 = {
+    id: 701,
     campaign_id: campaign_seed.id,
     user_id: guest_user_seed.id,
     proposition_id: proposition_1_seed.id,
@@ -117,6 +118,7 @@ const guest_user_proposition_result_1 = {
 };
 
 const guest_user_proposition_result_2 = {
+    id: 702,
     campaign_id: campaign_seed.id,
     user_id: guest_user_seed.id,
     proposition_id: proposition_2_seed.id,
@@ -124,6 +126,7 @@ const guest_user_proposition_result_2 = {
 };
 
 const guest_user_proposition_result_3 = {
+    id: 703,
     campaign_id: campaign_seed.id,
     user_id: guest_user_seed.id,
     proposition_id: proposition_3_seed.id,
@@ -132,6 +135,7 @@ const guest_user_proposition_result_3 = {
 
 // manager prop
 const manager_user_proposition_result_1 = {
+    id: 801,
     campaign_id: campaign_seed.id,
     user_id: manager_user_seed.id,
     proposition_id: proposition_1_seed.id,
@@ -139,6 +143,7 @@ const manager_user_proposition_result_1 = {
 };
 
 const manager_user_proposition_result_2 = {
+    id: 802,
     campaign_id: campaign_seed.id,
     user_id: manager_user_seed.id,
     proposition_id: proposition_2_seed.id,
@@ -146,6 +151,7 @@ const manager_user_proposition_result_2 = {
 };
 
 const manager_user_proposition_result_3 = {
+    id: 803,
     campaign_id: campaign_seed.id,
     user_id: manager_user_seed.id,
     proposition_id: proposition_3_seed.id,

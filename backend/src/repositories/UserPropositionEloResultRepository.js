@@ -105,6 +105,12 @@ class UserPropositionEloResultRepository extends AbstractSequelizeRepository {
             };
         }
 
+        if (id_list !== undefined) {
+            where[Op.and].id = {
+                [Op.in]: id_list,
+            };
+        }
+
         if (campaign_id !== undefined) {
             where[Op.and].campaign_id = {
                 [Op.eq]: campaign_id,
@@ -120,12 +126,6 @@ class UserPropositionEloResultRepository extends AbstractSequelizeRepository {
         if (proposition_id !== undefined) {
             where[Op.and].proposition_id = {
                 [Op.eq]: proposition_id,
-            };
-        }
-
-        if (id_list !== undefined) {
-            where[Op.and].id = {
-                [Op.in]: id_list,
             };
         }
 
