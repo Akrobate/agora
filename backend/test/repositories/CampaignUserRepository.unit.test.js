@@ -14,13 +14,11 @@ const {
     guest_campaign_user_seed,
 } = require('../test_seeds/test_data_seeds');
 const {
-    UserRepository,
     CampaignUserRepository,
 } = require('../../src/repositories/');
 
 describe('CampaignUserRepository', () => {
 
-    const user_repository = UserRepository.getInstance();
     const campaign_user_repository = CampaignUserRepository.getInstance();
 
     before(async () => {
