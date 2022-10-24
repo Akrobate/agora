@@ -95,6 +95,12 @@ class UserPropositionResultRepository extends AbstractSequelizeRepository {
             [Op.and]: {},
         };
 
+        if (id !== undefined) {
+            where[Op.and].id = {
+                [Op.eq]: id,
+            };
+        }
+
         if (id_list !== undefined) {
             where[Op.and].id = {
                 [Op.in]: id_list,
@@ -104,12 +110,6 @@ class UserPropositionResultRepository extends AbstractSequelizeRepository {
         if (user_id_list !== undefined) {
             where[Op.and].user_id = {
                 [Op.in]: user_id_list,
-            };
-        }
-
-        if (id !== undefined) {
-            where[Op.and].id = {
-                [Op.eq]: id,
             };
         }
 
