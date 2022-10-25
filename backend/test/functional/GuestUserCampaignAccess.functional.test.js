@@ -215,6 +215,18 @@ describe('CampaignAccess', () => {
     });
 
 
+    it('Guest user should not be able to login with bad public token', async () => {
+        await superApp
+            .post('/api/v1/users/login/guest')
+            .send({
+                public_token: `${guest_campaign_user_seed.public_token}-unknown-token` ,
+            })
+            .expect(HTTP_CODE.UNAUTHORIZED)
+            .expect((response) => {
+                expect(response.body).to.have.property('message', 'Bad token');
+            });
+    });
+
     it('Guest user should be able read a campaign', async () => {
         await superApp
             .get(`/api/v1/campaigns/${campaign_seed.id}`)

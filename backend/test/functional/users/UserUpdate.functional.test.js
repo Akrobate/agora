@@ -129,5 +129,23 @@ describe('User should be able to update it self', () => {
         });
     });
 
+
+
+    describe('User Service error test', () => {
+
+        it('Should throw an error on unexisting user', async () => {
+            const unexisting_user_seed = {
+                id: 33300,
+            };
+
+            await superApp
+                .get(`/api/v1/users/${unexisting_user_seed.id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(unexisting_user_seed)}`)
+                .expect(HTTP_CODE.UNAUTHORIZED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('message', 'User data cannot be accessed');
+                });
+        });
+    })
 });
 
