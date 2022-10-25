@@ -376,7 +376,7 @@ class UserService {
     tryToSignJwt(jwt_user_data, jwt_private_key, jwt_config) {
         let jwt_token = null;
         try {
-            jwt_token = jwt.sign(jwt_user_data, this.jwt_private_key, this.jwt_config);
+            jwt_token = jwt.sign(jwt_user_data, jwt_private_key, jwt_config);
         } catch (error) {
             throw new CustomError(CustomError.INTERNAL_ERROR, error.message);
         }
