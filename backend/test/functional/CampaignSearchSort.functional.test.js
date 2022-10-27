@@ -67,9 +67,17 @@ describe('CampaignSearchSort functionnal', () => {
     };
 
 
+    const random_user_witout_any_campaigns = {
+        id: 701,
+        password: 'ShouldHaveLettersDigitsAndAtLeast8chars1',
+        email: 'nevermind@random.com',
+    }
+
+
     before(async () => {
         await DataSeeder.truncateAll();
         await DataSeeder.createUserHashPassword(manager_user_seed);
+        await DataSeeder.createUserHashPassword(random_user_witout_any_campaigns);
 
         await DataSeeder.create('CampaignRepository', campaign_1);
         await DataSeeder.create('CampaignUserRepository', campaign_user_1);
@@ -172,6 +180,21 @@ describe('CampaignSearchSort functionnal', () => {
 
                     expect(campaign_first).to.have.property('title', campaign_2.title);
                     expect(campaign_second).to.have.property('title', campaign_1.title);
+                });
+        });
+    });
+
+
+    describe('Search on campaign with no campaigs', () => {
+
+        it('Should be able to sort ASC', async () => {
+            await superApp
+                .get('/api/v1/campaigns')
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(random_user_witout_any_campaigns)}`)
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response.body.campaign_list).to.be.an('Array');
+                    expect(response.body.campaign_list.length).to.equal(0);
                 });
         });
     });
