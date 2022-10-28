@@ -49,12 +49,14 @@ describe('Forgotten password', () => {
         await DataSeeder.truncateAll();
         await DataSeeder.createUserHashPassword(user_seed);
 
-        mocks.service_email = mock(email_service);
+        mocks.email_service = mock(email_service);
+        mocks.user_service = mock(user_service);
     });
 
 
     afterEach(() => {
-        mocks.service_email.restore();
+        mocks.email_service.restore();
+        mocks.user_service.restore();
     });
 
 
@@ -62,7 +64,7 @@ describe('Forgotten password', () => {
 
         const new_password = 'New_Password_Forgotten321';
 
-        mocks.service_email
+        mocks.email_service
             .expects('sendMail')
             .resolves({});
 
@@ -107,7 +109,7 @@ describe('Forgotten password', () => {
                 expect(decoded).to.have.property('iat');
             });
 
-        mocks.service_email.verify();
+        mocks.email_service.verify();
 
     });
 
@@ -116,7 +118,7 @@ describe('Forgotten password', () => {
 
         const new_password = 'New_Password_Forgotten321';
 
-        mocks.service_email
+        mocks.email_service
             .expects('sendMail')
             .resolves({});
 
@@ -153,5 +155,17 @@ describe('Forgotten password', () => {
                 email: '1',
             })
             .expect(HTTP_CODE.BAD_REQUEST);
+    });
+
+    it('Should not notify user if something bad went with renew password', async () => {
+        
+        mocks.user_service.expects('forgottenPassword').rejects(new Error('Unknown'));
+
+        await superApp
+            .post('/api/v1/users/forgotten-password')
+            .send({
+                email: 'email@format.com',
+            })
+            .expect(HTTP_CODE.CREATED);
     });
 });

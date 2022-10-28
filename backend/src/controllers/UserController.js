@@ -11,7 +11,9 @@ const {
 const {
     UserService,
 } = require('../services');
-const logger = require('../logger');
+const {
+    logger,
+} = require('../logger');
 
 
 class UserController extends AbstractController {
@@ -213,7 +215,7 @@ class UserController extends AbstractController {
         this.checkValidationError(error);
 
         try {
-            this.user_service.forgottenPassword({
+            await this.user_service.forgottenPassword({
                 ...value.body,
             });
         } catch (_) {
