@@ -92,6 +92,7 @@ describe('PropositionsEloRanking - Functional test', () => {
 
                 expect(response.body).to.have.property('user_proposition_elo_result_list');
                 expect(response.body.user_proposition_elo_result_list).to.be.an('Array');
+                expect(response.body.user_proposition_elo_result_list.length).to.equal(3);
                 const [
                     proposition_1,
                     proposition_2,
@@ -104,6 +105,29 @@ describe('PropositionsEloRanking - Functional test', () => {
                 expect(proposition_1).to.have.property('display_count', 0);
                 expect(proposition_2).to.have.property('display_count', 0);
                 expect(proposition_3).to.have.property('display_count', 0);
+            });
+    });
+
+
+
+    it('User should be able to init elo ranking twice', async () => {
+        await superApp
+            .post(`/api/v1/campaigns/${campaign_seed.id}/init-elo-ranking`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.CREATED)
+            .expect((response) => {
+                expect(response.body).to.have.property('user_proposition_elo_result_list');
+                expect(response.body.user_proposition_elo_result_list).to.be.an('Array');
+                expect(response.body.user_proposition_elo_result_list.length).to.equal(3);
+            });
+        await superApp
+            .post(`/api/v1/campaigns/${campaign_seed.id}/init-elo-ranking`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.CREATED)
+            .expect((response) => {
+                expect(response.body).to.have.property('user_proposition_elo_result_list');
+                expect(response.body.user_proposition_elo_result_list).to.be.an('Array');
+                expect(response.body.user_proposition_elo_result_list.length).to.equal(0);
             });
     });
 
