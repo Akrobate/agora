@@ -94,4 +94,22 @@ describe('CampaignUserManagement', () => {
             });
     });
 
+    it('Manager should able to add existing user', async () => {
+        const random_access_level = 1;
+        await superApp
+            .post(`/api/v1/campaigns/${campaign_seed.id}/users`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .send({
+                email: guest_user_seed.email,
+                access_level: random_access_level,
+                is_participant: true,
+            })
+            .expect(HTTP_CODE.CREATED)
+            .expect((response) => {
+                expect(response.body).to.have.property('is_participant', true);
+                expect(response.body).to.have.property('campaign_id', `${campaign_seed.id}`);
+                expect(response.body).to.have.property('access_level', random_access_level);
+                expect(response.body).to.have.property('public_token');
+            });
+    });
 });
