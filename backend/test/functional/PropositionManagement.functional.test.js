@@ -67,7 +67,7 @@ describe('PopositionManagement functionnal', () => {
 
     const manager_draft_campaign_user_seed = {
         campaign_id: draft_campaign_seed.id,
-        user_id: 100,
+        user_id: manager_user_seed.id,
         access_level: 3,
     };
 
@@ -200,6 +200,36 @@ describe('PopositionManagement functionnal', () => {
 
 
     describe('Update proposition', () => {
+
+        it('Manager should be able to create and update a proposition', async () => {
+            let created_proposition_id = null;
+
+            await superApp
+                .post(`/api/v1/campaigns/${draft_campaign_seed.id}/propositions`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send({
+                    payload: 'original',
+                })
+                .expect(HTTP_CODE.CREATED)
+                .expect((response) => {
+                    expect(response.body).to.have.property('id');
+                    created_proposition_id = response.body.id;
+                });
+
+            await superApp
+                .patch(`/api/v1/campaigns/${draft_campaign_seed.id}/propositions/${created_proposition_id}`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send({
+                    payload: 'change',
+                })
+                .expect(HTTP_CODE.CREATED)
+                .expect((response) => {
+                    expect(response.body).to.have.property(
+                        'payload',
+                        'change'
+                    );
+                });
+        });
 
         it('Manager should not be able to update a proposition on started campaign', async () => {
             await superApp
