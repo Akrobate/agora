@@ -32,14 +32,14 @@ const manager_campaign_user_seed = {
     id: 200,
     campaign_id: campaign_seed.id,
     user_id: manager_user_seed.id,
-    access_level: 3,
+    access_level: 3, // MANAGER
 };
 
 const manager_campaign_user_2_seed = {
     id: 205,
     campaign_id: campaign_seed.id,
     user_id: manager_user_2_seed.id,
-    access_level: 3,
+    access_level: 3, // MANAGER
 };
 
 const guest_campaign_user_seed = {
@@ -47,7 +47,7 @@ const guest_campaign_user_seed = {
     campaign_id: campaign_seed.id,
     user_id: guest_user_seed.id,
     public_token: '8185933f78c749b381ad630308cd1257',
-    access_level: 1,
+    access_level: 1, // GUEST
 };
 
 const observer_user_seed = {
@@ -60,7 +60,7 @@ const observer_campaign_user_seed = {
     campaign_id: campaign_seed.id,
     user_id: observer_user_seed.id,
     public_token: null,
-    access_level: 1,
+    access_level: 1, // GUEST
 };
 
 const campaign_user_status_1_seed = {
