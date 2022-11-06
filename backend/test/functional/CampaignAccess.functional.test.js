@@ -67,6 +67,21 @@ describe('CampaignAccess', () => {
             });
     });
 
+    it('Should not be able to create a campaign without malformed Bearer', async () => {
+        await superApp
+            .post('/api/v1/campaigns')
+            .set('Authorization', `Blabla ${'BAD_JWT_StrING'}`)
+            .send({
+                title: 'Title of campaign',
+                description: 'Something',
+                proposition_type: 'PROPOSITION_TYPE',
+                campaign_status: 2,
+            })
+            .expect(HTTP_CODE.UNAUTHORIZED)
+            .expect((response) => {
+                expect(response.body).to.have.property('message');
+            });
+    });
 
     it('Should be able to update a just created campaign', async () => {
         const campaign_create_data = {
