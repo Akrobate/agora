@@ -1,7 +1,7 @@
 'use strict';
 
-const superTest = require('supertest');
-const HTTP_CODE = require('http-status');
+const jwt = require('jsonwebtoken');
+
 const {
     expect,
 } = require('chai');
@@ -11,22 +11,33 @@ const {
 
 const {
     AuthenticationMiddleware,
-} = require('../../src/middlewares');
+} = require('../../src/middlewares/AuthenticationMiddleware');
+
+const authentication_middleware = AuthenticationMiddleware.getInstance();
 
 describe('AuthenticationMiddleware', () => {
 
     const mocks = {};
 
     beforeEach(() => {
-
+       mocks.jwt = mock(jwt);
     });
 
     afterEach(() => {
-
+        mocks.jwt.restore();
     });
 
 
-    it.skip('checkJwtValidity should faile when cannot validate', async () => {
+    it('checkJwtValidity should faile when cannot validate', (done) => {
+        mocks.jwt.expects('verify')
+            .throws(new Error('Some error'));
+        try {
+            AuthenticationMiddleware.getInstance().checkJwtValidity('JWT_STRING');
+        } catch(error) {
+            expect(error.message).to.equals('Some error');
+            mocks.jwt.verify();
+            done();
+        }
 
     });
 });
