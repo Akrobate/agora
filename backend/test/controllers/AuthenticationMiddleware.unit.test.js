@@ -20,7 +20,7 @@ describe('AuthenticationMiddleware', () => {
     const mocks = {};
 
     beforeEach(() => {
-       mocks.jwt = mock(jwt);
+        mocks.jwt = mock(jwt);
     });
 
     afterEach(() => {
@@ -32,8 +32,8 @@ describe('AuthenticationMiddleware', () => {
         mocks.jwt.expects('verify')
             .throws(new Error('Some error'));
         try {
-            AuthenticationMiddleware.getInstance().checkJwtValidity('JWT_STRING');
-        } catch(error) {
+            authentication_middleware.checkJwtValidity('JWT_STRING');
+        } catch (error) {
             expect(error.message).to.equals('Some error');
             mocks.jwt.verify();
             done();
