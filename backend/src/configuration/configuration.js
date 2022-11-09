@@ -21,12 +21,21 @@ class Configuration {
         this.CONFIGURATION_SAMPLE_YAML_FILE = './configuration.default.yml';
         this.CONFIGURATION_YAML_FILE = './configuration.yml';
 
-        if (process.env.CONFIGURATION_YAML_FILE) {
-            this.CONFIGURATION_YAML_FILE = process.env.CONFIGURATION_YAML_FILE;
-        }
+        this.process_env_vars = process.env;
+
+        this.overrideDefaultConfigurationFileIfSettedInEnvVars();
 
         this.configuration = {};
-        this.process_env_vars = process.env;
+    }
+
+
+    /**
+     * @returns {void}
+     */
+    overrideDefaultConfigurationFileIfSettedInEnvVars() {
+        if (this.process_env_vars.CONFIGURATION_YAML_FILE) {
+            this.CONFIGURATION_YAML_FILE = this.process_env_vars.CONFIGURATION_YAML_FILE;
+        }
     }
 
 
