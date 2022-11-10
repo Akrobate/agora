@@ -54,5 +54,18 @@ describe('Configuration unit test', () => {
         
         configuration.updateConfigurationWithEnvs('property_name_value', ['property', 'path']);
         expect(configuration.configuration.property.path).to.equal('RANDOM_VALUE');
-    })
+    });
+
+
+    it('overrideDefaultConfigurationFileIfSettedInEnvVars unit test', () => {
+        const _configuration = new Configuration();
+        delete(_configuration.process_env_vars.CONFIGURATION_YAML_FILE);
+
+        _configuration.overrideDefaultConfigurationFileIfSettedInEnvVars();
+        expect(_configuration.CONFIGURATION_YAML_FILE).to.equal('./configuration.test.yml');
+
+        _configuration.process_env_vars.CONFIGURATION_YAML_FILE = 'overide_file';
+        _configuration.overrideDefaultConfigurationFileIfSettedInEnvVars();
+        expect(_configuration.CONFIGURATION_YAML_FILE).to.equal('overide_file');
+    });
 });
