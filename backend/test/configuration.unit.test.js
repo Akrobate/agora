@@ -41,11 +41,18 @@ describe('Configuration unit test', () => {
         mocks.fs.expects('existsSync').withArgs(file_path).returns(true);
         mocks.fs.expects('readFileSync').withArgs(file_path, 'utf8').throws(error);
         mocks.logger.expects('log').withArgs(error);
-        await configuration.tryToLoadConfigurationFile('RANDOM_FILE_PATH');
+        await configuration.tryToLoadConfigurationFile(file_path);
         mocks.fs.verify();
         mocks.logger.verify();
     });
 
+    it('Should not modify configuration if no file found', async () => {
+        const file_path = 'RANDOM_FILE_PATH';
+        mocks.fs.expects('existsSync').withArgs(file_path).returns(false);
+        const config = await configuration.tryToLoadConfigurationFile(file_path);
+        mocks.fs.verify();
+        expect(config).to.deep.equal({});
+    });
 
     it('Should be able to find config from appen', () => {
         configuration.process_env_vars = {
