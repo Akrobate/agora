@@ -83,9 +83,7 @@ class Configuration {
     updateConfigurationWithEnvs(branch_to_parse, path = []) {
         if (typeof branch_to_parse === 'object') {
             for (const property in branch_to_parse) {
-                if (branch_to_parse.hasOwnProperty(property)) {
-                    this.updateConfigurationWithEnvs(branch_to_parse[property], [].concat(path, [property]));
-                }
+                this.updateConfigurationWithEnvs(branch_to_parse[property], [].concat(path, [property]));
             }
         } else {
             const env_var_name = ['appenv'].concat(path)
