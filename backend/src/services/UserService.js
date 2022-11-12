@@ -367,10 +367,10 @@ class UserService {
 
 
     /**
-     * @param {Object} jwt_user_data 
-     * @param {String} jwt_private_key 
-     * @param {Object} jwt_config 
-     * 
+     * @param {Object} jwt_user_data
+     * @param {String} jwt_private_key
+     * @param {Object} jwt_config
+     *
      * @return {Object|Error}
      */
     tryToSignJwt(jwt_user_data, jwt_private_key, jwt_config) {
