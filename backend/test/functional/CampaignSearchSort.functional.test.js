@@ -71,7 +71,7 @@ describe('CampaignSearchSort functionnal', () => {
         id: 701,
         password: 'ShouldHaveLettersDigitsAndAtLeast8chars1',
         email: 'nevermind@random.com',
-    }
+    };
 
 
     before(async () => {

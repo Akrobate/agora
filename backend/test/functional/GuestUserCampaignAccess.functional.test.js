@@ -219,7 +219,7 @@ describe('CampaignAccess', () => {
         await superApp
             .post('/api/v1/users/login/guest')
             .send({
-                public_token: `${guest_campaign_user_seed.public_token}-unknown-token` ,
+                public_token: `${guest_campaign_user_seed.public_token}-unknown-token`,
             })
             .expect(HTTP_CODE.UNAUTHORIZED)
             .expect((response) => {

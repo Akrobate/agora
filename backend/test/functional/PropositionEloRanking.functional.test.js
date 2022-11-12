@@ -109,7 +109,6 @@ describe('PropositionsEloRanking - Functional test', () => {
     });
 
 
-
     it('User should be able to init elo ranking twice', async () => {
         await superApp
             .post(`/api/v1/campaigns/${campaign_seed.id}/init-elo-ranking`)
