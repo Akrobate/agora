@@ -4,9 +4,6 @@ const {
     expect,
 } = require('chai');
 const {
-    v4,
-} = require('uuid');
-const {
     DataSeeder,
 } = require('../test_helpers/DataSeeder');
 const {
