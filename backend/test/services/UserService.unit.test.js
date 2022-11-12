@@ -15,7 +15,7 @@ describe('UserService unit test', () => {
 
     it('tryToSignJwt error', () => {
         try {
-            user_servce.tryToSignJwt({}, '', '')
+            user_servce.tryToSignJwt({}, '', '');
         } catch (error) {
             expect(error.message).to.equal('secretOrPrivateKey must have a value');
         }

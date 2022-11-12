@@ -38,8 +38,12 @@ describe('Configuration unit test', () => {
         const file_path = 'RANDOM_FILE_PATH';
         const error_message = 'random error';
         const error = new Error(error_message);
-        mocks.fs.expects('existsSync').withArgs(file_path).returns(true);
-        mocks.fs.expects('readFileSync').withArgs(file_path, 'utf8').throws(error);
+        mocks.fs.expects('existsSync')
+            .withArgs(file_path)
+            .returns(true);
+        mocks.fs.expects('readFileSync')
+            .withArgs(file_path, 'utf8')
+            .throws(error);
         mocks.logger.expects('log').withArgs(error);
         await configuration.tryToLoadConfigurationFile(file_path);
         mocks.fs.verify();
@@ -48,7 +52,9 @@ describe('Configuration unit test', () => {
 
     it('Should not modify configuration if no file found', async () => {
         const file_path = 'RANDOM_FILE_PATH';
-        mocks.fs.expects('existsSync').withArgs(file_path).returns(false);
+        mocks.fs.expects('existsSync')
+            .withArgs(file_path)
+            .returns(false);
         const config = await configuration.tryToLoadConfigurationFile(file_path);
         mocks.fs.verify();
         expect(config).to.deep.equal({});
@@ -58,7 +64,7 @@ describe('Configuration unit test', () => {
         configuration.process_env_vars = {
             APPENV_PROPERTY_PATH: 'RANDOM_VALUE',
         };
-        
+
         configuration.updateConfigurationWithEnvs('property_name_value', ['property', 'path']);
         expect(configuration.configuration.property.path).to.equal('RANDOM_VALUE');
     });
@@ -66,7 +72,7 @@ describe('Configuration unit test', () => {
 
     it('overrideDefaultConfigurationFileIfSettedInEnvVars unit test', () => {
         const _configuration = new Configuration();
-        delete(_configuration.process_env_vars.CONFIGURATION_YAML_FILE);
+        delete _configuration.process_env_vars.CONFIGURATION_YAML_FILE;
 
         _configuration.overrideDefaultConfigurationFileIfSettedInEnvVars();
         expect(_configuration.CONFIGURATION_YAML_FILE).to.equal('./configuration.test.yml');
