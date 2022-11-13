@@ -25,7 +25,7 @@ describe('Acl unit test', () => {
 
     afterEach(() => {
         mocks.campaign_repository.restore();
-    })
+    });
 
 
     it('calculateWinProbability', () => {
@@ -37,7 +37,7 @@ describe('Acl unit test', () => {
         });
         try {
             acl.checkCampaignStatus(campaign_id, status_id, message);
-        } catch(error) {
+        } catch (error) {
             mocks.campaign_repository.verify();
             expect(error).to.have.property('message', message);
         }
