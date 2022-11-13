@@ -2,7 +2,7 @@
     "check-coverage": true,
     "per-file": false,
     "statements": 99.75,
-    "branches": 98.58,
+    "branches": 99.04,
     "functions": 99.25,
     "lines": 99.83,
     "include": [
