@@ -4,9 +4,6 @@ const {
     expect,
 } = require('chai');
 const {
-    v4,
-} = require('uuid');
-const {
     DataSeeder,
 } = require('../test_helpers/DataSeeder');
 
@@ -72,7 +69,7 @@ describe('UserPropositionEloResultRepository', () => {
         const result = await user_proposition_elo_result_repository.search({
             id_list: [
                 user_proposition_elo_result_1.id,
-            ]
+            ],
         });
         expect(result).to.be.an('Array');
         expect(result.length).to.equals(1);
@@ -88,7 +85,7 @@ describe('UserPropositionEloResultRepository', () => {
         const result = await user_proposition_elo_result_repository.search({
             proposition_id: [
                 user_proposition_elo_result_3.proposition_id,
-            ]
+            ],
         });
         expect(result).to.be.an('Array');
         expect(result.length).to.equals(1);

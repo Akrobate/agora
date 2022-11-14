@@ -129,8 +129,6 @@ describe('User should be able to update it self', () => {
         });
     });
 
-
-
     describe('User Service error test', () => {
 
         it('Should throw an error on unexisting user', async () => {
@@ -146,6 +144,6 @@ describe('User should be able to update it self', () => {
                     expect(response.body).to.have.property('message', 'User data cannot be accessed');
                 });
         });
-    })
+    });
 });
 

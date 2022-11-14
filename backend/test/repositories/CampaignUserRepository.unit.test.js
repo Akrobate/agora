@@ -4,9 +4,6 @@ const {
     expect,
 } = require('chai');
 const {
-    v4,
-} = require('uuid');
-const {
     DataSeeder,
 } = require('../test_helpers/DataSeeder');
 const {
@@ -24,8 +21,7 @@ const observer_seed = {
     public_token: null,
     access_level: CampaignUserRepository.OBSERVER,
     is_participant: false,
-}
-
+};
 
 
 describe('CampaignUserRepository', () => {
