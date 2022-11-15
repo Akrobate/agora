@@ -47,7 +47,7 @@ describe('InvitationCampaignUser', () => {
 
         await DataSeeder.createUserHashPassword(manager_user_seed);
         await DataSeeder.create('UserRepository', guest_user_seed);
-    
+
         mocks.service_email = mock(EmailService.getInstance());
 
     });
@@ -87,7 +87,6 @@ describe('InvitationCampaignUser', () => {
 
             });
     });
-
 
 
     it('Manager should not be able to invite somebody on a draft campaign', async () => {

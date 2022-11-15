@@ -133,7 +133,7 @@ describe('Forgotten password', () => {
                 expect(response.body).to.deep.equal({});
             });
 
-        const forgotten_password_token = 'bad_token_string'
+        const forgotten_password_token = 'bad_token_string';
 
         await superApp
             .patch(`/api/v1/users/${user_seed.id}/forgotten-password`)
@@ -146,8 +146,6 @@ describe('Forgotten password', () => {
     });
 
 
-
-
     it('Should not be able to request forgotten password mail if is not email', async () => {
         await superApp
             .post('/api/v1/users/forgotten-password')
@@ -157,8 +155,9 @@ describe('Forgotten password', () => {
             .expect(HTTP_CODE.BAD_REQUEST);
     });
 
+
     it('Should not notify user if something bad went with renew password', async () => {
-        
+
         mocks.user_service.expects('forgottenPassword').rejects(new Error('Unknown'));
 
         await superApp
