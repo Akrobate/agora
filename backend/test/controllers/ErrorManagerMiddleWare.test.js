@@ -2,9 +2,7 @@
 
 const superTest = require('supertest');
 const HTTP_CODE = require('http-status');
-const {
-    expect,
-} = require('chai');
+
 const {
     mock,
 } = require('sinon');
@@ -20,10 +18,6 @@ const {
 const {
     UserService,
 } = require('../../src/services');
-
-const {
-    DataSeeder,
-} = require('../test_helpers/DataSeeder');
 
 const superApp = superTest(app);
 
@@ -53,7 +47,7 @@ describe('ErrorManagerMiddleWare', () => {
         await superApp
             .post('/api/v1/users/login')
             .send(user_seed)
-            .expect(HTTP_CODE.INTERNAL_SERVER_ERROR)
+            .expect(HTTP_CODE.INTERNAL_SERVER_ERROR);
     });
 
     it.skip('Unknown code should return a 500 code', async () => {
@@ -65,6 +59,6 @@ describe('ErrorManagerMiddleWare', () => {
         await superApp
             .post('/api/v1/users/login')
             .send(user_seed)
-            .expect(HTTP_CODE.INTERNAL_SERVER_ERROR)
+            .expect(HTTP_CODE.INTERNAL_SERVER_ERROR);
     });
 });

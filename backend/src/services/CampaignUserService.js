@@ -122,8 +122,9 @@ class CampaignUserService {
 
         if (
             manager_campaign_user.length === 1
-            && manager_campaign_user.find((item) => item.id == id) !== undefined
-            && manager_campaign_user.find((item) => item.id == id).access_level === CampaignUserRepository.MANAGER
+            && manager_campaign_user.find((item) => item.id === Number(id)) !== undefined
+            && manager_campaign_user.find((item) => item.id === Number(id))
+                .access_level === CampaignUserRepository.MANAGER
         ) {
             throw new CustomError(CustomError.UNAUTHORIZED, 'Last manager cannot be unsetted');
         }
