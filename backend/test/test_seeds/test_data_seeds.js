@@ -158,6 +158,32 @@ const manager_user_proposition_result_3 = {
     rank: 2,
 };
 
+// ELO result
+const manager_user_proposition_elo_result_1 = {
+    campaign_id: campaign_seed.id,
+    user_id: manager_user_seed.id,
+    proposition_id: proposition_1_seed.id,
+    elo_score: 1000,
+    display_count: 10,
+};
+
+const manager_user_proposition_elo_result_2 = {
+    campaign_id: campaign_seed.id,
+    user_id: manager_user_seed.id,
+    proposition_id: proposition_2_seed.id,
+    elo_score: 1000,
+    display_count: 10,
+};
+
+const manager_user_proposition_elo_result_3 = {
+    campaign_id: campaign_seed.id,
+    user_id: manager_user_seed.id,
+    proposition_id: proposition_3_seed.id,
+    elo_score: 1000,
+    display_count: 10,
+};
+
+
 
 const guest_user_to_delete_seed = {
     id: 300,
@@ -195,6 +221,9 @@ module.exports = {
     manager_user_proposition_result_1,
     manager_user_proposition_result_2,
     manager_user_proposition_result_3,
+    manager_user_proposition_elo_result_1,
+    manager_user_proposition_elo_result_2,
+    manager_user_proposition_elo_result_3,
     manager_user_2_seed,
     manager_campaign_user_2_seed,
 };
