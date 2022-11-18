@@ -49,6 +49,9 @@ const {
     manager_user_proposition_result_1,
     manager_user_proposition_result_2,
     manager_user_proposition_result_3,
+    manager_user_proposition_elo_result_1,
+    manager_user_proposition_elo_result_2,
+    manager_user_proposition_elo_result_3,
 } = require('../test_seeds/test_data_seeds');
 
 const superApp = superTest(app);
@@ -77,6 +80,12 @@ describe('CampaignDelete', () => {
         await DataSeeder.create('UserPropositionResultRepository', guest_user_proposition_result_1);
         await DataSeeder.create('UserPropositionResultRepository', guest_user_proposition_result_2);
         await DataSeeder.create('UserPropositionResultRepository', guest_user_proposition_result_3);
+
+
+        await DataSeeder.create('UserPropositionEloResultRepository', manager_user_proposition_elo_result_1);
+        await DataSeeder.create('UserPropositionEloResultRepository', manager_user_proposition_elo_result_2);
+        await DataSeeder.create('UserPropositionEloResultRepository', manager_user_proposition_elo_result_3);
+
 
         await DataSeeder.create('CampaignUserStatusRepository', campaign_user_status_1_seed);
         await DataSeeder.create('CampaignUserStatusRepository', campaign_user_status_2_seed);
