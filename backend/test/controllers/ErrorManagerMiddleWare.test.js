@@ -50,7 +50,7 @@ describe('ErrorManagerMiddleWare', () => {
             .expect(HTTP_CODE.INTERNAL_SERVER_ERROR);
     });
 
-    it.skip('Unknown code should return a 500 code', async () => {
+    it('Unknown code should return a 500 code', async () => {
 
         mocks.service_user
             .expects('login')
@@ -61,4 +61,17 @@ describe('ErrorManagerMiddleWare', () => {
             .send(user_seed)
             .expect(HTTP_CODE.INTERNAL_SERVER_ERROR);
     });
+
+    it('known Error BAD_REQUEST should return a 400 code', async () => {
+
+        mocks.service_user
+            .expects('login')
+            .rejects(new CustomError(CustomError.BAD_PARAMETER));
+
+        await superApp
+            .post('/api/v1/users/login')
+            .send(user_seed)
+            .expect(HTTP_CODE.BAD_REQUEST);
+    });
+
 });

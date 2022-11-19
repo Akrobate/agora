@@ -36,22 +36,10 @@ const error_mapper = {
     },
 };
 
-
-const error_manager_middleware = (error, _, response, next) => {
-    console.log(error);
-
-    if (error.code === undefined) {
-
-        logger.log(error);
-        return response
-            .status(status.INTERNAL_SERVER_ERROR)
-            .json(
-                {
-                    message: error.message,
-                }
-            );
-    }
-    if (error_mapper[error.code]) {
+// eslint-disable-next-line no-unused-vars
+const error_manager_middleware = (error, _, response, __) => {
+    logger.log(error);
+    if (error.code && error_mapper[error.code]) {
         const message = error.message_object ? error.message_object : {
             message: error_mapper[error.code].message,
         };
@@ -59,7 +47,13 @@ const error_manager_middleware = (error, _, response, next) => {
             .status(error_mapper[error.code].status)
             .json(message);
     }
-    return next();
+    return response
+        .status(status.INTERNAL_SERVER_ERROR)
+        .json(
+            {
+                message: error.message,
+            }
+        );
 };
 
 const not_found_error_middleware = (_, result) => result.status(status.NOT_FOUND).send({});
