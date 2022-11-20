@@ -184,7 +184,6 @@ const manager_user_proposition_elo_result_3 = {
 };
 
 
-
 const guest_user_to_delete_seed = {
     id: 300,
     email: 'guest.user_to_delete@test.com',
