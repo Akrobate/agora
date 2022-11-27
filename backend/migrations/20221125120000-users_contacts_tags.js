@@ -2,10 +2,10 @@
 
 module.exports = {
     down: (query_interface) => query_interface
-        .dropTable('users_contacts'),
+        .dropTable('users_contacts_tags'),
     up: (query_interface, sequelize) => query_interface
         .createTable(
-            'users_contacts',
+            'users_contacts_tags',
             {
                 id: {
                     allowNull: false,
@@ -19,6 +19,11 @@ module.exports = {
                     unique: false,
                 },
                 contact_user_id: {
+                    allowNull: false,
+                    type: sequelize.INTEGER.UNSIGNED,
+                    unique: false,
+                },
+                tag_id: {
                     allowNull: false,
                     type: sequelize.INTEGER.UNSIGNED,
                     unique: false,
