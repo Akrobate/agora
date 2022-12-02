@@ -9,6 +9,10 @@ const {
 } = require('./CampaignRepository');
 
 const {
+    ContactTagRepository,
+} = require('./ContactTagRepository');
+
+const {
     UserRepository,
 } = require('./UserRepository');
 
@@ -31,6 +35,7 @@ const {
 module.exports = {
     CampaignUserRepository,
     CampaignUserStatusRepository,
+    ContactTagRepository,
     CampaignRepository,
     UserRepository,
     PropositionRepository,
