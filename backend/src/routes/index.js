@@ -302,6 +302,14 @@ api_routes.get(
         .catch(next)
 );
 
+api_routes.get(
+    '/contacts/tags',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_elo_proposition_controller
+        .randomPropositions(request, response)
+        .catch(next)
+);
+
 module.exports = {
     api_routes,
     url_prefix,
