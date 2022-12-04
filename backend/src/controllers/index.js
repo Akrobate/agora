@@ -13,6 +13,10 @@ const {
 } = require('./CampaignUserController');
 
 const {
+    ContactTagController,
+} = require('./ContactTagController');
+
+const {
     PropositionController,
 } = require('./PropositionController');
 
@@ -35,6 +39,7 @@ const {
 module.exports = {
     CampaignController,
     CampaignUserController,
+    ContactTagController,
     UserController,
     PropositionController,
     CampaignUserStatusController,
