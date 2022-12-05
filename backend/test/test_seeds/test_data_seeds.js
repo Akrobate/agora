@@ -198,6 +198,37 @@ const guest_campaign_user_to_delete_seed = {
 };
 
 
+// Manager contact tag
+const manager_seed_contact_tag_1 = {
+    id: 1,
+    user_id: manager_user_seed.id,
+    name: 'My first tag',
+};
+const manager_seed_contact_tag_2 = {
+    id: 2,
+    user_id: manager_user_seed.id,
+    name: 'My second tag',
+};
+
+// manager contacts
+const manager_seed_contact_1_tag_1 = {
+    user_id: manager_user_seed.id,
+    contact_user_id: manager_user_2_seed.id,
+    tag_id: manager_seed_contact_tag_1.id,
+};
+
+const manager_seed_contact_2_tag_1 = {
+    user_id: manager_user_seed.id,
+    contact_user_id: guest_user_seed.id,
+    tag_id: manager_seed_contact_tag_1.id,
+};
+
+const manager_seed_contact_1_tag_2 = {
+    user_id: manager_user_seed.id,
+    contact_user_id: manager_user_2_seed.id,
+    tag_id: manager_seed_contact_tag_2.id,
+};
+
 module.exports = {
     manager_user_seed,
     campaign_seed,
