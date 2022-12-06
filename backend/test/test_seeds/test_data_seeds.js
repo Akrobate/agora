@@ -256,4 +256,9 @@ module.exports = {
     manager_user_proposition_elo_result_3,
     manager_user_2_seed,
     manager_campaign_user_2_seed,
+    manager_seed_contact_tag_1,
+    manager_seed_contact_tag_2,
+    manager_seed_contact_1_tag_1,
+    manager_seed_contact_2_tag_1,
+    manager_seed_contact_1_tag_2,
 };
