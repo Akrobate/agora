@@ -35,7 +35,7 @@ class UserContactTagRepository extends AbstractSequelizeRepository {
      */
     static getModel() {
         return sequelize.define(
-            'ContactTag',
+            'UserContactTag',
             {
                 id: {
                     allowNull: false,
@@ -65,7 +65,7 @@ class UserContactTagRepository extends AbstractSequelizeRepository {
                 },
             },
             {
-                tableName: 'contact_tags',
+                tableName: 'users_contacts_tags',
                 underscored: true,
                 timestamps: false,
             }
