@@ -21,8 +21,8 @@ class DataSeeder {
             'UserRepository',
             'PropositionRepository',
             'UserPropositionResultRepository',
-            'ContactTag',
-            'UserContactTag',
+            'ContactTagRepository',
+            'UserContactTagRepository',
         ]);
     }
 

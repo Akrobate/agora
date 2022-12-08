@@ -9,11 +9,11 @@ const {
 
 const {
     app,
-} = require('../../src/app');
+} = require('../../../src/app');
 
 const {
     DataSeeder,
-} = require('../test_helpers/DataSeeder');
+} = require('../../test_helpers/DataSeeder');
 
 const {
     manager_user_seed,
@@ -23,11 +23,11 @@ const {
     guest_campaign_user_seed,
     manager_user_2_seed,
     manager_campaign_user_2_seed,
-} = require('../test_seeds/test_data_seeds');
+} = require('../../test_seeds/test_data_seeds');
 
 const {
     CampaignUserRepository,
-} = require('../../src/repositories');
+} = require('../../../src/repositories');
 
 const superApp = superTest(app);
 
