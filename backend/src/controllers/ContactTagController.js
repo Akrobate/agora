@@ -56,30 +56,13 @@ class ContactTagController extends AbstractController {
             .keys({
                 body: joi.object()
                     .keys({
-                        title: joi.string()
+                        name: joi.string()
                             .trim()
                             .min(1)
                             .required(),
-                        description: joi.string()
-                            .min(1)
-                            .allow(null)
-                            .optional()
-                            .default(null),
-                        proposition_type: joi.string()
+                        user_id: joi.number()
                             .min(1)
                             .required(),
-                        campaign_status: joi.number()
-                            .min(1)
-                            .optional()
-                            .default(1),
-                        start_date: joi.date()
-                            .allow(null)
-                            .optional()
-                            .default(null),
-                        end_date: joi.date()
-                            .allow(null)
-                            .optional()
-                            .default(null),
                     })
                     .required(),
             })
@@ -91,12 +74,8 @@ class ContactTagController extends AbstractController {
         const user = await this.campaign_service.create(
             request.jwt_data,
             {
-                title: value.body.title,
-                description: value.body.description,
-                proposition_type: value.body.proposition_type,
-                campaign_status: value.body.campaign_status,
-                start_date: value.body.start_date,
-                end_date: value.body.end_date,
+                name: value.body.name,
+                user_id: value.body.user_id,
             }
         );
 
@@ -112,7 +91,7 @@ class ContactTagController extends AbstractController {
     async update(request, response) {
 
         const {
-            campaign_id,
+            tag_id,
         } = request.params;
 
         const {
@@ -123,25 +102,13 @@ class ContactTagController extends AbstractController {
             .keys({
                 body: joi.object()
                     .keys({
-                        title: joi.string()
+                        name: joi.string()
                             .trim()
                             .min(1)
-                            .optional(),
-                        description: joi.string()
+                            .required(),
+                        user_id: joi.number()
                             .min(1)
-                            .optional(),
-                        proposition_type: joi.string()
-                            .min(1)
-                            .optional(),
-                        campaign_status: joi.number()
-                            .min(1)
-                            .optional(),
-                        start_date: joi.date()
-                            .allow(null)
-                            .optional(),
-                        end_date: joi.date()
-                            .allow(null)
-                            .optional(),
+                            .required(),
                     })
                     .required(),
             })
@@ -154,7 +121,7 @@ class ContactTagController extends AbstractController {
             request.jwt_data,
             {
                 ...value.body,
-                id: Number(campaign_id),
+                id: Number(tag_id),
             }
         );
 
@@ -185,11 +152,11 @@ class ContactTagController extends AbstractController {
                                     .required()
                             )
                             .optional(),
-                        campaign_status_list: joi
+                        name_list: joi
                             .array()
                             .items(
                                 joi
-                                    .number()
+                                    .string()
                                     .required()
                             )
                             .optional(),
@@ -215,7 +182,7 @@ class ContactTagController extends AbstractController {
         );
 
         return response.status(HTTP_CODE.OK).send({
-            campaign_list: data,
+            tag_list: data,
         });
     }
 
@@ -227,7 +194,7 @@ class ContactTagController extends AbstractController {
     async read(request, response) {
 
         const {
-            campaign_id,
+            tag_id,
         } = request.params;
 
         const {
@@ -237,7 +204,7 @@ class ContactTagController extends AbstractController {
         const data = await this.campaign_service.read(
             jwt_data,
             {
-                campaign_id,
+                tag_id,
             }
         );
 
@@ -253,7 +220,7 @@ class ContactTagController extends AbstractController {
     async delete(request, response) {
 
         const {
-            campaign_id,
+            tag_id,
         } = request.params;
 
         const {
@@ -263,7 +230,7 @@ class ContactTagController extends AbstractController {
         const data = await this.campaign_service.delete(
             jwt_data,
             {
-                id: Number(campaign_id),
+                id: Number(tag_id),
             }
         );
 

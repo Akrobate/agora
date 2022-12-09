@@ -13,6 +13,7 @@ const {
     UserPropositionController,
     UserEloPropositionController,
     InvitationController,
+    ContactTagController,
 } = require('../controllers');
 
 const {
@@ -30,6 +31,7 @@ const campaign_user_status_controller = CampaignUserStatusController.getInstance
 const user_proposition_controller = UserPropositionController.getInstance();
 const user_elo_proposition_controller = UserEloPropositionController.getInstance();
 const invitation_controller = InvitationController.getInstance();
+const contact_tag_controller = ContactTagController.getInstance();
 
 const url_prefix = '/api/v1';
 
@@ -305,10 +307,43 @@ api_routes.get(
 api_routes.get(
     '/contacts/tags',
     authentication_middleware.injectJwtData(),
-    (request, response, next) => user_elo_proposition_controller
-        .randomPropositions(request, response)
+    (request, response, next) => contact_tag_controller
+        .search(request, response)
         .catch(next)
 );
+
+api_routes.post(
+    '/contacts/tags',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => contact_tag_controller
+        .create(request, response)
+        .catch(next)
+);
+
+api_routes.get(
+    '/contacts/tags/:tag_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => contact_tag_controller
+        .read(request, response)
+        .catch(next)
+);
+
+api_routes.patch(
+    '/contacts/tags/:tag_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => contact_tag_controller
+        .update(request, response)
+        .catch(next)
+);
+
+api_routes.delete(
+    '/contacts/tags/:tag_id',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => contact_tag_controller
+        .delete(request, response)
+        .catch(next)
+);
+
 
 module.exports = {
     api_routes,
