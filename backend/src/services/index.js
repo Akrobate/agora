@@ -25,6 +25,10 @@ const {
 } = require('./UserPropositionService');
 
 const {
+    UserContactTagService,
+} = require('./UserContactTagService');
+
+const {
     UserEloPropositionService,
 } = require('./UserEloPropositionService');
 
@@ -42,6 +46,7 @@ module.exports = {
     UserService,
     CampaignUserStatusService,
     PropositionService,
+    UserContactTagService,
     UserPropositionService,
     UserEloPropositionService,
     InvitationService,
