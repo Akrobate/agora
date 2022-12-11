@@ -7,6 +7,8 @@ const {
     expect,
 } = require('chai');
 
+const url_prefix = '/api/v1';
+
 const {
     app,
 } = require('../../../src/app');
@@ -32,7 +34,7 @@ const {
 const superApp = superTest(app);
 
 // @todo implement tags management
-describe.skip('UserContactTagManagement', () => {
+describe.only('UserContactTagManagement', () => {
 
     beforeEach(async () => {
         await DataSeeder.truncateAll();
@@ -50,66 +52,23 @@ describe.skip('UserContactTagManagement', () => {
 
     });
 
-    it('Manager should not be able to remove last campaign manager', async () => {
-        await superApp
-            .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_seed.id}`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .send({
-                access_level: CampaignUserRepository.GUEST,
-                is_participant: true,
-            })
-            .expect(HTTP_CODE.OK);
+    it('Should be able to create a new tag', async () => {
+
+        const tag_to_create = {
+            name: 'My new created tag',
+            user_id: manager_user_seed.id,
+        };
 
         await superApp
-            .patch(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_2_seed.id}`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
-            .send({
-                access_level: CampaignUserRepository.GUEST,
-                is_participant: true,
-            })
-            .expect(HTTP_CODE.UNAUTHORIZED)
-            .expect((response) => {
-                expect(response.body).to.have.property('message', 'Last manager cannot be unsetted');
-            });
-    });
-
-    it('Manager should not be able to remove another manager', async () => {
-        await superApp
-            .delete(`/api/v1/campaigns/${campaign_seed.id}/users/${manager_campaign_user_2_seed.id}`)
+            .post(`${url_prefix}/contacts/tags`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .expect(HTTP_CODE.UNAUTHORIZED)
-            .expect((response) => {
-                expect(response.body).to.have.property('message', 'Manager user cannot be removed');
-            });
-    });
-
-    it('Should not be able to do anything on bad campaign id', async () => {
-        const fake_campaign_id_shift = 878;
-        await superApp
-            .delete(`/api/v1/campaigns/${campaign_seed.id + fake_campaign_id_shift}/users/${manager_campaign_user_2_seed.id}`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .expect(HTTP_CODE.UNAUTHORIZED)
-            .expect((response) => {
-                expect(response.body).to.have.property('message', 'Campaign does not exists');
-            });
-    });
-
-    it('Manager should able to add existing user', async () => {
-        const random_access_level = 1;
-        await superApp
-            .post(`/api/v1/campaigns/${campaign_seed.id}/users`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .send({
-                email: guest_user_seed.email,
-                access_level: random_access_level,
-                is_participant: true,
-            })
+            .send(tag_to_create)
             .expect(HTTP_CODE.CREATED)
             .expect((response) => {
-                expect(response.body).to.have.property('is_participant', true);
-                expect(response.body).to.have.property('campaign_id', `${campaign_seed.id}`);
-                expect(response.body).to.have.property('access_level', random_access_level);
-                expect(response.body).to.have.property('public_token');
+                expect(response.body).to.have.property('id');
+                expect(response.body).to.have.property('name', tag_to_create.name);
+                expect(response.body).to.have.property('user_id', tag_to_create.user_id);
             });
     });
+
 });
