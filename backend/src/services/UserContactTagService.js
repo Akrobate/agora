@@ -51,6 +51,22 @@ class UserContactTagService {
         return UserContactTagService.instance;
     }
 
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async createTag(user, input) {
+
+        const tag = await this.contact_tag_repository
+            .create({
+                ...input,
+                owner_user_id: user.user_id,
+            });
+
+        return tag;
+    }
 }
 
 UserContactTagService.instance = null;
