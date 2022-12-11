@@ -9,19 +9,19 @@ const {
 } = require('./AbstractController');
 
 const {
-    CampaignService,
+    UserContactTagService,
 } = require('../services');
 
 class ContactTagController extends AbstractController {
 
     /**
-     * @param {CampaignService} campaign_service
+     * @param {UserContactTagService} user_contact_tag_service
      */
     constructor(
-        campaign_service
+        user_contact_tag_service
     ) {
         super();
-        this.campaign_service = campaign_service;
+        this.user_contact_tag_service = user_contact_tag_service;
     }
 
 
@@ -33,7 +33,7 @@ class ContactTagController extends AbstractController {
     static getInstance() {
         if (ContactTagController.instance === null) {
             ContactTagController.instance = new ContactTagController(
-                CampaignService.getInstance()
+                UserContactTagService.getInstance()
             );
         }
 
@@ -71,7 +71,7 @@ class ContactTagController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user = await this.campaign_service.create(
+        const user = await this.user_contact_tag_service.create(
             request.jwt_data,
             {
                 name: value.body.name,
@@ -117,7 +117,7 @@ class ContactTagController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user = await this.campaign_service.update(
+        const user = await this.user_contact_tag_service.update(
             request.jwt_data,
             {
                 ...value.body,
@@ -176,7 +176,7 @@ class ContactTagController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const data = await this.campaign_service.search(
+        const data = await this.user_contact_tag_service.search(
             request.jwt_data,
             value.query
         );
@@ -201,7 +201,7 @@ class ContactTagController extends AbstractController {
             jwt_data,
         } = request;
 
-        const data = await this.campaign_service.read(
+        const data = await this.user_contact_tag_service.read(
             jwt_data,
             {
                 tag_id,
@@ -227,7 +227,7 @@ class ContactTagController extends AbstractController {
             jwt_data,
         } = request;
 
-        const data = await this.campaign_service.delete(
+        const data = await this.user_contact_tag_service.delete(
             jwt_data,
             {
                 id: Number(tag_id),
