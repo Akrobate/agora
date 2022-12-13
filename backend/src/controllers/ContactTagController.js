@@ -71,7 +71,7 @@ class ContactTagController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user = await this.user_contact_tag_service.create(
+        const user = await this.user_contact_tag_service.createTag(
             request.jwt_data,
             {
                 name: value.body.name,

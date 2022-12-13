@@ -304,6 +304,8 @@ api_routes.get(
         .catch(next)
 );
 
+// Users contacts tags management
+
 api_routes.get(
     '/contacts/tags',
     authentication_middleware.injectJwtData(),
