@@ -176,7 +176,7 @@ class ContactTagController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const data = await this.user_contact_tag_service.search(
+        const data = await this.user_contact_tag_service.searchTag(
             request.jwt_data,
             value.query
         );
