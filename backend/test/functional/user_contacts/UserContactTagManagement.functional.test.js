@@ -71,4 +71,15 @@ describe.only('UserContactTagManagement', () => {
             });
     });
 
+    it('Should be able to search a tag', async () => {
+
+        await superApp
+            .get(`${url_prefix}/contacts/tags`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                console.log(response.body)
+            });
+    });
+
 });
