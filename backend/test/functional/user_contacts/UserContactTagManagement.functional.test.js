@@ -71,6 +71,7 @@ describe.only('UserContactTagManagement', () => {
             });
     });
 
+    // red test
     it('Should be able to search a tag', async () => {
 
         await superApp

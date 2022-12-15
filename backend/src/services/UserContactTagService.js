@@ -67,6 +67,23 @@ class UserContactTagService {
 
         return tag;
     }
+
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async searchTag(user, input) {
+
+        const tag = await this.contact_tag_repository
+            .search({
+                ...input,
+                owner_user_id: user.user_id,
+            });
+
+        return tag;
+    }
 }
 
 UserContactTagService.instance = null;
