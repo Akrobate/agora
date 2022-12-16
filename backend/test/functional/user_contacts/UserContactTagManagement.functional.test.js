@@ -25,6 +25,9 @@ const {
     guest_campaign_user_seed,
     manager_user_2_seed,
     manager_campaign_user_2_seed,
+    manager_seed_contact_tag_1,
+    manager_seed_contact_tag_2,
+    manager_seed_2_contact_tag_1,
 } = require('../../test_seeds/test_data_seeds');
 
 const {
@@ -50,6 +53,10 @@ describe.only('UserContactTagManagement', () => {
         await DataSeeder.create('UserRepository', guest_user_seed);
         await DataSeeder.create('CampaignUserRepository', guest_campaign_user_seed);
 
+        await DataSeeder.create('ContactTagRepository', manager_seed_contact_tag_1);
+        await DataSeeder.create('ContactTagRepository', manager_seed_contact_tag_2);
+        await DataSeeder.create('ContactTagRepository', manager_seed_2_contact_tag_1);
+
     });
 
     it('Should be able to create a new tag', async () => {
@@ -65,6 +72,7 @@ describe.only('UserContactTagManagement', () => {
             .send(tag_to_create)
             .expect(HTTP_CODE.CREATED)
             .expect((response) => {
+                console.log(response.body)
                 expect(response.body).to.have.property('id');
                 expect(response.body).to.have.property('name', tag_to_create.name);
                 expect(response.body).to.have.property('user_id', tag_to_create.user_id);
