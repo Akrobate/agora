@@ -198,7 +198,7 @@ const guest_campaign_user_to_delete_seed = {
 };
 
 
-// Manager contact tag
+// Contact tag Manager
 const manager_seed_contact_tag_1 = {
     id: 1,
     user_id: manager_user_seed.id,
@@ -208,6 +208,13 @@ const manager_seed_contact_tag_2 = {
     id: 2,
     user_id: manager_user_seed.id,
     name: 'My second tag',
+};
+
+// Contact tag Manager
+const manager_seed_2_contact_tag_1 = {
+    id: 3,
+    user_id: manager_user_2_seed.id,
+    name: 'Manager 2 - first tag',
 };
 
 // manager contacts
@@ -258,6 +265,7 @@ module.exports = {
     manager_campaign_user_2_seed,
     manager_seed_contact_tag_1,
     manager_seed_contact_tag_2,
+    manager_seed_2_contact_tag_1,
     manager_seed_contact_1_tag_1,
     manager_seed_contact_2_tag_1,
     manager_seed_contact_1_tag_2,
