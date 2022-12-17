@@ -75,14 +75,17 @@ class UserContactTagService {
      * @returns {Promise<*|Error>}
      */
     async searchTag(user, input) {
-
-        const tag = await this.contact_tag_repository
+console.log({
+    ...input,
+    user_id: user.user_id,
+})
+        const tag_list = await this.contact_tag_repository
             .search({
                 ...input,
-                owner_user_id: user.user_id,
+                user_id: user.user_id,
             });
 
-        return tag;
+        return tag_list;
     }
 }
 
