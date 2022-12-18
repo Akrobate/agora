@@ -80,15 +80,31 @@ describe.only('UserContactTagManagement', () => {
     });
 
     // red test
-    it('Should be able to search a tag', async () => {
+    describe('Search tags', () => {
+        it('Should be able to search a tag', () => {
+            return superApp
+                .get(`${url_prefix}/contacts/tags`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response).to.have.property('body');
+                    expect(response.body).to.have.property('tag_list');
+                    expect(response.body.tag_list).to.have.lengthOf(2);
 
-        await superApp
-            .get(`${url_prefix}/contacts/tags`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .expect(HTTP_CODE.OK)
-            .expect((response) => {
-                console.log(response.body)
-            });
+                });
+        });
+
+        it('Should be able to search a tag of manager_user_2_seed', () => {
+            return superApp
+                .get(`${url_prefix}/contacts/tags`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response).to.have.property('body');
+                    expect(response.body).to.have.property('tag_list');
+                    expect(response.body.tag_list).to.have.lengthOf(1);
+
+                });
+        });
     });
-
 });
