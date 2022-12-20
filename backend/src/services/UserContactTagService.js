@@ -75,10 +75,6 @@ class UserContactTagService {
      * @returns {Promise<*|Error>}
      */
     async searchTag(user, input) {
-console.log({
-    ...input,
-    user_id: user.user_id,
-})
         const tag_list = await this.contact_tag_repository
             .search({
                 ...input,
@@ -86,6 +82,28 @@ console.log({
             });
 
         return tag_list;
+    }
+
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async updateTag(user, input) {
+        const {
+            user_id,
+        } = user;
+        const {
+            id: tag_id,
+        } = input;
+
+        await this.contact_tag_repository
+            .update(input);
+
+        return this.contact_tag_repository.find({
+            id: tag_id,
+        });
     }
 }
 

@@ -106,9 +106,6 @@ class ContactTagController extends AbstractController {
                             .trim()
                             .min(1)
                             .required(),
-                        user_id: joi.number()
-                            .min(1)
-                            .required(),
                     })
                     .required(),
             })
@@ -117,7 +114,7 @@ class ContactTagController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user = await this.user_contact_tag_service.update(
+        const user = await this.user_contact_tag_service.updateTag(
             request.jwt_data,
             {
                 ...value.body,
