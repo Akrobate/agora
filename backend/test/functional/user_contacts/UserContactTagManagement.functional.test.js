@@ -92,6 +92,40 @@ describe.only('UserContactTagManagement', () => {
         })
     );
 
+    // @redtest
+    it('Should be able to delete a tag', async () => {
+        await superApp
+            .get(`${url_prefix}/contacts/tags`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response).to.have.property('body');
+                expect(response.body).to.have.property('tag_list');
+                expect(response.body.tag_list).to.have.lengthOf(2);
+            })
+
+        await superApp
+            .delete(`${url_prefix}/contacts/tags/${manager_seed_contact_tag_1.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            //.expect(HTTP_CODE.CREATED)
+            .expect((response) => {
+                console.log(response.body)
+                // expect(response.body).to.have.property('id');
+                // expect(response.body).to.have.property('name', 'Updated tag name');
+                // expect(response.body).to.have.property('user_id', manager_seed_contact_tag_1.user_id);
+            });
+
+        await superApp
+            .get(`${url_prefix}/contacts/tags`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response).to.have.property('body');
+                expect(response.body).to.have.property('tag_list');
+                expect(response.body.tag_list).to.have.lengthOf(1);
+            })
+    });
+
 
     describe('Search tags', () => {
         it('Should be able to search a tag', () => superApp
