@@ -105,6 +105,26 @@ class UserContactTagService {
             id: tag_id,
         });
     }
+
+
+    /**
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async deleteTag(user, input) {
+        const {
+            user_id,
+        } = user;
+        const {
+            id: tag_id,
+        } = input;
+     
+        await this.contact_tag_repository
+            .delete(tag_id);
+        
+        return null;
+    }
 }
 
 UserContactTagService.instance = null;
