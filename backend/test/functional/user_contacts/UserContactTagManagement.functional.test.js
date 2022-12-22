@@ -92,7 +92,7 @@ describe.only('UserContactTagManagement', () => {
         })
     );
 
-    // @redtest
+
     it('Should be able to delete a tag', async () => {
         await superApp
             .get(`${url_prefix}/contacts/tags`)
@@ -107,12 +107,9 @@ describe.only('UserContactTagManagement', () => {
         await superApp
             .delete(`${url_prefix}/contacts/tags/${manager_seed_contact_tag_1.id}`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            //.expect(HTTP_CODE.CREATED)
+            .expect(HTTP_CODE.OK)
             .expect((response) => {
-                console.log(response.body)
-                // expect(response.body).to.have.property('id');
-                // expect(response.body).to.have.property('name', 'Updated tag name');
-                // expect(response.body).to.have.property('user_id', manager_seed_contact_tag_1.user_id);
+                expect(response).to.have.property('body');
             });
 
         await superApp

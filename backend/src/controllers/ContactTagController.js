@@ -224,7 +224,7 @@ class ContactTagController extends AbstractController {
             jwt_data,
         } = request;
 
-        const data = await this.user_contact_tag_service.delete(
+        const data = await this.user_contact_tag_service.deleteTag(
             jwt_data,
             {
                 id: Number(tag_id),
