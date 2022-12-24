@@ -119,6 +119,11 @@ class UserContactTagService {
             id: tag_id,
         } = input;
 
+        const tag = await this.contact_tag_repository
+            .read(tag_id);
+
+        this.acl.checkUserModifiesOwnData(user_id, tag.user_id);
+
         await this.contact_tag_repository
             .delete(tag_id);
 
