@@ -1,15 +1,9 @@
 'use strict';
 
-const moment = require('moment');
-
 const {
     ContactTagRepository,
     UserContactTagRepository,
 } = require('../repositories');
-
-const {
-    CustomError,
-} = require('../CustomError');
 
 const {
     Acl,
@@ -27,7 +21,7 @@ class UserContactTagService {
     constructor(
         acl,
         contact_tag_repository,
-        user_contact_tag_repository,
+        user_contact_tag_repository
     ) {
         this.acl = acl;
         this.contact_tag_repository = contact_tag_repository;
@@ -45,7 +39,7 @@ class UserContactTagService {
             UserContactTagService.instance = new UserContactTagService(
                 Acl.getInstance(),
                 ContactTagRepository.getInstance(),
-                UserContactTagRepository.getInstance(),
+                UserContactTagRepository.getInstance()
             );
         }
         return UserContactTagService.instance;
@@ -98,6 +92,11 @@ class UserContactTagService {
             id: tag_id,
         } = input;
 
+        const tag = await this.contact_tag_repository
+            .read(tag_id);
+
+        this.acl.checkUserModifiesOwnData(user_id, tag.user_id);
+
         await this.contact_tag_repository
             .update(input);
 
@@ -119,10 +118,10 @@ class UserContactTagService {
         const {
             id: tag_id,
         } = input;
-     
+
         await this.contact_tag_repository
             .delete(tag_id);
-        
+
         return null;
     }
 }
