@@ -30,9 +30,6 @@ const {
     manager_seed_2_contact_tag_1,
 } = require('../../test_seeds/test_data_seeds');
 
-const {
-    CampaignUserRepository,
-} = require('../../../src/repositories');
 
 const superApp = superTest(app);
 
@@ -92,6 +89,15 @@ describe.only('UserContactTagManagement', () => {
         })
     );
 
+    it('Should not be able to update a tag of another user', () => superApp
+        .patch(`${url_prefix}/contacts/tags/${manager_seed_contact_tag_1.id}`)
+        .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
+        .send({
+            name: 'Updated tag name',
+        })
+        .expect(HTTP_CODE.UNAUTHORIZED)
+    );
+
 
     it('Should be able to delete a tag', async () => {
         await superApp
@@ -102,7 +108,7 @@ describe.only('UserContactTagManagement', () => {
                 expect(response).to.have.property('body');
                 expect(response.body).to.have.property('tag_list');
                 expect(response.body.tag_list).to.have.lengthOf(2);
-            })
+            });
 
         await superApp
             .delete(`${url_prefix}/contacts/tags/${manager_seed_contact_tag_1.id}`)
@@ -120,9 +126,11 @@ describe.only('UserContactTagManagement', () => {
                 expect(response).to.have.property('body');
                 expect(response.body).to.have.property('tag_list');
                 expect(response.body.tag_list).to.have.lengthOf(1);
-            })
+            });
     });
 
+    // @redtest
+    it.skip('Should not be able to delete a tag of another user', () => {});
 
     describe('Search tags', () => {
         it('Should be able to search a tag', () => superApp
