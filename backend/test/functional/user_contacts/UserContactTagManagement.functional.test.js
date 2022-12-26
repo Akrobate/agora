@@ -34,7 +34,7 @@ const {
 const superApp = superTest(app);
 
 // @todo implement tags management
-describe.only('UserContactTagManagement', () => {
+describe('UserContactTagManagement', () => {
 
     beforeEach(async () => {
         await DataSeeder.truncateAll();
@@ -129,8 +129,13 @@ describe.only('UserContactTagManagement', () => {
             });
     });
 
-    // @redtest
-    it.skip('Should not be able to delete a tag of another user', () => {});
+
+    it('Should not be able to delete a tag of another user', () => superApp
+        .delete(`${url_prefix}/contacts/tags/${manager_seed_contact_tag_1.id}`)
+        .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
+        .expect(HTTP_CODE.UNAUTHORIZED)
+    );
+
 
     describe('Search tags', () => {
         it('Should be able to search a tag', () => superApp
