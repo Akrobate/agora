@@ -36,6 +36,11 @@ const {
     InvitationController,
 } = require('./InvitationController');
 
+const {
+    UserContactController,
+} = require('./UserContactController');
+
+
 module.exports = {
     CampaignController,
     CampaignUserController,
@@ -46,4 +51,5 @@ module.exports = {
     UserPropositionController,
     UserEloPropositionController,
     InvitationController,
+    UserContactController,
 };
