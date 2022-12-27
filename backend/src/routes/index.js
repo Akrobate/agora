@@ -14,6 +14,7 @@ const {
     UserEloPropositionController,
     InvitationController,
     ContactTagController,
+    UserContactController,
 } = require('../controllers');
 
 const {
@@ -32,6 +33,8 @@ const user_proposition_controller = UserPropositionController.getInstance();
 const user_elo_proposition_controller = UserEloPropositionController.getInstance();
 const invitation_controller = InvitationController.getInstance();
 const contact_tag_controller = ContactTagController.getInstance();
+const user_contact_controller = UserContactController.getInstance();
+
 
 const url_prefix = '/api/v1';
 
@@ -346,6 +349,21 @@ api_routes.delete(
         .catch(next)
 );
 
+api_routes.post(
+    '/contacts',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_contact_controller
+        .create(request, response)
+        .catch(next)
+);
+
+api_routes.get(
+    '/contacts',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_contact_controller
+        .search(request, response)
+        .catch(next)
+);
 
 module.exports = {
     api_routes,
