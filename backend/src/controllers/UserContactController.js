@@ -43,6 +43,9 @@ class UserContactController extends AbstractController {
 
 
     /**
+     * 
+     * @todo
+     * 
      * @param {express.Request} request
      * @param {express.Response} response
      * @returns {Promise<*|Error>}
