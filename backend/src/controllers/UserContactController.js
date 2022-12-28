@@ -9,20 +9,20 @@ const {
 } = require('./AbstractController');
 
 const {
-    UserEloPropositionService,
+    UserContactTagService,
 } = require('../services');
 
 
 class UserContactController extends AbstractController {
 
     /**
-     * @param {UserEloPropositionService} proposition_elo_user_service
+     * @param {UserContactTagService} user_contact_tag_service
      */
     constructor(
-        proposition_elo_user_service
+        user_contact_tag_service
     ) {
         super();
-        this.proposition_elo_user_service = proposition_elo_user_service;
+        this.user_contact_tag_service = user_contact_tag_service;
     }
 
 
@@ -34,7 +34,7 @@ class UserContactController extends AbstractController {
     static getInstance() {
         if (UserContactController.instance === null) {
             UserContactController.instance = new UserContactController(
-                UserEloPropositionService.getInstance()
+                UserContactTagService.getInstance()
             );
         }
 
@@ -43,9 +43,9 @@ class UserContactController extends AbstractController {
 
 
     /**
-     * 
+     *
      * @todo
-     * 
+     *
      * @param {express.Request} request
      * @param {express.Response} response
      * @returns {Promise<*|Error>}
@@ -79,7 +79,7 @@ class UserContactController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user_proposition_elo_result_list = await this.proposition_elo_user_service
+        const user_proposition_elo_result_list = await this.user_contact_tag_service
             .processEloDuelResult(
                 request.jwt_data,
                 {
