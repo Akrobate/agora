@@ -50,11 +50,7 @@ class UserContactController extends AbstractController {
      * @param {express.Response} response
      * @returns {Promise<*|Error>}
      */
-    async searchContactsTags(request, response) {
-
-        const {
-            campaign_id,
-        } = request.params;
+    async search(request, response) {
 
         const {
             error,
@@ -62,15 +58,26 @@ class UserContactController extends AbstractController {
         } = joi
             .object()
             .keys({
-                body: joi.object()
+                query: joi.object()
                     .keys({
-                        proposition_id_1: joi.number()
+                        tag_id_list: joi
+                            .array()
+                            .items(
+                                joi
+                                    .number()
+                                    .required()
+                            )
+                            .optional(),
+                        user_id: joi.number()
                             .required(),
-                        proposition_id_2: joi.number()
-                            .required(),
-                        winner: joi.number()
-                            .valid(1, 2, 0)
-                            .required(),
+                        contact_id_list: joi
+                            .array()
+                            .items(
+                                joi
+                                    .number()
+                                    .required()
+                            )
+                            .optional(),
                     })
                     .required(),
             })
@@ -79,19 +86,18 @@ class UserContactController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user_proposition_elo_result_list = await this.user_contact_tag_service
-            .processEloDuelResult(
+        const user_contact_list = await this.user_contact_tag_service
+            .search(
                 request.jwt_data,
                 {
-                    campaign_id,
-                    proposition_id_1: value.body.proposition_id_1,
-                    proposition_id_2: value.body.proposition_id_2,
-                    winner: value.body.winner,
+                    tag_id_list: value.query.tag_id_list,
+                    contact_id_list: value.query.contact_id_list,
+                    user_id: value.query.user_id,
                 }
             );
 
         return response.status(HTTP_CODE.OK).send({
-            user_proposition_elo_result_list,
+            user_contact_list,
         });
     }
 
