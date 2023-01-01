@@ -43,6 +43,55 @@ class UserContactController extends AbstractController {
 
 
     /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async create(request, response) {
+
+        const {
+            error,
+            value,
+        } = joi
+            .object()
+            .keys({
+                body: joi.object()
+                    .keys({
+                        tag_id: joi.string()
+                            .trim()
+                            .min(1)
+                            .required(),
+                        user_id: joi.number()
+                            .min(1)
+                            .required(),
+                        contact_id_list: joi.array().items(
+				joi.number()
+	                        .min(1)
+                            	.required()
+			),
+
+                    })
+                    .required(),
+            })
+            .unknown(true)
+            .validate(request);
+
+        this.checkValidationError(error);
+
+        const user = await this.user_contact_tag_service.createTag(
+            request.jwt_data,
+            {
+                name: value.body.name,
+                user_id: value.body.user_id,
+            }
+        );
+
+        return response.status(HTTP_CODE.CREATED).send(user);
+    }
+
+
+
+    /**
      *
      * @todo
      *
