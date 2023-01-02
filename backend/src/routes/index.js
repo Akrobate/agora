@@ -353,7 +353,23 @@ api_routes.post(
     '/contacts',
     authentication_middleware.injectJwtData(),
     (request, response, next) => user_contact_controller
-        .create(request, response)
+        .replace(request, response)
+        .catch(next)
+);
+
+api_routes.patch(
+    '/contacts',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_contact_controller
+        .add(request, response)
+        .catch(next)
+);
+
+api_routes.delete(
+    '/contacts',
+    authentication_middleware.injectJwtData(),
+    (request, response, next) => user_contact_controller
+        .add(request, response)
         .catch(next)
 );
 
