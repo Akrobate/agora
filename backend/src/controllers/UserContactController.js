@@ -44,15 +44,10 @@ class UserContactController extends AbstractController {
 
     /**
      * @param {express.Request} request
-     * @param {express.Response} response
-     * @returns {Promise<*|Error>}
+     * @returns {Object}
      */
-    async create(request, response) {
-
-        const {
-            error,
-            value,
-        } = joi
+    joiWriteRequestValidation(request) {
+        return joi
             .object()
             .keys({
                 body: joi.object()
@@ -64,17 +59,31 @@ class UserContactController extends AbstractController {
                         user_id: joi.number()
                             .min(1)
                             .required(),
-                        contact_id_list: joi.array().items(
-				joi.number()
-	                        .min(1)
-                            	.required()
-			),
+                        contact_id_list: joi.array()
+                            .items(
+                                joi.number()
+                                    .min(1)
+                                    .required()
+                            ),
 
                     })
                     .required(),
             })
             .unknown(true)
             .validate(request);
+    }
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async replace(request, response) {
+
+        const {
+            error,
+            value,
+        } = this.joiWriteRequestValidation(request);
 
         this.checkValidationError(error);
 
@@ -89,6 +98,57 @@ class UserContactController extends AbstractController {
         return response.status(HTTP_CODE.CREATED).send(user);
     }
 
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async add(request, response) {
+
+        const {
+            error,
+            value,
+        } = this.joiWriteRequestValidation(request);
+
+        this.checkValidationError(error);
+
+        const user = await this.user_contact_tag_service.createTag(
+            request.jwt_data,
+            {
+                name: value.body.name,
+                user_id: value.body.user_id,
+            }
+        );
+
+        return response.status(HTTP_CODE.CREATED).send(user);
+    }
+
+
+    /**
+     * @param {express.Request} request
+     * @param {express.Response} response
+     * @returns {Promise<*|Error>}
+     */
+    async delete(request, response) {
+
+        const {
+            error,
+            value,
+        } = this.joiWriteRequestValidation(request);
+
+        this.checkValidationError(error);
+
+        const user = await this.user_contact_tag_service.createTag(
+            request.jwt_data,
+            {
+                name: value.body.name,
+                user_id: value.body.user_id,
+            }
+        );
+
+        return response.status(HTTP_CODE.CREATED).send(user);
+    }
 
 
     /**
