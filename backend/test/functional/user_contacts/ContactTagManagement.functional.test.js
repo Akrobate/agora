@@ -82,7 +82,7 @@ describe('ContactTagManagement', () => {
                 .post(`${url_prefix}/contacts/tags`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
                 .send(tag_to_create)
-                .expect(HTTP_CODE.BAD_REQUEST)
+                .expect(HTTP_CODE.BAD_REQUEST);
         });
 
 
@@ -96,7 +96,7 @@ describe('ContactTagManagement', () => {
                 .post(`${url_prefix}/contacts/tags`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
                 .send(tag_to_create)
-                .expect(HTTP_CODE.BAD_REQUEST)
+                .expect(HTTP_CODE.BAD_REQUEST);
         });
     });
 
