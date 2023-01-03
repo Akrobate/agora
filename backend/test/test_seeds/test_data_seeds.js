@@ -19,6 +19,26 @@ const guest_user_seed = {
     email: 'guest.user@test.com',
 };
 
+const contact_1_user_seed = {
+    id: 501,
+    email: 'contact_1.user@test.com',
+};
+
+const contact_2_user_seed = {
+    id: 502,
+    email: 'contact_2.user@test.com',
+};
+
+const contact_3_user_seed = {
+    id: 503,
+    email: 'contact_3.user@test.com',
+};
+
+const contact_4_user_seed = {
+    id: 504,
+    email: 'contact_4.user@test.com',
+};
+
 const campaign_seed = {
     id: 10,
     title: 'Title of campaignsss',
@@ -269,4 +289,8 @@ module.exports = {
     manager_seed_contact_1_tag_1,
     manager_seed_contact_2_tag_1,
     manager_seed_contact_1_tag_2,
+    contact_1_user_seed,
+    contact_2_user_seed,
+    contact_3_user_seed,
+    contact_4_user_seed,
 };
