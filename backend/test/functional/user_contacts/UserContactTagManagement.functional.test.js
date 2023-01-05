@@ -78,6 +78,26 @@ describe.only('User Contact Management', () => {
             };
 
             await superApp
+                .patch(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send(content_to_create)
+                .expect(HTTP_CODE.CREATED)
+                .expect((response) => {
+                    expect(response).to.have.property('body');
+                });
+        });
+
+        it('Should be able to replace user contact', async () => {
+            const content_to_create = {
+                tag_id: 'My new created tag',
+                user_id: manager_user_seed.id,
+                contact_id_list: [
+                    contact_1_user_seed.id,
+                    contact_2_user_seed.id,
+                ],
+            };
+
+            await superApp
                 .post(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
                 .send(content_to_create)
