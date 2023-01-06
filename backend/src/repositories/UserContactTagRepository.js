@@ -83,6 +83,7 @@ class UserContactTagRepository extends AbstractSequelizeRepository {
             id_list,
             user_id,
             user_id_list,
+            tag_id,
         } = criteria;
 
         const where = {
@@ -110,6 +111,12 @@ class UserContactTagRepository extends AbstractSequelizeRepository {
         if (user_id_list !== undefined) {
             where[Op.and].user_id = {
                 [Op.in]: user_id_list,
+            };
+        }
+
+        if (tag_id !== undefined) {
+            where[Op.and].tag_id = {
+                [Op.eq]: tag_id,
             };
         }
 
