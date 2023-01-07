@@ -87,7 +87,7 @@ class UserContactController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user = await this.user_contact_tag_service.createTag(
+        const user = await this.user_contact_tag_service.replace(
             request.jwt_data,
             {
                 name: value.body.name,
@@ -113,7 +113,7 @@ class UserContactController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user = await this.user_contact_tag_service.createTag(
+        const user = await this.user_contact_tag_service.add(
             request.jwt_data,
             {
                 name: value.body.name,
