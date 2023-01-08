@@ -47,6 +47,60 @@ class UserContactTagService {
 
 
     /**
+     * @todo
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async add(user, input) {
+
+        const tag = await this.contact_tag_repository
+            .create({
+                ...input,
+                owner_user_id: user.user_id,
+            });
+
+        return tag;
+    }
+
+
+    /**
+     * @todo
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async replace(user, input) {
+
+        const tag = await this.contact_tag_repository
+            .create({
+                ...input,
+                owner_user_id: user.user_id,
+            });
+
+        return tag;
+    }
+
+
+    /**
+     * @todo
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async deleteAllTagContent(user, input) {
+
+        const tag = await this.contact_tag_repository
+            .create({
+                ...input,
+                owner_user_id: user.user_id,
+            });
+
+        return tag;
+    }
+
+
+    /**
      * @param {Object} user
      * @param {Object} input
      * @returns {Promise<*|Error>}
