@@ -52,8 +52,7 @@ class UserContactController extends AbstractController {
             .keys({
                 body: joi.object()
                     .keys({
-                        tag_id: joi.string()
-                            .trim()
+                        tag_id: joi.number()
                             .min(1)
                             .required(),
                         user_id: joi.number()
@@ -90,8 +89,9 @@ class UserContactController extends AbstractController {
         const user = await this.user_contact_tag_service.replace(
             request.jwt_data,
             {
-                name: value.body.name,
+                tag_id: value.body.tag_id,
                 user_id: value.body.user_id,
+                contact_id_list: value.body.contact_id_list,
             }
         );
 
@@ -105,7 +105,6 @@ class UserContactController extends AbstractController {
      * @returns {Promise<*|Error>}
      */
     async add(request, response) {
-
         const {
             error,
             value,
@@ -116,8 +115,9 @@ class UserContactController extends AbstractController {
         const user = await this.user_contact_tag_service.add(
             request.jwt_data,
             {
-                name: value.body.name,
+                tag_id: value.body.tag_id,
                 user_id: value.body.user_id,
+                contact_id_list: value.body.contact_id_list,
             }
         );
 
