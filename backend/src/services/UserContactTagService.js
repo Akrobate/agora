@@ -54,6 +54,14 @@ class UserContactTagService {
      */
     async add(user, input) {
 
+        const {
+            tag_id,
+        } = input;
+
+        console.log('====================================>', tag_id);
+        await this.deleteAllTagContent();
+        
+        /*
         const tag = await this.contact_tag_repository
             .create({
                 ...input,
@@ -61,6 +69,8 @@ class UserContactTagService {
             });
 
         return tag;
+        */
+       return {};
     }
 
 
@@ -72,6 +82,14 @@ class UserContactTagService {
      */
     async replace(user, input) {
 
+        const {
+            tag_id,
+        } = input;
+
+        console.log('====================================>ssss', tag_id);
+        await this.deleteAllTagContent(user, input);
+        
+        /*
         const tag = await this.contact_tag_repository
             .create({
                 ...input,
@@ -79,6 +97,8 @@ class UserContactTagService {
             });
 
         return tag;
+        */
+       return {};
     }
 
 
@@ -90,13 +110,16 @@ class UserContactTagService {
      */
     async deleteAllTagContent(user, input) {
 
-        const tag = await this.contact_tag_repository
-            .create({
-                ...input,
-                owner_user_id: user.user_id,
-            });
+        const {
+            tag_id,
+        } = input;
 
-        return tag;
+        const user_contact_list = await this.user_contact_tag_repository
+            .search({
+                tag_id,
+            });
+console.log(user_contact_list);
+        return user_contact_list;
     }
 
 
