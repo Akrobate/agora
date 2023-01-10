@@ -118,8 +118,15 @@ class UserContactTagService {
             .search({
                 tag_id,
             });
-console.log(user_contact_list);
-        return user_contact_list;
+
+        // console.log(user_contact_list);
+
+        return Promise.all(
+            user_contact_list
+                .map((user_contact) => this
+                    .user_contact_tag_repository
+                    .delete(user_contact.id)
+        );
     }
 
 
