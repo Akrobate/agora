@@ -111,4 +111,19 @@ describe.only('User Contact Management', () => {
         });
     });
 
+    // @red test
+    describe('Read content in user tag', () => {
+        it.skip('Should be able to read a user contact', async () => {
+            await superApp
+                .get(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send(content_to_create)
+                .expect(HTTP_CODE.CREATED)
+                .expect((response) => {
+                    expect(response).to.have.property('body');
+                });
+        });
+    });
+
+
 });
