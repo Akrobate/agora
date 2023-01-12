@@ -126,6 +126,7 @@ class UserContactTagService {
                 .map((user_contact) => this
                     .user_contact_tag_repository
                     .delete(user_contact.id)
+                )
         );
     }
 
