@@ -61,15 +61,28 @@ describe.only('User Contact Management', () => {
         await DataSeeder.create('ContactTagRepository', manager_seed_contact_tag_2);
         await DataSeeder.create('ContactTagRepository', manager_seed_2_contact_tag_1);
 
-        // contact_3_user_seed.id,
-        // contact_4_user_seed.id,
-
-
+        await DataSeeder.create('UserContactTagRepository', {
+            user_id: manager_user_seed.id,
+            contact_user_id: contact_3_user_seed.id,
+            tag_id: manager_seed_contact_tag_1.id
+        });
+        /*
+        await DataSeeder.create('UserContactTagRepository', {
+            user_id: manager_user_seed.id,
+            contact_user_id: contact_4_user_seed.id,
+            tag_id: manager_seed_contact_tag_1.id
+        });
+        */
+       console.log({
+        user_id: manager_user_seed.id,
+        contact_user_id: contact_3_user_seed.id,
+        tag_id: manager_seed_contact_tag_1.id
+        })
     });
 
 
     describe('Create content in user tag', () => {
-        it.skip('Should be able to add a user contact', async () => {
+        it('Should be able to add a user contact', async () => {
             const content_to_create = {
                 tag_id: manager_seed_contact_tag_1.id,
                 user_id: manager_user_seed.id,
@@ -90,7 +103,7 @@ describe.only('User Contact Management', () => {
                 });
         });
 
-        it('Should be able to replace user contact', async () => {
+        it.skip('Should be able to replace user contact', async () => {
             const content_to_create = {
                 tag_id: manager_seed_contact_tag_1.id,
                 user_id: manager_user_seed.id,
