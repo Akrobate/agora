@@ -60,17 +60,15 @@ class UserContactTagService {
 
         console.log('====================================>', tag_id);
         await this.deleteAllTagContent();
-        
-        /*
-        const tag = await this.contact_tag_repository
-            .create({
-                ...input,
-                owner_user_id: user.user_id,
-            });
 
-        return tag;
-        */
-       return {};
+        // const tag = await this.contact_tag_repository
+        //     .create({
+        //         ...input,
+        //         owner_user_id: user.user_id,
+        //     });
+        // return tag;
+
+        return {};
     }
 
 
@@ -88,17 +86,14 @@ class UserContactTagService {
 
         console.log('====================================>ssss', tag_id);
         await this.deleteAllTagContent(user, input);
-        
-        /*
-        const tag = await this.contact_tag_repository
-            .create({
-                ...input,
-                owner_user_id: user.user_id,
-            });
 
-        return tag;
-        */
-       return {};
+        // const tag = await this.contact_tag_repository
+        //     .create({
+        //         ...input,
+        //         owner_user_id: user.user_id,
+        //     });
+        // return tag;
+        return {};
     }
 
 
