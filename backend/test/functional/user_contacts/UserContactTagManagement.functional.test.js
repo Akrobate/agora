@@ -64,13 +64,13 @@ describe.only('User Contact Management', () => {
         await DataSeeder.create('UserContactTagRepository', {
             user_id: manager_user_seed.id,
             contact_user_id: contact_3_user_seed.id,
-            tag_id: manager_seed_contact_tag_1.id
+            tag_id: manager_seed_contact_tag_1.id,
         });
-        
+
         await DataSeeder.create('UserContactTagRepository', {
             user_id: manager_user_seed.id,
             contact_user_id: contact_4_user_seed.id,
-            tag_id: manager_seed_contact_tag_1.id
+            tag_id: manager_seed_contact_tag_1.id,
         });
 
     });
@@ -121,6 +121,15 @@ describe.only('User Contact Management', () => {
 
     // @red test
     describe('Read content in user tag', () => {
+        const content_to_create = {
+            tag_id: manager_seed_contact_tag_1.id,
+            user_id: manager_user_seed.id,
+            contact_id_list: [
+                contact_1_user_seed.id,
+                contact_2_user_seed.id,
+            ],
+        };
+
         it.skip('Should be able to read a user contact', async () => {
             await superApp
                 .get(`${url_prefix}/contacts`)
