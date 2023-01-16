@@ -81,6 +81,8 @@ class UserContactTagRepository extends AbstractSequelizeRepository {
         const {
             id,
             id_list,
+            contact_user_id,
+            contact_user_id_list,
             user_id,
             user_id_list,
             tag_id,
@@ -99,6 +101,18 @@ class UserContactTagRepository extends AbstractSequelizeRepository {
         if (id_list !== undefined) {
             where[Op.and].id = {
                 [Op.in]: id_list,
+            };
+        }
+
+        if (contact_user_id !== undefined) {
+            where[Op.and].contact_user_id = {
+                [Op.eq]: contact_user_id,
+            };
+        }
+
+        if (contact_user_id_list !== undefined) {
+            where[Op.and].contact_user_id = {
+                [Op.in]: contact_user_id_list,
             };
         }
 
