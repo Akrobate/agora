@@ -58,8 +58,20 @@ class UserContactTagService {
             tag_id,
         } = input;
 
-        console.log('====================================>', tag_id);
-        await this.deleteAllTagContent();
+        const {
+            user_id,
+        } = user;
+
+        console.log('====================================> tag_id : ', tag_id);
+        console.log('====================================> user_id : ', user_id);
+
+        const _list = await this.contact_tag_repository
+            .search({
+                tag_id,
+                user_id,
+            });
+
+        console.log('====================================>', _list);
 
         // const tag = await this.contact_tag_repository
         //     .create({
