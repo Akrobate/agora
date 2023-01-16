@@ -56,6 +56,7 @@ class UserContactTagService {
 
         const {
             tag_id,
+            contact_id_list,
         } = input;
 
         const {
@@ -64,8 +65,9 @@ class UserContactTagService {
 
         console.log('====================================> tag_id : ', tag_id);
         console.log('====================================> user_id : ', user_id);
+        console.log('====================================> contact_id_list : ', contact_id_list);
 
-        const _list = await this.contact_tag_repository
+        const _list = await this.user_contact_tag_repository
             .search({
                 tag_id,
                 user_id,
