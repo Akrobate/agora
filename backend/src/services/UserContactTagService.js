@@ -63,26 +63,40 @@ class UserContactTagService {
             user_id,
         } = user;
 
-        console.log('====================================> tag_id : ', tag_id);
-        console.log('====================================> user_id : ', user_id);
-        console.log('====================================> contact_id_list : ', contact_id_list);
+        const existing_contact_user_list = await this.user_contact_tag_repository
+            .search({
+                tag_id,
+                user_id,
+                contact_user_id_list: contact_id_list,
+            });
 
-        const _list = await this.user_contact_tag_repository
+        const not_to_insert_contact_user_id_list = existing_contact_user_list
+            .map((item) => item.contact_user_id);
+
+        for (const contact_user_id of contact_id_list) {
+            if (!not_to_insert_contact_user_id_list.includes(contact_user_id)) {
+                await this.user_contact_tag_repository.create({
+                    contact_user_id,
+                    tag_id,
+                    user_id,
+                });
+            }
+        }
+
+        const tag_content = await this.user_contact_tag_repository
             .search({
                 tag_id,
                 user_id,
             });
 
-        console.log('====================================>', _list);
-
-        // const tag = await this.contact_tag_repository
-        //     .create({
-        //         ...input,
-        //         owner_user_id: user.user_id,
-        //     });
-        // return tag;
-
-        return {};
+        return {
+            tag_id,
+            user_id,
+            contact_user_list: tag_content.map((item) => ({
+                id: item.id,
+                contact_user_id: item.contact_user_id,
+            })),
+        };
     }
 
 
