@@ -119,7 +119,7 @@ describe.only('User Contact Management', () => {
                 });
         });
 
-        it.skip('Should be able to replace user contact', async () => {
+        it.only('Should be able to replace user contact', async () => {
             const content_to_create = {
                 tag_id: manager_seed_contact_tag_1.id,
                 user_id: manager_user_seed.id,
@@ -136,6 +136,28 @@ describe.only('User Contact Management', () => {
                 .expect(HTTP_CODE.CREATED)
                 .expect((response) => {
                     expect(response).to.have.property('body');
+                    const {
+                        body,
+                    } = response;
+
+                    expect(body).to.have.property('tag_id', content_to_create.tag_id);
+                    expect(body).to.have.property('user_id', content_to_create.user_id);
+                    expect(body).to.have.property('contact_user_list');
+
+                    const {
+                        contact_user_list,
+                    } = body;
+
+                    expect(contact_user_list).to.be.an('Array');
+
+                    const tag_contact_user_id_list = contact_user_list
+                        .map((item) => item.contact_user_id);
+
+                    expect(tag_contact_user_id_list).to.includes(contact_1_user_seed.id);
+                    expect(tag_contact_user_id_list).to.includes(contact_2_user_seed.id);
+
+                    expect(contact_user_list).to.have.lengthOf(2)
+
                 });
         });
     });
