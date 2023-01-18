@@ -110,18 +110,37 @@ class UserContactTagService {
 
         const {
             tag_id,
+            contact_id_list,
         } = input;
 
-        console.log('====================================>ssss', tag_id);
+        const {
+            user_id,
+        } = user;
+        
         await this.deleteAllTagContent(user, input);
 
-        // const tag = await this.contact_tag_repository
-        //     .create({
-        //         ...input,
-        //         owner_user_id: user.user_id,
-        //     });
-        // return tag;
-        return {};
+        for (const contact_user_id of contact_id_list) {
+            await this.user_contact_tag_repository.create({
+                contact_user_id,
+                tag_id,
+                user_id,
+            });
+        }
+
+        const tag_content = await this.user_contact_tag_repository
+            .search({
+                tag_id,
+                user_id,
+            });
+
+        return {
+            tag_id,
+            user_id,
+            contact_user_list: tag_content.map((item) => ({
+                id: item.id,
+                contact_user_id: item.contact_user_id,
+            })),
+        };
     }
 
 
