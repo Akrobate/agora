@@ -145,7 +145,39 @@ class UserContactTagService {
 
 
     /**
-     * @todo
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async readOneTagContent(user, input) {
+
+        const {
+            tag_id,
+        } = input;
+
+        const {
+            user_id,
+        } = user;
+
+        const tag_content = await this.user_contact_tag_repository
+            .search({
+                tag_id,
+                user_id,
+            });
+
+        return {
+            tag_id,
+            user_id,
+            contact_user_list: tag_content.map((item) => ({
+                id: item.id,
+                contact_user_id: item.contact_user_id,
+            })),
+        };
+    }
+
+
+
+    /**
      * @param {Object} user
      * @param {Object} input
      * @returns {Promise<*|Error>}
