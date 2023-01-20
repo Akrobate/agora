@@ -82,7 +82,7 @@ class UserContactTagService {
             }
         }
 
-        return readOneTagContent(user, input);
+        return this.readOneTagContent(user, input);
     }
 
 
@@ -112,7 +112,7 @@ class UserContactTagService {
             });
         }
 
-        return readOneTagContent(user, input);
+        return this.readOneTagContent(user, input);
     }
 
 

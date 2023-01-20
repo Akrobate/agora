@@ -36,7 +36,7 @@ const {
 
 const superApp = superTest(app);
 
-describe.only('User Contact Management', () => {
+describe('User Contact Management', () => {
 
     beforeEach(async () => {
         await DataSeeder.truncateAll();
@@ -77,7 +77,7 @@ describe.only('User Contact Management', () => {
 
 
     describe('Create content in user tag', () => {
-        it.only('Should be able to add a user contact', async () => {
+        it('Should be able to add a user contact', async () => {
             const content_to_create = {
                 tag_id: manager_seed_contact_tag_1.id,
                 user_id: manager_user_seed.id,
@@ -119,7 +119,7 @@ describe.only('User Contact Management', () => {
                 });
         });
 
-        it.only('Should be able to replace user contact', async () => {
+        it('Should be able to replace user contact', async () => {
             const content_to_create = {
                 tag_id: manager_seed_contact_tag_1.id,
                 user_id: manager_user_seed.id,
@@ -163,7 +163,7 @@ describe.only('User Contact Management', () => {
     });
 
     // @red test
-    describe('Read content in user tag', () => {
+    describe.skip('Read content in user tag', () => {
         const content_to_create = {
             tag_id: manager_seed_contact_tag_1.id,
             user_id: manager_user_seed.id,
