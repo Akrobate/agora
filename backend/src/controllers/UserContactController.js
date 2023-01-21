@@ -139,15 +139,16 @@ class UserContactController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user = await this.user_contact_tag_service.createTag(
+        const user = await this.user_contact_tag_service.delete(
             request.jwt_data,
             {
-                name: value.body.name,
+                tag_id: value.body.tag_id,
                 user_id: value.body.user_id,
+                contact_id_list: value.body.contact_id_list,
             }
         );
 
-        return response.status(HTTP_CODE.CREATED).send(user);
+        return response.status(HTTP_CODE.OK).send(user);
     }
 
 

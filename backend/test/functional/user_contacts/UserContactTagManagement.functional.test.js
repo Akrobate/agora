@@ -162,6 +162,32 @@ describe('User Contact Management', () => {
         });
     });
 
+    describe.only('Delete content in user tag', () => {
+        it('Should be able to read a user contact', async () => {
+
+            const content_to_delete = {
+                tag_id: manager_seed_contact_tag_1.id,
+                user_id: manager_user_seed.id,
+                contact_id_list: [
+                    contact_3_user_seed.id,
+                    contact_4_user_seed.id,
+                ],
+            };
+
+            await superApp
+                .delete(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send(content_to_delete)
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response).to.have.property('body');
+                });
+        });
+
+
+    })
+
+
     // @red test
     describe.skip('Read content in user tag', () => {
         const content_to_create = {
