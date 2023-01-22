@@ -117,6 +117,45 @@ class UserContactTagService {
 
 
     /**
+     * @todo
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Promise<*|Error>}
+     */
+    async deleteContactsInTag(user, input) {
+
+        const {
+            tag_id,
+            contact_id_list,
+        } = input;
+
+        const {
+            user_id,
+        } = user;
+        
+        const user_contact_list = await this.user_contact_tag_repository
+            .search({
+                tag_id,
+                contact_user_id_list: contact_id_list,
+            });
+
+        console.log(user_contact_list)
+
+/*
+        for (const contact_user_id of contact_id_list) {
+            await this.user_contact_tag_repository.create({
+                contact_user_id,
+                tag_id,
+                user_id,
+            });
+        }
+*/
+
+        return {};
+    }
+
+
+    /**
      * @param {Object} user
      * @param {Object} input
      * @returns {Promise<*|Error>}
