@@ -139,17 +139,13 @@ class UserContactTagService {
                 contact_user_id_list: contact_id_list,
             });
 
-        console.log(user_contact_list)
-
-/*
-        for (const contact_user_id of contact_id_list) {
-            await this.user_contact_tag_repository.create({
-                contact_user_id,
-                tag_id,
-                user_id,
-            });
-        }
-*/
+        return Promise.all(
+            user_contact_list
+                .map((user_contact) => this
+                    .user_contact_tag_repository
+                    .delete(user_contact.id)
+                )
+        );
 
         return {};
     }
@@ -203,8 +199,6 @@ class UserContactTagService {
             .search({
                 tag_id,
             });
-
-        // console.log(user_contact_list);
 
         return Promise.all(
             user_contact_list
