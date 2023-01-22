@@ -369,7 +369,7 @@ api_routes.delete(
     '/contacts',
     authentication_middleware.injectJwtData(),
     (request, response, next) => user_contact_controller
-        .add(request, response)
+        .delete(request, response)
         .catch(next)
 );
 
