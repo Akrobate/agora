@@ -139,7 +139,7 @@ class UserContactController extends AbstractController {
 
         this.checkValidationError(error);
 
-        const user = await this.user_contact_tag_service.delete(
+        const user = await this.user_contact_tag_service.deleteContactsInTag(
             request.jwt_data,
             {
                 tag_id: value.body.tag_id,
