@@ -163,7 +163,7 @@ describe('User Contact Management', () => {
     });
 
     describe.only('Delete content in user tag', () => {
-        it('Should be able to read a user contact', async () => {
+        it('Should be able to delete user contacts', async () => {
 
             const content_to_delete = {
                 tag_id: manager_seed_contact_tag_1.id,
