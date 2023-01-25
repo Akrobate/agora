@@ -2,6 +2,7 @@
 
 const superTest = require('supertest');
 const HTTP_CODE = require('http-status');
+const qs = require('qs');
 
 const {
     expect,
@@ -162,7 +163,7 @@ describe('User Contact Management', () => {
         });
     });
 
-    describe.only('Delete content in user tag', () => {
+    describe('Delete content in user tag', () => {
         it('Should be able to delete user contacts', async () => {
 
             const content_to_delete = {
@@ -183,27 +184,23 @@ describe('User Contact Management', () => {
                     expect(response).to.have.property('body');
                 });
         });
-
-
     })
 
 
     // @red test
-    describe.skip('Read content in user tag', () => {
-        const content_to_create = {
-            tag_id: manager_seed_contact_tag_1.id,
-            user_id: manager_user_seed.id,
-            contact_id_list: [
-                contact_1_user_seed.id,
-                contact_2_user_seed.id,
+    describe.only('Read content in user tag', () => {
+        const content_to_read = {
+            tag_id_list: [
+                manager_seed_contact_tag_1.id,
             ],
+            user_id: manager_user_seed.id,
         };
 
-        it.skip('Should be able to read a user contact', async () => {
+        it.only('Should be able to read a user contact', async () => {
             await superApp
                 .get(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-                .send(content_to_create)
+                .query(qs.stringify(content_to_read))
                 .expect(HTTP_CODE.CREATED)
                 .expect((response) => {
                     expect(response).to.have.property('body');
