@@ -201,7 +201,7 @@ describe('User Contact Management', () => {
                 .get(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
                 .query(qs.stringify(content_to_read))
-                .expect(HTTP_CODE.CREATED)
+                .expect(HTTP_CODE.OK)
                 .expect((response) => {
                     expect(response).to.have.property('body');
                 });
