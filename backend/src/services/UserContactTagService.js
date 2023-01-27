@@ -116,6 +116,27 @@ class UserContactTagService {
     }
 
 
+    async search(user, input) {
+
+        const {
+            tag_id_list,
+            contact_id_list,
+        } = input;
+
+        const {
+            user_id,
+        } = user;
+
+        const user_contact_list = await this.user_contact_tag_repository
+            .search({
+                tag_id_list,
+                contact_user_id_list: contact_id_list,
+                user_id,
+            });
+
+        return user_contact_list;
+    }
+
     /**
      * @todo
      * @param {Object} user
