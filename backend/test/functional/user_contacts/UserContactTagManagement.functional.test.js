@@ -187,8 +187,7 @@ describe('User Contact Management', () => {
     });
 
 
-    // @red test
-    describe.only('Read content in user tag', () => {
+    describe('Read content in user tag', () => {
         const content_to_read = {
             tag_id_list: [
                 manager_seed_contact_tag_1.id,
@@ -196,7 +195,7 @@ describe('User Contact Management', () => {
             user_id: manager_user_seed.id,
         };
 
-        it.only('Should be able to read a user contact', async () => {
+        it('Should be able to read a user contact', async () => {
             await superApp
                 .get(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
