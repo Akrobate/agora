@@ -183,6 +183,25 @@ describe('User Contact Management', () => {
                 .expect((response) => {
                     expect(response).to.have.property('body');
                 });
+
+            await superApp
+                .get(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .query(qs.stringify({
+                    tag_id_list: [
+                        manager_seed_contact_tag_1.id,
+                    ],
+                    user_id: manager_user_seed.id,
+                }))
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response).to.have.property('body');
+                    expect(response.body).to.have.property('user_contact_list');
+                    const {
+                        user_contact_list,
+                    } = response.body;
+                    expect(user_contact_list.length).to.equal(0);
+                });
         });
     });
 
