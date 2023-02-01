@@ -211,14 +211,35 @@ describe('User Contact Management', () => {
 
                     expect(contact_user_list).to.be.an('Array');
 
-                    const tag_contact_user_id_list = contact_user_list
-                        .map((item) => item.contact_user_id);
-
-                    expect(tag_contact_user_id_list).to.includes(contact_1_user_seed.id);
-                    expect(tag_contact_user_id_list).to.includes(contact_2_user_seed.id);
+                    expect(user_contact_list.map((item) => item.contact_user_id))
+                        .to.includes(contact_1_user_seed.id);
+                    expect(user_contact_list.map((item) => item.contact_user_id))
+                        .to.includes(contact_2_user_seed.id);
 
                     expect(contact_user_list).to.have.lengthOf(2);
 
+                });
+
+            await superApp
+                .get(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .query(qs.stringify({
+                    tag_id_list: [
+                        manager_seed_contact_tag_1.id,
+                    ],
+                    user_id: manager_user_seed.id,
+                }))
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response).to.have.property('body');
+                    expect(response.body).to.have.property('user_contact_list');
+                    const {
+                        user_contact_list,
+                    } = response.body;
+                    expect(tag_contact_user_id_list).to.includes(contact_1_user_seed.id);
+                    expect(tag_contact_user_id_list).to.includes(contact_2_user_seed.id);
+
+                    expect(user_contact_list).to.have.lengthOf(2);
                 });
         });
     });
