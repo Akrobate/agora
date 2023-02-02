@@ -211,10 +211,10 @@ describe('User Contact Management', () => {
 
                     expect(contact_user_list).to.be.an('Array');
 
-                    expect(user_contact_list.map((item) => item.contact_user_id))
-                        .to.includes(contact_1_user_seed.id);
-                    expect(user_contact_list.map((item) => item.contact_user_id))
-                        .to.includes(contact_2_user_seed.id);
+                    const tag_contact_user_id_list = contact_user_list
+                        .map((item) => item.contact_user_id);
+                    expect(tag_contact_user_id_list).to.includes(contact_1_user_seed.id);
+                    expect(tag_contact_user_id_list).to.includes(contact_2_user_seed.id);
 
                     expect(contact_user_list).to.have.lengthOf(2);
 
@@ -236,11 +236,14 @@ describe('User Contact Management', () => {
                     const {
                         user_contact_list,
                     } = response.body;
-                    expect(tag_contact_user_id_list).to.includes(contact_1_user_seed.id);
-                    expect(tag_contact_user_id_list).to.includes(contact_2_user_seed.id);
+                    expect(user_contact_list.map((item) => item.contact_user_id))
+                        .to.includes(contact_1_user_seed.id);
+                    expect(user_contact_list.map((item) => item.contact_user_id))
+                        .to.includes(contact_2_user_seed.id);
 
-                    expect(user_contact_list).to.have.lengthOf(2);
+                    expect(user_contact_list.length).to.equal(2);
                 });
+
         });
     });
 
