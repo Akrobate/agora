@@ -106,6 +106,22 @@ describe('User Contact Management', () => {
 
                 });
         });
+
+        // @redtest
+        it.skip('Should not be able to read content of an other user', async () => {
+            const content_to_read = {
+                tag_id_list: [
+                    manager_seed_contact_tag_1.id,
+                ],
+                user_id: manager_user_seed.id,
+            };
+
+            await superApp
+                .get(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
+                .query(qs.stringify(content_to_read))
+                .expect(HTTP_CODE.UNAUTHORIZED);
+        });
     });
 
 
