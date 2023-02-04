@@ -196,6 +196,24 @@ describe('User Contact Management', () => {
                 });
         });
 
+        // @redtest
+        it.skip('Should not be able to add a user contact of an other user', async () => {
+            const content_to_create = {
+                tag_id: manager_seed_contact_tag_1.id,
+                user_id: manager_user_seed.id,
+                contact_id_list: [
+                    contact_1_user_seed.id,
+                    contact_2_user_seed.id,
+                ],
+            };
+
+            await superApp
+                .patch(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
+                .send(content_to_create)
+                .expect(HTTP_CODE.UNAUTHORIZED);
+        });
+
         it('Should be able to replace user contact', async () => {
             const content_to_create = {
                 tag_id: manager_seed_contact_tag_1.id,
@@ -260,6 +278,25 @@ describe('User Contact Management', () => {
                     expect(user_contact_list.length).to.equal(2);
                 });
 
+        });
+
+
+        // @redtest
+        it.skip('Should not be able to replace user contact of an other user', async () => {
+            const content_to_create = {
+                tag_id: manager_seed_contact_tag_1.id,
+                user_id: manager_user_seed.id,
+                contact_id_list: [
+                    contact_1_user_seed.id,
+                    contact_2_user_seed.id,
+                ],
+            };
+
+            await superApp
+                .post(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
+                .send(content_to_create)
+                .expect(HTTP_CODE.UNAUTHORIZED);
         });
     });
 
