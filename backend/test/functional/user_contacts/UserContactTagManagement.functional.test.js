@@ -109,13 +109,6 @@ describe('User Contact Management', () => {
 
         // @redtest
         it.skip('Should not be able to read content of an other user', async () => {
-            const content_to_read = {
-                tag_id_list: [
-                    manager_seed_contact_tag_1.id,
-                ],
-                user_id: manager_user_seed.id,
-            };
-
             await superApp
                 .get(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
@@ -123,7 +116,6 @@ describe('User Contact Management', () => {
                 .expect(HTTP_CODE.UNAUTHORIZED);
         });
     });
-
 
 
     describe('Create content in user tag', () => {
@@ -167,7 +159,7 @@ describe('User Contact Management', () => {
                     expect(contact_user_list).to.have.lengthOf(4);
 
                 });
-            
+
             await superApp
                 .get(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
@@ -341,9 +333,4 @@ describe('User Contact Management', () => {
                 });
         });
     });
-
-
-
-
-
 });
