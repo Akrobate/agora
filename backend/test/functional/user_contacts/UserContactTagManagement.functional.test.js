@@ -332,5 +332,25 @@ describe('User Contact Management', () => {
                     expect(user_contact_list.length).to.equal(0);
                 });
         });
+
+        // @redtest
+        it.skip('Should be able to delete user contacts', async () => {
+
+            const content_to_delete = {
+                tag_id: manager_seed_contact_tag_1.id,
+                user_id: manager_user_seed.id,
+                contact_id_list: [
+                    contact_3_user_seed.id,
+                    contact_4_user_seed.id,
+                ],
+            };
+
+            await superApp
+                .delete(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
+                .send(content_to_delete)
+                .expect(HTTP_CODE.UNAUTHORIZED);
+        });
+
     });
 });
