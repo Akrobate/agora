@@ -198,7 +198,7 @@ class UserService {
         const {
             id,
         } = input;
-        this.acl.checkUserModifiesOwnData(user.user_id, id);
+        this.acl.checkUserAccessOwnData(user.user_id, id);
         const user_updated = await this.user_repository.update(input);
         return user_updated;
     }
@@ -215,7 +215,7 @@ class UserService {
             old_password,
             new_password,
         } = input;
-        this.acl.checkUserModifiesOwnData(user.user_id, id);
+        this.acl.checkUserAccessOwnData(user.user_id, id);
 
         const stored_user = await this.user_repository.find({
             id,

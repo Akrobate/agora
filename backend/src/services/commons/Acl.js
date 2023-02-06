@@ -152,9 +152,9 @@ class Acl {
      * @param {Number} user_id
      * @returns {Object|Error}
      */
-    checkUserModifiesOwnData(jwt_user_id, user_id) {
+    checkUserAccessOwnData(jwt_user_id, user_id) {
         if (jwt_user_id !== user_id) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'User can only modify own data');
+            throw new CustomError(CustomError.UNAUTHORIZED, 'User can only access own data');
         }
     }
 

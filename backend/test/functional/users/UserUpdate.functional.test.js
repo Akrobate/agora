@@ -71,7 +71,7 @@ describe('User should be able to update it self', () => {
             .expect((response) => {
                 expect(response.body).to.have.property(
                     'message',
-                    'User can only modify own data'
+                    'User can only access own data'
                 );
             });
     });
