@@ -101,7 +101,7 @@ class UserContactTagService {
         const {
             user_id,
         } = user;
-        
+
         await this.deleteAllTagContent(user, input);
 
         for (const contact_user_id of contact_id_list) {
@@ -116,6 +116,12 @@ class UserContactTagService {
     }
 
 
+    /**
+     *
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Object}
+     */
     async search(user, input) {
 
         const {
@@ -153,14 +159,15 @@ class UserContactTagService {
         const {
             user_id,
         } = user;
-        
+
         const user_contact_list = await this.user_contact_tag_repository
             .search({
                 tag_id,
+                user_id,
                 contact_user_id_list: contact_id_list,
             });
 
-        return Promise.all(
+        await Promise.all(
             user_contact_list
                 .map((user_contact) => this
                     .user_contact_tag_repository
@@ -202,7 +209,6 @@ class UserContactTagService {
             })),
         };
     }
-
 
 
     /**
