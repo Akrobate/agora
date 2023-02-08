@@ -127,11 +127,14 @@ class UserContactTagService {
         const {
             tag_id_list,
             contact_id_list,
+            user_id,
         } = input;
 
         const {
-            user_id,
+            user_id: jwt_user_id,
         } = user;
+
+        this.acl.checkUserAccessOwnData(jwt_user_id, user_id);
 
         const user_contact_list = await this.user_contact_tag_repository
             .search({
