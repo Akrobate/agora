@@ -108,7 +108,7 @@ describe('User Contact Management', () => {
         });
 
         // @redtest
-        it.skip('Should not be able to read content of an other user', async () => {
+        it('Should not be able to read content of an other user', async () => {
             await superApp
                 .get(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
