@@ -37,7 +37,7 @@ const {
 
 const superApp = superTest(app);
 
-describe('User Contact Management', () => {
+describe.only('User Contact Management', () => {
 
     beforeEach(async () => {
         await DataSeeder.truncateAll();
@@ -107,7 +107,6 @@ describe('User Contact Management', () => {
                 });
         });
 
-        // @redtest
         it('Should not be able to read content of an other user', async () => {
             await superApp
                 .get(`${url_prefix}/contacts`)
@@ -188,8 +187,8 @@ describe('User Contact Management', () => {
                 });
         });
 
-        // @redtest
-        it.skip('Should not be able to add a user contact of an other user', async () => {
+
+        it('Should not be able to add a user contact of an other user', async () => {
             const content_to_create = {
                 tag_id: manager_seed_contact_tag_1.id,
                 user_id: manager_user_seed.id,
@@ -205,6 +204,10 @@ describe('User Contact Management', () => {
                 .send(content_to_create)
                 .expect(HTTP_CODE.UNAUTHORIZED);
         });
+
+        // RED Test
+        it.skip('Should not be able to add a user contact on tag_id that belongs to another user');
+
 
         it('Should be able to replace user contact', async () => {
             const content_to_create = {
