@@ -99,11 +99,14 @@ class UserContactTagService {
         const {
             tag_id,
             contact_id_list,
+            user_id,
         } = input;
 
         const {
-            user_id,
+            user_id: jwt_user_id,
         } = user;
+
+        this.acl.checkUserAccessOwnData(jwt_user_id, user_id);
 
         await this.deleteAllTagContent(user, input);
 

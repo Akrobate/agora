@@ -276,8 +276,7 @@ describe.only('User Contact Management', () => {
         });
 
 
-        // @redtest
-        it.skip('Should not be able to replace user contact of an other user', async () => {
+        it('Should not be able to replace user contact of an other user', async () => {
             const content_to_create = {
                 tag_id: manager_seed_contact_tag_1.id,
                 user_id: manager_user_seed.id,
@@ -293,6 +292,9 @@ describe.only('User Contact Management', () => {
                 .send(content_to_create)
                 .expect(HTTP_CODE.UNAUTHORIZED);
         });
+
+        // redtest
+        it.skip('Should not be able to replace a user contact on tag_id that belongs to another user');
     });
 
     describe('Delete content in user tag', () => {
