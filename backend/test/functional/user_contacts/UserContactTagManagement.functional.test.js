@@ -339,7 +339,7 @@ describe.only('User Contact Management', () => {
         });
 
         // @redtest
-        it.skip('Should be able to delete user contacts', async () => {
+        it('Should be able to delete user contacts', async () => {
 
             const content_to_delete = {
                 tag_id: manager_seed_contact_tag_1.id,
