@@ -163,7 +163,7 @@ class UserContactTagService {
         const {
             tag_id,
             contact_id_list,
-            user_id
+            user_id,
         } = input;
 
         const {

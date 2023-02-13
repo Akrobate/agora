@@ -338,7 +338,6 @@ describe.only('User Contact Management', () => {
                 });
         });
 
-        // @redtest
         it('Should be able to delete user contacts', async () => {
 
             const content_to_delete = {
