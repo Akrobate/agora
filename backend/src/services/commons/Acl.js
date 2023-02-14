@@ -154,8 +154,16 @@ class Acl {
      */
     checkUserAccessOwnData(jwt_user_id, user_id) {
         if (jwt_user_id !== user_id) {
-            throw new CustomError(CustomError.UNAUTHORIZED, 'User can only access own data');
+            this.throwErrorUserAccessOwnData();
         }
+    }
+
+
+    /**
+     * @returns {Void}
+     */
+    throwErrorUserAccessOwnData() {
+        throw new CustomError(CustomError.UNAUTHORIZED, 'User can only access own data');
     }
 
 }
