@@ -65,7 +65,6 @@ class UserContactTagService {
 
         this.acl.checkUserAccessOwnData(jwt_user_id, user_id);
 
-
         const tag_list = await this.contact_tag_repository
             .search({
                 id: tag_id,
@@ -75,7 +74,6 @@ class UserContactTagService {
         if (tag_list.length === 0) {
             this.acl.throwErrorUserAccessOwnData();
         }
-        
 
         const existing_contact_user_list = await this.user_contact_tag_repository
             .search({
@@ -119,6 +117,16 @@ class UserContactTagService {
         } = user;
 
         this.acl.checkUserAccessOwnData(jwt_user_id, user_id);
+
+        const tag_list = await this.contact_tag_repository
+            .search({
+                id: tag_id,
+                user_id,
+            });
+
+        if (tag_list.length === 0) {
+            this.acl.throwErrorUserAccessOwnData();
+        }
 
         await this.deleteAllTagContent(user, input);
 

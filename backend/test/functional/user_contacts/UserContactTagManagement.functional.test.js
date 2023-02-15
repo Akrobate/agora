@@ -205,8 +205,22 @@ describe.only('User Contact Management', () => {
                 .expect(HTTP_CODE.UNAUTHORIZED);
         });
 
-        // RED Test
-        it.skip('Should not be able to add a user contact on tag_id that belongs to another user');
+        it('Should not be able to add a user contact on tag_id that belongs to another user', async () => {
+            const content_to_create = {
+                tag_id: manager_seed_2_contact_tag_1.id,
+                user_id: manager_user_seed.id,
+                contact_id_list: [
+                    contact_1_user_seed.id,
+                    contact_2_user_seed.id,
+                ],
+            };
+
+            await superApp
+                .patch(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send(content_to_create)
+                .expect(HTTP_CODE.UNAUTHORIZED);
+        });
 
 
         it('Should be able to replace user contact', async () => {
@@ -293,8 +307,23 @@ describe.only('User Contact Management', () => {
                 .expect(HTTP_CODE.UNAUTHORIZED);
         });
 
-        // redtest
-        it.skip('Should not be able to replace a user contact on tag_id that belongs to another user');
+
+        it('Should not be able to replace a user contact on tag_id that belongs to another user', async () => {
+            const content_to_create = {
+                tag_id: manager_seed_2_contact_tag_1.id,
+                user_id: manager_user_seed.id,
+                contact_id_list: [
+                    contact_1_user_seed.id,
+                    contact_2_user_seed.id,
+                ],
+            };
+
+            await superApp
+                .post(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .send(content_to_create)
+                .expect(HTTP_CODE.UNAUTHORIZED);
+        });
     });
 
     describe('Delete content in user tag', () => {
