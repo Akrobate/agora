@@ -327,16 +327,17 @@ describe('User Contact Management', () => {
     });
 
     describe('Delete content in user tag', () => {
-        it('Should be able to delete user contacts', async () => {
 
-            const content_to_delete = {
-                tag_id: manager_seed_contact_tag_1.id,
-                user_id: manager_user_seed.id,
-                contact_id_list: [
-                    contact_3_user_seed.id,
-                    contact_4_user_seed.id,
-                ],
-            };
+        const content_to_delete = {
+            tag_id: manager_seed_contact_tag_1.id,
+            user_id: manager_user_seed.id,
+            contact_id_list: [
+                contact_3_user_seed.id,
+                contact_4_user_seed.id,
+            ],
+        };
+
+        it('Should be able to delete user contacts', async () => {
 
             await superApp
                 .delete(`${url_prefix}/contacts`)
@@ -369,15 +370,6 @@ describe('User Contact Management', () => {
 
         it('Should not be able to delete user contacts of an other user', async () => {
 
-            const content_to_delete = {
-                tag_id: manager_seed_contact_tag_1.id,
-                user_id: manager_user_seed.id,
-                contact_id_list: [
-                    contact_3_user_seed.id,
-                    contact_4_user_seed.id,
-                ],
-            };
-
             await superApp
                 .delete(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_2_seed)}`)
@@ -386,23 +378,15 @@ describe('User Contact Management', () => {
         });
 
         it('Should not be able to delete user contacts on tag_id that belongs to another user', async () => {
-
-            const content_to_delete = {
-                tag_id: manager_seed_2_contact_tag_1.id,
-                user_id: manager_user_seed.id,
-                contact_id_list: [
-                    contact_3_user_seed.id,
-                    contact_4_user_seed.id,
-                ],
-            };
-
             await superApp
                 .delete(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-                .send(content_to_delete)
+                .send({
+                    ...content_to_delete,
+                    tag_id: manager_seed_2_contact_tag_1.id,
+                })
                 .expect(HTTP_CODE.UNAUTHORIZED);
         });
-
 
     });
 });
