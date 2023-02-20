@@ -46,7 +46,7 @@ class EmailRepository extends AbstractSequelizeRepository {
      */
     static getModel() {
         return sequelize.define(
-            'Campaign',
+            'Email',
             {
                 id: {
                     allowNull: false,
@@ -59,7 +59,7 @@ class EmailRepository extends AbstractSequelizeRepository {
                     type: DataTypes.STRING,
                 },
                 body: {
-                    allowNull: true,
+                    allowNull: false,
                     type: DataTypes.STRING,
                 },
                 email_status: {
@@ -96,7 +96,7 @@ class EmailRepository extends AbstractSequelizeRepository {
                 },
             },
             {
-                tableName: 'campaigns',
+                tableName: 'emails',
                 underscored: true,
                 timestamps: false,
             }
