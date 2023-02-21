@@ -54,12 +54,16 @@ class EmailRepository extends AbstractSequelizeRepository {
                     primaryKey: true,
                     type: DataTypes.INTEGER.UNSIGNED,
                 },
-                object: {
+                subject: {
                     allowNull: false,
                     type: DataTypes.STRING,
                 },
-                body: {
-                    allowNull: false,
+                html: {
+                    allowNull: true,
+                    type: DataTypes.STRING,
+                },
+                text: {
+                    allowNull: true,
                     type: DataTypes.STRING,
                 },
                 email_status: {
@@ -78,7 +82,11 @@ class EmailRepository extends AbstractSequelizeRepository {
                     allowNull: false,
                     type: DataTypes.STRING,
                 },
-                email_from: {
+                from_name: {
+                    allowNull: false,
+                    type: DataTypes.STRING,
+                },
+                from_email: {
                     allowNull: false,
                     type: DataTypes.STRING,
                 },

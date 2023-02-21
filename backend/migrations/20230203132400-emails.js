@@ -13,12 +13,16 @@ module.exports = {
                     primaryKey: true,
                     type: sequelize.INTEGER.UNSIGNED,
                 },
-                object: {
+                subject: {
                     allowNull: false,
                     type: sequelize.STRING,
                 },
-                body: {
-                    allowNull: false,
+                html: {
+                    allowNull: true,
+                    type: sequelize.STRING,
+                },
+                text: {
+                    allowNull: true,
                     type: sequelize.STRING,
                 },
                 email_status: {
@@ -37,7 +41,11 @@ module.exports = {
                     allowNull: false,
                     type: sequelize.STRING,
                 },
-                email_from: {
+                from_name: {
+                    allowNull: false,
+                    type: sequelize.STRING,
+                },
+                from_email: {
                     allowNull: false,
                     type: sequelize.STRING,
                 },
