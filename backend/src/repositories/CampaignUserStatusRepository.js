@@ -72,6 +72,10 @@ class CampaignUserStatusRepository extends AbstractSequelizeRepository {
                     allowNull: false,
                     type: DataTypes.INTEGER.UNSIGNED,
                 },
+                email_id: {
+                    allowNull: true,
+                    type: DataTypes.INTEGER.UNSIGNED,
+                },
                 status_id: {
                     allowNull: false,
                     type: DataTypes.INTEGER.UNSIGNED,

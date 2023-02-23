@@ -12,7 +12,7 @@ module.exports = {
                 after: 'status_id',
                 allowNull: true,
                 defaultValue: null,
-                type: sequelize.INTEGER.UNSIGNED,
+                type: Sequelize.INTEGER.UNSIGNED,
             },
             {}
         ),
