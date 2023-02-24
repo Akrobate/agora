@@ -9,6 +9,10 @@ const fs = require('fs').promises;
 const mustache = require('mustache');
 
 const {
+    EmailRepository,
+} = require('../repositories');
+
+const {
     CustomError,
 } = require('../CustomError');
 
@@ -19,10 +23,16 @@ const {
 class EmailService {
 
     /**
-     * Constructor.
+     * @param {EmailRepository} email_repository
+     * @returns {EmailService}
      */
-    constructor() {
+    constructor(
+        email_repository
+    ) {
+        this.email_repository = email_repository;
+
         this.connection = null;
+        this.email_sender_running = true;
     }
 
 
@@ -41,6 +51,7 @@ class EmailService {
     static getInstance() {
         if (EmailService.instance === null) {
             EmailService.instance = new EmailService(
+                EmailRepository.getInstance()
             );
         }
         return EmailService.instance;
@@ -204,6 +215,34 @@ class EmailService {
             html,
             text: null,
         });
+    }
+
+
+    /**
+     * @param {Object} send_mail_params
+     * @return {Promise}
+     */
+    async createQueuedSendMail(send_mail_params) {
+
+    }
+
+
+    /**
+     * Should be called on application UP
+     * Should be called on each queuedSendMail,  queuedSendMail shoud set running = true
+     */
+    async startEmailSender() {
+        // if is not running email sender return
+            // if has some mails to send
+                // Count all send mails in last 24h
+
+                // if Rules to send are ok
+                    // Send one mail and set as setted
+
+                // delay
+                // call startEmailSender
+            // else
+                // running = false
     }
 
 }
