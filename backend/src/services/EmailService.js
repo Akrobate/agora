@@ -223,7 +223,28 @@ class EmailService {
      * @return {Promise}
      */
     async createQueuedSendMail(send_mail_params) {
-
+        const {
+            to_list,
+            from_email,
+            from_name,
+            from_user_id,
+            to_user_id,
+            subject,
+            html,
+            text,
+        } = send_mail_params;
+        const reponse = await this.email_repository
+            .create({
+                subject,
+                text,
+                html,
+                email_status: EmailRepository.STATUS_TO_SEND,
+                from_user_id,
+                to_user_id,
+                email_to: to_list.join(', '),
+                from: `"${from_name}" <${from_email}>`,
+            });
+        return reponse;
     }
 
 
