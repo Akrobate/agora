@@ -36,11 +36,16 @@ const {
     UserPropositionResultRepository,
 } = require('./UserPropositionResultRepository');
 
+const {
+    EmailRepository,
+} = require('./EmailRepository');
+
 module.exports = {
     CampaignUserRepository,
     CampaignUserStatusRepository,
     ContactTagRepository,
     CampaignRepository,
+    EmailRepository,
     UserRepository,
     PropositionRepository,
     UserContactTagRepository,
