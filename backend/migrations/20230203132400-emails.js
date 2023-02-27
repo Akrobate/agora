@@ -30,7 +30,7 @@ module.exports = {
                     type: sequelize.INTEGER.UNSIGNED,
                 },
                 from_user_id: {
-                    allowNull: false,
+                    allowNull: true,
                     type: sequelize.INTEGER.UNSIGNED,
                 },
                 to_user_id: {
@@ -50,7 +50,7 @@ module.exports = {
                     type: sequelize.STRING,
                 },
                 send_at: {
-                    allowNull: false,
+                    allowNull: true,
                     type: sequelize.DATE,
                 },
                 created_at: {
