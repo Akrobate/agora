@@ -91,7 +91,7 @@ class EmailRepository extends AbstractSequelizeRepository {
                     type: DataTypes.STRING,
                 },
                 send_at: {
-                    allowNull: false,
+                    allowNull: true,
                     type: DataTypes.DATE,
                 },
                 created_at: {
