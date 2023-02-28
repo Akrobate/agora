@@ -240,6 +240,8 @@ class EmailService {
                 html,
                 email_status: EmailRepository.STATUS_TO_SEND,
                 from_user_id,
+                from_email,
+                from_name,
                 to_user_id,
                 email_to: to_list.join(', '),
                 from: `"${from_name}" <${from_email}>`,

@@ -22,7 +22,7 @@ describe.only('EmailService unit tests', () => {
         const create_data = {
             to_list: [
                 'to_toto@test.com',
-                'to_toto@test2.com'
+                'to_toto@test2.com',
             ],
             from_email: 'from_email@test.com',
             from_name: 'FromEmailLabel',
