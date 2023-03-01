@@ -26,7 +26,7 @@ module.exports = {
                     type: sequelize.STRING,
                 },
                 email_status: {
-                    allowNull: null,
+                    allowNull: false,
                     type: sequelize.INTEGER.UNSIGNED,
                 },
                 from_user_id: {

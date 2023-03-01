@@ -71,7 +71,7 @@ class EmailRepository extends AbstractSequelizeRepository {
                     type: DataTypes.INTEGER.UNSIGNED,
                 },
                 from_user_id: {
-                    allowNull: false,
+                    allowNull: true,
                     type: DataTypes.INTEGER.UNSIGNED,
                 },
                 to_user_id: {
