@@ -51,6 +51,7 @@ module.exports = {
                 },
                 send_at: {
                     allowNull: true,
+                    defaultValue: null,
                     type: sequelize.DATE,
                 },
                 created_at: {

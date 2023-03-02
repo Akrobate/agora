@@ -1,4 +1,5 @@
 'use strict';
+
 const {
     DataSeeder,
 } = require('../test_helpers/DataSeeder');
@@ -9,9 +10,15 @@ const {
 const {
     EmailService,
 } = require('../../src/services');
+const {
+    EmailRepository,
+} = require('../../src/repositories');
 
 
 describe.only('EmailService unit tests', () => {
+
+    const email_repository = EmailRepository.getInstance();
+
 
     beforeEach(async () => {
         await DataSeeder.truncate('EmailRepository');
@@ -33,9 +40,25 @@ describe.only('EmailService unit tests', () => {
             text: 'Text content',
         };
         const email_data = await email_service.createQueuedSendMail(create_data);
-        console.log(email_data);
         expect(email_data).to.have.property('id');
-
+        const {
+            id,
+        } = email_data;
+        const [
+            saved_data,
+        ] = await email_repository.search({
+            id,
+        });
+        expect(saved_data).to.have.property('id', id);
+        expect(saved_data).to.have.property('email_to', create_data.to_list.join(', '));
+        expect(saved_data).to.have.property('from_email', create_data.from_email);
+        expect(saved_data).to.have.property('from_name', create_data.from_name);
+        expect(saved_data).to.have.property('from_user_id', create_data.from_user_id);
+        expect(saved_data).to.have.property('to_user_id', create_data.to_user_id);
+        expect(saved_data).to.have.property('subject', create_data.subject);
+        expect(saved_data).to.have.property('html', create_data.html);
+        expect(saved_data).to.have.property('text', create_data.text);
+        expect(saved_data).to.have.property('send_at', null);
     });
 
 });
