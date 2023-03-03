@@ -121,8 +121,12 @@ class EmailRepository extends AbstractSequelizeRepository {
         const {
             id,
             id_list,
-            campaign_status_list,
-            end_date_upper_boundary,
+            email_status,
+            email_status_list,
+            from_user_id,
+            from_user_id_list,
+            to_user_id,
+            to_user_id_list,
         } = criteria;
 
 
@@ -142,15 +146,39 @@ class EmailRepository extends AbstractSequelizeRepository {
             };
         }
 
-        if (campaign_status_list !== undefined) {
-            where[Op.and].campaign_status = {
-                [Op.in]: campaign_status_list,
+        if (email_status !== undefined) {
+            where[Op.and].email_status = {
+                [Op.eq]: email_status,
             };
         }
 
-        if (end_date_upper_boundary !== undefined) {
-            where[Op.and].end_date = {
-                [Op.lte]: end_date_upper_boundary,
+        if (email_status_list !== undefined) {
+            where[Op.and].email_status = {
+                [Op.in]: email_status_list,
+            };
+        }
+
+        if (from_user_id !== undefined) {
+            where[Op.and].from_user_id = {
+                [Op.eq]: from_user_id,
+            };
+        }
+
+        if (from_user_id_list !== undefined) {
+            where[Op.and].from_user_id = {
+                [Op.in]: from_user_id_list,
+            };
+        }
+
+        if (to_user_id !== undefined) {
+            where[Op.and].to_user_id = {
+                [Op.eq]: to_user_id,
+            };
+        }
+
+        if (to_user_id !== undefined) {
+            where[Op.and].to_user_id = {
+                [Op.in]: to_user_id_list,
             };
         }
 
