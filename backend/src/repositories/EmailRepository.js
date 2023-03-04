@@ -186,6 +186,16 @@ class EmailRepository extends AbstractSequelizeRepository {
             where,
         };
     }
+
+
+    updateEmailSent(email_id) {
+        return this.update({
+            id: email_id,
+            status_id: EmailRepository.STATUS_SENT,
+            sent_at: new Date(),
+        });
+    }
+
 }
 
 EmailRepository.instance = null;
