@@ -59,6 +59,56 @@ describe.only('EmailService unit tests', () => {
         expect(saved_data).to.have.property('html', create_data.html);
         expect(saved_data).to.have.property('text', create_data.text);
         expect(saved_data).to.have.property('send_at', null);
+        expect(saved_data).to.have.property('status_id', EmailRepository.STATUS_TO_SEND);
     });
 
+
+
+    it('Should be able to update sent email', async () => {
+        const email_service = EmailService.getInstance();
+        const create_data = {
+            to_list: [
+                'to_toto@test.com',
+                'to_toto@test2.com',
+            ],
+            from_email: 'from_email@test.com',
+            from_name: 'FromEmailLabel',
+            from_user_id: 122,
+            to_user_id: 123,
+            subject: 'Email subject',
+            html: '<p>Html content</p>',
+            text: 'Text content',
+        };
+        const email_data = await email_service.createQueuedSendMail(create_data);
+        expect(email_data).to.have.property('id');
+        const {
+            id,
+        } = email_data;
+        const [
+            saved_data,
+        ] = await email_repository.search({
+            id,
+        });
+        expect(saved_data).to.have.property('id', id);
+        expect(saved_data).to.have.property('email_to', create_data.to_list.join(', '));
+        expect(saved_data).to.have.property('from_email', create_data.from_email);
+        expect(saved_data).to.have.property('from_name', create_data.from_name);
+        expect(saved_data).to.have.property('from_user_id', create_data.from_user_id);
+        expect(saved_data).to.have.property('to_user_id', create_data.to_user_id);
+        expect(saved_data).to.have.property('subject', create_data.subject);
+        expect(saved_data).to.have.property('html', create_data.html);
+        expect(saved_data).to.have.property('text', create_data.text);
+        expect(saved_data).to.have.property('send_at', null);
+        expect(saved_data).to.have.property('status_id', EmailRepository.STATUS_TO_SEND);
+
+        await email_repository.updateEmailSent(id);
+
+        const email_sent = await email_repository.read(id);
+
+        expect(saved_data).to.have.property('send_at');
+        expect(saved_data.sent_at).to.not.equal(null);
+        expect(saved_data).to.have.property('status_id', EmailRepository.STATUS_SENT);
+
+
+    });
 });
