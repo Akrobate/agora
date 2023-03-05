@@ -59,7 +59,7 @@ describe.only('EmailService unit tests', () => {
         expect(saved_data).to.have.property('html', create_data.html);
         expect(saved_data).to.have.property('text', create_data.text);
         expect(saved_data).to.have.property('send_at', null);
-        expect(saved_data).to.have.property('status_id', EmailRepository.STATUS_TO_SEND);
+        expect(saved_data).to.have.property('email_status', EmailRepository.STATUS_TO_SEND);
     });
 
 
@@ -99,15 +99,15 @@ describe.only('EmailService unit tests', () => {
         expect(saved_data).to.have.property('html', create_data.html);
         expect(saved_data).to.have.property('text', create_data.text);
         expect(saved_data).to.have.property('send_at', null);
-        expect(saved_data).to.have.property('status_id', EmailRepository.STATUS_TO_SEND);
+        expect(saved_data).to.have.property('email_status', EmailRepository.STATUS_TO_SEND);
 
         await email_repository.updateEmailSent(id);
 
         const email_sent = await email_repository.read(id);
 
-        expect(saved_data).to.have.property('send_at');
-        expect(saved_data.sent_at).to.not.equal(null);
-        expect(saved_data).to.have.property('status_id', EmailRepository.STATUS_SENT);
+        expect(email_sent).to.have.property('send_at');
+        expect(email_sent.sent_at).to.not.equal(null);
+        expect(email_sent).to.have.property('email_status', EmailRepository.STATUS_SENT);
 
 
     });
