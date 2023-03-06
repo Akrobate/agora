@@ -13,7 +13,7 @@ const {
 const {
     EmailRepository,
 } = require('../../src/repositories');
-
+const moment = require('moment');
 
 describe.only('EmailService unit tests', () => {
 
@@ -58,10 +58,9 @@ describe.only('EmailService unit tests', () => {
         expect(saved_data).to.have.property('subject', create_data.subject);
         expect(saved_data).to.have.property('html', create_data.html);
         expect(saved_data).to.have.property('text', create_data.text);
-        expect(saved_data).to.have.property('send_at', null);
+        expect(saved_data).to.have.property('sent_at', null);
         expect(saved_data).to.have.property('email_status', EmailRepository.STATUS_TO_SEND);
     });
-
 
 
     it('Should be able to update sent email', async () => {
@@ -98,15 +97,23 @@ describe.only('EmailService unit tests', () => {
         expect(saved_data).to.have.property('subject', create_data.subject);
         expect(saved_data).to.have.property('html', create_data.html);
         expect(saved_data).to.have.property('text', create_data.text);
-        expect(saved_data).to.have.property('send_at', null);
+        expect(saved_data).to.have.property('sent_at', null);
         expect(saved_data).to.have.property('email_status', EmailRepository.STATUS_TO_SEND);
 
         await email_repository.updateEmailSent(id);
 
         const email_sent = await email_repository.read(id);
 
-        expect(email_sent).to.have.property('send_at');
+        expect(email_sent).to.have.property('sent_at');
         expect(email_sent.sent_at).to.not.equal(null);
+
+        const {
+            sent_at,
+        } = email_sent;
+
+        expect(
+            moment(sent_at).isBetween(moment().subtract(1, 'minute'), moment())
+        ).to.equal(true);
         expect(email_sent).to.have.property('email_status', EmailRepository.STATUS_SENT);
 
 
