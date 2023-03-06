@@ -90,7 +90,7 @@ class EmailRepository extends AbstractSequelizeRepository {
                     allowNull: false,
                     type: DataTypes.STRING,
                 },
-                send_at: {
+                sent_at: {
                     allowNull: true,
                     type: DataTypes.DATE,
                 },
@@ -188,6 +188,10 @@ class EmailRepository extends AbstractSequelizeRepository {
     }
 
 
+    /**
+     * @param {Number} email_id
+     * @returns {Promise}
+     */
     updateEmailSent(email_id) {
         return this.update({
             id: email_id,

@@ -49,7 +49,7 @@ module.exports = {
                     allowNull: false,
                     type: sequelize.STRING,
                 },
-                send_at: {
+                sent_at: {
                     allowNull: true,
                     defaultValue: null,
                     type: sequelize.DATE,
