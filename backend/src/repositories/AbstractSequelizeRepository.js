@@ -289,6 +289,28 @@ class AbstractSequelizeRepository {
 
 
     /**
+     * @param {Object} criteria
+     *
+     * @returns {Promise<AbstractIEntity[]|Error>}
+     */
+    async count(criteria = {}) {
+        let sequelize_entity_count;
+        try {
+            sequelize_entity_count = await this.sequelize_model.count({
+                ...this.constructor._formatCriteria(criteria),
+            });
+        } catch (error) {
+            throw new CustomError(
+                CustomError.INTERNAL_ERROR,
+                error.message
+            );
+        }
+
+        return sequelize_entity_count;
+    }
+
+
+    /**
      * @param {*} value
      * @returns {Boolean}
      */
