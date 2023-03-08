@@ -200,6 +200,26 @@ class EmailRepository extends AbstractSequelizeRepository {
         });
     }
 
+
+    /**
+     * @param {Number} email_id
+     * @returns {Promise}
+     */
+    countToSendEmails() {
+        return countEmailsByEmailStatus(EmailRepository.STATUS_TO_SEND);
+    }
+
+
+    /**
+     * @param {Number} email_status
+     * @returns {Promise<Number>}
+     */
+    countEmailsByEmailStatus(email_status) {
+        return this.count({
+            email_status,
+        });
+    }
+
 }
 
 EmailRepository.instance = null;
