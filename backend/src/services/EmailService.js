@@ -266,6 +266,18 @@ class EmailService {
                 // call startEmailSender
             // else
                 // running = false
+        if (this.email_sender_running === false) {
+            return;
+        }
+
+        const email_to_send_count = await this.email_repository.count({
+            email_status: EmailRepository.STATUS_TO_SEND,
+        });
+
+        if (email_to_send_count === 0) {
+            return;
+        }
+
     }
 
 }
