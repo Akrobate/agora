@@ -10,7 +10,6 @@ const {
 const {
     EmailRepository,
 } = require('../../src/repositories');
-const moment = require('moment');
 
 describe.only('EmailRepository unit tests', () => {
 
@@ -26,7 +25,7 @@ describe.only('EmailRepository unit tests', () => {
             subject: 'Email subject',
             html: '<p>Html content</p>',
             text: 'Text content',
-            email_status: 1,
+            email_status: EmailRepository.STATUS_TO_SEND,
         };
         await DataSeeder.truncate('EmailRepository');
         await DataSeeder.create('EmailRepository', create_data);
@@ -35,59 +34,50 @@ describe.only('EmailRepository unit tests', () => {
 
         await DataSeeder.create('EmailRepository', {
             ...create_data,
-            email_status: 2,
+            email_status: EmailRepository.STATUS_SENT,
         });
+
         await DataSeeder.create('EmailRepository', {
             ...create_data,
-            email_status: 2,
-        });
-        await DataSeeder.create('EmailRepository', {
-            ...create_data,
-            email_status: 3,
+            email_status: EmailRepository.STATUS_SENT,
         });
 
     });
 
     it('Should be able to count', async () => {
         const email_count = await email_repository.count();
-        expect(email_count).to.equal(6);
+        expect(email_count).to.equal(5);
     });
 
 
     it('Should be able to count by status', async () => {
         let email_count = 0;
         email_count = await email_repository.count({
-            email_status: 1,
+            email_status: EmailRepository.STATUS_TO_SEND,
         });
         expect(email_count).to.equal(3);
 
         email_count = await email_repository.count({
-            email_status: 2,
+            email_status: EmailRepository.STATUS_SENT,
         });
         expect(email_count).to.equal(2);
-
-        email_count = await email_repository.count({
-            email_status: 3,
-        });
-        expect(email_count).to.equal(1);
     });
 
     it('Should be able to count by status list', async () => {
         let email_count = 0;
         email_count = await email_repository.count({
             email_status_list: [
-                1,
-                3,
-            ],
-        });
-        expect(email_count).to.equal(4);
-
-        email_count = await email_repository.count({
-            email_status_list: [
-                2,
-                3,
+                EmailRepository.STATUS_TO_SEND,
             ],
         });
         expect(email_count).to.equal(3);
+
+        email_count = await email_repository.count({
+            email_status_list: [
+                EmailRepository.STATUS_TO_SEND,
+                EmailRepository.STATUS_SENT,
+            ],
+        });
+        expect(email_count).to.equal(5);
     });
 });
