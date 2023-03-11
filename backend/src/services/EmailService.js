@@ -3,6 +3,7 @@
 'use strict';
 
 const nodemailer = require('nodemailer');
+const moment = require('moment');
 
 const fs = require('fs').promises;
 
@@ -42,6 +43,15 @@ class EmailService {
     static get TEMPLATES_FOLDER() {
         return `${__dirname}/email_templates/`;
     }
+
+
+    /**
+     * @returns {String}
+     */
+    static get MAX_DAILY_MAILS_COUNT() {
+        return 250;
+    }
+
 
     /* istanbul ignore next */
     /**
@@ -275,8 +285,20 @@ class EmailService {
         });
 
         if (email_to_send_count === 0) {
+            this.email_sender_running = false;
             return;
         }
+
+        const email_sent_last_periode_count = await this.email_repository.count({
+            email_status: EmailRepository.STATUS_SENT,
+            sent_at_lower_boundary: moment().subtract(24, 'hours');
+        });
+
+        if (email_sent_last_periode_count < MAX_DAILY_MAILS_COUNT) {
+            // SENT A MAIL
+        }
+
+        // 
 
     }
 

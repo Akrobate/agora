@@ -182,6 +182,20 @@ class EmailRepository extends AbstractSequelizeRepository {
             };
         }
 
+        // @todo: Need to be tester
+        if (sent_at_upper_boundary !== undefined) {
+            where[Op.and].sent_at = {
+                [Op.lte]: sent_at_upper_boundary,
+            };
+        }
+
+        // @todo: Need to be tester
+        if (sent_at_lower_boundary !== undefined) {
+            where[Op.and].sent_at = {
+                [Op.gte]: sent_at_lower_boundary,
+            };
+        }
+
         return {
             where,
         };
