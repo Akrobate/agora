@@ -127,6 +127,8 @@ class EmailRepository extends AbstractSequelizeRepository {
             from_user_id_list,
             to_user_id,
             to_user_id_list,
+            sent_at_upper_boundary,
+            sent_at_lower_boundary,
         } = criteria;
 
 
