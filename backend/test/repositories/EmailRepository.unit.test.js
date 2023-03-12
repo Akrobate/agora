@@ -6,7 +6,7 @@ const {
 const {
     expect,
 } = require('chai');
-
+const moment = require('moment');
 const {
     EmailRepository,
 } = require('../../src/repositories');
@@ -35,11 +35,13 @@ describe.only('EmailRepository unit tests', () => {
         await DataSeeder.create('EmailRepository', {
             ...create_data,
             email_status: EmailRepository.STATUS_SENT,
+            sent_at: moment().subtract(12, 'hours'),
         });
 
         await DataSeeder.create('EmailRepository', {
             ...create_data,
             email_status: EmailRepository.STATUS_SENT,
+            sent_at: moment().subtract(2, 'days'),
         });
 
     });
@@ -79,5 +81,17 @@ describe.only('EmailRepository unit tests', () => {
             ],
         });
         expect(email_count).to.equal(5);
+    });
+
+
+    it('Should be able to count by status list and sent_at_lower_boundary', async () => {
+        let email_count = 0;
+        email_count = await email_repository.count({
+            email_status_list: [
+                EmailRepository.STATUS_SENT,
+            ],
+            sent_at_lower_boundary: moment().subtract(24, 'hours'),
+        });
+        expect(email_count).to.equal(1);
     });
 });
