@@ -291,7 +291,7 @@ class EmailService {
 
         const email_sent_last_periode_count = await this.email_repository.count({
             email_status: EmailRepository.STATUS_SENT,
-            sent_at_lower_boundary: moment().subtract(24, 'hours');
+            sent_at_lower_boundary: moment().subtract(24, 'hours'),
         });
 
         if (email_sent_last_periode_count < MAX_DAILY_MAILS_COUNT) {
