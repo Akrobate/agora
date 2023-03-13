@@ -263,6 +263,7 @@ class EmailService {
     /**
      * Should be called on application UP
      * Should be called on each queuedSendMail,  queuedSendMail shoud set running = true
+     * @returns {Void}
      */
     async startEmailSender() {
         // if is not running email sender return
@@ -294,11 +295,11 @@ class EmailService {
             sent_at_lower_boundary: moment().subtract(24, 'hours'),
         });
 
-        if (email_sent_last_periode_count < MAX_DAILY_MAILS_COUNT) {
+        if (email_sent_last_periode_count < EmailService.MAX_DAILY_MAILS_COUNT) {
             // SENT A MAIL
         }
 
-        // 
+        //
 
     }
 

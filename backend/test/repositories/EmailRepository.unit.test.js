@@ -93,5 +93,14 @@ describe.only('EmailRepository unit tests', () => {
             sent_at_lower_boundary: moment().subtract(24, 'hours'),
         });
         expect(email_count).to.equal(1);
+
+        email_count = await email_repository.count({
+            email_status_list: [
+                EmailRepository.STATUS_SENT,
+            ],
+            sent_at_lower_boundary: moment().subtract(7, 'days'),
+        });
+        expect(email_count).to.equal(2);
     });
+
 });
