@@ -256,27 +256,31 @@ class EmailService {
                 email_to: to_list.join(', '),
                 from: `"${from_name}" <${from_email}>`,
             });
+
+        this.email_sender_running = true;
         return reponse;
     }
 
 
     /**
      * Should be called on application UP
-     * Should be called on each queuedSendMail,  queuedSendMail shoud set running = true
+     * Should be called on each queuedSendMail
      * @returns {Void}
      */
     async startEmailSender() {
-        // if is not running email sender return
-            // if has some mails to send
-                // Count all send mails in last 24h
+        if (this.email_sender_running === true) {
+            return;
+        }
 
-                // if Rules to send are ok
-                    // Send one mail and set as setted
+        this.email_sender_running = true;
+        this.processEmailSender();
+    }
 
-                // delay
-                // call startEmailSender
-            // else
-                // running = false
+
+    /**
+     * @returns {Void}
+     */
+    async processEmailSender() {
         if (this.email_sender_running === false) {
             return;
         }
@@ -299,7 +303,8 @@ class EmailService {
             // SENT A MAIL
         }
 
-        //
+        // Wait
+        // call processEmailSender again
 
     }
 
