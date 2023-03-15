@@ -4,6 +4,7 @@
 
 const nodemailer = require('nodemailer');
 const moment = require('moment');
+const Promise = require('bluebird');
 
 const fs = require('fs').promises;
 
@@ -303,11 +304,27 @@ class EmailService {
             // SENT A MAIL
         }
 
-        // Wait
-        // call processEmailSender again
-
+        await Promise.delay(
+            this.calculateEmailRandomDelay()
+        );
+        
+        this.processEmailSender();
     }
 
+
+    /**
+     * 
+     * @param {Number} random_delay_min
+     * @param {Number} random_delay_max
+     * @returns {Number}
+     */
+    calculateEmailRandomDelay(
+        random_delay_min = 30000,
+        random_delay_max = 90000
+    ) {
+        return random_delay_min
+            + Math.ceil(Math.random() * (random_delay_max - random_delay_min));
+    }
 }
 
 EmailService.instance = null;
