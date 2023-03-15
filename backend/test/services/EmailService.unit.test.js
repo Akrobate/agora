@@ -15,7 +15,7 @@ const {
 } = require('../../src/repositories');
 const moment = require('moment');
 
-describe.only('EmailService unit tests', () => {
+describe('EmailService unit tests', () => {
 
     const email_repository = EmailRepository.getInstance();
 
@@ -116,6 +116,22 @@ describe.only('EmailService unit tests', () => {
         ).to.equal(true);
         expect(email_sent).to.have.property('email_status', EmailRepository.STATUS_SENT);
 
-
     });
+});
+
+
+describe.only('calculateEmailRandomDelay', () => {
+        
+    const email_service = EmailService.getInstance();
+
+    it('calculateEmailRandomDelay 1 10', () => {
+        let range_min = 1;
+        let range_max = 10;
+
+        for(let i = 0; i < 10; i++) {
+            expect(email_service.calculateEmailRandomDelay(range_min, range_max))
+                .to.be.greaterThanOrEqual(range_min)
+                .and.lessThanOrEqual(range_max);
+        }
+    })
 });
