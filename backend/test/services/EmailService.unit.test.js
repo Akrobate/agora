@@ -121,17 +121,29 @@ describe('EmailService unit tests', () => {
 
 
 describe.only('calculateEmailRandomDelay', () => {
-        
+
     const email_service = EmailService.getInstance();
 
     it('calculateEmailRandomDelay 1 10', () => {
-        let range_min = 1;
-        let range_max = 10;
+        const range_min = 1;
+        const range_max = 10;
 
-        for(let i = 0; i < 10; i++) {
+        for (let i = 0; i < (range_max - range_min); i++) {
             expect(email_service.calculateEmailRandomDelay(range_min, range_max))
                 .to.be.greaterThanOrEqual(range_min)
                 .and.lessThanOrEqual(range_max);
         }
-    })
+    });
+
+
+    it('calculateEmailRandomDelay 2000 2100', () => {
+        const range_min = 2000;
+        const range_max = 2100;
+
+        for (let i = 0; i < (range_max - range_min); i++) {
+            expect(email_service.calculateEmailRandomDelay(range_min, range_max))
+                .to.be.greaterThanOrEqual(range_min)
+                .and.lessThanOrEqual(range_max);
+        }
+    });
 });
