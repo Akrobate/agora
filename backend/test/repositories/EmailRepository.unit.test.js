@@ -103,4 +103,28 @@ describe.only('EmailRepository unit tests', () => {
         expect(email_count).to.equal(2);
     });
 
+
+    it('Should be able to search', async () => {
+
+        const email_list = await email_repository.search(
+            {
+                email_status: EmailRepository.STATUS_TO_SEND,
+            },
+            {
+                sort_list: [
+                    '-id',
+                ],
+            }
+        );
+
+        const [
+            row_1,
+            row_2,
+        ] = email_list;
+
+        expect(row_1.id > row_2.id).to.be.equal(true);
+    });
+
+
+
 });
