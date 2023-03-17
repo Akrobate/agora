@@ -268,7 +268,7 @@ class EmailService {
      * Should be called on each queuedSendMail
      * @returns {Void}
      */
-    async startEmailSender() {
+    startEmailSender() {
         if (this.email_sender_running === true) {
             return;
         }
@@ -301,19 +301,39 @@ class EmailService {
         });
 
         if (email_sent_last_periode_count < EmailService.MAX_DAILY_MAILS_COUNT) {
-            // SENT A MAIL
+            await this.sendOldestWaitingMail();
         }
 
         await Promise.delay(
             this.calculateEmailRandomDelay()
         );
-        
+
         this.processEmailSender();
     }
 
 
     /**
-     * 
+     * @returns {Promise}
+     */
+    async sendOldestWaitingMail() {
+        const [
+            email_to_send,
+        ] = await this.email_repository.search(
+            {
+                email_status: EmailRepository.STATUS_TO_SEND,
+            },
+            {
+                sort_list: '-created_at',
+            }
+        );
+
+        if (email_to_send) {
+            // SEnd email_to_send;
+        }
+    }
+
+
+    /**
      * @param {Number} random_delay_min
      * @param {Number} random_delay_max
      * @returns {Number}
@@ -323,7 +343,13 @@ class EmailService {
         random_delay_max = 90000
     ) {
         return random_delay_min
-            + Math.ceil(Math.random() * (random_delay_max - random_delay_min));
+            + Math.ceil(
+                Math.random()
+                * (
+                    random_delay_max
+                    - random_delay_min
+                )
+            );
     }
 }
 
