@@ -146,4 +146,15 @@ describe.only('calculateEmailRandomDelay', () => {
                 .and.lessThanOrEqual(range_max);
         }
     });
+
+    it('calculateEmailRandomDelay 5000 10000', () => {
+        const range_min = 5000;
+        const range_max = 10000;
+
+        for (let i = 0; i < (range_max - range_min); i++) {
+            expect(email_service.calculateEmailRandomDelay(range_min, range_max))
+                .to.be.greaterThanOrEqual(range_min)
+                .and.lessThanOrEqual(range_max);
+        }
+    });
 });
