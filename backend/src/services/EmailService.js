@@ -304,9 +304,7 @@ class EmailService {
             await this.sendOldestWaitingMail();
         }
 
-        await Promise.delay(
-            this.calculateEmailRandomDelay()
-        );
+        await this.waitRandomEmailDelay();
 
         this.processEmailSender();
     }
@@ -330,6 +328,16 @@ class EmailService {
         if (email_to_send) {
             // SEnd email_to_send;
         }
+    }
+
+
+    /**
+     * @returns {Promise}
+     */
+    async waitRandomEmailDelay() {
+        await Promise.delay(
+            this.calculateEmailRandomDelay()
+        );
     }
 
 
