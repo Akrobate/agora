@@ -117,6 +117,12 @@ describe('EmailService unit tests', () => {
         expect(email_sent).to.have.property('email_status', EmailRepository.STATUS_SENT);
 
     });
+
+
+    it('Should be able to process enqueued mail', async () =>{
+
+    });
+
 });
 
 
