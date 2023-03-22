@@ -6,7 +6,9 @@ const {
 const {
     expect,
 } = require('chai');
-
+const {
+    mock,
+} = require('sinon');
 const {
     EmailService,
 } = require('../../src/services');
@@ -15,6 +17,8 @@ const {
 } = require('../../src/repositories');
 const moment = require('moment');
 
+const mocks = {};
+
 describe('EmailService unit tests', () => {
 
     const email_repository = EmailRepository.getInstance();
@@ -22,7 +26,12 @@ describe('EmailService unit tests', () => {
 
     beforeEach(async () => {
         await DataSeeder.truncate('EmailRepository');
+        mocks.email_repository = mock(email_repository);
     });
+
+    afterEach(() => {
+        mocks.email_repository.restore();
+    })
 
     it('Should be able to enqueue email', async () => {
         const email_service = EmailService.getInstance();
@@ -120,7 +129,7 @@ describe('EmailService unit tests', () => {
 
 
     it('Should be able to process enqueued mail', async () =>{
-
+        const email_service = EmailService.getInstance();
     });
 
 });
