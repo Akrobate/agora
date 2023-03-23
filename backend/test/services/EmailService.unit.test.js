@@ -22,19 +22,19 @@ const mocks = {};
 describe('EmailService unit tests', () => {
 
     const email_repository = EmailRepository.getInstance();
-
+    const email_service = EmailService.getInstance();
 
     beforeEach(async () => {
         await DataSeeder.truncate('EmailRepository');
         mocks.email_repository = mock(email_repository);
+        mocks.email_service = mock(email_service);
     });
 
     afterEach(() => {
         mocks.email_repository.restore();
-    })
+    });
 
     it('Should be able to enqueue email', async () => {
-        const email_service = EmailService.getInstance();
         const create_data = {
             to_list: [
                 'to_toto@test.com',
@@ -73,7 +73,6 @@ describe('EmailService unit tests', () => {
 
 
     it('Should be able to update sent email', async () => {
-        const email_service = EmailService.getInstance();
         const create_data = {
             to_list: [
                 'to_toto@test.com',
@@ -128,8 +127,10 @@ describe('EmailService unit tests', () => {
     });
 
 
-    it('Should be able to process enqueued mail', async () =>{
-        const email_service = EmailService.getInstance();
+    it('Should be able to process enqueued mail and do nothing if nothing to send', async () =>{
+        email_service.startEmailSender();
+        mocks.email_service.expects('sendOldestWaitingMail').never();
+        mocks.email_service.expects('waitRandomEmailDelay').never();
     });
 
 });
