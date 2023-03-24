@@ -11,7 +11,7 @@ const {
     EmailRepository,
 } = require('../../src/repositories');
 
-describe.only('EmailRepository unit tests', () => {
+describe('EmailRepository unit tests', () => {
 
     const email_repository = EmailRepository.getInstance();
 
