@@ -34,7 +34,7 @@ class EmailService {
         this.email_repository = email_repository;
 
         this.connection = null;
-        this.email_sender_running = true;
+        this.email_sender_running = false;
     }
 
 
@@ -257,8 +257,6 @@ class EmailService {
                 email_to: to_list.join(', '),
                 from: `"${from_name}" <${from_email}>`,
             });
-
-        this.email_sender_running = true;
         return reponse;
     }
 
@@ -274,7 +272,7 @@ class EmailService {
         }
 
         this.email_sender_running = true;
-        this.processEmailSender();
+        return this.processEmailSender();
     }
 
 
@@ -282,6 +280,7 @@ class EmailService {
      * @returns {Void}
      */
     async processEmailSender() {
+
         if (this.email_sender_running === false) {
             return;
         }
