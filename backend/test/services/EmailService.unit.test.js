@@ -24,6 +24,21 @@ describe('EmailService unit tests', () => {
     const email_repository = EmailRepository.getInstance();
     const email_service = EmailService.getInstance();
 
+    const create_data_seed = {
+        to_list: [
+            'to_toto@test.com',
+            'to_toto@test2.com',
+        ],
+        from_email: 'from_email@test.com',
+        from_name: 'FromEmailLabel',
+        from_user_id: 122,
+        to_user_id: 123,
+        subject: 'Email subject',
+        html: '<p>Html content</p>',
+        text: 'Text content',
+    };
+
+
     beforeEach(async () => {
         await DataSeeder.truncate('EmailRepository');
         mocks.email_repository = mock(email_repository);
@@ -31,23 +46,12 @@ describe('EmailService unit tests', () => {
     });
 
     afterEach(() => {
+        mocks.email_service.restore();
         mocks.email_repository.restore();
     });
 
     it('Should be able to enqueue email', async () => {
-        const create_data = {
-            to_list: [
-                'to_toto@test.com',
-                'to_toto@test2.com',
-            ],
-            from_email: 'from_email@test.com',
-            from_name: 'FromEmailLabel',
-            from_user_id: 122,
-            to_user_id: 123,
-            subject: 'Email subject',
-            html: '<p>Html content</p>',
-            text: 'Text content',
-        };
+        const create_data = create_data_seed;
         const email_data = await email_service.createQueuedSendMail(create_data);
         expect(email_data).to.have.property('id');
         const {
@@ -73,19 +77,7 @@ describe('EmailService unit tests', () => {
 
 
     it('Should be able to update sent email', async () => {
-        const create_data = {
-            to_list: [
-                'to_toto@test.com',
-                'to_toto@test2.com',
-            ],
-            from_email: 'from_email@test.com',
-            from_name: 'FromEmailLabel',
-            from_user_id: 122,
-            to_user_id: 123,
-            subject: 'Email subject',
-            html: '<p>Html content</p>',
-            text: 'Text content',
-        };
+        const create_data = create_data_seed;
         const email_data = await email_service.createQueuedSendMail(create_data);
         expect(email_data).to.have.property('id');
         const {
@@ -127,16 +119,33 @@ describe('EmailService unit tests', () => {
     });
 
 
-    it('Should be able to process enqueued mail and do nothing if nothing to send', async () =>{
-        email_service.startEmailSender();
+    it('Should be able to process enqueued mail and do nothing if nothing to send', async () => {
         mocks.email_service.expects('sendOldestWaitingMail').never();
         mocks.email_service.expects('waitRandomEmailDelay').never();
+        await email_service.startEmailSender();
+        mocks.email_service.verify();
     });
+
+
+    it('Should be able to process ONE enqueued mail and do one execution of send', async () => {
+        const email_data = await email_service.createQueuedSendMail(create_data_seed);
+
+        mocks.email_service.expects('sendOldestWaitingMail')
+            .once()
+            .resolves();
+        mocks.email_service.expects('waitRandomEmailDelay')
+            .once()
+            .resolves();
+
+        await email_service.startEmailSender();
+        mocks.email_service.verify();
+    });
+
 
 });
 
 
-describe.only('calculateEmailRandomDelay', () => {
+describe('calculateEmailRandomDelay', () => {
 
     const email_service = EmailService.getInstance();
 
