@@ -305,7 +305,7 @@ class EmailService {
 
         await this.waitRandomEmailDelay();
 
-        this.processEmailSender();
+        return this.processEmailSender();
     }
 
 
@@ -320,12 +320,23 @@ class EmailService {
                 email_status: EmailRepository.STATUS_TO_SEND,
             },
             {
-                sort_list: '-created_at',
+                sort_list: [
+                    '-created_at'
+                ],
             }
         );
 
         if (email_to_send) {
             // SEnd email_to_send;
+
+            // Update mail as was sent
+            // @todo: missing sent_date
+            await this.email_repository.update(
+                {
+                    id: email_to_send.id,
+                    email_status: EmailRepository.STATUS_SENT,
+                }
+            );
         }
     }
 

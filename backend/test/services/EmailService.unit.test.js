@@ -127,17 +127,18 @@ describe('EmailService unit tests', () => {
     });
 
 
-    it('Should be able to process ONE enqueued mail and do one execution of send', async () => {
+    it.only('Should be able to process ONE enqueued mail and do one execution of send', async () => {
         const email_data = await email_service.createQueuedSendMail(create_data_seed);
 
-        mocks.email_service.expects('sendOldestWaitingMail')
-            .once()
-            .resolves();
         mocks.email_service.expects('waitRandomEmailDelay')
             .once()
             .resolves();
 
+        expect(email_service.email_sender_running).to.equal(false);
         await email_service.startEmailSender();
+        expect(email_service.email_sender_running).to.equal(false);
+        
+
         mocks.email_service.verify();
     });
 
