@@ -264,7 +264,7 @@ class EmailService {
     /**
      * Should be called on application UP
      * Should be called on each queuedSendMail
-     * @returns {Void}
+     * @returns {Promise}
      */
     startEmailSender() {
         if (this.email_sender_running === true) {
@@ -321,7 +321,7 @@ class EmailService {
             },
             {
                 sort_list: [
-                    '-created_at'
+                    '-created_at',
                 ],
             }
         );
