@@ -329,12 +329,11 @@ class EmailService {
         if (email_to_send) {
             // SEnd email_to_send;
 
-            // Update mail as was sent
-            // @todo: missing sent_date
             await this.email_repository.update(
                 {
                     id: email_to_send.id,
                     email_status: EmailRepository.STATUS_SENT,
+                    sent_at: moment(),
                 }
             );
         }
