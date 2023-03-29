@@ -137,7 +137,14 @@ describe('EmailService unit tests', () => {
         expect(email_service.email_sender_running).to.equal(false);
         await email_service.startEmailSender();
         expect(email_service.email_sender_running).to.equal(false);
-        
+
+        mocks.email_service.verify();
+    });
+
+    // Working on.
+    it.skip('Should be able to process TWO enqueued mail and do twice execution of send with delay called', async () => {
+        const email_data = await email_service.createQueuedSendMail(create_data_seed);
+
 
         mocks.email_service.verify();
     });
