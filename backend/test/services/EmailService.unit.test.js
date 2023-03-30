@@ -143,8 +143,18 @@ describe('EmailService unit tests', () => {
 
     // Working on.
     it.skip('Should be able to process TWO enqueued mail and do twice execution of send with delay called', async () => {
-        const email_data = await email_service.createQueuedSendMail(create_data_seed);
+        const email_data_1 = await email_service.createQueuedSendMail(create_data_seed);
+        const email_data_2 = await email_service.createQueuedSendMail(create_data_seed);
 
+        await email_service.startEmailSender();
+        
+        mocks.email_service.expects('sendMail')
+            .once()
+            .resolves();
+
+        mocks.email_service.expects('sendMail')
+            .once()
+            .resolves();
 
         mocks.email_service.verify();
     });

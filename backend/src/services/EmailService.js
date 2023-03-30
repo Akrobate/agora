@@ -308,7 +308,16 @@ class EmailService {
         return this.processEmailSender();
     }
 
-
+    subject,
+    text,
+    html,
+    email_status: EmailRepository.STATUS_TO_SEND,
+    from_user_id,
+    from_email,
+    from_name,
+    to_user_id,
+    email_to: to_list.join(', '),
+    from: `"${from_name}" <${from_email}>`,
     /**
      * @returns {Promise}
      */
@@ -327,7 +336,16 @@ class EmailService {
         );
 
         if (email_to_send) {
-            // SEnd email_to_send;
+            return this.sendMail({
+                to_list: [
+                    email_to_send.email_to.split(', '),
+                ],
+                from_email: email_to_send.from_email,
+                from_name: email_to_send.from_name,
+                subject: email_to_send.subject,
+                html: email_to_send.html,
+                text: email_to_send.text,
+            });
 
             await this.email_repository.update(
                 {
