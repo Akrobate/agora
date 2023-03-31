@@ -134,6 +134,10 @@ describe('EmailService unit tests', () => {
             .once()
             .resolves();
 
+        mocks.email_service.expects('sendMail')
+            .once()
+            .resolves();
+
         expect(email_service.email_sender_running).to.equal(false);
         await email_service.startEmailSender();
         expect(email_service.email_sender_running).to.equal(false);
