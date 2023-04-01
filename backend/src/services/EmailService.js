@@ -268,7 +268,7 @@ class EmailService {
      */
     startEmailSender() {
         if (this.email_sender_running === true) {
-            return;
+            return Promise.resolve();
         }
 
         this.email_sender_running = true;
@@ -277,12 +277,12 @@ class EmailService {
 
 
     /**
-     * @returns {Void}
+     * @returns {Promise}
      */
     async processEmailSender() {
 
         if (this.email_sender_running === false) {
-            return;
+            return Promise.resolve();
         }
 
         const email_to_send_count = await this.email_repository.count({
@@ -291,7 +291,7 @@ class EmailService {
 
         if (email_to_send_count === 0) {
             this.email_sender_running = false;
-            return;
+            return Promise.resolve();
         }
 
         const email_sent_last_periode_count = await this.email_repository.count({
@@ -325,7 +325,7 @@ class EmailService {
                 ],
             }
         );
-console.log(email_to_send);
+
         if (email_to_send) {
             await this.sendMail({
                 to_list: [
