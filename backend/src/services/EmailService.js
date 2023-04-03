@@ -121,7 +121,7 @@ class EmailService {
             html,
             text,
         } = input;
-
+console.log(input)
         const connection = await this.getConnectionInstance();
         return connection
             .sendMail({
@@ -328,9 +328,7 @@ class EmailService {
 
         if (email_to_send) {
             await this.sendMail({
-                to_list: [
-                    email_to_send.email_to.split(', '),
-                ],
+                to_list: email_to_send.email_to.split(', '),
                 from_email: email_to_send.from_email,
                 from_name: email_to_send.from_name,
                 subject: email_to_send.subject,
