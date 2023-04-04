@@ -121,7 +121,10 @@ class EmailService {
             html,
             text,
         } = input;
-console.log(input)
+
+        // console.log("SEND_MAIL", input);
+        // return Promise.resolve();
+
         const connection = await this.getConnectionInstance();
         return connection
             .sendMail({
