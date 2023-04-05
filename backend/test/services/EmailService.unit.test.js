@@ -127,7 +127,7 @@ describe('EmailService unit tests', () => {
     });
 
 
-    it.only('Should be able to process ONE enqueued mail and do one execution of send', async () => {
+    it('Should be able to process ONE enqueued mail and do one execution of send', async () => {
         const email_data = await email_service.createQueuedSendMail(create_data_seed);
 
         mocks.email_service.expects('waitRandomEmailDelay')
@@ -146,49 +146,45 @@ describe('EmailService unit tests', () => {
     });
 
     // Working on.
-    it.only('Should be able to process TWO enqueued mail and do twice execution of send with delay called', async () => {
+    it('Should be able to process TWO enqueued mail and do twice execution of send with delay called', async () => {
         const email_data_1 = await email_service.createQueuedSendMail(create_data_seed);
         const email_data_2 = await email_service.createQueuedSendMail(create_data_seed);
-console.log("With args", {
-    to_list: email_data_1.email_to.split(', '),
-    from_email: email_data_1.from_email,
-    from_name: email_data_1.from_name,
-    subject: email_data_1.subject,
-    html: email_data_1.html,
-    text: email_data_1.text,
-})
+
+        mocks.email_service.expects('sendMail')
+            .withArgs({
+                to_list: email_data_1.email_to.split(', '),
+                from_email: email_data_1.from_email,
+                from_name: email_data_1.from_name,
+                subject: email_data_1.subject,
+                html: email_data_1.html,
+                text: email_data_1.text,
+            })
+            .once()
+            .resolves();
+
+        mocks.email_service.expects('sendMail')
+            .withArgs({
+                to_list: email_data_2.email_to.split(', '),
+                from_email: email_data_2.from_email,
+                from_name: email_data_2.from_name,
+                subject: email_data_2.subject,
+                html: email_data_2.html,
+                text: email_data_2.text,
+            })
+            .once()
+            .resolves();
 
 
-mocks.email_service.expects('sendMail')
-// .withArgs({
-//     to_list: email_data_1.email_to.split(', '),
-//     from_email: email_data_1.from_email,
-//     from_name: email_data_1.from_name,
-//     subject: email_data_1.subject,
-//     html: email_data_1.html,
-//     text: email_data_1.text,
-// })
-.once()
-.resolves();
-
-mocks.email_service.expects('sendMail')
-//.withArgs({
-//    to_list: email_data_2.email_to.split(', '),
-//    from_email: email_data_2.from_email,
-//    from_name: email_data_2.from_name,
-//    subject: email_data_2.subject,
-//    html: email_data_2.html,
-//    text: email_data_2.text,
-// })
-.once()
-.resolves();
-
+        mocks.email_service.expects('waitRandomEmailDelay')
+            .once()
+            .resolves();
+        mocks.email_service.expects('waitRandomEmailDelay')
+            .once()
+            .resolves();
 
         expect(email_service.email_sender_running).to.equal(false);
         await email_service.startEmailSender();
         expect(email_service.email_sender_running).to.equal(false);
-
-
 
         mocks.email_service.verify();
     });
