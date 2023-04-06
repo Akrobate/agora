@@ -128,7 +128,8 @@ describe('EmailService unit tests', () => {
 
 
     it('Should be able to process ONE enqueued mail and do one execution of send', async () => {
-        const email_data = await email_service.createQueuedSendMail(create_data_seed);
+        // const email_data = await email_service.createQueuedSendMail(create_data_seed);
+        await email_service.createQueuedSendMail(create_data_seed);
 
         mocks.email_service.expects('waitRandomEmailDelay')
             .once()

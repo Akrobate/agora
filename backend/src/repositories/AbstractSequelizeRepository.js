@@ -294,7 +294,7 @@ class AbstractSequelizeRepository {
      * @returns {Promise<AbstractIEntity[]|Error>}
      */
     async count(criteria = {}) {
-        let sequelize_entity_count;
+        let sequelize_entity_count = 0;
         try {
             sequelize_entity_count = await this.sequelize_model.count({
                 ...this.constructor._formatCriteria(criteria),

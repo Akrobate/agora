@@ -222,7 +222,7 @@ class EmailRepository extends AbstractSequelizeRepository {
      * @returns {Promise}
      */
     countToSendEmails() {
-        return countEmailsByEmailStatus(EmailRepository.STATUS_TO_SEND);
+        return this.countEmailsByEmailStatus(EmailRepository.STATUS_TO_SEND);
     }
 
 

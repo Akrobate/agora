@@ -125,6 +125,4 @@ describe('EmailRepository unit tests', () => {
         expect(row_1.id > row_2.id).to.be.equal(true);
     });
 
-
-
 });
