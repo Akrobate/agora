@@ -14,23 +14,31 @@ const {
 describe('EmailRepository unit tests', () => {
 
     const email_repository = EmailRepository.getInstance();
+    const create_data = {
+        email_to: 'to_toto@test.com',
+        from_email: 'from_email@test.com',
+        from_name: 'FromEmailLabel',
+        from_user_id: 122,
+        to_user_id: 123,
+        subject: 'Email subject',
+        html: '<p>Html content</p>',
+        text: 'Text content',
+        email_status: EmailRepository.STATUS_TO_SEND,
+    };
+
+    let created_data_list = [];
 
     beforeEach(async () => {
-        const create_data = {
-            email_to: 'to_toto@test.com',
-            from_email: 'from_email@test.com',
-            from_name: 'FromEmailLabel',
-            from_user_id: 122,
-            to_user_id: 123,
-            subject: 'Email subject',
-            html: '<p>Html content</p>',
-            text: 'Text content',
-            email_status: EmailRepository.STATUS_TO_SEND,
-        };
+
         await DataSeeder.truncate('EmailRepository');
-        await DataSeeder.create('EmailRepository', create_data);
-        await DataSeeder.create('EmailRepository', create_data);
-        await DataSeeder.create('EmailRepository', create_data);
+        created_data_list = [];
+        let created_data = null;
+        created_data = await DataSeeder.create('EmailRepository', create_data);
+        created_data_list.push(created_data);
+        created_data = await DataSeeder.create('EmailRepository', create_data);
+        created_data_list.push(created_data);
+        created_data = await DataSeeder.create('EmailRepository', create_data);
+        created_data_list.push(created_data);
 
         await DataSeeder.create('EmailRepository', {
             ...create_data,
@@ -104,7 +112,7 @@ describe('EmailRepository unit tests', () => {
     });
 
 
-    it('Should be able to search', async () => {
+    it('Should be able to search with sort', async () => {
 
         const email_list = await email_repository.search(
             {
@@ -123,6 +131,29 @@ describe('EmailRepository unit tests', () => {
         ] = email_list;
 
         expect(row_1.id > row_2.id).to.be.equal(true);
+    });
+
+
+    describe('Criteria tests', () => {
+        it('Should be able to search by id_list', async () => {
+
+            const email_list = await email_repository.search(
+                {
+                    id_list: [
+                        created_data_list[1].id,
+                        created_data_list[2].id,
+                    ],
+                }
+            );
+    
+            const [
+                row_1,
+                row_2,
+            ] = email_list;
+
+            expect(row_1.id).to.be.equal(created_data_list[1].id);
+            expect(row_2.id).to.be.equal(created_data_list[2].id);
+        });
     });
 
 });
