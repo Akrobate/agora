@@ -32,33 +32,39 @@ describe('EmailRepository unit tests', () => {
 
         await DataSeeder.truncate('EmailRepository');
         created_data_list = [];
+
         let created_data = null;
         created_data = await DataSeeder.create('EmailRepository', {
             ...create_data,
         });
         created_data_list.push(created_data);
+
         created_data = await DataSeeder.create('EmailRepository', {
             ...create_data,
             from_user_id: 102,
+            to_user_id: 124,
         });
         created_data_list.push(created_data);
+
         created_data = await DataSeeder.create('EmailRepository', {
             ...create_data,
             from_user_id: 103,
         });
         created_data_list.push(created_data);
 
-        await DataSeeder.create('EmailRepository', {
+        created_data = await DataSeeder.create('EmailRepository', {
             ...create_data,
             email_status: EmailRepository.STATUS_SENT,
             sent_at: moment().subtract(12, 'hours'),
         });
+        created_data_list.push(created_data);
 
-        await DataSeeder.create('EmailRepository', {
+        created_data = await DataSeeder.create('EmailRepository', {
             ...create_data,
             email_status: EmailRepository.STATUS_SENT,
             sent_at: moment().subtract(2, 'days'),
         });
+        created_data_list.push(created_data);
 
     });
 
@@ -196,6 +202,55 @@ describe('EmailRepository unit tests', () => {
             ] = email_list;
 
             expect(row_1.id).to.be.equal(created_data_list[2].id);
+        });
+
+        it('Should be able to search by to_user_id', async () => {
+
+            const email_list = await email_repository.search(
+                {
+                    to_user_id: created_data_list[1].to_user_id,
+                }
+            );
+    
+            const [
+                row_1,
+            ] = email_list;
+
+            expect(row_1.id).to.be.equal(created_data_list[1].id);
+        });
+
+        it('Should be able to search by to_user_id_list', async () => {
+
+            const email_list = await email_repository.search(
+                {
+                    to_user_id_list: [
+                        created_data_list[1].to_user_id,
+                    ],
+                }
+            );
+    
+            const [
+                row_1,
+            ] = email_list;
+
+            expect(row_1.id).to.be.equal(created_data_list[1].id);
+        });
+
+        it('Should be able to search by sent_at_upper_boundary', async () => {
+
+            const email_list = await email_repository.search(
+                {
+                    to_user_id_list: [
+                        created_data_list[1].to_user_id,
+                    ],
+                }
+            );
+    
+            const [
+                row_1,
+            ] = email_list;
+
+            expect(row_1.id).to.be.equal(created_data_list[1].id);
         });
     });
 
