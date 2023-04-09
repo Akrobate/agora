@@ -178,7 +178,7 @@ class EmailRepository extends AbstractSequelizeRepository {
             };
         }
 
-        if (to_user_id !== undefined) {
+        if (to_user_id_list !== undefined) {
             where[Op.and].to_user_id = {
                 [Op.in]: to_user_id_list,
             };
