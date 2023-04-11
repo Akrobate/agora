@@ -240,18 +240,16 @@ describe('EmailRepository unit tests', () => {
 
             const email_list = await email_repository.search(
                 {
-                    to_user_id_list: [
-                        created_data_list[1].to_user_id,
-                    ],
+                    sent_at_upper_boundary: moment().subtract(24, 'hours'),
                 }
             );
     
             const [
                 row_1,
             ] = email_list;
-
-            expect(row_1.id).to.be.equal(created_data_list[1].id);
+            expect(row_1.id).to.be.equal(created_data_list[4].id);
         });
+
     });
 
 });
