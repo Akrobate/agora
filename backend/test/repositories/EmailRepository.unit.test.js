@@ -228,7 +228,7 @@ describe('EmailRepository unit tests', () => {
                     ],
                 }
             );
-    
+
             const [
                 row_1,
             ] = email_list;
@@ -243,7 +243,7 @@ describe('EmailRepository unit tests', () => {
                     sent_at_upper_boundary: moment().subtract(24, 'hours'),
                 }
             );
-    
+
             const [
                 row_1,
             ] = email_list;
@@ -252,4 +252,10 @@ describe('EmailRepository unit tests', () => {
 
     });
 
+    describe('countToSendEmails', () => {
+        it('Should be able to countToSendEmails', async () => {
+            const count = await email_repository.countToSendEmails();
+            expect(count).to.be.equal(3);
+        });
+    });
 });
