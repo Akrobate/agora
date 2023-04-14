@@ -12,11 +12,13 @@ const {
 } = require('../../src/repositories');
 
 
-// @TODO Need to create seed data
-describe.skip('ContactTagRepository unit tests', () => {
+describe('ContactTagRepository unit tests', () => {
 
     const contact_tag_repository = ContactTagRepository.getInstance();
-    const create_data = {};
+    const create_data = {
+        user_id: 100,
+        name: 'Test contact tag repository'
+    };
 
     let created_data_list = [];
 
@@ -33,11 +35,13 @@ describe.skip('ContactTagRepository unit tests', () => {
 
         created_data = await DataSeeder.create('ContactTagRepository', {
             ...create_data,
+            user_id: 101,
         });
         created_data_list.push(created_data);
 
         created_data = await DataSeeder.create('ContactTagRepository', {
             ...create_data,
+            user_id: 102,
         });
         created_data_list.push(created_data);
 
@@ -64,13 +68,13 @@ describe.skip('ContactTagRepository unit tests', () => {
         expect(row_2.id).to.be.equal(created_data_list[2].id);
     });
 
-    it('Should be able to search by from_user_id_list', async () => {
+    it('Should be able to search by user_id_list', async () => {
 
         const contact_tag_list = await contact_tag_repository.search(
             {
-                from_user_id_list: [
-                    created_data_list[1].from_user_id,
-                    created_data_list[2].from_user_id,
+                user_id_list: [
+                    created_data_list[1].user_id,
+                    created_data_list[2].user_id,
                 ],
             }
         );
