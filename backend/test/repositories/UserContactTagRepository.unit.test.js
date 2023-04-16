@@ -37,6 +37,7 @@ describe('UserContactTagRepository unit tests', () => {
         created_data = await DataSeeder.create('UserContactTagRepository', {
             ...create_data,
             user_id: 101,
+            contact_user_id: 202,
         });
         created_data_list.push(created_data);
 
@@ -103,5 +104,20 @@ describe('UserContactTagRepository unit tests', () => {
 
         expect(row_1.id).to.be.equal(created_data_list[1].id);
         expect(row_2.id).to.be.equal(created_data_list[2].id);
+    });
+
+    it('Should be able to search by contact_user_id', async () => {
+
+        const contact_tag_list = await user_contact_tag_repository.search(
+            {
+                contact_user_id: created_data_list[1].contact_user_id,
+            }
+        );
+
+        const [
+            row_1,
+        ] = contact_tag_list;
+
+        expect(row_1.id).to.be.equal(created_data_list[1].id);
     });
 });
