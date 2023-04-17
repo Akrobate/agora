@@ -198,7 +198,7 @@ class ContactTagController extends AbstractController {
             jwt_data,
         } = request;
 
-        const data = await this.user_contact_tag_service.read(
+        const data = await this.user_contact_tag_service.readOneTagContent(
             jwt_data,
             {
                 tag_id,

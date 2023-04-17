@@ -189,4 +189,14 @@ describe('ContactTagManagement', () => {
             })
         );
     });
+
+    // @todo: test content values
+    describe('Read tags', () => {
+        it('Should be able to read a tag', () => superApp
+            .get(`${url_prefix}/contacts/tags/${manager_seed_contact_tag_1.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+            .expect(HTTP_CODE.OK)
+        );
+    });
+
 });
