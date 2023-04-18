@@ -132,7 +132,14 @@ describe('User Contact Management', () => {
             await superApp
                 .patch(`${url_prefix}/contacts`)
                 .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-                .send(content_to_create)
+                .send({
+                    ...content_to_create,
+                    contact_id_list: [
+                        contact_1_user_seed.id,
+                        contact_2_user_seed.id,
+                        contact_3_user_seed.id,
+                    ],
+                })
                 .expect(HTTP_CODE.CREATED)
                 .expect((response) => {
                     expect(response).to.have.property('body');
