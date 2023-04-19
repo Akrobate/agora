@@ -202,7 +202,9 @@ class UserContactTagService {
             this.acl.throwErrorUserAccessOwnData();
         }
 
-        await this.deleteAllTagContent(user, input);
+
+        // Modification to validate. Seems beeing not use full here
+        // await this.deleteAllTagContent(user, input);
 
 
         const user_contact_list = await this.user_contact_tag_repository
