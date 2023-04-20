@@ -40,7 +40,7 @@
 
         <v-list dense nav>
             <v-list-item
-                v-for="item in items"
+                v-for="item in campaign_items"
                 :key="item.title"
                 link
                 :to="item.route"
@@ -55,6 +55,39 @@
                 </v-list-item-content>
             </v-list-item>
         </v-list>
+
+
+        <v-list-item>
+            <v-list-item-content>
+                <v-list-item-title class="title">
+                    {{ $t('contact_section_title') }}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                    {{ $t('contact_section_subtitle') }}
+                </v-list-item-subtitle>
+            </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list dense nav>
+            <v-list-item
+                v-for="item in contact_items"
+                :key="item.title"
+                link
+                :to="item.route"
+                :exact="item.route_exact"
+            >
+                <v-list-item-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
+
 
 
         <v-list-item>
@@ -112,7 +145,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            items: [
+            campaign_items: [
                 {
                     title: this.$t('campaign_create_link_label'),
                     icon: 'mdi-text-box-plus-outline',
@@ -158,6 +191,9 @@ export default {
                     route_exact: true,
                 },
             ],
+            contact_items: [
+
+            ],
             right: null,
         }
     },
@@ -195,6 +231,8 @@ export default {
     "campaign_draft_link_label": "Brouillons",
     "campaign_in_progress_link_label": "En cours",
     "campaign_finished_link_label": "Terminées",
+    "contact_section_title": "Carnet d'adresse",
+    "contact_section_subtitle": "Gestion de contacts",
     "user_section_title": "Utilisateur",
     "user_section_subtitle": "Paramètres",
     "user_profile_link_label": "Profil"
