@@ -28,6 +28,9 @@ import {
     user_proposition_repository,
 } from './UserPropositionRepository'
 
+import {
+    user_contact_tag_repository,
+} from './UserPropositionRepository'
 
 export {
     user_repository,
@@ -37,4 +40,5 @@ export {
     elo_ranking_repository,
     campaign_user_status_repository,
     user_proposition_repository,
+    user_contact_tag_repository,
 }
