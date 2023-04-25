@@ -11,14 +11,25 @@ import {
     async searchContacts(_, criteria) {
       const {
         contact_list,
-      } = await user_contact_tag_store.searchContacts(criteria);
+      } = await user_contact_tag_store.searchContacts(criteria)
       return contact_list;
     },
-    async getTags(_, criteria) {
+    async searcgTags(_, criteria) {
       const {
         tag_list,
-      } = await user_contact_tag_store.searchContactsTags(criteria);
+      } = await user_contact_tag_store.searchContactsTags(criteria)
       return tag_list;
+    },
+    getContactsTag(_, {
+      id,
+    }) {
+      return user_contact_tag_store.searchContactsTags(id)
+    },
+    updateContactsTag(_, {
+      id,
+      data,
+    }) {
+      return user_contact_tag_store.searchContactsTags(id, data)
     },
   }
   
