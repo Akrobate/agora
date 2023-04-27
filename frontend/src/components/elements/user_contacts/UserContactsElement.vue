@@ -6,12 +6,12 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
-import AvatarElement from '@/components/elements/user/AvatarElement'
+// import AvatarElement from '@/components/elements/user/AvatarElement'
 
   export default {
     name: 'UserContactsElement',
     components: {
-        AvatarElement,
+      //AvatarElement,
     },
     data: () => ({
     }),

@@ -192,7 +192,14 @@ export default {
                 },
             ],
             contact_items: [
-
+                {
+                    title: this.$t('contact_my_contacts_link_label'),
+                    icon: 'mdi-account-group',
+                    route: {
+                        name: 'user-contacts',
+                    },
+                    route_exact: true,
+                },
             ],
             right: null,
         }
@@ -233,6 +240,7 @@ export default {
     "campaign_finished_link_label": "Terminées",
     "contact_section_title": "Carnet d'adresse",
     "contact_section_subtitle": "Gestion de contacts",
+    "contact_my_contacts_link_label": "Mes contacts",
     "user_section_title": "Utilisateur",
     "user_section_subtitle": "Paramètres",
     "user_profile_link_label": "Profil"
