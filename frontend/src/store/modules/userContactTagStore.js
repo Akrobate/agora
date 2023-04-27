@@ -7,7 +7,9 @@ import {
     user_contact_tag_list: []
   })
   
-  const getters = {}
+  const getters = {
+    userContactTagList: (_state) => _state.user_contact_tag_list,
+  }
   
   const actions = {
     async searchContacts(_, criteria) {
@@ -16,7 +18,7 @@ import {
       } = await user_contact_tag_store.searchContacts(criteria)
       return contact_list;
     },
-    async loadCampaigns({ commit, dispatch }, { criteria = {} } = {}) {
+    async loadContacts({ commit, dispatch }, { criteria = {} } = {}) {
       const user_contact_tag_list = await dispatch('searchContacts', criteria)
       commit('set_user_contact_tag_list', user_contact_tag_list)
       return user_contact_tag_list
