@@ -1,5 +1,5 @@
 import {
-    user_contact_tag_store,
+    user_contact_tag_repository,
   } from '@/repositories'
   
   
@@ -15,7 +15,7 @@ import {
     async searchContacts(_, criteria) {
       const {
         contact_list,
-      } = await user_contact_tag_store.searchContacts(criteria)
+      } = await user_contact_tag_repository.searchContacts(criteria)
       return contact_list;
     },
     async loadContacts({ commit, dispatch }, { criteria = {} } = {}) {
@@ -26,19 +26,19 @@ import {
     async searcgTags(_, criteria) {
       const {
         tag_list,
-      } = await user_contact_tag_store.searchContactsTags(criteria)
+      } = await user_contact_tag_repository.searchContactsTags(criteria)
       return tag_list;
     },
     getContactsTag(_, {
       id,
     }) {
-      return user_contact_tag_store.searchContactsTags(id)
+      return user_contact_tag_repository.searchContactsTags(id)
     },
     updateContactsTag(_, {
       id,
       data,
     }) {
-      return user_contact_tag_store.searchContactsTags(id, data)
+      return user_contact_tag_repository.searchContactsTags(id, data)
     },
   }
   

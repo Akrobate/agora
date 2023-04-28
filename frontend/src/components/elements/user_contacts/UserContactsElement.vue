@@ -32,7 +32,7 @@ import { mapActions, mapGetters } from 'vuex';
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         async initialize () {
-
+          await this.loadContacts();
         },
     },
   }

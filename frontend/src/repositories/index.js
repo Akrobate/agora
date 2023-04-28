@@ -30,7 +30,7 @@ import {
 
 import {
     user_contact_tag_repository,
-} from './UserPropositionRepository'
+} from './UserContactTagRepository'
 
 export {
     user_repository,

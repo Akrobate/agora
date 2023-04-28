@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import campaignStore from './modules/campaignStore'
 import appLayoutStore from './modules/appLayoutStore'
-import userStore from './modules/userStore'
 import authenticationStore from './modules/authenticationStore'
-import eloRankingStore from './modules/eloRankingStore'
-import userPropositionStore from './modules/userPropositionStore'
+import campaignStore from './modules/campaignStore'
 import campaignUserStatusStore from './modules/campaignUserStatusStore'
+import eloRankingStore from './modules/eloRankingStore'
 import snackBarStore from './modules/snackBarStore'
+import userContactTagStore from './modules/userContactTagStore'
+import userPropositionStore from './modules/userPropositionStore'
+import userStore from './modules/userStore'
 
 Vue.use(Vuex)
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     user_proposition_store: userPropositionStore,
     campaign_user_status_store: campaignUserStatusStore,
     snack_bar_store: snackBarStore,
+    user_contact_tag_store: userContactTagStore,
   },
   // strict: debug,
   // plugins: debug ? [createLogger()] : []
