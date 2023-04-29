@@ -18,11 +18,13 @@ import { mapActions, mapGetters } from 'vuex';
     computed: {
         ...mapGetters({
             userContactTagList: 'user_contact_tag_store/userContactTagList',
+            token_data: 'authentication_store/tokenData',
         }),
     },
     watch: {
     },
     async mounted () {
+      console.log("uid: ", this.token_data.user_id);
         await this.initialize()
     },
     methods: {
@@ -32,7 +34,11 @@ import { mapActions, mapGetters } from 'vuex';
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         async initialize () {
-          await this.loadContacts();
+          await this.loadContacts({
+            criteria: {
+              user_id: this.token_data.user_id,
+            }
+          });
         },
     },
   }
