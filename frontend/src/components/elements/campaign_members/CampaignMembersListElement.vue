@@ -77,6 +77,21 @@
 
         <template v-slot:[`item.actions`]="{ item }">
 
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        @click="addUserContact(item)" v-bind="attrs" v-on="on"
+                    >
+                        <v-icon>mdi-account-group</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    {{ $t('add_user_contact_tooltip') }}
+                </span>
+            </v-tooltip>
+
+
             <v-tooltip top v-if="campaign_status !== CAMPAIGN_STATUS.DRAFT">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -309,6 +324,9 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.triggerSuccess(this.$t('deleted_member_success_message'))
             this.closeDelete()
         },
+        async addUserContact() {
+            // @todo
+        },
         close () {
             this.dialog = false
         },
@@ -329,6 +347,8 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     "send_invitation_tooltip": "Envoyer une invitation par mail",
     "edit_member_tooltip": "Modifier le membre",
     "delete_member_tooltip": "Supprimer le membre de la campagne",
+    "add_user_contact_tooltip": "Ajouter le membre au cartnet d'adresses",
+    "added_user_contact_tooltip": "Ce membre fait partie de votre carnet d'adresses",
     "invitation_success_message": "Invitation envoyée",
     "deleted_member_success_message": "Membre supprimé de la campagne",
     "remove_campaign_dialog_title": "Supprimer membre?",
