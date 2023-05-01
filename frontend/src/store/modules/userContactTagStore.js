@@ -4,11 +4,13 @@ import {
   
   
   const state = () => ({
-    user_contact_tag_list: []
+    user_contact_tag_list: [],
+    user_contact_list: [],
   })
   
   const getters = {
     userContactTagList: (_state) => _state.user_contact_tag_list,
+    userContactList: (_state) => _state.user_contact_list,
   }
   
   const actions = {
@@ -22,7 +24,7 @@ import {
       const user_contact_tag_list = await dispatch('searchContacts', criteria)
       commit('set_user_contact_tag_list', user_contact_tag_list)
       return user_contact_tag_list
-  },
+    },
     async searcgTags(_, criteria) {
       const {
         tag_list,
@@ -40,9 +42,17 @@ import {
     }) {
       return user_contact_tag_repository.searchContactsTags(id, data)
     },
+    createContactsTag(_, {
+      data,
+    }) {
+      return user_contact_tag_repository.createContactsTags(id, data)
+    },
   }
   
   const mutations = {
+    set_user_contact_list(_state, user_contact_list) {
+      _state.user_contact_list = user_contact_list;    
+    },
     set_user_contact_tag_list(_state, user_contact_tag_list) {
       _state.user_contact_tag_list = user_contact_tag_list;    
     },
