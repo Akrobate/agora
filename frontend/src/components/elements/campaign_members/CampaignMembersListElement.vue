@@ -347,7 +347,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     "send_invitation_tooltip": "Envoyer une invitation par mail",
     "edit_member_tooltip": "Modifier le membre",
     "delete_member_tooltip": "Supprimer le membre de la campagne",
-    "add_user_contact_tooltip": "Ajouter le membre au cartnet d'adresses",
+    "add_user_contact_tooltip": "Ajouter le membre au carnet d'adresses",
     "added_user_contact_tooltip": "Ce membre fait partie de votre carnet d'adresses",
     "invitation_success_message": "Invitation envoyée",
     "deleted_member_success_message": "Membre supprimé de la campagne",

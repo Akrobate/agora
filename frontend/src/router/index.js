@@ -136,6 +136,14 @@ const routes = [
     {
         path: '/user-contacts',
         name: 'user-contacts',
+        component: () => import('@/components/pages/UserContactPage.vue'),
+        meta: {
+            layout: 'AppLayout',
+        }
+    },
+    {
+        path: '/user-contact-tags',
+        name: 'user-contact-tags',
         component: () => import('@/components/pages/UserContactTagPage.vue'),
         meta: {
             layout: 'AppLayout',

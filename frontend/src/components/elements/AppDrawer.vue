@@ -200,6 +200,14 @@ export default {
                     },
                     route_exact: true,
                 },
+                {
+                    title: this.$t('contact_lists_link_label'),
+                    icon: 'mdi-format-list-bulleted',
+                    route: {
+                        name: 'user-contact-tags',
+                    },
+                    route_exact: true,
+                },
             ],
             right: null,
         }
@@ -238,9 +246,10 @@ export default {
     "campaign_draft_link_label": "Brouillons",
     "campaign_in_progress_link_label": "En cours",
     "campaign_finished_link_label": "Terminées",
-    "contact_section_title": "Carnet d'adresse",
+    "contact_section_title": "Carnet d'adresses",
     "contact_section_subtitle": "Gestion de contacts",
     "contact_my_contacts_link_label": "Mes contacts",
+    "contact_lists_link_label": "Listes de contacts",
     "user_section_title": "Utilisateur",
     "user_section_subtitle": "Paramètres",
     "user_profile_link_label": "Profil"
