@@ -35,6 +35,16 @@ class UserContactTagRepository {
 
 
     /**
+     * @param {Object} criteria
+     * @returns {Promise}
+     */
+    async createContactsTags(data) {
+        const result = await axios.post(`${this.ressource_url}/tags`, data);
+        return result.data
+    }
+
+
+    /**
      * @param {Number} id
      * @returns {Promise}
      */
