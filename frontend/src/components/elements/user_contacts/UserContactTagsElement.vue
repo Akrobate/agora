@@ -1,10 +1,16 @@
 <template>
-  <h1>UserContactTagsElement</h1>
+  <div>
+    <h1>UserContactTagsElement</h1>
+    <div>
+      <ContactTagCreateEditElement />
+    </div>
+  </div>
 </template>
 
 
 <script>
 
+import ContactTagCreateEditElement from '@/components/elements/user_contacts/ContactTagCreateEditElement'
 import { mapActions, mapGetters } from 'vuex';
 // import AvatarElement from '@/components/elements/user/AvatarElement'
 
@@ -12,6 +18,7 @@ import { mapActions, mapGetters } from 'vuex';
     name: 'UserContactsElement',
     components: {
       //AvatarElement,
+      ContactTagCreateEditElement,
     },
     data: () => ({
     }),
