@@ -24,7 +24,6 @@ import { mapActions, mapGetters } from 'vuex';
     watch: {
     },
     async mounted () {
-      console.log("uid: ", this.token_data.user_id);
         await this.initialize()
     },
     methods: {

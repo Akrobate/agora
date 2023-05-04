@@ -50,21 +50,29 @@
 <script>
 
 
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: 'PropositionCreateEditElement',
     props: {
         contact_tag_id: Number,
     },
-    data: () => ({
-        valid: true,
-        tag_name: '',
-        contacts_tag: {},
-        rules: {
-            required: (value) => !!value || this.$t('validation_rule_required'),
-        },
-    }),
+    data() {
+        return {
+            valid: true,
+            tag_name: '',
+            contacts_tag: {},
+            rules: {
+                required: (value) => !!value || this.$t('validation_rule_required'),
+            },
+        }
+    },
+    computed: {
+        ...mapGetters({
+            userContactTagList: 'user_contact_tag_store/userContactTagList',
+            token_data: 'authentication_store/tokenData',
+        }),
+    },
     async mounted() {
         await this.init()
     },
@@ -75,9 +83,9 @@ export default {
     },
     methods: {
         ...mapActions({
-            createContactsTag: 'user_contact_tag_store/createProposition',
-            updateContactsTag: 'user_contact_tag_store/updateProposition',
-            getContactsTag: 'user_contact_tag_store/readProposition',
+            createContactsTag: 'user_contact_tag_store/createContactsTag',
+            updateContactsTag: 'user_contact_tag_store/updateContactsTag',
+            getContactsTag: 'user_contact_tag_store/getContactsTag',
         }),
         async init() {
             if (this.contact_tag_id) {
@@ -95,21 +103,18 @@ export default {
 
             const data = {
                 name: this.tag_name,
+                user_id: this.token_data.user_id,
             }
 
             if (this.contact_tag_id) {
-                await this.updateContactsTag(
-                    {
-                        id: this.contact_tag_id,
-                        data,
-                    }
-                )
+                await this.updateContactsTag({
+                    id: this.contact_tag_id,
+                    data,
+                })
             } else {
-                await this.createProposition(
-                    {
-                        data,
-                    }
-                )
+                await this.createContactsTag({
+                    data,
+                })
             }
             this.$emit('saved')
             this.reset()
