@@ -34,20 +34,21 @@
                 text
                 @click="reset"
             >
-                {{ $t('cancel') }}
+                {{ $t('cancel_button') }}
             </v-btn>
             <v-btn
                 color="blue darken-1"
                 text
                 @click="save"
             >
-                {{ $t('save') }}
+                {{ $t('save_button') }}
             </v-btn>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
+
 
 import { mapActions } from 'vuex'
 
