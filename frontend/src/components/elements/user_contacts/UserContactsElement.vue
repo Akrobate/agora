@@ -17,7 +17,7 @@ import { mapActions, mapGetters } from 'vuex';
     }),
     computed: {
         ...mapGetters({
-            userContactTagList: 'user_contact_tag_store/userContactTagList',
+            userContactList: 'user_contact_tag_store/userContactList',
             token_data: 'authentication_store/tokenData',
         }),
     },

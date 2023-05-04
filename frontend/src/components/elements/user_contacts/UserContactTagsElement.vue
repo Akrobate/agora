@@ -4,6 +4,9 @@
     <div>
       <ContactTagCreateEditElement />
     </div>
+    <div>
+      {{ userContactTagList }}
+    </div>
   </div>
 </template>
 
@@ -16,12 +19,10 @@
 
 import ContactTagCreateEditElement from '@/components/elements/user_contacts/ContactTagCreateEditElement'
 import { mapActions, mapGetters } from 'vuex';
-// import AvatarElement from '@/components/elements/user/AvatarElement'
 
   export default {
     name: 'UserContactsElement',
     components: {
-      //AvatarElement,
       ContactTagCreateEditElement,
     },
     data: () => ({
@@ -35,21 +36,16 @@ import { mapActions, mapGetters } from 'vuex';
     watch: {
     },
     async mounted () {
-      console.log("uid: ", this.token_data.user_id);
         await this.initialize()
     },
     methods: {
         ...mapActions({
-            loadContacts: 'user_contact_tag_store/loadContacts',
+            loadContactTags: 'user_contact_tag_store/loadContactTags',
             triggerError: 'snack_bar_store/triggerError',
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         async initialize () {
-          await this.loadContacts({
-            criteria: {
-              user_id: this.token_data.user_id,
-            }
-          });
+          await this.loadContactTags();
         },
     },
   }

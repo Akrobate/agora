@@ -27,9 +27,9 @@ import {
     },
     async searchContactTags(_, criteria) {
       const {
-        contact_tag_list,
-      } = await user_contact_tag_repository.searchContactTags(criteria)
-      return contact_tag_list;
+        tag_list,
+      } = await user_contact_tag_repository.searchContactsTags(criteria)
+      return tag_list;
     },
     async loadContactTags({ commit, dispatch }, { criteria = {} } = {}) {
       const user_contact_tag_list = await dispatch('searchContactTags', criteria)
@@ -51,7 +51,7 @@ import {
       id,
       data,
     }) {
-      return user_contact_tag_repository.searchContactsTags(id, data)
+      return user_contact_tag_repository.updateContactsTags(id, data)
     },
     createContactsTag(_, {
       data,
