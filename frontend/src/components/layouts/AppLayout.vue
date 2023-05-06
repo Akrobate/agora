@@ -20,5 +20,7 @@ export default {
     AppDrawer,
     SnackBar,
   },
+  mounted() {
+  },
 };
 </script>

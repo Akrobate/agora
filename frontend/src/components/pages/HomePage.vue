@@ -20,5 +20,7 @@ export default {
     data: () => ({
         display_managed_campaigns: true,
     }),
+    mounted() {
+    },
 }
 </script>
