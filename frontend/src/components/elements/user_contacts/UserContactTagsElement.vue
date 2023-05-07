@@ -5,6 +5,15 @@
       <ContactTagCreateEditElement />
     </div>
     <div>
+
+    <v-data-table
+        :headers="headers"
+        :items="userContactTagList"
+        class="elevation-1"
+        @click:row="clickOnRow"
+    >
+
+    </v-data-table>
       {{ userContactTagList }}
     </div>
   </div>
@@ -25,8 +34,23 @@ import { mapActions, mapGetters } from 'vuex';
     components: {
       ContactTagCreateEditElement,
     },
-    data: () => ({
-    }),
+    data(){
+        return {
+            headers: [
+                {
+                    text: this.$t('tag_name_table_header'),
+                    align: 'start',
+                    value: 'name',
+                },
+                {
+                    text: this.$t('actions_table_header'),
+                    value: 'actions',
+                    align: 'end',
+                    sortable: false,
+                },
+            ],
+        }
+    },
     computed: {
         ...mapGetters({
             userContactTagList: 'user_contact_tag_store/userContactTagList',
@@ -47,11 +71,16 @@ import { mapActions, mapGetters } from 'vuex';
         async initialize () {
           await this.loadContactTags();
         },
+        clickOnRow() {
+
+        },
     },
   }
 </script>
 
 <i18n locale='fr'>
 {
+    "tag_name_table_header": "Nom du tag",
+    "actions_table_header": "actions"
 }
 </i18n>
