@@ -12,6 +12,39 @@
         class="elevation-1"
         @click:row="clickOnRow"
     >
+      <template v-slot:top>
+          <v-toolbar flat>
+              <v-toolbar-title>{{ list_title }}</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn
+                  v-if="campaign_status === 'draft'"
+                  color="primary"
+                  dark
+                  class="mb-2"
+                  :to="{'name': 'campaign-create', params: { campaign_status: 'create'}}"
+                  :exact="true"
+              >
+                  {{ $t('create_new_contact_list') }}
+              </v-btn>
+
+              <v-dialog v-model="dialog_delete" max-width="400px">
+                  <v-card>
+                      <v-card-title class="headline">{{ $t('delete_campaign_modal_title') }}</v-card-title>
+                      <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="blue darken-1" text @click="closeDelete">{{ $t('cancel_button') }}</v-btn>
+                          <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{ $t('yes_button') }}</v-btn>
+                          <v-spacer></v-spacer>
+                      </v-card-actions>
+                  </v-card>
+              </v-dialog>
+
+          </v-toolbar>
+      </template>
+
+      <template v-slot:[`item.actions`]="{ item }">
+
+      </template>
 
     </v-data-table>
       {{ userContactTagList }}
@@ -81,6 +114,7 @@ import { mapActions, mapGetters } from 'vuex';
 <i18n locale='fr'>
 {
     "tag_name_table_header": "Nom du tag",
-    "actions_table_header": "actions"
+    "actions_table_header": "actions",
+    "create_new_contact_list": "Nouvelle liste de contacts"
 }
 </i18n>
