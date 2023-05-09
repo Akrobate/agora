@@ -43,7 +43,7 @@
       </template>
 
       <template v-slot:[`item.actions`]="{ item }">
-
+        id: {{ item.id }}
       </template>
 
     </v-data-table>
