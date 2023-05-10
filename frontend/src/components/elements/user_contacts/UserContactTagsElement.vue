@@ -1,11 +1,5 @@
 <template>
   <div>
-    <h1>UserContactTagsElement</h1>
-    <div>
-      <ContactTagCreateEditElement />
-    </div>
-    <div>
-
     <v-data-table
         :headers="headers"
         :items="userContactTagList"
@@ -14,18 +8,22 @@
     >
       <template v-slot:top>
           <v-toolbar flat>
-              <v-toolbar-title>{{ list_title }}</v-toolbar-title>
+              <v-toolbar-title>{{ $t('contact_list_title') }}</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-btn
-                  v-if="campaign_status === 'draft'"
                   color="primary"
                   dark
                   class="mb-2"
-                  :to="{'name': 'campaign-create', params: { campaign_status: 'create'}}"
-                  :exact="true"
               >
                   {{ $t('create_new_contact_list') }}
               </v-btn>
+
+              <v-dialog v-model="dialog" max-width="500px">
+                  <contact-tag-create-edit-element
+                      @reset="close"
+                      @saved="saved"
+                  />
+              </v-dialog>
 
               <v-dialog v-model="dialog_delete" max-width="400px">
                   <v-card>
@@ -47,8 +45,6 @@
       </template>
 
     </v-data-table>
-      {{ userContactTagList }}
-    </div>
   </div>
 </template>
 
@@ -115,6 +111,7 @@ import { mapActions, mapGetters } from 'vuex';
 {
     "tag_name_table_header": "Nom du tag",
     "actions_table_header": "actions",
-    "create_new_contact_list": "Nouvelle liste de contacts"
+    "create_new_contact_list": "Nouvelle liste de contacts",
+    "contact_list_title": "Listes de contacts"
 }
 </i18n>
