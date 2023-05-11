@@ -27,7 +27,7 @@
 
               <v-dialog v-model="dialog_delete" max-width="400px">
                   <v-card>
-                      <v-card-title class="headline">{{ $t('delete_campaign_modal_title') }}</v-card-title>
+                      <v-card-title class="headline">{{ $t('delete_contact_list_modal_title') }}</v-card-title>
                       <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn color="blue darken-1" text @click="closeDelete">{{ $t('cancel_button') }}</v-btn>
@@ -53,8 +53,6 @@
 
 // @todo: Should probably be renamed to UserContactTagsListElement?
 
-
-
 import ContactTagCreateEditElement from '@/components/elements/user_contacts/ContactTagCreateEditElement'
 import { mapActions, mapGetters } from 'vuex';
 
@@ -65,6 +63,8 @@ import { mapActions, mapGetters } from 'vuex';
     },
     data(){
         return {
+            dialog: null,
+            dialog_delete: null,
             headers: [
                 {
                     text: this.$t('tag_name_table_header'),
@@ -103,6 +103,18 @@ import { mapActions, mapGetters } from 'vuex';
         clickOnRow() {
 
         },
+        deleteItemConfirm() {
+
+        },
+        closeDelete() {
+
+        },
+        saved() {
+
+        },
+        close() {
+
+        },
     },
   }
 </script>
@@ -112,6 +124,9 @@ import { mapActions, mapGetters } from 'vuex';
     "tag_name_table_header": "Nom du tag",
     "actions_table_header": "actions",
     "create_new_contact_list": "Nouvelle liste de contacts",
-    "contact_list_title": "Listes de contacts"
+    "contact_list_title": "Listes de contacts",
+    "yes_button": "Oui",
+    "cancel_button": "Annuler",
+    "delete_contact_list_modal_title": "Supprimer la liste de contacts"
 }
 </i18n>
