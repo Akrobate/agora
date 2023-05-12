@@ -14,6 +14,7 @@
                   color="primary"
                   dark
                   class="mb-2"
+                  @click="createContactList"
               >
                   {{ $t('create_new_contact_list') }}
               </v-btn>
@@ -98,7 +99,10 @@ import { mapActions, mapGetters } from 'vuex';
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         async initialize () {
-          await this.loadContactTags();
+          await this.loadContactTags()
+        },
+        createContactList() {
+            this.dialog = true
         },
         clickOnRow() {
 
@@ -110,10 +114,11 @@ import { mapActions, mapGetters } from 'vuex';
 
         },
         saved() {
-
+            this.loadContactTags()
+            this.dialog = false
         },
         close() {
-
+            this.dialog = false
         },
     },
   }
