@@ -58,7 +58,7 @@ import ContactTagCreateEditElement from '@/components/elements/user_contacts/Con
 import { mapActions, mapGetters } from 'vuex';
 
   export default {
-    name: 'UserContactsElement',
+    name: 'UserContactTagsListElement',
     components: {
       ContactTagCreateEditElement,
     },

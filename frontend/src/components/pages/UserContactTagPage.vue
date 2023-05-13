@@ -1,17 +1,17 @@
 <template>
     <v-container>
-        <user-contact-tags-element />
+        <user-contact-tags-list-element />
     </v-container>
 </template>
 
 <script>
 
-import UserContactTagsElement from '@/components/elements/user_contacts/UserContactTagsElement'
+import UserContactTagsListElement from '@/components/elements/user_contacts/UserContactTagsListElement'
 
 export default {
     name: 'UserContactTagPage',
     components: {
-        UserContactTagsElement,
+        UserContactTagsListElement,
     },
 }
 </script>
