@@ -66,6 +66,7 @@ import { mapActions, mapGetters } from 'vuex';
         return {
             dialog: null,
             dialog_delete: null,
+            editing_contacts_tag_id: null,
             headers: [
                 {
                     text: this.$t('tag_name_table_header'),
@@ -107,8 +108,11 @@ import { mapActions, mapGetters } from 'vuex';
         clickOnRow() {
 
         },
-        deleteItemConfirm() {
-
+        deleteItemConfirm(item) {
+            // Todo
+            // await this.deleteTag({})
+            this.closeDelete()
+            this.editing_contacts_tag_id = null
         },
         closeDelete() {
 
@@ -119,6 +123,10 @@ import { mapActions, mapGetters } from 'vuex';
         },
         close() {
             this.dialog = false
+        },
+        deleteItem (item) {
+            this.editing_contacts_tag_id = item.id
+            this.dialog_delete = true
         },
     },
   }
