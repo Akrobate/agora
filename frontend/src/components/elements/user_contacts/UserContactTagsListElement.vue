@@ -1,52 +1,77 @@
 <template>
-  <div>
-    <v-data-table
-        :headers="headers"
-        :items="userContactTagList"
-        class="elevation-1"
-        @click:row="clickOnRow"
-    >
-      <template v-slot:top>
-          <v-toolbar flat>
-              <v-toolbar-title>{{ $t('contact_list_title') }}</v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  @click="createContactList"
-              >
-                  {{ $t('create_new_contact_list') }}
-              </v-btn>
+    <div>
+        <v-data-table
+            :headers="headers"
+            :items="userContactTagList"
+            class="elevation-1"
+            @click:row="clickOnRow"
+        >
+            <template v-slot:top>
+                <v-toolbar flat>
+                    <v-toolbar-title>{{ $t('contact_list_title') }}</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="primary"
+                        dark
+                        class="mb-2"
+                        @click="createContactList"
+                    >
+                        {{ $t('create_new_contact_list') }}
+                    </v-btn>
 
-              <v-dialog v-model="dialog" max-width="500px">
-                  <contact-tag-create-edit-element
-                      @reset="close"
-                      @saved="saved"
-                  />
-              </v-dialog>
+                    <v-dialog v-model="dialog" max-width="500px">
+                        <contact-tag-create-edit-element
+                            @reset="close"
+                            @saved="saved"
+                        />
+                    </v-dialog>
 
-              <v-dialog v-model="dialog_delete" max-width="400px">
-                  <v-card>
-                      <v-card-title class="headline">{{ $t('delete_contact_list_modal_title') }}</v-card-title>
-                      <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn color="blue darken-1" text @click="closeDelete">{{ $t('cancel_button') }}</v-btn>
-                          <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{ $t('yes_button') }}</v-btn>
-                          <v-spacer></v-spacer>
-                      </v-card-actions>
-                  </v-card>
-              </v-dialog>
+                    <v-dialog v-model="dialog_delete" max-width="400px">
+                        <v-card>
+                            <v-card-title class="headline">{{ $t('delete_contact_list_modal_title') }}</v-card-title>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="closeDelete">{{ $t('cancel_button') }}</v-btn>
+                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">{{ $t('yes_button') }}</v-btn>
+                                <v-spacer></v-spacer>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
 
-          </v-toolbar>
-      </template>
+                </v-toolbar>
+            </template>
 
-      <template v-slot:[`item.actions`]="{ item }">
-        id: {{ item.id }}
-      </template>
-
-    </v-data-table>
-  </div>
+            <template v-slot:[`item.actions`]="{ item }">
+                <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            icon
+                            @click="editItem(item)" v-bind="attrs" v-on="on"
+                        >
+                            <v-icon>mdi-pencil</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>
+                        {{ $t('tooltip_edit') }}
+                    </span>
+                </v-tooltip>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            icon
+                            color="red"
+                            @click="deleteItem(item)" v-bind="attrs" v-on="on"
+                        >
+                            <v-icon>mdi-delete</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>
+                        {{ $t('tooltip_remove') }}
+                    </span>
+                </v-tooltip>
+            </template>
+        </v-data-table>
+    </div>
 </template>
 
 
@@ -111,6 +136,7 @@ import { mapActions, mapGetters } from 'vuex';
         deleteItemConfirm(item) {
             // Todo
             // await this.deleteTag({})
+            console.log(item)
             this.closeDelete()
             this.editing_contacts_tag_id = null
         },
@@ -140,6 +166,8 @@ import { mapActions, mapGetters } from 'vuex';
     "contact_list_title": "Listes de contacts",
     "yes_button": "Oui",
     "cancel_button": "Annuler",
-    "delete_contact_list_modal_title": "Supprimer la liste de contacts"
+    "delete_contact_list_modal_title": "Supprimer la liste de contacts",
+    "tooltip_edit": "Modifier la liste de contacts",
+    "tooltip_remove": "Supprimer la liste de contacts"
 }
 </i18n>
