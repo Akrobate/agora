@@ -21,6 +21,7 @@
 
                     <v-dialog v-model="dialog" max-width="500px">
                         <contact-tag-create-edit-element
+                            :contact_tag_id="editing_contacts_tag_id"
                             @reset="close"
                             @saved="saved"
                         />
@@ -153,6 +154,10 @@ import { mapActions, mapGetters } from 'vuex';
         deleteItem (item) {
             this.editing_contacts_tag_id = item.id
             this.dialog_delete = true
+        },
+        editItem(item) {
+            this.dialog = true
+            this.editing_proposition_id = item.id
         },
     },
   }
