@@ -45,7 +45,7 @@ const actions = {
   getContactsTag(_, {
     id,
   }) {
-    return user_contact_tag_repository.searchContactsTags(id)
+    return user_contact_tag_repository.getContactsTag(id)
   },
   updateContactsTag(_, {
     id,

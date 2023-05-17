@@ -158,6 +158,7 @@ import { mapActions, mapGetters } from 'vuex';
         editItem(item) {
             this.dialog = true
             this.editing_proposition_id = item.id
+            console.log(this.editing_proposition_id)
         },
     },
   }

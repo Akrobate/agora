@@ -78,6 +78,7 @@ export default {
     },
     watch: {
         contact_tag_id() {
+            console.log("in watcj contact tag id")
             this.init()
         },
     },
@@ -92,6 +93,7 @@ export default {
                 this.contacts_tag = await this.getContactsTag({
                     id: this.contact_tag_id
                 })
+                console.log(this.contacts_tag)
                 this.tag_name = this.contacts_tag.name
             }
         },
