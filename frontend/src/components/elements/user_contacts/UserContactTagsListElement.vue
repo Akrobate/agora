@@ -88,11 +88,11 @@ import { mapActions, mapGetters } from 'vuex';
     components: {
       ContactTagCreateEditElement,
     },
-    data(){
+    data() {
         return {
             dialog: null,
             dialog_delete: null,
-            editing_contacts_tag_id: null,
+            editing_contacts_tag_id: 0,
             headers: [
                 {
                     text: this.$t('tag_name_table_header'),
@@ -115,6 +115,9 @@ import { mapActions, mapGetters } from 'vuex';
         }),
     },
     watch: {
+        editing_contacts_tag_id() {
+            console.log("watchiiiiing", this.editing_contacts_tag_id)
+        }
     },
     async mounted () {
         await this.initialize()
@@ -156,9 +159,9 @@ import { mapActions, mapGetters } from 'vuex';
             this.dialog_delete = true
         },
         editItem(item) {
+            this.editing_contacts_tag_id = item.id
             this.dialog = true
-            this.editing_proposition_id = item.id
-            console.log(this.editing_proposition_id)
+            console.log(this.editing_contacts_tag_id)
         },
     },
   }
