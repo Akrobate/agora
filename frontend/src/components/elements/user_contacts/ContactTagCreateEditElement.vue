@@ -34,7 +34,7 @@
                 text
                 @click="reset"
             >
-                {{ $t('cancel_button') }}321111
+                {{ $t('cancel_button') }}
             </v-btn>
             <v-btn
                 color="blue darken-1"
@@ -78,7 +78,6 @@ export default {
     },
     watch: {
         contact_tag_id() {
-            console.log("in watcj contact tag id")
             this.init()
         },
     },

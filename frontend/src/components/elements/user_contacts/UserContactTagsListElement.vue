@@ -114,11 +114,6 @@ import { mapActions, mapGetters } from 'vuex';
             token_data: 'authentication_store/tokenData',
         }),
     },
-    watch: {
-        editing_contacts_tag_id() {
-            console.log("watchiiiiing", this.editing_contacts_tag_id)
-        }
-    },
     async mounted () {
         await this.initialize()
     },
@@ -140,7 +135,6 @@ import { mapActions, mapGetters } from 'vuex';
         deleteItemConfirm(item) {
             // Todo
             // await this.deleteTag({})
-            console.log(item)
             this.closeDelete()
             this.editing_contacts_tag_id = null
         },
@@ -161,7 +155,6 @@ import { mapActions, mapGetters } from 'vuex';
         editItem(item) {
             this.editing_contacts_tag_id = item.id
             this.dialog = true
-            console.log(this.editing_contacts_tag_id)
         },
     },
   }
