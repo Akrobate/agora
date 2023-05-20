@@ -135,6 +135,7 @@ import { mapActions, mapGetters } from 'vuex';
         deleteItemConfirm(item) {
             // Todo
             // await this.deleteTag({})
+            console.log(item);
             this.closeDelete()
             this.editing_contacts_tag_id = null
         },

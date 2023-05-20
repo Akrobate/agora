@@ -241,6 +241,14 @@ class UserContactTagService {
             user_id,
         } = user;
 
+        // @todo check ownership
+
+        const {
+            name,
+            created_at,
+            updated_at,
+        } = await this.contact_tag_repository.read(tag_id);
+
         const tag_content = await this.user_contact_tag_repository
             .search({
                 tag_id,
@@ -250,6 +258,9 @@ class UserContactTagService {
         return {
             tag_id,
             user_id,
+            name,
+            created_at,
+            updated_at,
             contact_user_list: tag_content.map((item) => ({
                 id: item.id,
                 contact_user_id: item.contact_user_id,
