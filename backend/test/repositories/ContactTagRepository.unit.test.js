@@ -17,7 +17,7 @@ describe('ContactTagRepository unit tests', () => {
     const contact_tag_repository = ContactTagRepository.getInstance();
     const create_data = {
         user_id: 100,
-        name: 'Test contact tag repository'
+        name: 'Test contact tag repository',
     };
 
     let created_data_list = [];

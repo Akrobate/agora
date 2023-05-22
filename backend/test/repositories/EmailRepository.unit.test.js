@@ -159,7 +159,7 @@ describe('EmailRepository unit tests', () => {
                     ],
                 }
             );
-    
+
             const [
                 row_1,
                 row_2,
@@ -179,7 +179,7 @@ describe('EmailRepository unit tests', () => {
                     ],
                 }
             );
-    
+
             const [
                 row_1,
                 row_2,
@@ -196,7 +196,7 @@ describe('EmailRepository unit tests', () => {
                     from_user_id: created_data_list[2].from_user_id,
                 }
             );
-    
+
             const [
                 row_1,
             ] = email_list;
@@ -211,7 +211,7 @@ describe('EmailRepository unit tests', () => {
                     to_user_id: created_data_list[1].to_user_id,
                 }
             );
-    
+
             const [
                 row_1,
             ] = email_list;
