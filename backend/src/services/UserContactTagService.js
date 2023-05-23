@@ -324,7 +324,21 @@ class UserContactTagService {
                 user_id: user.user_id,
             });
 
-        return tag_list;
+        const results = [];
+
+        for(const tag of tag_list) {
+            const tag_content = await this.user_contact_tag_repository
+                .search({
+                    tag_id: tag.id,
+                    user_id: tag.user_id,
+                });
+            results.push({
+                ...tag,
+                contact_count: tag_content.length,
+            })
+        }
+        
+        return results;
     }
 
 
