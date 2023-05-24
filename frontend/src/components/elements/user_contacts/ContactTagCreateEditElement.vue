@@ -102,19 +102,19 @@ export default {
                 return
             }
 
-            const data = {
-                name: this.tag_name,
-                user_id: this.token_data.user_id,
-            }
-
             if (this.contact_tag_id) {
                 await this.updateContactsTag({
                     id: this.contact_tag_id,
-                    data,
+                    data: {
+                        name: this.tag_name
+                    },
                 })
             } else {
                 await this.createContactsTag({
-                    data,
+                    data: {
+                        name: this.tag_name,
+                        user_id: this.token_data.user_id,
+                    },
                 })
             }
             this.$emit('saved')

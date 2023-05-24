@@ -51,7 +51,7 @@ const actions = {
     id,
     data,
   }) {
-    return user_contact_tag_repository.updateContactsTags(id, data)
+    return user_contact_tag_repository.updateContactsTag(id, data)
   },
   createContactsTag(_, {
     data,
