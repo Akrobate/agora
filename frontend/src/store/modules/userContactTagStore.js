@@ -53,6 +53,11 @@ const actions = {
   }) {
     return user_contact_tag_repository.updateContactsTag(id, data)
   },
+  deleteContactsTag(_, {
+    id,
+  }) {
+    return user_contact_tag_repository.deleteContactsTag(id)
+  },
   createContactsTag(_, {
     data,
   }) {

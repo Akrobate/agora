@@ -120,6 +120,7 @@ import { mapActions, mapGetters } from 'vuex';
     methods: {
         ...mapActions({
             loadContactTags: 'user_contact_tag_store/loadContactTags',
+            deleteContactsTag:  'user_contact_tag_store/deleteContactsTag',
             triggerError: 'snack_bar_store/triggerError',
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
@@ -133,9 +134,7 @@ import { mapActions, mapGetters } from 'vuex';
 
         },
         deleteItemConfirm(item) {
-            // Todo
-            // await this.deleteTag({})
-            console.log(item);
+            await this.deleteContactsTag(item.id)
             this.closeDelete()
             this.editing_contacts_tag_id = null
         },

@@ -53,6 +53,15 @@ class UserContactTagRepository {
         return result.data
     }
 
+    /**
+     * @param {Number} id
+     * @returns {Promise}
+     */
+    async deleteContactsTag(id) {
+        const result = await axios.delete(`${this.ressource_url}/tags/${id}`);
+        return result.data
+    }
+
 
     /**
      * @param {Number} id
