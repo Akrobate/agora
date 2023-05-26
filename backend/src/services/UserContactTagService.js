@@ -326,7 +326,7 @@ class UserContactTagService {
 
         const results = [];
 
-        for(const tag of tag_list) {
+        for (const tag of tag_list) {
             const tag_content = await this.user_contact_tag_repository
                 .search({
                     tag_id: tag.id,
@@ -335,9 +335,8 @@ class UserContactTagService {
             results.push({
                 ...tag,
                 contact_count: tag_content.length,
-            })
+            });
         }
-        
         return results;
     }
 
