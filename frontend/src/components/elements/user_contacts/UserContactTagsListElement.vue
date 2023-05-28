@@ -133,13 +133,14 @@ import { mapActions, mapGetters } from 'vuex';
         clickOnRow() {
 
         },
-        deleteItemConfirm(item) {
-            await this.deleteContactsTag(item.id)
+        async deleteItemConfirm() {
+            await this.deleteContactsTag(this.editing_contacts_tag_id)
             this.closeDelete()
             this.editing_contacts_tag_id = null
         },
         closeDelete() {
-
+            this.dialog_delete = false
+            this.editing_contacts_tag_id = null
         },
         saved() {
             this.loadContactTags()
