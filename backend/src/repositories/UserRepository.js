@@ -64,6 +64,10 @@ class UserRepository extends AbstractSequelizeRepository {
                     allowNull: true,
                     type: DataTypes.STRING,
                 },
+                is_alpha: {
+                    allowNull: true,
+                    type: DataTypes.BOOLEAN,
+                },
                 created_at: {
                     allowNull: false,
                     type: DataTypes.DATE,
