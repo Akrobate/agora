@@ -6,6 +6,7 @@ const manager_user_seed = {
     id: 100,
     password: 'ShouldHaveLettersDigitsAndAtLeast8chars1',
     email: 'manager.user@test.com',
+    is_alpha: true,
 };
 
 const manager_user_2_seed = {

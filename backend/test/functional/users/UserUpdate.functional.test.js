@@ -34,6 +34,20 @@ describe('User should be able to update it self', () => {
     });
 
 
+    it.skip('Should be able to get a user with alpha prop', async () => {
+
+        await superApp
+            .get(`/api/v1/users/${user_seed.id}`)
+            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(user_seed)}`)
+            .expect(HTTP_CODE.OK)
+            .expect((response) => {
+                expect(response.body).to.have.property('first_name', user_seed.first_name);
+                expect(response.body).to.have.property('last_name', user_seed.last_name);
+
+            });
+        });
+    });
+
     it('Should be able to update a user', async () => {
 
         await superApp
