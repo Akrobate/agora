@@ -26,6 +26,7 @@ describe('User should be able to update it self', () => {
         last_name: 'Fedorov',
         password: 'ShouldHaveLettersDigitsAndAtLeast8chars',
         email: `artiom.fedorov@${v4()}.com`,
+        is_alpha: true,
     };
 
     beforeEach(async () => {
@@ -34,7 +35,7 @@ describe('User should be able to update it self', () => {
     });
 
 
-    it.skip('Should be able to get a user with alpha prop', async () => {
+    it('Should be able to get a user with alpha prop', async () => {
 
         await superApp
             .get(`/api/v1/users/${user_seed.id}`)
@@ -43,9 +44,8 @@ describe('User should be able to update it self', () => {
             .expect((response) => {
                 expect(response.body).to.have.property('first_name', user_seed.first_name);
                 expect(response.body).to.have.property('last_name', user_seed.last_name);
-
+                expect(response.body).to.have.property('is_alpha', user_seed.is_alpha);
             });
-        });
     });
 
     it('Should be able to update a user', async () => {
