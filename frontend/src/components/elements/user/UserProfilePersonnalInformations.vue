@@ -31,6 +31,13 @@
                             />
                         </v-col>
                     </v-row>
+                    <v-row v-if="is_alpha">
+                        <v-col
+                            cols="12"
+                        >
+                            {{ $t('information_is_alpha') }}
+                        </v-col>
+                    </v-row>
                 </v-container>
             </v-form>
         </v-card-text>
@@ -64,6 +71,7 @@ export default {
             last_name: null,
             first_name: null,
             valid: true,
+            is_alpha: null,
         }
     },
     computed: {
@@ -100,6 +108,7 @@ export default {
             const user = await this.getUser(this.token_data.user_id)
             this.last_name = user.last_name
             this.first_name = user.first_name
+            this.is_alpha = user.is_alpha
         },
     },
 }
@@ -115,6 +124,7 @@ export default {
     "first_name": "Prénom",
     "last_name": "Nom",
     "information_updated_success": "Mise a jour du profil réussie",
-    "information_updated_fail": "Une erreur est survenue"
+    "information_updated_fail": "Une erreur est survenue",
+    "information_is_alpha": "Vous êtes un utilisateur Alpha. Vous avez accès a des fonctionalités en avant première"
 }
 </i18n>
