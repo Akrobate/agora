@@ -12,6 +12,15 @@
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn
+                    v-if="0"
+                    color="primary"
+                    dark
+                    class="mb-2"
+                    @click="createProposition"
+                >
+                    {{ $t('add_members_to_list_button') }}
+                </v-btn>
+                <v-btn
                     color="primary"
                     dark
                     class="mb-2"
@@ -344,6 +353,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
 {
     "members_title": "Membres de la campagne",
     "add_member_button": "Ajouter un membre",
+    "add_members_to_list_button": "Ajouter les members au carnet d'addresses",
     "send_invitation_tooltip": "Envoyer une invitation par mail",
     "edit_member_tooltip": "Modifier le membre",
     "delete_member_tooltip": "Supprimer le membre de la campagne",
