@@ -16,7 +16,7 @@
                     color="primary"
                     dark
                     class="mb-2"
-                    @click="createProposition"
+                    @click="addAllMembersToContacts"
                 >
                     {{ $t('add_members_to_list_button') }}
                 </v-btn>
@@ -333,6 +333,9 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.triggerSuccess(this.$t('deleted_member_success_message'))
             this.closeDelete()
         },
+        async addAllMembersToContacts() {
+            this.triggerSuccess(this.$t('all_members_added_success_message'))
+        },
         async addUserContact() {
             // @todo
         },
@@ -361,6 +364,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     "added_user_contact_tooltip": "Ce membre fait partie de votre carnet d'adresses",
     "invitation_success_message": "Invitation envoyée",
     "deleted_member_success_message": "Membre supprimé de la campagne",
+    "all_members_added_success_message": "Tous les membres de la campagne ont été ajoutés au carnet d'adresses",
     "remove_campaign_dialog_title": "Supprimer membre?",
     "invite_member_dialog_title": "Inviter le membre",
     "invite_member_dialog_description": "Etes vous sur de vouloir inviter ce membre maintenant?",
