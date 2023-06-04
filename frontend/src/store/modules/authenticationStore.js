@@ -95,7 +95,10 @@ const actions = {
             forgotten_password_token,
             new_password,
         })
-    }
+    },
+    isAlpha() {
+        // @Todo: Add is Alpha
+    },
 }
 
 const mutations = {
