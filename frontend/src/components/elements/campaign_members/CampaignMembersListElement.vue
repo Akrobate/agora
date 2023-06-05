@@ -338,6 +338,16 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         },
         async addUserContact() {
             // @todo
+            const member_user_list = this
+                .loadCampaignUserList({ campaign_id: this.campaign_id })
+            const campagin_name = this.campaign.name
+            await this.createContactsTag({
+                    data: {
+                        name: `${this.$t('members_of')} ${campagin_name}`,
+                        user_id: this.editing_campaign_user_id,
+                    },
+                })
+            
         },
         close () {
             this.dialog = false
@@ -373,6 +383,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     "observer_chip": "Observateur",
     "manager_chip": "Manager",
     "participant_chip": "Participant",
-    "invited_string": "Invité"
+    "invited_string": "Invité",
+    "members_of": "Membres de",
 }
 </i18n>
