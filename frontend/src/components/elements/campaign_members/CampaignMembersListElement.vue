@@ -347,6 +347,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
                         user_id: this.editing_campaign_user_id,
                     },
                 })
+            console.log(member_user_list);
             
         },
         close () {
@@ -384,6 +385,6 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     "manager_chip": "Manager",
     "participant_chip": "Participant",
     "invited_string": "Invité",
-    "members_of": "Membres de",
+    "members_of": "Membres de"
 }
 </i18n>
