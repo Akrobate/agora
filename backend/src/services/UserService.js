@@ -146,6 +146,7 @@ class UserService {
             user_id: user.id,
             email: user.email,
             access_type: 'full',
+            is_alpha: user.is_alpha,
         };
 
         const jwt_token = this.tryToSignJwt(jwt_user_data, this.jwt_private_key, this.jwt_config);

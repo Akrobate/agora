@@ -12,7 +12,7 @@
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn
-                    v-if="0"
+                    v-if="user_is_alpha"
                     color="primary"
                     dark
                     class="mb-2"
@@ -20,6 +20,7 @@
                 >
                     {{ $t('add_members_to_list_button') }}
                 </v-btn>
+                <v-spacer></v-spacer>
                 <v-btn
                     color="primary"
                     dark
@@ -258,7 +259,11 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     computed: {
         ...mapGetters({
             campaignUserList: 'campaign_store/campaignUserList',
+            token_data: 'authentication_store/tokenData',
         }),
+        user_is_alpha() {
+            return this.token_data.is_alpha ? true : false;
+        }
     },
     watch: {
         dialog (val) {
@@ -276,6 +281,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     },
     async mounted () {
         await this.initialize()
+        console.log(this.token_data);
     },
     methods: {
         ...mapActions({
@@ -286,6 +292,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             deleteCampaignUser: 'campaign_store/deleteCampaignUser',
             triggerError: 'snack_bar_store/triggerError',
             triggerSuccess: 'snack_bar_store/triggerSuccess',
+            createContactsTag: 'user_contact_tag_store/createContactsTag',
         }),
         saved() {
             this.loadCampaignUserList({ campaign_id: this.campaign_id })
