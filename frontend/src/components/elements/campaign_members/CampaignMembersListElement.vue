@@ -82,6 +82,29 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
+
+                <v-dialog v-model="dialogAddMembersToList" max-width="500px">
+                    <v-card>
+                        <v-card-title class="headline">
+                            {{ $t('invite_member_dialog_title') }}
+                        </v-card-title>
+
+                        <v-card-text>
+                            {{ $t('invite_member_dialog_description') }}
+                        </v-card-text>
+
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="closeInvite">
+                                {{ $t('cancel_button') }}
+                            </v-btn>
+                            <v-btn color="blue darken-1" text @click="InviteConfirm">
+                                {{ $t('yes_button') }}
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
             </v-toolbar>
         </template>
 
@@ -219,6 +242,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         dialog: false,
         dialogDelete: false,
         dialogInvite: false,
+        dialogAddMembersToList: false,
         campaign_status: {},
         headers: [
             {
@@ -341,6 +365,10 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.closeDelete()
         },
         async addAllMembersToContacts() {
+            this.dialogAddMembersToList = true
+            this.triggerSuccess(this.$t('all_members_added_success_message'))
+        },
+        async addAllMembersToContactsConfirm() {
             this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
         async addUserContact() {
