@@ -86,20 +86,20 @@
                 <v-dialog v-model="dialogAddMembersToList" max-width="500px">
                     <v-card>
                         <v-card-title class="headline">
-                            {{ $t('invite_member_dialog_title') }}
+                            {{ $t('add_user_contact_dialog_title') }}
                         </v-card-title>
 
                         <v-card-text>
-                            {{ $t('invite_member_dialog_description') }}
+                            {{ $t('add_user_contact_dialog_description') }}
                         </v-card-text>
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="closeInvite">
+                            <v-btn color="blue darken-1" text @click="closeAddUserContact">
                                 {{ $t('cancel_button') }}
                             </v-btn>
-                            <v-btn color="blue darken-1" text @click="InviteConfirm">
-                                {{ $t('yes_button') }}
+                            <v-btn color="blue darken-1" text @click="addUserContact">
+                                {{ $t('add_button') }}
                             </v-btn>
                             <v-spacer></v-spacer>
                         </v-card-actions>
@@ -394,6 +394,9 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         closeInvite () {
             this.dialogInvite = false
         },
+        closeAddUserContact () {
+            this.dialogInvite = false
+        },
     },
   }
 </script>
@@ -402,11 +405,14 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
 {
     "members_title": "Membres de la campagne",
     "add_member_button": "Ajouter un membre",
+    "add_button": "Ajouter",
     "add_members_to_list_button": "Ajouter les members au carnet d'addresses",
     "send_invitation_tooltip": "Envoyer une invitation par mail",
     "edit_member_tooltip": "Modifier le membre",
     "delete_member_tooltip": "Supprimer le membre de la campagne",
     "add_user_contact_tooltip": "Ajouter le membre au carnet d'adresses",
+    "add_user_contact_dialog_title": "Ajouter au carnet d'adresse",
+    "add_user_contact_dialog_description": "Ajouter les contacts au carnet d'adresse",
     "added_user_contact_tooltip": "Ce membre fait partie de votre carnet d'adresses",
     "invitation_success_message": "Invitation envoyée",
     "deleted_member_success_message": "Membre supprimé de la campagne",
