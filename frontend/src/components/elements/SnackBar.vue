@@ -26,7 +26,7 @@
 </template>
 
 
-<script>
+<script lang="js">
 
 import { mapGetters, mapMutations } from 'vuex'
 
