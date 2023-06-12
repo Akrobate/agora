@@ -90,7 +90,15 @@
                         </v-card-title>
 
                         <v-card-text>
-                            {{ $t('add_user_contact_dialog_description') }}
+                            <p>
+                                {{ $t('add_user_contact_dialog_description') }}
+                            </p>
+                            <v-select
+                                label="Select"
+                                :items="userContactTagList"
+                                :item-text="item => `${item.name} (${item.contact_count})`"
+                                item-value="id"
+                            ></v-select>
                         </v-card-text>
 
                         <v-card-actions>
@@ -283,6 +291,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     computed: {
         ...mapGetters({
             campaignUserList: 'campaign_store/campaignUserList',
+            userContactTagList: 'user_contact_tag_store/userContactTagList',
             token_data: 'authentication_store/tokenData',
         }),
         user_is_alpha() {
@@ -317,12 +326,14 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             triggerError: 'snack_bar_store/triggerError',
             triggerSuccess: 'snack_bar_store/triggerSuccess',
             createContactsTag: 'user_contact_tag_store/createContactsTag',
+            loadContactTags: 'user_contact_tag_store/loadContactTags',
         }),
         saved() {
             this.loadCampaignUserList({ campaign_id: this.campaign_id })
             this.dialog = false
         },
         async initialize () {
+            await this.loadContactTags();
             if (this.campaign_id) {
                 this.loadCampaignUserList({ campaign_id: this.campaign_id })
                 this.campaign = await this.getCampaign({ campaign_id: this.campaign_id })
@@ -330,6 +341,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             } else {
                 this.clearCampaignUserList()
             }
+            console.log(this.userContactTagList)
         },
         createProposition() {
             this.editing_campaign_user_id = null
