@@ -97,6 +97,7 @@
                                 label="Select"
                                 :items="userContactTagList"
                                 :item-text="item => `${item.name} (${item.contact_count})`"
+                                v-model="selected_contact_list_id"
                                 item-value="id"
                             ></v-select>
                         </v-card-text>
@@ -285,6 +286,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
                 sortable: false,
             },
         ],
+        selected_contact_list_id,
         editing_campaign_user_id: null,
         CAMPAIGN_STATUS,
     }),
@@ -310,6 +312,9 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         },
         campaign_id () {
             this.initialize()
+        },
+        selected_contact_list_id () {
+            console.log(this.selected_contact_list_id);
         }
     },
     async mounted () {
