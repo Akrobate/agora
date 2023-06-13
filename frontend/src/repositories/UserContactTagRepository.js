@@ -72,6 +72,15 @@ class UserContactTagRepository {
         const result = await axios.patch(`${this.ressource_url}/tags/${id}`, data)
         return result.data
     }
+
+    /**
+     * @param {*} data 
+     * @returns 
+     */
+    async addContacts(data) {
+        const result = await axios.patch(`${this.ressource_url}/`, data)
+        return result.data
+    }
 }
 
 const user_contact_tag_repository = new UserContactTagRepository()
