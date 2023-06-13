@@ -63,6 +63,19 @@ const actions = {
   }) {
     return user_contact_tag_repository.createContactsTags(data)
   },
+  addContacts(_, {
+    tag_id,
+    user_id,
+    contact_id_list,
+  }) {
+    return user_contact_tag_repository.addContacts({
+      tag_id,
+      user_id,
+      contact_id_list,
+    })
+  }
+
+  
 }
   
 const mutations = {
