@@ -286,7 +286,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
                 sortable: false,
             },
         ],
-        selected_contact_list_id,
+        selected_contact_list_id: null,
         editing_campaign_user_id: null,
         CAMPAIGN_STATUS,
     }),
@@ -314,12 +314,12 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.initialize()
         },
         selected_contact_list_id () {
-            console.log(this.selected_contact_list_id);
+            console.log(this.selected_contact_list_id)
         }
     },
     async mounted () {
         await this.initialize()
-        console.log(this.token_data);
+        console.log("this.token_datathis.token_data", this.token_data)
     },
     methods: {
         ...mapActions({
@@ -332,6 +332,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             triggerSuccess: 'snack_bar_store/triggerSuccess',
             createContactsTag: 'user_contact_tag_store/createContactsTag',
             loadContactTags: 'user_contact_tag_store/loadContactTags',
+            addContacts: 'user_contact_tag_store/addContacts',
         }),
         saved() {
             this.loadCampaignUserList({ campaign_id: this.campaign_id })
@@ -386,6 +387,11 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
         async addAllMembersToContactsConfirm() {
+            await this.addContacts({
+                user_id: this.token_data.user_id,
+                tag_id: this.selected_contact_list_id,
+                contact_id_list: this.campaignUserList.map((item) => item.id),
+            })
             this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
         async addUserContact() {
