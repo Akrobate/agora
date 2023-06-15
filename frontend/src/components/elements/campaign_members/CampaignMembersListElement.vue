@@ -382,10 +382,13 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.triggerSuccess(this.$t('deleted_member_success_message'))
             this.closeDelete()
         },
-        async addAllMembersToContacts() {
+        async addAllMembersToContacts(item) {
+            console.log(item)
             this.dialogAddMembersToList = true
             this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
+
+        // Similar methods, => Needs refacto
         async addAllMembersToContactsConfirm() {
             await this.addContacts({
                 user_id: this.token_data.user_id,
@@ -408,6 +411,8 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             console.log(member_user_list);
             
         },
+        // Similar methods, => Needs refacto
+
         close () {
             this.dialog = false
         },
