@@ -16,7 +16,7 @@
                     color="primary"
                     dark
                     class="mb-2"
-                    @click="addAllMembersToContacts"
+                    @click="addMembersToContacts"
                 >
                     {{ $t('add_members_to_list_button') }}
                 </v-btn>
@@ -104,10 +104,10 @@
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" text @click="closeAddUserContact">
+                            <v-btn color="blue darken-1" text @click="closeAddMembersToContacts()">
                                 {{ $t('cancel_button') }}
                             </v-btn>
-                            <v-btn color="blue darken-1" text @click="addUserContact">
+                            <v-btn color="blue darken-1" text @click="addMembersToContactsConfirm()">
                                 {{ $t('add_button') }}
                             </v-btn>
                             <v-spacer></v-spacer>
@@ -123,7 +123,7 @@
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         icon
-                        @click="addUserContact(item)" v-bind="attrs" v-on="on"
+                        @click="addMembersToContacts(item)" v-bind="attrs" v-on="on"
                     >
                         <v-icon>mdi-account-group</v-icon>
                     </v-btn>
@@ -382,37 +382,21 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.triggerSuccess(this.$t('deleted_member_success_message'))
             this.closeDelete()
         },
-        async addAllMembersToContacts(item) {
+        async addMembersToContacts(item) {
             console.log(item)
             this.dialogAddMembersToList = true
             this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
-
-        // Similar methods, => Needs refacto
-        async addAllMembersToContactsConfirm() {
+        async addMembersToContactsConfirm() {
+            const member_user_list = this
+                .loadCampaignUserList({ campaign_id: this.campaign_id })
             await this.addContacts({
                 user_id: this.token_data.user_id,
                 tag_id: this.selected_contact_list_id,
-                contact_id_list: this.campaignUserList.map((item) => item.id),
+                contact_id_list: member_user_list.map((item) => item.id),
             })
             this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
-        async addUserContact() {
-            // @todo
-            const member_user_list = this
-                .loadCampaignUserList({ campaign_id: this.campaign_id })
-            const campagin_name = this.campaign.name
-            await this.createContactsTag({
-                    data: {
-                        name: `${this.$t('members_of')} ${campagin_name}`,
-                        user_id: this.editing_campaign_user_id,
-                    },
-                })
-            console.log(member_user_list);
-            
-        },
-        // Similar methods, => Needs refacto
-
         close () {
             this.dialog = false
         },
@@ -422,8 +406,8 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         closeInvite () {
             this.dialogInvite = false
         },
-        closeAddUserContact () {
-            this.dialogInvite = false
+        closeAddMembersToContacts () {
+            this.dialogAddMembersToList = false
         },
     },
   }
