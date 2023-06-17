@@ -90,8 +90,11 @@
                         </v-card-title>
 
                         <v-card-text>
-                            <p>
-                                {{ $t('add_user_contact_dialog_description') }}
+                            <p v-if="editing_campaign_user_id">
+                                {{ $t('add_user_contact_dialog_description_one') }}
+                            </p>
+                            <p v-else>
+                                {{ $t('add_user_contact_dialog_description_all') }}
                             </p>
                             <v-select
                                 label="Select"
@@ -365,6 +368,15 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.editing_campaign_user_id = item.id
             this.dialogInvite = true
         },
+        async addMembersToContacts(item) {
+            console.log(item)
+            const {
+                id,
+            } = item
+            this.editing_campaign_user_id = id ? id : null
+            this.dialogAddMembersToList = true
+            this.triggerSuccess(this.$t('all_members_added_success_message'))
+        },
         async InviteConfirm() {
             await this.inviteCampaignUser({
                 id: this.editing_campaign_user_id,
@@ -382,18 +394,22 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.triggerSuccess(this.$t('deleted_member_success_message'))
             this.closeDelete()
         },
-        async addMembersToContacts(item) {
-            console.log(item)
-            this.dialogAddMembersToList = true
-            this.triggerSuccess(this.$t('all_members_added_success_message'))
-        },
         async addMembersToContactsConfirm() {
-            const member_user_list = this
-                .loadCampaignUserList({ campaign_id: this.campaign_id })
+            let member_user_id_list;
+            if (this.editing_campaign_user_id) {
+                member_user_id_list = [
+                    this.editing_campaign_user_id,
+                ]
+            } else {
+                member_user_id_list = this
+                    .campaignUserList
+                    .map((item) => item.id)
+            }
+            
             await this.addContacts({
                 user_id: this.token_data.user_id,
                 tag_id: this.selected_contact_list_id,
-                contact_id_list: member_user_list.map((item) => item.id),
+                contact_id_list: member_user_id_list,
             })
             this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
@@ -424,7 +440,8 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     "delete_member_tooltip": "Supprimer le membre de la campagne",
     "add_user_contact_tooltip": "Ajouter le membre au carnet d'adresses",
     "add_user_contact_dialog_title": "Ajouter au carnet d'adresse",
-    "add_user_contact_dialog_description": "Ajouter les contacts au carnet d'adresse",
+    "add_user_contact_dialog_description_all": "Ajouter les contacts au carnet d'adresse",
+    "add_user_contact_dialog_description_one": "Ajouter le contact au carnet d'adresse",
     "added_user_contact_tooltip": "Ce membre fait partie de votre carnet d'adresses",
     "invitation_success_message": "Invitation envoyée",
     "deleted_member_success_message": "Membre supprimé de la campagne",
