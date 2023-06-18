@@ -1,5 +1,8 @@
 # Agora
 
+## Agora front is coded on vuejs2, vuetify and vuex
+
+
 ### Before working dev configure your env
 
 create a .env.local with your local back configuration
