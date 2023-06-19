@@ -15,6 +15,9 @@ export default {
         dialog: false,
     }),
     computed: {
+        getStatus() {
+            return this.dialog
+        },
     },
     watch: {
         dialog (val) {
@@ -27,6 +30,9 @@ export default {
         close () {
             this.dialog = false
         },
+        open() {
+            this.dialog = true
+        }
     },
   }
 </script>
