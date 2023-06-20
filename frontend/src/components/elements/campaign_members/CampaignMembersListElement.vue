@@ -375,7 +375,6 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             } = item
             this.editing_campaign_user_id = id ? id : null
             this.dialogAddMembersToList = true
-            this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
         async InviteConfirm() {
             await this.inviteCampaignUser({
@@ -405,12 +404,16 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
                     .campaignUserList
                     .map((item) => item.id)
             }
-            
-            await this.addContacts({
-                user_id: this.token_data.user_id,
-                tag_id: this.selected_contact_list_id,
-                contact_id_list: member_user_id_list,
-            })
+            try {    
+                await this.addContacts({
+                    user_id: this.token_data.user_id,
+                    tag_id: this.selected_contact_list_id,
+                    contact_id_list: member_user_id_list,
+                })
+            } catch (error) {
+                console.log(error)
+                this.triggerError(this.$t('all_members_added_error_message'))
+            }
             this.triggerSuccess(this.$t('all_members_added_success_message'))
         },
         close () {
@@ -445,7 +448,8 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     "added_user_contact_tooltip": "Ce membre fait partie de votre carnet d'adresses",
     "invitation_success_message": "Invitation envoyée",
     "deleted_member_success_message": "Membre supprimé de la campagne",
-    "all_members_added_success_message": "Tous les membres de la campagne ont été ajoutés au carnet d'adresses",
+    "all_members_added_success_message": "Ajouté au carnet d'adresses",
+    "all_members_added_error_message": "Erreur technique a l'ajout au carnet d'adresse",
     "remove_campaign_dialog_title": "Supprimer membre?",
     "invite_member_dialog_title": "Inviter le membre",
     "invite_member_dialog_description": "Etes vous sur de vouloir inviter ce membre maintenant?",
