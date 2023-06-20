@@ -404,7 +404,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
                     .campaignUserList
                     .map((item) => item.id)
             }
-            try {    
+            try {
                 await this.addContacts({
                     user_id: this.token_data.user_id,
                     tag_id: this.selected_contact_list_id,
@@ -415,17 +415,18 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
                 this.triggerError(this.$t('all_members_added_error_message'))
             }
             this.triggerSuccess(this.$t('all_members_added_success_message'))
+            this.closeAddMembersToContacts()
         },
-        close () {
+        close() {
             this.dialog = false
         },
-        closeDelete () {
+        closeDelete() {
             this.dialogDelete = false
         },
-        closeInvite () {
+        closeInvite() {
             this.dialogInvite = false
         },
-        closeAddMembersToContacts () {
+        closeAddMembersToContacts() {
             this.dialogAddMembersToList = false
         },
     },
