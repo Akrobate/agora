@@ -100,6 +100,11 @@ import { mapActions, mapGetters } from 'vuex';
                     value: 'name',
                 },
                 {
+                    text: this.$t('contact_count_table_header'),
+                    align: 'end',
+                    value: 'contact_count',
+                },
+                {
                     text: this.$t('actions_table_header'),
                     value: 'actions',
                     align: 'end',
@@ -164,6 +169,7 @@ import { mapActions, mapGetters } from 'vuex';
 <i18n locale='fr'>
 {
     "tag_name_table_header": "Nom du tag",
+    "contact_count_table_header": "Nombre de contacts",
     "actions_table_header": "actions",
     "create_new_contact_list": "Nouvelle liste de contacts",
     "contact_list_title": "Listes de contacts",
