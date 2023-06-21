@@ -14,7 +14,7 @@
                     icon
                     text
                     v-bind="attrs"
-                    @click="snackbar = false"
+                    @click="active = false"
                 >
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
