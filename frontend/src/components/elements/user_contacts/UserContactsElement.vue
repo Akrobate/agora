@@ -1,5 +1,21 @@
 <template>
-  <h1>UserContactsElement</h1>
+  <div>
+      <v-data-table
+          :headers="headers"
+          :items="userContactTagList"
+          class="elevation-1"
+          @click:row="clickOnRow"
+      >
+          <template v-slot:top>
+              <v-toolbar flat>
+                  <v-toolbar-title>{{ $t('contact_list_title') }}</v-toolbar-title>
+                  <v-spacer></v-spacer>
+              </v-toolbar>
+          </template>
+
+
+      </v-data-table>
+  </div>
 </template>
 
 
@@ -45,5 +61,6 @@ import { mapActions, mapGetters } from 'vuex';
 
 <i18n locale='fr'>
 {
+  "contact_list_title": "Mes contacts"
 }
 </i18n>

@@ -8,7 +8,7 @@
         >
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>{{ $t('contact_list_title') }}</v-toolbar-title>
+                    <v-toolbar-title>{{ $t('contact_tag_list_title') }}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-btn
                         color="primary"
@@ -172,7 +172,7 @@ import { mapActions, mapGetters } from 'vuex';
     "contact_count_table_header": "Nombre de contacts",
     "actions_table_header": "actions",
     "create_new_contact_list": "Nouvelle liste de contacts",
-    "contact_list_title": "Listes de contacts",
+    "contact_tag_list_title": "Listes de contacts",
     "yes_button": "Oui",
     "cancel_button": "Annuler",
     "delete_contact_list_modal_title": "Supprimer la liste de contacts",
