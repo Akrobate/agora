@@ -121,7 +121,6 @@ export default {
             this.reset()
         },
         reset() {
-            console.log("=====================", this.contact_tag_id)
             this.tag_name = ''
             this.$refs.form.reset()
             this.$emit('reset')

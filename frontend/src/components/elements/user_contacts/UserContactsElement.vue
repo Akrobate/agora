@@ -2,7 +2,7 @@
   <div>
       <v-data-table
           :headers="headers"
-          :items="userContactTagList"
+          :items="userContactList"
           class="elevation-1"
           @click:row="clickOnRow"
       >
