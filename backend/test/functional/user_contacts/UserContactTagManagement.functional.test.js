@@ -77,7 +77,7 @@ describe('User Contact Management', () => {
     });
 
 
-    describe('Read content in user tag', () => {
+    describe('Read contact content', () => {
         const content_to_read = {
             tag_id_list: [
                 manager_seed_contact_tag_1.id,
@@ -98,6 +98,29 @@ describe('User Contact Management', () => {
                         user_contact_list,
                     } = response.body;
 
+                    expect(user_contact_list.map((item) => item.contact_user_id))
+                        .to.includes(contact_3_user_seed.id);
+                    expect(user_contact_list.map((item) => item.contact_user_id))
+                        .to.includes(contact_4_user_seed.id);
+                    expect(user_contact_list.length).to.equal(2);
+
+                });
+        });
+
+        it('Should be able to read a user contact', async () => {
+            await superApp
+                .get(`${url_prefix}/contacts`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .query(qs.stringify({
+                    user_id: manager_user_seed.id,
+                }))
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    expect(response).to.have.property('body');
+                    expect(response.body).to.have.property('user_contact_list');
+                    const {
+                        user_contact_list,
+                    } = response.body;
                     expect(user_contact_list.map((item) => item.contact_user_id))
                         .to.includes(contact_3_user_seed.id);
                     expect(user_contact_list.map((item) => item.contact_user_id))
