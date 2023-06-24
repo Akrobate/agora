@@ -3,6 +3,7 @@
 const {
     ContactTagRepository,
     UserContactTagRepository,
+    UserRepository,
 } = require('../repositories');
 
 const {
@@ -17,15 +18,18 @@ class UserContactTagService {
      * @param {Acl} acl
      * @param {ContactTagRepository} contact_tag_repository
      * @param {UserContactTagRepository} user_contact_tag_repository
+     * @param {UserRepository} user_repository
      */
     constructor(
         acl,
         contact_tag_repository,
-        user_contact_tag_repository
+        user_contact_tag_repository,
+        user_repository
     ) {
         this.acl = acl;
         this.contact_tag_repository = contact_tag_repository;
         this.user_contact_tag_repository = user_contact_tag_repository;
+        this.user_repository = user_repository;
     }
 
 
@@ -39,7 +43,8 @@ class UserContactTagService {
             UserContactTagService.instance = new UserContactTagService(
                 Acl.getInstance(),
                 ContactTagRepository.getInstance(),
-                UserContactTagRepository.getInstance()
+                UserContactTagRepository.getInstance(),
+                UserRepository.getInstance()
             );
         }
         return UserContactTagService.instance;
@@ -169,7 +174,26 @@ class UserContactTagService {
                 user_id,
             });
 
-        return user_contact_list;
+        const contact_user_id_list = [
+            ...new Set(user_contact_list.map((item) => item.contact_user_id)),
+        ];
+
+        const user_list = await this.user_repository
+            .search({
+                id_list: contact_user_id_list,
+            });
+
+        const enriched_user_contact_list = user_contact_list.map((item) => {
+            const found_user = user_list.find((user_item) => user_item.id === item.contact_user_id);
+            return {
+                ...item,
+                contact_first_name: found_user.first_name,
+                contact_last_name: found_user.last_name,
+                contact_email: found_user.email,
+            };
+        });
+
+        return enriched_user_contact_list;
     }
 
     /**
