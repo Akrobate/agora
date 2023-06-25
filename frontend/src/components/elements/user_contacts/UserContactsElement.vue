@@ -29,8 +29,29 @@ import { mapActions, mapGetters } from 'vuex';
     components: {
       //AvatarElement,
     },
-    data: () => ({
-    }),
+    data() {
+
+      return {
+        headers: [
+              {
+                  text: this.$t('tag_name_table_header'),
+                  align: 'start',
+                  value: 'id',
+              },
+              {
+                  text: this.$t('contact_count_table_header'),
+                  align: 'end',
+                  value: 'contact_user_id',
+              },
+              {
+                  text: this.$t('actions_table_header'),
+                  value: 'actions',
+                  align: 'end',
+                  sortable: false,
+              },
+          ],
+      }
+    },
     computed: {
         ...mapGetters({
             userContactList: 'user_contact_tag_store/userContactList',
@@ -54,7 +75,11 @@ import { mapActions, mapGetters } from 'vuex';
               user_id: this.token_data.user_id,
             }
           });
+          console.log(this.userContactList)
         },
+        clickOnRow() {
+
+        }
     },
   }
 </script>
