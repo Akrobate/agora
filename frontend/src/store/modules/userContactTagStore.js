@@ -16,9 +16,9 @@ const getters = {
 const actions = {
   async searchContacts(_, criteria) {
     const {
-      contact_list,
+      user_contact_list,
     } = await user_contact_tag_repository.searchContacts(criteria)
-    return contact_list;
+    return user_contact_list;
   },
   async loadContacts({ commit, dispatch }, { criteria = {} } = {}) {
     const user_contact_list = await dispatch('searchContacts', criteria)
