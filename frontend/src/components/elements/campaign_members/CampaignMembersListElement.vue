@@ -371,9 +371,9 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         async addMembersToContacts(item) {
             console.log(item)
             const {
-                id,
+                user_id,
             } = item
-            this.editing_campaign_user_id = id ? id : null
+            this.editing_campaign_user_id = user_id ? user_id : null
             this.dialogAddMembersToList = true
         },
         async InviteConfirm() {
@@ -402,7 +402,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             } else {
                 member_user_id_list = this
                     .campaignUserList
-                    .map((item) => item.id)
+                    .map((item) => item.user_id)
             }
             try {
                 await this.addContacts({
