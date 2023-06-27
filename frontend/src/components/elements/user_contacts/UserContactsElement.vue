@@ -34,14 +34,19 @@ import { mapActions, mapGetters } from 'vuex';
       return {
         headers: [
               {
-                  text: this.$t('tag_name_table_header'),
+                  text: this.$t('contact_email_table_header'),
                   align: 'start',
-                  value: 'id',
+                  value: 'contact_email',
               },
               {
-                  text: this.$t('contact_count_table_header'),
-                  align: 'end',
-                  value: 'contact_user_id',
+                  text: this.$t('contact_first_name_table_header'),
+                  align: 'start',
+                  value: 'contact_first_name',
+              },
+              {
+                  text: this.$t('contact_last_name_table_header'),
+                  align: 'start',
+                  value: 'contact_last_name',
               },
               {
                   text: this.$t('actions_table_header'),
@@ -86,6 +91,9 @@ import { mapActions, mapGetters } from 'vuex';
 
 <i18n locale='fr'>
 {
-  "contact_list_title": "Mes contacts"
+  "contact_list_title": "Mes contacts",
+  "contact_email_table_header": "Email",
+  "contact_first_name_table_header": "Prénom",
+  "contact_last_name_table_header": "Nom"
 }
 </i18n>
