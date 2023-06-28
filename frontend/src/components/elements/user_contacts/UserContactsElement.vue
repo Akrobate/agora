@@ -13,6 +13,10 @@
               </v-toolbar>
           </template>
 
+          <template v-slot:[`item.avatar`]="{ item }">
+            <avatar-element size="30" :email="item.email" />
+          </template>
+
 
       </v-data-table>
   </div>
@@ -22,17 +26,23 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
-// import AvatarElement from '@/components/elements/user/AvatarElement'
+import AvatarElement from '@/components/elements/user/AvatarElement'
 
   export default {
     name: 'UserContactsElement',
     components: {
-      //AvatarElement,
+      AvatarElement,
     },
     data() {
 
       return {
         headers: [
+              {
+                  text: '',
+                  align: 'start',
+                  value: 'avatar',
+                  sortable: false,
+              },
               {
                   text: this.$t('contact_email_table_header'),
                   align: 'start',
