@@ -146,6 +146,54 @@ class UserContactTagService {
         return this.readOneTagContent(user, input);
     }
 
+    /**
+     *
+     * @param {Object} user
+     * @param {Object} input
+     * @returns {Object}
+     */
+    async __search(user, input) {
+
+        const {
+            tag_id_list,
+            contact_id_list,
+            user_id,
+        } = input;
+
+        const {
+            user_id: jwt_user_id,
+        } = user;
+
+        this.acl.checkUserAccessOwnData(jwt_user_id, user_id);
+
+        const user_contact_list = await this.user_contact_tag_repository
+            .search({
+                tag_id_list,
+                contact_user_id_list: contact_id_list,
+                user_id,
+            });
+
+        const contact_user_id_list = [
+            ...new Set(user_contact_list.map((item) => item.contact_user_id)),
+        ];
+
+        const user_list = await this.user_repository
+            .search({
+                id_list: contact_user_id_list,
+            });
+
+        const enriched_user_contact_list = user_contact_list.map((item) => {
+            const found_user = user_list.find((user_item) => user_item.id === item.contact_user_id);
+            return {
+                ...item,
+                contact_first_name: found_user.first_name,
+                contact_last_name: found_user.last_name,
+                contact_email: found_user.email,
+            };
+        });
+
+        return enriched_user_contact_list;
+    }
 
     /**
      *
@@ -183,13 +231,20 @@ class UserContactTagService {
                 id_list: contact_user_id_list,
             });
 
-        const enriched_user_contact_list = user_contact_list.map((item) => {
-            const found_user = user_list.find((user_item) => user_item.id === item.contact_user_id);
+        const enrichment_user_contact_list = await this.user_contact_tag_repository
+            .search({
+                contact_user_id_list: [user_list],
+                user_id,
+            });
+
+        const enriched_user_contact_list = user_list.map((item) => {
+            const user_contact_tag_list = enrichment_user_contact_list
+                .filter((user_contact) => item.id === user_contact.contact_user_id);
             return {
-                ...item,
-                contact_first_name: found_user.first_name,
-                contact_last_name: found_user.last_name,
-                contact_email: found_user.email,
+                contact_first_name: item.first_name,
+                contact_last_name: item.last_name,
+                contact_email: item.email,
+                tag_list: user_contact_tag_list,
             };
         });
 
