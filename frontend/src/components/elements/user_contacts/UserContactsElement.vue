@@ -59,6 +59,11 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
                   value: 'contact_last_name',
               },
               {
+                  text: this.$t('contact_tag_name_list_table_header'),
+                  align: 'start',
+                  value: 'tag_list',
+              },
+              {
                   text: this.$t('actions_table_header'),
                   value: 'actions',
                   align: 'end',
@@ -104,6 +109,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
   "contact_list_title": "Mes contacts",
   "contact_email_table_header": "Email",
   "contact_first_name_table_header": "Prénom",
-  "contact_last_name_table_header": "Nom"
+  "contact_last_name_table_header": "Nom",
+  "contact_tag_name_list_table_header": "Liste de contacts"
 }
 </i18n>
