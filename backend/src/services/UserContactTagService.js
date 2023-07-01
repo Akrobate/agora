@@ -185,9 +185,7 @@ class UserContactTagService {
 
         const enrichment_user_contact_list = await this.user_contact_tag_repository
             .search({
-                contact_user_id_list: [
-                    user_list.map((item) => item.id),
-                ],
+                contact_user_id_list: user_list.map((item) => item.id),
                 user_id,
             });
 
