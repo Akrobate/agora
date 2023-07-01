@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/index.js",
     "start": "node src/index.js",
     "test": "CONFIGURATION_YAML_FILE=./configuration.test.yml mocha --recursive test",
     "lint": "eslint src test",
@@ -37,6 +38,7 @@
     "chai": "^4.3.4",
     "eslint": "^7.23.0",
     "mocha": "^8.3.2",
+    "nodemon": "^2.0.22",
     "nyc": "^15.1.0",
     "sequelize-cli": "^6.2.0",
     "sinon": "^10.0.0",
