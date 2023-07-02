@@ -189,6 +189,15 @@ class UserContactTagService {
                 user_id,
             });
 
+        const uniq_tag_id_list = [
+            ...new Set(enrichment_user_contact_list.map((item) => item.tag_id)),
+        ];
+
+        const enrichment_tag_list = await this.contact_tag_repository
+            .search({
+                id_list: uniq_tag_id_list,
+            });
+
         const enriched_user_contact_list = user_list.map((item) => {
             const user_contact_tag_list = enrichment_user_contact_list
                 .filter((user_contact) => item.id === user_contact.contact_user_id);
@@ -198,7 +207,11 @@ class UserContactTagService {
                 contact_first_name: item.first_name,
                 contact_last_name: item.last_name,
                 contact_email: item.email,
-                tag_list: user_contact_tag_list,
+                tag_list: user_contact_tag_list.map((_user_contact_tag) => ({
+                    ..._user_contact_tag,
+                    tag_name: enrichment_tag_list
+                        .find((tag) => tag.id === _user_contact_tag.tag_id).name,
+                })),
             };
         });
 
