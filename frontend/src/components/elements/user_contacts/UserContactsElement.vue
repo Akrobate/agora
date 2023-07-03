@@ -17,6 +17,18 @@
             <avatar-element size="30" :email="item.email" />
           </template>
 
+          <template v-slot:[`item.tag_list`]="{ item }">
+            <v-chip
+              v-for="tag in item.tag_list" :key="tag.tag_name"
+              class="ma-1"
+              color="primary"
+              label
+              text-color="white"
+              x-small
+            >
+            {{ tag.tag_name }}
+            </v-chip>
+          </template>
 
       </v-data-table>
   </div>
