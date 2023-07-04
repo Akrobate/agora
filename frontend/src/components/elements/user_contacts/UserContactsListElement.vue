@@ -41,7 +41,7 @@ import { mapActions, mapGetters } from 'vuex';
 import AvatarElement from '@/components/elements/user/AvatarElement'
 
   export default {
-    name: 'UserContactsElement',
+    name: 'UserContactsListElement',
     components: {
       AvatarElement,
     },

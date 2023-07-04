@@ -6,12 +6,12 @@
 
 <script>
 
-import UserContactsElement from '@/components/elements/user_contacts/UserContactsElement'
+import UserContactsListElement from '@/components/elements/user_contacts/UserContactsListElement'
 
 export default {
     name: 'UserContactPage',
     components: {
-        UserContactsElement,
+        UserContactsListElement,
     },
 }
 </script>
