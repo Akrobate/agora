@@ -24,6 +24,7 @@
               color="primary"
               label
               text-color="white"
+              :to="{ name: 'user-contacts', params: { tag_id: tag.is} }"
               x-small
             >
             {{ tag.tag_name }}
