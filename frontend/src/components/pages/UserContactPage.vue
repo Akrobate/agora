@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <user-contacts-element />
+        <user-contacts-list-element />
     </v-container>
 </template>
 

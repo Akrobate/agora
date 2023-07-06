@@ -24,8 +24,8 @@
               color="primary"
               label
               text-color="white"
-              :to="{ name: 'user-contacts', params: { tag_id: tag.is} }"
-              x-small
+              :to="{ name: 'user-contacts', query: { tag_id: tag.id } }"
+              small
             >
             {{ tag.tag_name }}
             </v-chip>

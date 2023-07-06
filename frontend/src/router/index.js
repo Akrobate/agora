@@ -136,6 +136,10 @@ const routes = [
     {
         path: '/user-contacts',
         name: 'user-contacts',
+        props: (route) => ({
+            ...route.params,
+            tag_id: parseInt(route.query.tag_id)
+        }),
         component: () => import('@/components/pages/UserContactPage.vue'),
         meta: {
             layout: 'AppLayout',
