@@ -46,6 +46,9 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     components: {
       AvatarElement,
     },
+    props: {
+      tag_id: Number,
+    },
     data() {
 
       return {
@@ -92,6 +95,9 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         }),
     },
     watch: {
+      tag_id() {
+        console.log("tag_id changed", this.tag_id)
+      },
     },
     async mounted () {
         await this.initialize()
