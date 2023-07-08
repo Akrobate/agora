@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <user-contacts-list-element />
+        <user-contacts-list-element :tag_id="tag_id" />
     </v-container>
 </template>
 
@@ -12,6 +12,9 @@ export default {
     name: 'UserContactPage',
     components: {
         UserContactsListElement,
+    },
+    props: {
+        tag_id: Number,
     },
 }
 </script>
