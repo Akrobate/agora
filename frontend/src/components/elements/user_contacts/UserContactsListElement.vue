@@ -97,6 +97,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     watch: {
       tag_id() {
         console.log("tag_id changed", this.tag_id)
+        initialize()
       },
     },
     async mounted () {
@@ -112,9 +113,9 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
           await this.loadContacts({
             criteria: {
               user_id: this.token_data.user_id,
+              tag_id: this.tag_id,
             }
-          });
-          console.log(this.userContactList)
+          })
         },
         clickOnRow() {
 
