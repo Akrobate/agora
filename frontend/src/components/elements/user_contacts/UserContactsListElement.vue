@@ -97,7 +97,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     watch: {
       tag_id() {
         console.log("tag_id changed", this.tag_id)
-        initialize()
+        this.initialize()
       },
     },
     async mounted () {
