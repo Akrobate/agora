@@ -24,7 +24,7 @@
               color="primary"
               label
               text-color="white"
-              :to="{ name: 'user-contacts', query: { tag_id: tag.id } }"
+              :to="{ name: 'user-contacts', query: { tag_id: tag.tag_id } }"
               small
             >
             {{ tag.tag_name }}
@@ -113,7 +113,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
           await this.loadContacts({
             criteria: {
               user_id: this.token_data.user_id,
-              tag_id: this.tag_id,
+              tag_id_list: this.tag_id ? [this.tag_id] : undefined,
             }
           })
         },
