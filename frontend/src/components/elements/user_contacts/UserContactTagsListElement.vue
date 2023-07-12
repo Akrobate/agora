@@ -47,6 +47,20 @@
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
                             icon
+                            v-bind="attrs" v-on="on"
+                            :to="{ name: 'user-contacts', query: { tag_id: item.id } }"
+                        >
+                            <v-icon>mdi-view</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>
+                        {{ $t('tooltip_view_contacts') }}
+                    </span>
+                </v-tooltip>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            icon
                             @click="editItem(item)" v-bind="attrs" v-on="on"
                         >
                             <v-icon>mdi-pencil</v-icon>
@@ -177,6 +191,7 @@ import { mapActions, mapGetters } from 'vuex';
     "cancel_button": "Annuler",
     "delete_contact_list_modal_title": "Supprimer la liste de contacts",
     "tooltip_edit": "Modifier la liste de contacts",
-    "tooltip_remove": "Supprimer la liste de contacts"
+    "tooltip_remove": "Supprimer la liste de contacts",
+    "tooltip_view_contacts": "Afficher la liste de contacts"
 }
 </i18n>
