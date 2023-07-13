@@ -50,7 +50,7 @@
                             v-bind="attrs" v-on="on"
                             :to="{ name: 'user-contacts', query: { tag_id: item.id } }"
                         >
-                            <v-icon>mdi-view</v-icon>
+                            <v-icon>mdi-format-list-bulleted</v-icon>
                         </v-btn>
                     </template>
                     <span>
