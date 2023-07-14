@@ -89,10 +89,7 @@
     </div>
 </template>
 
-
 <script>
-
-// @todo: Should probably be renamed to UserContactTagsListElement?
 
 import ContactTagCreateEditElement from '@/components/elements/user_contacts/ContactTagCreateEditElement'
 import { mapActions, mapGetters } from 'vuex';

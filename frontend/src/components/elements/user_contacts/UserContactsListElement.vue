@@ -1,38 +1,38 @@
 <template>
-  <div>
-      <v-data-table
-          :headers="headers"
-          :items="userContactList"
-          class="elevation-1"
-          @click:row="clickOnRow"
-      >
-          <template v-slot:top>
-              <v-toolbar flat>
-                  <v-toolbar-title>{{ $t('contact_list_title') }}</v-toolbar-title>
-                  <v-spacer></v-spacer>
-              </v-toolbar>
-          </template>
-
-          <template v-slot:[`item.avatar`]="{ item }">
+    <div>
+        <v-data-table
+            :headers="headers"
+            :items="userContactList"
+            class="elevation-1"
+            @click:row="clickOnRow"
+        >
+        <template v-slot:top>
+            <v-toolbar flat>
+                <v-toolbar-title>{{ $t('contact_list_title') }}</v-toolbar-title>
+                <v-spacer></v-spacer>
+            </v-toolbar>
+        </template>
+        
+        <template v-slot:[`item.avatar`]="{ item }">
             <avatar-element size="30" :email="item.email" />
-          </template>
-
-          <template v-slot:[`item.tag_list`]="{ item }">
+        </template>
+        
+        <template v-slot:[`item.tag_list`]="{ item }">
             <v-chip
-              v-for="tag in item.tag_list" :key="tag.tag_name"
-              class="ma-1"
-              color="primary"
-              label
-              text-color="white"
-              :to="{ name: 'user-contacts', query: { tag_id: tag.tag_id } }"
-              small
+                v-for="tag in item.tag_list" :key="tag.tag_name"
+                class="ma-1"
+                color="primary"
+                label
+                text-color="white"
+                :to="{ name: 'user-contacts', query: { tag_id: tag.tag_id } }"
+                small
             >
             {{ tag.tag_name }}
-            </v-chip>
-          </template>
-
-      </v-data-table>
-  </div>
+        </v-chip>
+    </template>
+    
+</v-data-table>
+</div>
 </template>
 
 
@@ -41,52 +41,51 @@
 import { mapActions, mapGetters } from 'vuex';
 import AvatarElement from '@/components/elements/user/AvatarElement'
 
-  export default {
+export default {
     name: 'UserContactsListElement',
     components: {
-      AvatarElement,
+        AvatarElement,
     },
     props: {
-      tag_id: Number,
+        tag_id: Number,
     },
     data() {
-
-      return {
-        headers: [
-              {
-                  text: '',
-                  align: 'start',
-                  value: 'avatar',
-                  sortable: false,
-              },
-              {
-                  text: this.$t('contact_email_table_header'),
-                  align: 'start',
-                  value: 'contact_email',
-              },
-              {
-                  text: this.$t('contact_first_name_table_header'),
-                  align: 'start',
-                  value: 'contact_first_name',
-              },
-              {
-                  text: this.$t('contact_last_name_table_header'),
-                  align: 'start',
-                  value: 'contact_last_name',
-              },
-              {
-                  text: this.$t('contact_tag_name_list_table_header'),
-                  align: 'start',
-                  value: 'tag_list',
-              },
-              {
-                  text: this.$t('actions_table_header'),
-                  value: 'actions',
-                  align: 'end',
-                  sortable: false,
-              },
-          ],
-      }
+        return {
+            headers: [
+                {
+                    text: '',
+                    align: 'start',
+                    value: 'avatar',
+                    sortable: false,
+                },
+                {
+                    text: this.$t('contact_email_table_header'),
+                    align: 'start',
+                    value: 'contact_email',
+                },
+                {
+                    text: this.$t('contact_first_name_table_header'),
+                    align: 'start',
+                    value: 'contact_first_name',
+                },
+                {
+                    text: this.$t('contact_last_name_table_header'),
+                    align: 'start',
+                    value: 'contact_last_name',
+                },
+                {
+                    text: this.$t('contact_tag_name_list_table_header'),
+                    align: 'start',
+                    value: 'tag_list',
+                },
+                {
+                    text: this.$t('actions_table_header'),
+                    value: 'actions',
+                    align: 'end',
+                    sortable: false,
+                },
+            ],
+        }
     },
     computed: {
         ...mapGetters({
@@ -95,10 +94,10 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         }),
     },
     watch: {
-      tag_id() {
-        console.log("tag_id changed", this.tag_id)
-        this.initialize()
-      },
+        tag_id() {
+            console.log("tag_id changed", this.tag_id)
+            this.initialize()
+        },
     },
     async mounted () {
         await this.initialize()
@@ -110,26 +109,26 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         async initialize () {
-          await this.loadContacts({
-            criteria: {
-              user_id: this.token_data.user_id,
-              tag_id_list: this.tag_id ? [this.tag_id] : undefined,
-            }
-          })
+            await this.loadContacts({
+                criteria: {
+                    user_id: this.token_data.user_id,
+                    tag_id_list: this.tag_id ? [this.tag_id] : undefined,
+                }
+            })
         },
         clickOnRow() {
-
+            
         }
     },
-  }
+}
 </script>
 
 <i18n locale='fr'>
 {
-  "contact_list_title": "Mes contacts",
-  "contact_email_table_header": "Email",
-  "contact_first_name_table_header": "Prénom",
-  "contact_last_name_table_header": "Nom",
-  "contact_tag_name_list_table_header": "Liste de contacts"
+    "contact_list_title": "Mes contacts",
+    "contact_email_table_header": "Email",
+    "contact_first_name_table_header": "Prénom",
+    "contact_last_name_table_header": "Nom",
+    "contact_tag_name_list_table_header": "Liste de contacts"
 }
 </i18n>
