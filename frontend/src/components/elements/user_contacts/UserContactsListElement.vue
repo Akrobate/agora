@@ -5,6 +5,8 @@
             :items="userContactList"
             class="elevation-1"
             @click:row="clickOnRow"
+            :hide-default-footer="userContactList.length === 0"
+            :hide-default-header="userContactList.length === 0"
         >
         <template v-slot:top>
             <v-toolbar flat>
@@ -29,6 +31,12 @@
             >
             {{ tag.tag_name }}
         </v-chip>
+    </template>
+
+    <template v-slot:no-data>
+        <p class="text-h6">
+            {{ $t('no_contacts_help_text') }}
+        </p>
     </template>
     
 </v-data-table>
@@ -129,6 +137,8 @@ export default {
     "contact_email_table_header": "Email",
     "contact_first_name_table_header": "Prénom",
     "contact_last_name_table_header": "Nom",
-    "contact_tag_name_list_table_header": "Liste de contacts"
+    "contact_tag_name_list_table_header": "Liste de contacts",
+    "no_contacts_help_text": "Vous n'avez aucun contact dans cette liste",
+    "actions_table_header": "Actions"
 }
 </i18n>
