@@ -33,6 +33,25 @@
         </v-chip>
     </template>
 
+    <template v-slot:[`item.actions`]="{ item }">
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        color="red"
+                        @click="deleteItem(item)" v-bind="attrs" v-on="on"
+                    >
+                        <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    {{ $t('tooltip_remove') }}
+                </span>
+            </v-tooltip>
+        </template>
+
+
+
     <template v-slot:no-data>
         <p class="text-h6">
             {{ $t('no_contacts_help_text') }}
@@ -126,7 +145,10 @@ export default {
         },
         clickOnRow() {
             
-        }
+        },
+        deleteItem(item) {
+            console.log(item)
+        },
     },
 }
 </script>
@@ -139,6 +161,7 @@ export default {
     "contact_last_name_table_header": "Nom",
     "contact_tag_name_list_table_header": "Liste de contacts",
     "no_contacts_help_text": "Vous n'avez aucun contact dans cette liste",
-    "actions_table_header": "Actions"
+    "actions_table_header": "Actions",
+    "tooltip_remove": "Supprimer le contact de la liste"
 }
 </i18n>
