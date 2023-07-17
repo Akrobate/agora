@@ -48,6 +48,20 @@
                     {{ $t('tooltip_remove') }}
                 </span>
             </v-tooltip>
+            <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        icon
+                        color="red"
+                        @click="addToCampaign(item)" v-bind="attrs" v-on="on"
+                    >
+                        <v-icon>mdi-account-plus-outline</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    {{ $t('tooltip_add_to_campaign') }}
+                </span>
+            </v-tooltip>
         </template>
 
 
@@ -149,6 +163,9 @@ export default {
         deleteItem(item) {
             console.log(item)
         },
+        addToCampaign(item) {
+            console.log(item)
+        }
     },
 }
 </script>
@@ -162,6 +179,7 @@ export default {
     "contact_tag_name_list_table_header": "Liste de contacts",
     "no_contacts_help_text": "Vous n'avez aucun contact dans cette liste",
     "actions_table_header": "Actions",
-    "tooltip_remove": "Supprimer le contact de la liste"
+    "tooltip_remove": "Supprimer le contact de la liste",
+    "tooltip_add_to_campaign": "Ajouter ce contact a une campagne"
 }
 </i18n>
