@@ -13,6 +13,25 @@
                 <v-toolbar-title>{{ $t('contact_list_title') }}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
+
+
+            <v-dialog v-model="dialogAddToCampaign" max-width="600px">
+                <v-card>
+                    <v-card-title class="headline">
+                        {{ $t('delete_modal_title') }}
+                    </v-card-title>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="closeAddToCampaign">
+                            {{ $t('cancel') }}
+                        </v-btn>
+                        <v-btn color="blue darken-1" text @click="AddToCampaignConfirm">
+                            {{ $t('ok') }}
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </template>
         
         <template v-slot:[`item.avatar`]="{ item }">
@@ -34,35 +53,35 @@
     </template>
 
     <template v-slot:[`item.actions`]="{ item }">
-            <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        icon
-                        color="red"
-                        @click="deleteItem(item)" v-bind="attrs" v-on="on"
-                    >
-                        <v-icon>mdi-delete</v-icon>
-                    </v-btn>
-                </template>
-                <span>
-                    {{ $t('tooltip_remove') }}
-                </span>
-            </v-tooltip>
-            <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        icon
-                        color="red"
-                        @click="addToCampaign(item)" v-bind="attrs" v-on="on"
-                    >
-                        <v-icon>mdi-account-plus-outline</v-icon>
-                    </v-btn>
-                </template>
-                <span>
-                    {{ $t('tooltip_add_to_campaign') }}
-                </span>
-            </v-tooltip>
-        </template>
+        <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    icon
+                    color="red"
+                    @click="deleteItem(item)" v-bind="attrs" v-on="on"
+                >
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </template>
+            <span>
+                {{ $t('tooltip_remove') }}
+            </span>
+        </v-tooltip>
+        <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    icon
+                    color="red"
+                    @click="addToCampaign(item)" v-bind="attrs" v-on="on"
+                >
+                    <v-icon>mdi-account-plus-outline</v-icon>
+                </v-btn>
+            </template>
+            <span>
+                {{ $t('tooltip_add_to_campaign') }}
+            </span>
+        </v-tooltip>
+    </template>
 
 
 
@@ -92,6 +111,7 @@ export default {
     },
     data() {
         return {
+            dialogAddToCampaign: false,
             headers: [
                 {
                     text: '',
