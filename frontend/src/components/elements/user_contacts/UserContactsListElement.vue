@@ -112,6 +112,7 @@ export default {
     data() {
         return {
             dialogAddToCampaign: false,
+            editing_item: null,
             headers: [
                 {
                     text: '',
@@ -184,7 +185,16 @@ export default {
             console.log(item)
         },
         addToCampaign(item) {
+            this.dialogAddToCampaign = true
+            this.editing_item = item
             console.log(item)
+        },
+        confirmAddToCampaign() {
+            console.log(this.editing_item)
+            // Mecanic goes here
+        },
+        closeAddToCampaign() {
+            this.dialogAddToCampaign = false
         }
     },
 }
