@@ -32,7 +32,9 @@ const actions = {
     },
     async loadCampaigns({ commit, dispatch }, { criteria = {}, list_to_update = 'draft' } = {}) {
         const campaign_list = await dispatch('searchCampaign', criteria)
-        commit(`set_campaign_${list_to_update}_list`, campaign_list)
+        if (list_to_update) {
+            commit(`set_campaign_${list_to_update}_list`, campaign_list)
+        }
         return campaign_list
     },
     getCampaign(_, { campaign_id }) {

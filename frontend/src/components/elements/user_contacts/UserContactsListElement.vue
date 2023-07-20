@@ -100,7 +100,7 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import AvatarElement from '@/components/elements/user/AvatarElement'
-
+import { CAMPAIGN_STATUS } from '@/constants'
 export default {
     name: 'UserContactsListElement',
     components: {
@@ -113,6 +113,7 @@ export default {
         return {
             dialogAddToCampaign: false,
             editing_item: null,
+            campaign_list: [],
             headers: [
                 {
                     text: '',
@@ -166,6 +167,7 @@ export default {
     },
     methods: {
         ...mapActions({
+            loadCampaigns: 'campaign_store/loadCampaigns',
             loadContacts: 'user_contact_tag_store/loadContacts',
             triggerError: 'snack_bar_store/triggerError',
             triggerSuccess: 'snack_bar_store/triggerSuccess',
@@ -177,6 +179,17 @@ export default {
                     tag_id_list: this.tag_id ? [this.tag_id] : undefined,
                 }
             })
+            this.campaign_list = await this.loadCampaigns(
+                { 
+                    criteria: { 
+                        campaign_status_list: [
+                            CAMPAIGN_STATUS.IN_PROGRESS,
+                            CAMPAIGN_STATUS.DRAFT,
+                        ]
+                    },
+                    list_to_update: null,
+                }
+            )
         },
         clickOnRow() {
             
