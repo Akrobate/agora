@@ -20,6 +20,33 @@
                     <v-card-title class="headline">
                         {{ $t('delete_modal_title') }}
                     </v-card-title>
+
+
+                    <v-container fluid>
+                        <v-row align="center">
+                            <v-col cols="6">
+                                <v-subheader>
+                                    campaigns
+                                </v-subheader>
+                            </v-col>
+
+                            <v-col cols="6">
+                                <v-select
+                                v-model="select"
+                                hint="Select campaign"
+                                :items="campaign_list"
+                                item-text="name"
+                                item-value="id"
+                                label="Select"
+                                persistent-hint
+                                return-object
+                                single-line
+                                ></v-select>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+
+
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="blue darken-1" text @click="closeAddToCampaign">
