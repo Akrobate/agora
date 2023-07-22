@@ -18,30 +18,29 @@
             <v-dialog v-model="dialogAddToCampaign" max-width="600px">
                 <v-card>
                     <v-card-title class="headline">
-                        {{ $t('delete_modal_title') }}
+                        {{ $t('add_to_campaign_modal_title') }}
                     </v-card-title>
 
 
                     <v-container fluid>
                         <v-row align="center">
-                            <v-col cols="6">
+                            <v-col cols="3">
                                 <v-subheader>
                                     campaigns
                                 </v-subheader>
                             </v-col>
 
-                            <v-col cols="6">
+                            <v-col cols="9">
                                 <v-select
-                                v-model="select"
-                                hint="Select campaign"
-                                :items="campaign_list"
-                                item-text="name"
-                                item-value="id"
-                                label="Select"
-                                persistent-hint
-                                return-object
-                                single-line
-                                ></v-select>
+                                    v-model="selected_campaign"
+                                    :items="campaign_list"
+                                    item-text="title"
+                                    item-value="id"
+                                    label="Select"
+                                    persistent-hint
+                                    return-object
+                                    single-line
+                                    ></v-select>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -52,7 +51,7 @@
                         <v-btn color="blue darken-1" text @click="closeAddToCampaign">
                             {{ $t('cancel') }}
                         </v-btn>
-                        <v-btn color="blue darken-1" text @click="AddToCampaignConfirm">
+                        <v-btn color="blue darken-1" text @click="confirmAddToCampaign">
                             {{ $t('ok') }}
                         </v-btn>
                         <v-spacer></v-spacer>
@@ -141,6 +140,7 @@ export default {
             dialogAddToCampaign: false,
             editing_item: null,
             campaign_list: [],
+            selected_campaign: null,
             headers: [
                 {
                     text: '',
@@ -233,7 +233,7 @@ export default {
             console.log(this.editing_item)
             // Mecanic goes here
         },
-        closeAddToCampaign() {
+        closeAddToCampaign() {
             this.dialogAddToCampaign = false
         }
     },
@@ -250,6 +250,8 @@ export default {
     "no_contacts_help_text": "Vous n'avez aucun contact dans cette liste",
     "actions_table_header": "Actions",
     "tooltip_remove": "Supprimer le contact de la liste",
-    "tooltip_add_to_campaign": "Ajouter ce contact a une campagne"
+    "tooltip_add_to_campaign": "Ajouter ce contact à une campagne",
+    "add_to_campaign_modal_title": "Ajouter le contact à la campagne",
+    "cancel": "Annuler"
 }
 </i18n>
