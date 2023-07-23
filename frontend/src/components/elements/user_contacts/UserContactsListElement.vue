@@ -196,6 +196,7 @@ export default {
         ...mapActions({
             loadCampaigns: 'campaign_store/loadCampaigns',
             loadContacts: 'user_contact_tag_store/loadContacts',
+            addCampaignUser: 'campaign_store/addCampaignUser',
             triggerError: 'snack_bar_store/triggerError',
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
@@ -227,11 +228,18 @@ export default {
         addToCampaign(item) {
             this.dialogAddToCampaign = true
             this.editing_item = item
-            console.log(item)
         },
-        confirmAddToCampaign() {
+        async confirmAddToCampaign() {
             console.log(this.editing_item)
-            // Mecanic goes here
+
+            await this.addCampaignUser({
+                campaign_id: this.selected_campaign,
+                data: {
+                    email: this.editing_item.email,
+                    access_level: 1, // needs form implementation
+                    is_participant: true, // needs form implementation
+                }
+            })
         },
         closeAddToCampaign() {
             this.dialogAddToCampaign = false
