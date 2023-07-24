@@ -23,26 +23,29 @@
 
 
                     <v-container fluid>
-                        <v-row align="center">
-                            <v-col cols="3">
-                                <v-subheader>
-                                    campaigns
-                                </v-subheader>
-                            </v-col>
+                        <v-select
+                            v-model="selected_campaign"
+                            :items="campaign_list"
+                            item-text="title"
+                            item-value="id"
+                            label="Select"
+                            persistent-hint
+                            return-object
+                            single-line
+                        ></v-select>
+                        <v-select
+                            v-model="selected_campaign_user_access_level"
+                            :items="access_level_list"
+                            item-text="label"
+                            item-value="id"
+                            :label="$t('access_level_field_label')"
+                            :rules="access_level_rules"
+                        ></v-select>
 
-                            <v-col cols="9">
-                                <v-select
-                                    v-model="selected_campaign"
-                                    :items="campaign_list"
-                                    item-text="title"
-                                    item-value="id"
-                                    label="Select"
-                                    persistent-hint
-                                    return-object
-                                    single-line
-                                    ></v-select>
-                            </v-col>
-                        </v-row>
+                        <v-switch
+                            v-model="selected_campaign_user_is_participant"
+                            :label="$t('is_participant_field_label')"
+                        ></v-switch>
                     </v-container>
 
 
@@ -141,6 +144,8 @@ export default {
             editing_item: null,
             campaign_list: [],
             selected_campaign: null,
+            selected_campaign_user_access_level: null,
+            selected_campaign_user_is_participant: null,
             headers: [
                 {
                     text: '',
@@ -260,6 +265,8 @@ export default {
     "tooltip_remove": "Supprimer le contact de la liste",
     "tooltip_add_to_campaign": "Ajouter ce contact à une campagne",
     "add_to_campaign_modal_title": "Ajouter le contact à la campagne",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "access_level_field_label": "Privilèges",
+    "is_participant_field_label": "Participe à la campagne"
 }
 </i18n>

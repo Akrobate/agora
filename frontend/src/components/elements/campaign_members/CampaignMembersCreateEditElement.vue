@@ -185,7 +185,7 @@ export default {
     "validation_required_email": "Le mail est obligatoire",
     "email_field_label": "Email",
     "access_level_field_label": "Privilèges",
-    "is_participant_field_label": "Participe a la campagne",
+    "is_participant_field_label": "Participe à la campagne",
     "cancel_button": "Annuler",
     "save_button": "Sauvegarder"
 }
