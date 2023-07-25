@@ -74,7 +74,6 @@ export default {
     },
     data() {
         return {
-            USER_ACCESS_LEVEL,
             valid: true,
             email: '',
             email_rules: [

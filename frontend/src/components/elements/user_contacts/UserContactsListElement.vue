@@ -129,7 +129,8 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import AvatarElement from '@/components/elements/user/AvatarElement'
-import { CAMPAIGN_STATUS } from '@/constants'
+import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
+
 export default {
     name: 'UserContactsListElement',
     components: {
@@ -178,6 +179,20 @@ export default {
                     value: 'actions',
                     align: 'end',
                     sortable: false,
+                },
+            ],
+            access_level_list: [
+                {
+                    id: USER_ACCESS_LEVEL.NONE,
+                    label: this.$t('access_label_none'),
+                },
+                {
+                    id: USER_ACCESS_LEVEL.OBSERVER,
+                    label: this.$t('access_label_observer'),
+                },
+                {
+                    id: USER_ACCESS_LEVEL.MANAGER,
+                    label: this.$t('access_label_manager'),
                 },
             ],
         }
@@ -241,10 +256,14 @@ export default {
                 campaign_id: this.selected_campaign,
                 data: {
                     email: this.editing_item.email,
-                    access_level: 1, // needs form implementation
-                    is_participant: true, // needs form implementation
+                    access_level: this.selected_campaign_user_access_level,
+                    is_participant: this.selected_campaign_user_is_participant,
                 }
             })
+
+            this.selected_campaign = null
+            this.selected_campaign_user_access_level = null
+            this.selected_campaign_user_is_participant = null
         },
         closeAddToCampaign() {
             this.dialogAddToCampaign = false
