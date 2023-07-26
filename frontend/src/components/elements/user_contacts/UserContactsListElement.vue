@@ -195,6 +195,9 @@ export default {
                     label: this.$t('access_label_manager'),
                 },
             ],
+            access_level_rules: [
+                (value) => !! value || this.$t('validation_access_level_must_be_provided'),
+            ],
         }
     },
     computed: {
