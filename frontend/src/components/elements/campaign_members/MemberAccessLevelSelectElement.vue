@@ -47,7 +47,10 @@ export default {
     watch: {
         access_level() {
             this.$emit('input', this.access_level)
-        }
+        },
+        value() {
+            this.access_level = this.value
+        },
     },
 }
 </script>
@@ -58,6 +61,6 @@ export default {
     "access_label_manager": "Manager",
     "access_label_observer": "Observateur",
     "validation_access_level_must_be_provided": "Un niveau d'accès doit être renseigné",
-    "access_level_field_label": "Privilèges",
+    "access_level_field_label": "Privilèges"
 }
 </i18n>

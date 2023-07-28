@@ -22,6 +22,7 @@
                         :disabled="!creation_mode"
                     ></v-text-field>
 
+                    <!--
                     <v-select
                         v-model="access_level"
                         :items="access_level_list"
@@ -30,6 +31,10 @@
                         :label="$t('access_level_field_label')"
                         :rules="access_level_rules"
                     ></v-select>
+                    -->
+                    <MemberAccessLevelSelectElement
+                        v-model="access_level"
+                    ></MemberAccessLevelSelectElement>
                 </v-form>
 
                 <v-switch
@@ -65,12 +70,17 @@
 
 import { mapActions } from 'vuex'
 import { USER_ACCESS_LEVEL } from '@/constants'
+import MemberAccessLevelSelectElement from '@/components/elements/campaign_members/MemberAccessLevelSelectElement'
+
 
 export default {
     name: 'CampaignMembersCreateEditElement',
     props: {
         campaign_id: Number,
         campaign_user_id: Number,
+    },
+    components: {
+        MemberAccessLevelSelectElement,
     },
     data() {
         return {
@@ -102,13 +112,16 @@ export default {
         }
     },
     async mounted() {
-        this.init()
+        console.log("======= mounted 1 ====>", this.campaign_user_id)
+        await this.init()
+        console.log("======= mounted 2 ====>", this.campaign_user_id)
     },
     watch: {
         async campaign_id() {
             await this.init()
         },
         async campaign_user_id() {
+            console.log("=============>", this.campaign_user_id)
             await this.init()
         },
     },
@@ -122,8 +135,10 @@ export default {
         
         async init() {
             if (this.campaign_user_id) {
+                console.log("heeeerrreeeeeeeeeeeeeeeeeeeeeee", this.campaign_user_id )
                 this.creation_mode = false;
-                const campaign_user = await this.getCampaignUser({ campaign_id: this.campaign_id, id: this.campaign_user_id });
+                const campaign_user = await this.getCampaignUser({ campaign_id: this.campaign_id, id: this.campaign_user_id })
+                console.log("campaign_user", campaign_user)
                 this.email = campaign_user.email
                 this.access_level = campaign_user.access_level
                 this.is_participant = campaign_user.is_participant

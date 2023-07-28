@@ -358,6 +358,7 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         },
         editItem (item) {
             this.dialog = true
+            console.log("======<<<>>", item)
             this.editing_campaign_user_id = item.id
         },
         deleteItem (item) {
