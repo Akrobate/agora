@@ -15,8 +15,7 @@ import { USER_ACCESS_LEVEL } from '@/constants'
 export default {
     name: 'MemberAccessLevelSelectElement',
     props: {
-        campaign_id: Number,
-        campaign_user_id: Number,
+        value: Number,
     },
     data() {
         return {
@@ -46,10 +45,10 @@ export default {
     async mounted() {
     },
     watch: {
+        access_level() {
+            this.$emit('input', this.access_level)
+        }
     },
-    methods: {
-    },
-
 }
 </script>
 
