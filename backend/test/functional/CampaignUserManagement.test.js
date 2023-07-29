@@ -113,7 +113,7 @@ describe('CampaignUserManagement', () => {
             });
     });
 
-    it.only('Manager should able search a user by id', async () => {
+    it('Manager should able search a user by id', async () => {
         await superApp
             .get(`/api/v1/campaigns/${campaign_seed.id}/users`)
             .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)

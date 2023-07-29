@@ -147,6 +147,7 @@ class CampaignUserService {
      */
     async searchCampaignUsers(user, input) {
         const {
+            id_list,
             campaign_id,
             status_id_list,
             is_participant,
@@ -164,6 +165,7 @@ class CampaignUserService {
         });
 
         const campaign_user_list = await this.campaign_user_repository.search({
+            id_list,
             is_participant,
             campaign_id,
         });
