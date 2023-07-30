@@ -33,6 +33,7 @@
                             return-object
                             single-line
                         ></v-select>
+                        <!--
                         <v-select
                             v-model="selected_campaign_user_access_level"
                             :items="access_level_list"
@@ -41,7 +42,10 @@
                             :label="$t('access_level_field_label')"
                             :rules="access_level_rules"
                         ></v-select>
-
+                        -->
+                        <MemberAccessLevelSelectElement
+                            v-model="selected_campaign_user_access_level"
+                        ></MemberAccessLevelSelectElement>
                         <v-switch
                             v-model="selected_campaign_user_is_participant"
                             :label="$t('is_participant_field_label')"
@@ -130,11 +134,13 @@
 import { mapActions, mapGetters } from 'vuex';
 import AvatarElement from '@/components/elements/user/AvatarElement'
 import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
+import MemberAccessLevelSelectElement from '@/components/elements/campaign_members/MemberAccessLevelSelectElement'
 
 export default {
     name: 'UserContactsListElement',
     components: {
         AvatarElement,
+        MemberAccessLevelSelectElement,
     },
     props: {
         tag_id: Number,
