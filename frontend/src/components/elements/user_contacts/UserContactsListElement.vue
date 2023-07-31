@@ -33,16 +33,6 @@
                             return-object
                             single-line
                         ></v-select>
-                        <!--
-                        <v-select
-                            v-model="selected_campaign_user_access_level"
-                            :items="access_level_list"
-                            item-text="label"
-                            item-value="id"
-                            :label="$t('access_level_field_label')"
-                            :rules="access_level_rules"
-                        ></v-select>
-                        -->
                         <MemberAccessLevelSelectElement
                             v-model="selected_campaign_user_access_level"
                         ></MemberAccessLevelSelectElement>
@@ -116,8 +106,6 @@
         </v-tooltip>
     </template>
 
-
-
     <template v-slot:no-data>
         <p class="text-h6">
             {{ $t('no_contacts_help_text') }}
@@ -133,7 +121,7 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import AvatarElement from '@/components/elements/user/AvatarElement'
-import { CAMPAIGN_STATUS, USER_ACCESS_LEVEL } from '@/constants'
+import { CAMPAIGN_STATUS } from '@/constants'
 import MemberAccessLevelSelectElement from '@/components/elements/campaign_members/MemberAccessLevelSelectElement'
 
 export default {
@@ -186,23 +174,6 @@ export default {
                     align: 'end',
                     sortable: false,
                 },
-            ],
-            access_level_list: [
-                {
-                    id: USER_ACCESS_LEVEL.NONE,
-                    label: this.$t('access_label_none'),
-                },
-                {
-                    id: USER_ACCESS_LEVEL.OBSERVER,
-                    label: this.$t('access_label_observer'),
-                },
-                {
-                    id: USER_ACCESS_LEVEL.MANAGER,
-                    label: this.$t('access_label_manager'),
-                },
-            ],
-            access_level_rules: [
-                (value) => !! value || this.$t('validation_access_level_must_be_provided'),
             ],
         }
     },
@@ -294,7 +265,6 @@ export default {
     "tooltip_add_to_campaign": "Ajouter ce contact à une campagne",
     "add_to_campaign_modal_title": "Ajouter le contact à la campagne",
     "cancel": "Annuler",
-    "access_level_field_label": "Privilèges",
     "is_participant_field_label": "Participe à la campagne"
 }
 </i18n>
