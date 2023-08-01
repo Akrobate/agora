@@ -112,16 +112,13 @@ export default {
         }
     },
     async mounted() {
-        console.log("======= mounted 1 ====>", this.campaign_user_id)
         await this.init()
-        console.log("======= mounted 2 ====>", this.campaign_user_id)
     },
     watch: {
         async campaign_id() {
             await this.init()
         },
         async campaign_user_id() {
-            console.log("=============>", this.campaign_user_id)
             await this.init()
         },
     },
@@ -135,10 +132,8 @@ export default {
         
         async init() {
             if (this.campaign_user_id) {
-                console.log("heeeerrreeeeeeeeeeeeeeeeeeeeeee", this.campaign_user_id )
                 this.creation_mode = false;
                 const campaign_user = await this.getCampaignUser({ campaign_id: this.campaign_id, id: this.campaign_user_id })
-                console.log("campaign_user", campaign_user)
                 this.email = campaign_user.email
                 this.access_level = campaign_user.access_level
                 this.is_participant = campaign_user.is_participant

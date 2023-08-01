@@ -62,7 +62,6 @@ export default {
             triggerSuccess: 'snack_bar_store/triggerSuccess',
         }),
         async requestPassword() {
-            console.log(this.email)
             this.triggerSuccess(this.$t('renew_password_requested_snack_bar'))
             await this.requestForgottenPassword({
                 email: this.email

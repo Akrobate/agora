@@ -322,7 +322,6 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
     },
     async mounted () {
         await this.initialize()
-        console.log("this.token_datathis.token_data", this.token_data)
     },
     methods: {
         ...mapActions({
@@ -350,7 +349,6 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             } else {
                 this.clearCampaignUserList()
             }
-            console.log(this.userContactTagList)
         },
         createProposition() {
             this.editing_campaign_user_id = null
@@ -358,7 +356,6 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
         },
         editItem (item) {
             this.dialog = true
-            console.log("======<<<>>", item)
             this.editing_campaign_user_id = item.id
         },
         deleteItem (item) {
@@ -370,7 +367,6 @@ import AvatarElement from '@/components/elements/user/AvatarElement'
             this.dialogInvite = true
         },
         async addMembersToContacts(item) {
-            console.log(item)
             const {
                 user_id,
             } = item

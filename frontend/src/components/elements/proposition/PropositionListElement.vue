@@ -181,7 +181,6 @@ export default {
                 this.campaign = await this.getCampaign({
                     campaign_id: this.campaign_id
                 })
-                console.log(this.campaign)
                 this.loadPropositionList({ campaign_id: this.campaign_id })
             } else {
                 this.clearPropositionList()
