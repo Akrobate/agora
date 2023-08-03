@@ -113,22 +113,33 @@ describe('CampaignUserManagement', () => {
             });
     });
 
-    it('Manager should able search a user by id', async () => {
-        await superApp
-            .get(`/api/v1/campaigns/${campaign_seed.id}/users`)
-            .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
-            .query(qs.stringify({
-                id_list: [
-                    guest_campaign_user_seed.id,
-                ],
-            }))
-            .expect(HTTP_CODE.OK)
-            .expect((response) => {
-                console.log(response.body);
-                expect(response.body).to.have.property('campaign_user_list');
-                expect(response.body.campaign_user_list).to.be.an('array');
-                expect(response.body.campaign_user_list.length).to.equal(1);
-            });
+
+    describe('search', () => {
+
+        it('Manager should able search a user by id', async () => {
+            await superApp
+                .get(`/api/v1/campaigns/${campaign_seed.id}/users`)
+                .set('Authorization', `Bearer ${DataSeeder.getJwtFullAccessToken(manager_user_seed)}`)
+                .query(qs.stringify({
+                    id_list: [
+                        guest_campaign_user_seed.id,
+                    ],
+                }))
+                .expect(HTTP_CODE.OK)
+                .expect((response) => {
+                    console.log(response.body);
+                    expect(response.body).to.have.property('campaign_user_list');
+                    expect(response.body.campaign_user_list).to.be.an('array');
+                    expect(response.body.campaign_user_list.length).to.equal(1);
+
+                    const [
+                        found_element,
+                    ] = response.body.campaign_user_list;
+
+                    expect(found_element).to.have.property('id', guest_campaign_user_seed.id);
+                });
+        });
+
     });
 });
 
